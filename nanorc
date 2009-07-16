@@ -1,0 +1,53 @@
+# Use 4-character wide tabs.
+set tabsize 4
+
+# Convert typed tabs to spaces.
+set tabstospaces
+
+# Indent new lines to same level as previous line.
+set autoindent
+
+# Create backups in filename~ files.
+set backup
+
+# Store backup files in ~/.nano_backups/.
+#set backupdir ~/.nano_backups
+
+# Always display the cursor position in the status bar.
+set const
+
+# CTRL+K cuts to end of line, not entire line.
+set cut
+
+# When wordwrap is turned on, have it wrap at 72 columns.
+set fill 72
+
+# Enable ~/.nano_history for saving and reading search/replace strings.
+set historylog
+
+# Use the blank line below the titlebar as extra editing space.
+set morespace
+
+# Enable mouse support, if available.
+set mouse
+
+# Allow inserting files into their own buffers.
+set multibuffer
+
+# Don't enable word wrap by default.
+set nowrap
+
+# Enable smart home-key -- toggle between column 1 and first non-whitespace column.
+set smarthome
+
+# Include syntax color highlighting for various file types.
+#include "/usr/share/nano/html.nanorc"
+#include "/usr/share/nano/ruby.nanorc"
+#include "/usr/share/nano/sh.nanorc"
+#include "/usr/share/nano/python.nanorc"
+#include "/usr/share/nano/c.nanorc"
+#include "/usr/share/nano/perl.nanorc"
+#include "/usr/share/nano/java.nanorc"
+include "~/.nano/php.nanorc"
+include "~/.nano/css.nanorc"
+include "~/.nano/xml.nanorc"

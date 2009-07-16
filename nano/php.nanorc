@@ -1,0 +1,42 @@
+syntax "php" "\.php[2345s~]?$"
+
+# Keywords
+color brightred "(^|[^A-Za-z0-9])(var|and|or|default|class|extends|true|false|global|function|new|switch|case|break|next|prev|elseif|if|else|foreach|for|as|do|while|exit|die|declare|require_once|require|include_once|include|return|echo|static|array|isset)([^A-Za-z0-9])"
+
+# Types
+#color brightred "([^A-Za-z0-9])|[^A-Za-z](null|int|string|float|bool|object|resource)[^A-Za-z0-9_]+[^A-Za-z]"
+
+# Functions
+#color brightmagenta "([A-Za-z0-9])"
+
+# Symbols
+#color cyan "(\[)|(\])"
+#color red "="
+#color green "[,{}()]"
+#color green "=="
+#color white "('[^']*')|(\"[^"]*\")"
+
+# Numbers
+#color brightblue "[0-9]"
+
+# Variables
+color cyan "\$[a-zA-Z_0-9]*"
+
+# Strings
+color yellow ""(\\.|[^\"])*""
+color yellow "'(\\.|[^\'])*'"
+
+# HTML delimiters
+#color blue start="<[^\?]" end="[^\?]>"
+color brightblue start="<[a-zA-Z]" end=">"
+color brightblue start="</[a-zA-Z]" end=">"
+
+# PHP delimiters
+color brightblue "<\?(php)?"
+color brightblue "\?>"
+
+# Comments (NOTE: these go last, to override coloring anything inside comments)
+color white start="<!--" end="-->"
+color white start="/\*" end="\*/"
+color white start="#" end="$"
+color white start="//" end="$"

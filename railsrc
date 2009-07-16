@@ -1,0 +1,8 @@
+# From recipe #37 in Advanced Rails Recipes
+def sql(query)
+  ActiveRecord::Base.connection.select_all(query)
+end
+
+def routes
+  ActionController::Routing::Routes.routes
+end

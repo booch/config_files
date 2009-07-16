@@ -1,0 +1,41 @@
+# Automatically send output through less (with processing of ANSI color codes) unless piping.
+--pager=less -R
+
+# Always display the files in alphabetical order.
+--sort-files
+
+# Display 3 lines before and after each matching line.
+--context=3
+
+# Follow soft links.
+--follow
+
+# Print file name on a separate line before all matches for that file, with blank line between files.
+--group
+
+## Add some new file types and file extensions.
+
+# This is so I can use "bash" in place of "shell".
+--type-set=bash=.bash,.sh
+
+# When looking for Ruby files, include HAML files.
+--type-add=ruby=.haml
+
+# When looking for CSS files, include Sass and Less files (which get compiled into CSS).
+--type-add=css=.sass,.less
+
+# I never use this for PHP, but some people/projects use it for PHP include files.
+--type-add=php=.inc
+
+# Add a few more programming languages.
+--type-set=ada=.ada
+--type-set=boo=.boo
+--type-set=clojure=.clj
+--type-set=eiffel=.e,.eiffel
+--type-set=factor=.factor
+--type-set=fsharp=.fs
+--type-set=groovy=.groovy
+--type-set=io=.io
+--type-set=pdf=.pdf
+--type-set=reia=.re
+--type-set=scala=.scala
