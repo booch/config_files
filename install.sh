@@ -42,7 +42,10 @@ ln -f nano/xml.nanorc   ~/.nano/xml.nanorc
 ln -f profile           ~/.profile
 ln -f railsrc           ~/.railsrc
 ln -f vimrc             ~/.vimrc
-
+if [ "`uname`"x -eq "Darwin"x  ]; then
+  mkdir -p ~/Library/KeyBindings
+  ln -f DefaultKeyBinding.Dict ~/Library/KeyBindings/DefaultKeyBinding.Dict
+fi
 
 # TODO: Need more permission changes?
 chmod go-rwx .*_history
