@@ -27,6 +27,9 @@
 # I never use this for PHP, but some people/projects use it for PHP include files.
 --type-add=php=.inc
 
+# Create a type just for HAML files.
+--type-add=haml=.haml
+
 # Add a few more programming languages.
 --type-set=ada=.ada
 --type-set=boo=.boo
