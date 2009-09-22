@@ -32,6 +32,10 @@ which is completely different.
 */
 
 {
+"@\UF702"  = "moveToBeginningOfLine:";                       /* Cmd + Left */
+"$@\UF702" = "moveToBeginningOfLineAndModifySelection:";     /* Shift + Cmd + Left */
+"@\UF703"  = "moveToEndOfLine:";                             /* Cmd + Right */
+"$@\UF703" = "moveToEndOfLineAndModifySelection:";           /* Shift + Cmd + Right */
 "\UF729"   = "moveToBeginningOfLine:";                       /* Home         */
 "^\UF729"  = "moveToBeginningOfDocument:";                   /* Ctrl + Home  */
 "$\UF729"  = "moveToBeginningOfLineAndModifySelection:";     /* Shift + Home */
