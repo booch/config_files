@@ -13,7 +13,9 @@ require 'pp'
 # The below come as gems, so we have to load RubyGems.
 require 'rubygems'
 
-# Enable Wirble, to colorize IRB output, retain history, and add some other nice features.
+# Enable Wirble: colorize IRB output; save history across sessions in ~/.irb_history file.
+# Automatically loads rubygems, pp, and irb/completion.
+# Adds a fewe aliases: ri (run ri docs), po (print object methods), poc (print object constants).
 # See http://pablotron.org/software/wirble/ for details.
 begin
   require 'wirble'
