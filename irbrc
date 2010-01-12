@@ -18,6 +18,7 @@ require 'rubygems'
 begin
   require 'wirble'
   Wirble.init :init_color => true, :colors => {:number => :nothing}
+  Wirble.colorize
 rescue LoadError => err
   warn "Couldn't load Wirble: #{err}"
 end
