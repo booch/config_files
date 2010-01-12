@@ -19,8 +19,7 @@ require 'rubygems'
 # See http://pablotron.org/software/wirble/ for details.
 begin
   require 'wirble'
-  Wirble.init :init_color => true, :colors => {:number => :nothing}
-  Wirble.colorize
+  Wirble.init :init_colors => true, :colors => {:number => :nothing}
 rescue LoadError => err
   warn "Couldn't load Wirble: #{err}"
 end
