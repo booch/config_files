@@ -28,7 +28,10 @@
 --type-add=php=.inc
 
 # Create a type just for HAML files.
---type-add=haml=.haml
+--type-set=haml=.haml
+
+# Create a type for Cucumber feature files.
+--type-set=cucumber=.feature
 
 # Add a few more programming languages.
 --type-set=ada=.ada
