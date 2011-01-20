@@ -184,6 +184,10 @@ fi
 # Enable programmable completion features.
 if [ -r /etc/bash_completion -a ! -z "$BASH_COMPLETION" ]; then
     . /etc/bash_completion
+elif [ -r /usr/local/bin/bash_completion ]; then
+    export BASH_COMPLETION=/usr/local/bin/bash_completion
+    export BASH_COMPLETION_DIR=~/bin/bash_completion.d
+    . /usr/local/bin/bash_completion
 elif [ -r ~/bin/bash_completion ]; then
     export BASH_COMPLETION=~/bin/bash_completion
     export BASH_COMPLETION_DIR=~/bin/bash_completion.d
