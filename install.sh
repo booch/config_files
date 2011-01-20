@@ -24,6 +24,7 @@ TODAY=`date +'%Y%m%d'`
 
 # Link files to where they belong.
 ln -f ackrc             ~/.ackrc
+ln -f aprc              ~/.aprc
 ln -f bash_aliases      ~/.bash_aliases
 ln -f bash_logout       ~/.bash_logout
 ln -f bash_profile      ~/.bash_profile
