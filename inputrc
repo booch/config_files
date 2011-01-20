@@ -34,6 +34,8 @@ set show-all-if-unmodified on
 # Blink to show matching parentheses.
 set blink-matching-paren on
 
+# Expand out any ! commands on the line when hitting space.
+Space: magic-space
 
 ## Extra key-bindings for various terminal types.
 
