@@ -18,8 +18,8 @@
 # This is so I can use "bash" in place of "shell".
 --type-set=bash=.bash,.sh
 
-# When looking for Ruby files, include HAML files.
---type-add=ruby=.haml
+# When looking for Ruby files, include HAML files and rake files.
+--type-add=ruby=.haml,.rake
 
 # When looking for CSS files, include Sass and Less files (which get compiled into CSS).
 --type-add=css=.sass,.less
