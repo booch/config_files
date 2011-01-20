@@ -13,6 +13,9 @@ require 'pp'
 # The below come as gems, so we have to load RubyGems.
 require 'rubygems'
 
+# The 'ap' extension is even nicer for pretty-printing output. Requires config to be in ~/.aprc though. See http://github.com/michaeldv/awesome_print for details.
+require 'ap'
+
 # Enable Wirble: colorize IRB output; save history across sessions in ~/.irb_history file.
 # Automatically loads rubygems, pp, and irb/completion.
 # Adds a fewe aliases: ri (run ri docs), po (print object methods), poc (print object constants).
