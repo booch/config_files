@@ -52,6 +52,9 @@ fi
 if [ -x '/Applications/VLC.app/Contents/MacOS/VLC' ]; then
   alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 fi
+if type -P hdiutil >/dev/null; then
+  alias eject='hdiutil eject'
+fi
 
 
 # Show top 10 most frequent items in the list piped in. Can specify top 20 with 'top10 -20'.
