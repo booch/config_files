@@ -202,3 +202,6 @@ fi
 if [ -f ~/.bashrc-private ]; then
     . ~/.bashrc-private
 fi
+
+# RVM (Ruby Version Manager)
+if [[ -s "$HOME/.rvm/scripts/rvm" ]]  ; then source "$HOME/.rvm/scripts/rvm" ; fi
