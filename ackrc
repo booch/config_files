@@ -13,6 +13,18 @@
 # Print file name on a separate line before all matches for that file, with blank line between files.
 --group
 
+# Ignore directories that don't (normally) contain source code. If you want to search in them, specify them in the command line.
+--ignore-dir=.idea
+--ignore-dir=.bundle
+--ignore-dir=tmp
+--ignore-dir=temp
+--ignore-dir=log
+--ignore-dir=coverage
+--ignore-dir=results
+--ignore-dir=mock_data
+--ignore-dir=stress_test_scripts
+--ignore-dir=vendor
+
 ## Add some new file types and file extensions.
 
 # This is so I can use "bash" in place of "shell".
