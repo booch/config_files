@@ -21,6 +21,9 @@ export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups,ignorespace
 # Append to the history file, don't overwrite it.
 shopt -s histappend
 
+# Save commands immediately, to solve the multiple window problem (see http://www.ukuug.org/events/linux2003/papers/bash_tips/#S4).
+export PROMPT_COMMAND='history -a'
+
 # Save timestamps in the history file.
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S '
 
