@@ -24,7 +24,11 @@ alias home='pushd ~'
 alias ..='cd ..'
 
 alias du='du -kh'   # See du replacement below.
-alias df='df -kTh'
+if df -T 2>/dev/null; then
+    alias df='df -kTh'
+else
+    alias df='df -kh'
+fi
 
 alias lstrings='strings $1 | less'
 
@@ -33,6 +37,7 @@ alias tree='tree -Csu'		# nice alternative to 'ls'
 # If we've got vim (which we hopefully do!), alias vi as vim.
 which vim > /dev/null && alias vi=vim
 
+# Typos
 alias more='less'
 alias kess='less'
 alias ks='ls'
