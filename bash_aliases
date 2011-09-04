@@ -4,6 +4,8 @@ if [ "$TERM" != "dumb" ]; then
         eval "`dircolors -b`"
     fi
     if ls --color=auto 2> /dev/null > /dev/null ; then
+        # See http://www.linux-sxs.org/housekeeping/lscolors.html
+        export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'
         alias ls='ls --color=auto -h'
         alias dir='ls --color=auto --format=vertical'
     else
