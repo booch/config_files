@@ -40,9 +40,9 @@ export FIGNORE='~:.o:.svn:vmlinuz'
 
 
 # Bash completion settings (actually, these are readline settings)
-bind "set completion-ignore-case on" # note: bind is used instead of setting these in .inputrc.  This ignores case in bash completion
-bind "set bell-style none" # No bell, because it's damn annoying
-bind "set show-all-if-ambiguous On" # this allows you to automatically show completion without double tab-ing
+bind "set completion-ignore-case on"      # Note: bind is used instead of setting these in .inputrc.  This makes bash completion case insensitive.
+bind "set bell-style none"                # No bell, because it's annoying.
+bind "set show-all-if-ambiguous On"       # Show ambiguous completions without having to hit tab a second time.
 
 # Make sure we're using Emacs-style command-line editing, not vi-style.
 set -o emacs
@@ -68,7 +68,13 @@ export IGNOREEOF=3
 export LESS='-I -M -R -S -W -x4'
 
 # Make less more friendly for non-text input files. See lesspipe(1).
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+if type -P lesspipe >/dev/null; then
+    export LESSPIPE=lesspipe
+elif type -P lesspipe.sh >/dev/null; then
+    export LESSPIPE=lesspipe.sh
+fi
+[ -n "$LESSPIPE" ] && eval "$(SHELL=/bin/sh $LESSPIPE)"
+
 
 
 # Set the default editor to nano, if it exists. Next best choice is pico, then vim.
@@ -95,8 +101,9 @@ export PAGER=less
 export LESSCHARSET='latin1'
 
 
-# Highlight matching strings if grep command is run interactively.
+# Highlight matching strings if grep command is run interactively. Highlight in green, instead of the default red.
 export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;32'
 
 
 # Set variable identifying the chroot you work in (used in the prompt below).
@@ -106,24 +113,24 @@ fi
 
 
 # From http://blog.infinitered.com/entries/show/4
-export COLOR_NONE='\e[0m'
-export COLOR_WHITE='\e[1;37m'
-export COLOR_BLACK='\e[0;30m'
-export COLOR_BLUE='\e[0;34m'
-export COLOR_LIGHT_BLUE='\e[1;34m'
-export COLOR_GREEN='\e[0;32m'
-export COLOR_LIGHT_GREEN='\e[1;32m'
-export COLOR_CYAN='\e[0;36m'
-export COLOR_LIGHT_CYAN='\e[1;36m'
-export COLOR_RED='\e[0;31m'
-export COLOR_LIGHT_RED='\e[1;31m'
-export COLOR_PURPLE='\e[0;35m'
-export COLOR_LIGHT_PURPLE='\e[1;35m'
-export COLOR_BROWN='\e[0;33m'
-export COLOR_YELLOW='\e[1;33m'
-export COLOR_GRAY='\e[0;30m'
-export COLOR_LIGHT_GRAY='\e[0;37m'
-alias colorslist="set | egrep 'COLOR_\w*'"  # lists all the colors
+export COLOR_NONE='\033[0m'
+export COLOR_WHITE='\033[1;37m'
+export COLOR_BLACK='\033[0;30m'
+export COLOR_BLUE='\033[0;34m'
+export COLOR_LIGHT_BLUE='\033[1;34m'
+export COLOR_GREEN='\033[0;32m'
+export COLOR_LIGHT_GREEN='\033[1;32m'
+export COLOR_CYAN='\033[0;36m'
+export COLOR_LIGHT_CYAN='\033[1;36m'
+export COLOR_RED='\033[0;31m'
+export COLOR_LIGHT_RED='\033[1;31m'
+export COLOR_PURPLE='\033[0;35m'
+export COLOR_LIGHT_PURPLE='\033[1;35m'
+export COLOR_BROWN='\033[0;33m'
+export COLOR_YELLOW='\033[1;33m'
+export COLOR_GRAY='\033[0;30m'
+export COLOR_LIGHT_GRAY='\033[0;37m'
+alias colorslist="set | egrep 'COLOR_\w*'"  # Lists all the colors.
 
 
 # Set prompt with info on current git branch, if any (from http://railstips.org/2009/2/2/bedazzle-your-bash-prompt-with-git-info, http://asemanfar.com/Current-Git-Branch-in-Bash-Prompt).
@@ -161,7 +168,7 @@ xterm*|rxvt*)
 esac
 
 # Or set the window title to the current directory.
-#function settitle() { echo -ne "\e]2;$@\a\e]1;$@\a"; }
+#function settitle() { echo -ne "\033]2;$@\a\033]1;$@\a"; }
 #function cd() { command cd "$@"; settitle `pwd -P`; }
 
 
@@ -197,6 +204,8 @@ elif [ -r ~/bin/bash_completion ]; then
     . ~/bin/bash_completion
 fi
 
+# If we stop console output with Ctrl+S, allow any key to restart the output.
+stty ixany
 
 # Allow pulling in some private settings.
 if [ -f ~/.bashrc-private ]; then
