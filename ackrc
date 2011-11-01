@@ -34,7 +34,7 @@
 --type-add=ruby=.haml,.rake
 
 # When looking for CSS files, include Sass and Less files (which get compiled into CSS).
---type-add=css=.sass,.less
+--type-add=css=.sass,.scss,.less
 
 # I never use this for PHP, but some people/projects use it for PHP include files.
 --type-add=php=.inc
