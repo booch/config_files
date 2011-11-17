@@ -14,7 +14,15 @@ require 'pp'
 require 'rubygems'
 
 # The 'ap' extension is even nicer for pretty-printing output. Requires config to be in ~/.aprc though. See http://github.com/michaeldv/awesome_print for details.
-require 'ap'
+begin
+  require 'ap'
+  alias pp ap
+  AwesomePrint.defaults = {
+    :sorted_hash_keys => true
+  }
+rescue LoadError => err
+  warn "Couldn't load AwesomePrint: #{err}"
+end
 
 # Enable Wirble: colorize IRB output; save history across sessions in ~/.irb_history file.
 # Automatically loads rubygems, pp, and irb/completion.
