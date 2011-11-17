@@ -16,10 +16,27 @@ require 'rubygems'
 # The 'ap' extension is even nicer for pretty-printing output. Requires config to be in ~/.aprc though. See http://github.com/michaeldv/awesome_print for details.
 begin
   require 'ap'
-  alias pp ap
   AwesomePrint.defaults = {
     :sorted_hash_keys => true
   }
+
+  # Use AwesomePrint in place of PrettyPrint.
+  alias pp ap
+
+  # Make IRB output use AwesomePrint automagically. From http://stackoverflow.com/questions/123494/whats-your-favourite-irb-trick/3091252#3091252
+  if IRB.version.include?('DietRB') # MacRuby
+    IRB.formatter = Class.new(IRB::Formatter) do
+      def inspect_object(object)
+        object.ai
+      end
+    end.new
+  else # regular IRB
+    IRB::Irb.class_eval do
+      def output_value
+        ap @context.last_value
+      end
+    end
+  end
 rescue LoadError => err
   warn "Couldn't load AwesomePrint: #{err}"
 end
