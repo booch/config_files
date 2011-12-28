@@ -1,6 +1,5 @@
 
 
-
 TODO
 ----
 Finish install script.
@@ -8,3 +7,4 @@ Add script/alias to push/pull new versions.
 Add Firefox stuff:
     userChrome.css
     user.js
+Add .gitrc file, if possible.
