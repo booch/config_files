@@ -21,7 +21,7 @@ export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups,ignorespace
 # Append to the history file, don't overwrite it.
 shopt -s histappend
 
-# Save commands immediately, to solve the multiple window problem (see http://www.ukuug.org/events/linux2003/papers/bash_tips/#S4).
+# Save commands immediately, to solve the multiple window problem (see http://www.ukuug.org/events/linux2003/papers/bash_tips/#S4). Add 'history -n' to reload the history file.
 export PROMPT_COMMAND='history -a'
 
 # Save timestamps in the history file.
@@ -29,6 +29,14 @@ export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S '
 
 # Don't add these commands to the shell history. (& = duplicate lines)
 export HISTIGNORE="&:exit:logout:history:bg:fg:jobs"
+
+# Increase history to keep 10000 lines in memory ($HISTSIZE), and in the .bash_history file ($HISTFILESIZE).
+# NOTE: The history-size option in your .inputrc controls searching through your history. Make sure it's set to 0 (unlimited, the default) or something reasonable.
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+
+# Save all lines of a multiple-line command in the same history entry, to allow easy editing.
+shopt -s cmdhist
 
 
 # When doing a 'cd', look in these directories for the destination.
