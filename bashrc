@@ -28,7 +28,7 @@ export PROMPT_COMMAND='history -a'
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S '
 
 # Don't add these commands to the shell history. (& = duplicate lines)
-export HISTIGNORE="&:exit"
+export HISTIGNORE="&:exit:logout:history:bg:fg:jobs"
 
 
 # When doing a 'cd', look in these directories for the destination.
