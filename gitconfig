@@ -10,6 +10,9 @@
 	status = auto
 	branch = auto
 	interactive = auto
+[apply]
+	whitespace = strip
+	whitespace = nowarn
 [merge]
 	tool = opendiff
 	summary = true
