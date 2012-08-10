@@ -30,6 +30,7 @@ ln -f bash_logout       ~/.bash_logout
 ln -f bash_profile      ~/.bash_profile
 ln -f bashrc            ~/.bashrc
 ln -f gemrc             ~/.gemrc
+ln -f gitconfig         ~/.gitconfig
 ln -f gitignore         ~/.gitignore
 ln -f inputrc           ~/.inputrc
 ln -f irbrc             ~/.irbrc
