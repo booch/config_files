@@ -20,10 +20,12 @@
 [rerere]
 	enabled = true  # Automatically record and replay merge conflict resolutions. (http://git-scm.com/2010/03/08/rerere.html)
 [alias]
+	addall = !git add . && git add -u && git st
 	amend = commit --amend --reset-author --reuse-message=HEAD
 	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
 	br = branch
 	ci = commit -v
+	clear = !git add . && git stash && git stash drop
 	co = checkout
 	cp = cherry-pick
 	di = diff
