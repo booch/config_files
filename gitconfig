@@ -33,6 +33,9 @@
 	cp = cherry-pick
 	di = diff
 	diff-stat = diff -b --stat
+	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	log-graph = log --all --graph --decorate
@@ -41,6 +44,8 @@
 	log-local = log --oneline origin..HEAD
 	log-fetched = log --oneline HEAD..origin/master
 	merged = branch --merged
+	oneline = log --oneline
+	p = pair
 	patch = log -p --no-walk # Generate patch file from a commit.
 	pick = cherry-pick
 	prune = remote prune
