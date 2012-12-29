@@ -26,7 +26,7 @@ alias home='pushd ~'
 alias ..='cd ..'
 
 alias du='du -kh'   # See du replacement below.
-if df -T 2>/dev/null; then
+if df -T >/dev/null 2>/dev/null; then
     alias df='df -kTh'
 else
     alias df='df -kh'
