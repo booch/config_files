@@ -50,4 +50,4 @@ if [ "`uname`"x = "Darwin"x  ]; then
 fi
 
 # TODO: Need more permission changes?
-chmod go-rwx .*_history
+chmod go-rwx ~/.*_history
