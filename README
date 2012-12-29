@@ -1,8 +1,15 @@
 
 TODO
 ----
+Consider pulling in somone else's dotfiles framework.
+    Would ease the burden of updating the install script.
 Finish install script.
 Add script/alias to push/pull new versions.
 Add Firefox stuff:
     userChrome.css
     user.js
+Use include.path in gitconfig to include private gitconfig settings.
+    Need to wait until all our systems have git 1.7.10.2, which enables that feature.
+        Mac OS X homebrew is up to date.
+        Debian 6 is NOT up to date.
+        Debian 7 is up to date.
