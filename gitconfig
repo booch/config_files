@@ -10,6 +10,8 @@
 	status = auto
 	branch = auto
 	interactive = auto
+[color "status"]
+	untracked = blue
 [apply]
 	whitespace = strip
 	whitespace = nowarn
