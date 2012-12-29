@@ -36,8 +36,8 @@
 	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-	ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
-	ignored = !git ls-files --others -i --exclude-standard --directory
+	ignore = update-index --assume-unchanged
+	ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	log-graph = log --all --graph --decorate
 	log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
@@ -58,6 +58,7 @@
 	svn-pull = !git svn fetch && git svn rebase
 	svn-push = !git svn dcommit
 	uncommit = reset --soft HEAD^
+	unignore = update-index --no-assume-unchanged
 	unmerge = reset --hard ORIG_HEAD
 	unmerged = branch --no-merged
 	unstage = reset HEAD --
