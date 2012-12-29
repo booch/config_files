@@ -42,8 +42,8 @@
 # Create a type just for HAML files.
 --type-set=haml=.haml
 
-# Create a type for CoffeeScript files.
---type-set=coffee=.coffee
+# Create a type for CoffeeScript files (and Eco templates).
+--type-set=coffee=.coffee,.eco
 
 # Create a type for Cucumber feature files.
 --type-set=cucumber=.feature
