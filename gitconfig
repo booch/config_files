@@ -53,6 +53,7 @@
 	p = pair
 	patch = log -p --no-walk # Generate patch file from a commit.
 	pick = cherry-pick
+	poH = push origin HEAD
 	prune = remote prune
 	prune-all = !git remote | xargs -n 1 git remote prune
 	search = log --pretty=short -S
