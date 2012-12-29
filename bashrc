@@ -22,7 +22,7 @@ export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups,ignorespace
 shopt -s histappend
 
 # Save commands immediately, to solve the multiple window problem (see http://www.ukuug.org/events/linux2003/papers/bash_tips/#S4). Add 'history -n' to reload the history file.
-export PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; history -a"
+export PROMPT_COMMAND="${PROMPT_COMMAND:-:} history -a ;"
 
 # Save timestamps in the history file.
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S '
@@ -169,7 +169,7 @@ fi
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; echo -ne \"\\033]0;${USER}@${HOSTNAME%%.*}: \${PWD/\$HOME/~}\\007\""
+    PROMPT_COMMAND="${PROMPT_COMMAND:-:} echo -ne \"\\033]0;${USER}@${HOSTNAME%%.*}: \${PWD/\$HOME/~}\\007\" ;"
     ;;
 *)
     ;;
