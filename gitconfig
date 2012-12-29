@@ -12,6 +12,8 @@
 	interactive = auto
 [color "status"]
 	untracked = blue
+[color "diff"]
+	meta = yellow bold
 [apply]
 	whitespace = strip
 	whitespace = nowarn
