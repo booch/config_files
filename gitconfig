@@ -67,7 +67,7 @@
 	unmerge = reset --hard ORIG_HEAD
 	unmerged = branch --no-merged
 	unstage = reset HEAD --
-	wdiff = diff --word-diff-regex=[a-zA-Z_0-9]+
+	wdiff = diff --word-diff=color --word-diff-regex=[a-zA-Z_0-9]+
 	which-branches-contain = branch -a --contains
 	which-tags-contain = name-rev --name-only
 	wipe = !git reset --hard; git clean -fd
