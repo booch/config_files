@@ -25,3 +25,5 @@ Use include.path in gitconfig to include private gitconfig settings.
         Mac OS X homebrew is up to date.
         Debian 6 is NOT up to date.
         Debian 7 is up to date.
+Use --all for git 'addall' and 'aa' aliases.
+    Need to wait until all our systems have git thats supports the --all option.
