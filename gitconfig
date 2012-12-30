@@ -34,6 +34,7 @@
 	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
 	br = branch
 	c = commit -m
+	changes=diff --name-status -r
 	ci = commit -v
 	clear = !git add . && git stash && git stash drop
 	co = checkout
@@ -48,13 +49,16 @@
 	ignore = update-index --assume-unchanged
 	ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
 	ir = rebase -i origin/master
+	lc = log ORIG_HEAD.. --stat --no-merges
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	llog = log --date=local
 	log-graph = log --all --graph --decorate
 	log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
 	log-timeline = log --format='%h %an %ar - %s'
 	log-local = log --oneline origin..HEAD
 	log-fetched = log --oneline HEAD..origin/master
 	merged = branch --merged
+	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
 	next = !git add . && git rebase --continue
 	oneline = log --oneline
 	p = pair
@@ -71,6 +75,7 @@
 	svn-push = !git svn dcommit
 	today = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
 	uncommit = reset --soft HEAD^
+	undo = reset --hard
 	unignore = update-index --no-assume-unchanged
 	unmerge = reset --hard ORIG_HEAD
 	unmerged = branch --no-merged
@@ -80,4 +85,5 @@
 	wdiff = diff --word-diff=color --word-diff-regex=[a-zA-Z_0-9]+
 	which-branches-contain = branch -a --contains
 	which-tags-contain = name-rev --name-only
+	who = shortlog -s --
 	wipe = !git reset --hard; git clean -fd
