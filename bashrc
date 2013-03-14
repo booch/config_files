@@ -55,6 +55,9 @@ bind "set show-all-if-ambiguous On"       # Show ambiguous completions without h
 # Make sure we're using Emacs-style command-line editing, not vi-style.
 set -o emacs
 
+# Report status of terminated background jobs immediately, instead of waiting for next prompt.
+set -o notify
+
 # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
@@ -99,12 +102,16 @@ elif type -P vim >dev/null; then
 fi
 
 
-ulimit -S -c 0        # Don't want any coredumps
-set -o notify		# ???
+# Don't produce core dumps.
+ulimit -S -c 0
+
+
+# Don't bother telling us if we have unread or read emails.
 shopt -u mailwarn
-unset MAILCHECK       # I don't want my shell to warn me of incoming mail
+unset MAILCHECK
 
 
+# Use less (instead of more) anywhere paging is required.
 export PAGER=less
 
 
