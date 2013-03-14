@@ -106,7 +106,10 @@ unset MAILCHECK       # I don't want my shell to warn me of incoming mail
 
 
 export PAGER=less
-export LESSCHARSET='latin1'
+
+
+# We should be able to use UTF-8 everywhere these days.
+export LESSCHARSET='utf-8'
 
 
 # Highlight matching strings if grep command is run interactively. Highlight in green, instead of the default red.
