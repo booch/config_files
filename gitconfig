@@ -35,6 +35,7 @@
 	br = branch
 	c = commit -m
 	changes=diff --name-status -r
+	changed=diff --name-only
 	ci = commit -v
 	clear = !git add . && git stash && git stash drop
 	co = checkout
