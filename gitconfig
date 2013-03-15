@@ -62,6 +62,7 @@
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
 	next = !git add . && git rebase --continue
 	oneline = log --oneline
+	ours = "!f() { git co --ours $@ && git add $@; }; f"
 	p = pair
 	patch = log -p --no-walk # Generate patch file from a commit.
 	pick = cherry-pick
@@ -74,6 +75,7 @@
 	stat = status
 	svn-pull = !git svn fetch && git svn rebase
 	svn-push = !git svn dcommit
+	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
 	today = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
 	uncommit = reset --soft HEAD^
 	undo = reset --hard
