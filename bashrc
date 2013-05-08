@@ -95,7 +95,7 @@ if type -P nano >/dev/null; then
 elif type -P pico >/dev/null; then
     export EDITOR=pico
     alias nano=pico
-elif type -P vim >dev/null; then
+elif type -P vim >/dev/null; then
     export EDITOR=vim
     alias nano=vim
     alias pico=vim
