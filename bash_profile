@@ -8,11 +8,6 @@ if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
 
-# If I have a ~/bin directory, add it to my $PATH, ahead of everything else. TODO: Should be in .bashrc, I think.
-if [ -d ~/bin ] ; then
-    PATH=~/bin:"${PATH}"
-fi
-
 # Output some info about the system.
 if lsb_release 2>/dev/null; then
     OS="$(lsb_release -d | sed -e 's/^Description:\s*//')"
