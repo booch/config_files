@@ -29,6 +29,8 @@ ln -f bash_aliases      ~/.bash_aliases
 ln -f bash_logout       ~/.bash_logout
 ln -f bash_profile      ~/.bash_profile
 ln -f bashrc            ~/.bashrc
+mkdir -p ~/.bundle
+ln -f bundle/config     ~/.bundle/config
 ln -f gemrc             ~/.gemrc
 ln -f gitconfig         ~/.gitconfig
 ln -f gitignore         ~/.gitignore
