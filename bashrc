@@ -256,6 +256,8 @@ fi
 # RVM (Ruby Version Manager)
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]  ; then source "$HOME/.rvm/scripts/rvm" ; fi
 
+# rbenv Ruby environment manager
+if which rbenv ; then eval "$(rbenv init -)" ; fi
 
 ## Mac OS X specific settings.
 if [[ "$OSTYPE" = "darwin10.0" ]] ; then
