@@ -1,8 +1,6 @@
-[user]
-	name = Craig Buchek
-	email = craig@boochtek.com
+[include]
+	path = ~/.gitconfig.local
 [core]
-	editor = nano -Y patch # Use nano for commit messages, and colorize diffs. (http://www.ralfebert.de/blog/git/shortcuts/)
 	excludesfile = ~/.gitignore
 [color]
 	ui = auto
