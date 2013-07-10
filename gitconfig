@@ -44,6 +44,7 @@
 	di = diff
 	diff-stat = diff -b --stat
 	done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
+	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
@@ -53,6 +54,7 @@
 	lc = log ORIG_HEAD.. --stat --no-merges
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	llog = log --date=local
+	ln = log --pretty=format:'%Cblue%h %Cred* %C(yellow)%s'
 	log-graph = log --all --graph --decorate
 	log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
 	log-timeline = log --format='%h %an %ar - %s'
@@ -69,7 +71,13 @@
 	poh = push origin HEAD
 	prune = remote prune
 	prune-all = !git remote | xargs -n 1 git remote prune
+	put = push origin HEAD
+	reset-authors = commit --amend --reset-author -CHEAD
+	ri = rebase --interactive
+	rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
 	search = log --pretty=short -S
+	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	st = status
 	staged = diff --staged
 	stat = status
@@ -77,11 +85,15 @@
 	svn-push = !git svn dcommit
 	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
 	today = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
+	tr = log --graph --oneline --decorate --color
+	tree = log --graph --oneline --decorate --color --all
 	uncommit = reset --soft HEAD^
 	undo = reset --hard
 	unignore = update-index --no-assume-unchanged
 	unmerge = reset --hard ORIG_HEAD
 	unmerged = branch --no-merged
+	unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
+	unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
 	unstage = reset HEAD --
 	up = !git fetch origin && git rebase origin/master
 	update = !git fetch origin && git rebase origin/master
