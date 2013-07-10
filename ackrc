@@ -30,20 +30,27 @@
 # This is so I can use "bash" in place of "shell".
 --type-set=bash=.bash,.sh
 
-# When looking for Ruby files, include HAML files and rake files.
---type-add=ruby=.haml,.rake
+# Create a type for Markdown text.
+--type-set=markdown=.md,.mmd,.mkd
+
+# When looking for Ruby files, include HAML, Slim, ERB, and rake files.
+--type-add=ruby=.haml,.slim,.erb,.rake
 
 # When looking for CSS files, include Sass and Less files (which get compiled into CSS).
 --type-add=css=.sass,.scss,.less
 
+# Allow either flavor of Sass.
+--type-set=sass=.sass,.scss
+
 # I never use this for PHP, but some people/projects use it for PHP include files.
 --type-add=php=.inc
 
-# Create a type just for HAML files.
---type-set=haml=.haml
+# Create a type just for HAML files (but include Slim files too).
+--type-set=haml=.haml,.slim
+--type-set=slim=.slim
 
 # Create a type for CoffeeScript files (and Eco templates).
---type-set=coffee=.coffee,.eco
+--type-set=coffee=.coffee,.coffee.md,.eco
 
 # Create a type for Cucumber feature files.
 --type-set=cucumber=.feature
@@ -60,3 +67,4 @@
 --type-set=pdf=.pdf
 --type-set=reia=.re
 --type-set=scala=.scala
+--type-set=elixir=.ex,.exs
