@@ -85,3 +85,8 @@ function _du {
   \du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=`echo "scale=1; $size / 1024" | bc`; done; done
 }
 alias du=_du
+
+# Unless we already have a json formatter, add a simple one.
+if ! type -P json >/dev/null; then
+  alias json='python -mjson.tool'
+fi
