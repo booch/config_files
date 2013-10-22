@@ -5,8 +5,11 @@
 # If not running interactively, exit this file.
 [ -z "$PS1" ] && return
 
+# Make sure locally installed binaries come before system binaries.
+export PATH=/usr/local/bin:/usr/bin:/bin
+
 # I like to have sbin directories in my path.
-export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
+export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 
 # Add personal bin directory, if it exists.
 if [ -d $HOME/bin ]; then
