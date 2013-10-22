@@ -6,7 +6,7 @@
 [ -z "$PS1" ] && return
 
 # Make sure locally installed binaries come before system binaries.
-export PATH=/usr/local/bin:/usr/bin:/bin
+export PATH=/usr/local/bin:$PATH
 
 # I like to have sbin directories in my path.
 export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
