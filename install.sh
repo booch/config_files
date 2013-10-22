@@ -24,28 +24,40 @@ TODAY=`date +'%Y%m%d'`
 
 # Link files to where they belong.
 ln -f ackrc             ~/.ackrc
-ln -f aprc              ~/.aprc
+
 ln -f bash_aliases      ~/.bash_aliases
 ln -f bash_logout       ~/.bash_logout
 ln -f bash_profile      ~/.bash_profile
 ln -f bashrc            ~/.bashrc
+ln -f profile           ~/.profile
+
 mkdir -p ~/.bundle
 ln -f bundle/config     ~/.bundle/config
 ln -f gemrc             ~/.gemrc
+ln -f irbrc             ~/.irbrc
+ln -f aprc              ~/.aprc
+ln -f railsrc           ~/.railsrc
+
 ln -f gitconfig         ~/.gitconfig
 ln -f gitignore         ~/.gitignore
+
 ln -f inputrc           ~/.inputrc
-ln -f irbrc             ~/.irbrc
+
 mkdir -p ~/.mc
 ln -f mc/ini            ~/.mc/ini
+
 ln -f nanorc            ~/.nanorc
 mkdir -p ~/.nano
 ln -f nano/css.nanorc   ~/.nano/css.nanorc
 ln -f nano/php.nanorc   ~/.nano/php.nanorc
 ln -f nano/xml.nanorc   ~/.nano/xml.nanorc
-ln -f profile           ~/.profile
-ln -f railsrc           ~/.railsrc
+
 ln -f vimrc             ~/.vimrc
+mkdir -p ~/.vim
+ln -f vim/abbrev.vim    ~/.vim/abbrev.vim
+ln -f vim/keymaps.vim   ~/.vim/keymaps.vim
+
+
 if [ "`uname`"x = "Darwin"x  ]; then
   mkdir -p ~/Library/KeyBindings
   ln -f DefaultKeyBinding.Dict ~/Library/KeyBindings/DefaultKeyBinding.Dict
