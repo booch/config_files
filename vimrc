@@ -7,7 +7,7 @@ set encoding=utf-8
 " Turn on syntax highlighting if terminal can handle it.
 if has('syntax') && (&t_Co > 2)
   syntax on
-  colorscheme elflord " Other acceptable themes: ron 
+  colorscheme elflord " Other acceptable themes: ron
 endif
 
 " Enable a status line that displays the current cursor position. TODO: Add more to the status line.
@@ -33,7 +33,7 @@ set smarttab
 
 " Show periods in place of whitespace at end of line. Show double-chevron in place of hard tabs.
 " TODO: Use UTF-8 characters here. (Can't get them to work in PuTTY.)
-set listchars=tab:>>,trail:. " NOTE: We're unsetting eol here 
+set listchars=tab:>>,trail:. " NOTE: We're unsetting eol here
 set list
 
 " Backspace can go across newlines.
@@ -44,23 +44,8 @@ set whichwrap=b,<,[
 " Use visual bell instead of beeping.
 set visualbell
 
-" Handle several flavors of cursor keys. TODO: This only handles HOME key.
-map [7~  <Home>
-imap [7~ <Home>
-map OH   <Home>
-imap OH  <Home>
-map [1~  <Home>
-imap [1~ <Home>
-
-" Home key toggles between first nonblank character on line, and first column.
-" From http://vim.wikia.com/wiki/Smart_home:
-" FIXME: Doesn't handle lines containing only whitespace.
-noremap  <expr> <Home> (col('.') == matchend(getline('.'), '^\s*')+1 ? '0'  : '^')
-imap <Home> <C-o><Home>
-
-
 " These are from http://www.vi-improved.org/vimrc.php
-"set autochdir " always switch to the current file directory 
+"set autochdir " always switch to the current file directory
 set clipboard+=unnamed " share windows clipboard
 set wildmenu " turn on command line completion wild style
 " ignore these list file extensions
@@ -90,8 +75,6 @@ au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
 if has("gui_running")
   set mousehide " hide the mouse cursor when typing
 endif
-
-
 
 
 " These are from http://www.hermann-uwe.de/files/vimrc
@@ -150,73 +133,24 @@ set smartcase
 set infercase
 " assume the /g flag on :s substitutions to replace all matches in a line:
 set gdefault
-" have <Tab> (and <Shift>+<Tab> where it works) change the level of
-" indentation:
-inoremap <Tab> <C-T>
-inoremap <S-Tab> <C-D>
-" [<Ctrl>+V <Tab> still inserts an actual tab character.]
 
 
-"------------------------------------------------------------------------------
-" Abbreviations.
-"------------------------------------------------------------------------------
-iab beacuse    because
-iab becuase    because
-iab cna        can
-iab chnage     change
-iab chnages    changes
-iab chnaged    changed
-iab ChnageLog  ChangeLog
-iab defualt    default
-iab differnt   different
-iab diffrent   different
-iab emial      email
-iab figth      fight
-iab figther    fighter
-iab fro        for
-iab fucntion   function
-iab ahve       have
-iab homepgae   homepage
-iab logifle    logfile
-iab lokk       look
-iab lokking    looking
-iab mial       mail
-iab Mial       Mail
-iab miantainer maintainer
-iab amke       make
-iab mroe       more
-iab nwe        new
-iab recieve    receive
-iab recieved   received
-iab erturn     return
-iab retrun     return
-iab retunr     return
-iab seperate   separate
-iab shoudl     should
-iab soem       some
-iab taht       that
-iab thta       that
-iab teh        the
-iab tehy       they
-iab truely     truly
-iab waht       what
-iab wiht       with
-iab whic       which
-iab whihc      which
-iab yuo        you
-iab databse    database
-iab versnio    version
-iab flase      false
-
-ab lnx         Linux
-ab cb          Craig Buchek
-
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
+if filereadable(expand("~/.vim/local.vim"))
+  source ~/.vim/local.vim
 endif
 
-
-if filereadable(expand("~/.vim/abbreviations"))
-  source ~/.vim/abbreviations
+if filereadable(expand("~/.vim/commands.vim"))
+  source ~/.vim/commands.vim
 endif
 
+if filereadable(expand("~/.vim/filetypes.vim"))
+  source ~/.vim/filetypes.vim
+endif
+
+if filereadable(expand("~/.vim/keymaps.vim"))
+  source ~/.vim/keymaps.vim
+endif
+
+if filereadable(expand("~/.vim/abbrev.vim"))
+  source ~/.vim/abbrev.vim
+endif
