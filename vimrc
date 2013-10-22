@@ -52,6 +52,15 @@ set number
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
 
+" Make the keyboard and mouse act more like Windows.
+set selection=exclusive
+set selectmode=mouse,key
+set mousemodel=popup
+set keymodel=startsel,stopsel
+
+" Allow shifted cursor keys to act more like Mac/Windows.
+let macvim_hig_shift_movement = 1
+
 
 " These are from http://www.vi-improved.org/vimrc.php
 "set autochdir " always switch to the current file directory
