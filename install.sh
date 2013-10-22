@@ -54,6 +54,7 @@ ln -f nano/xml.nanorc   ~/.nano/xml.nanorc
 
 ln -f vimrc             ~/.vimrc
 mkdir -p ~/.vim
+mkdir -p ~/.vim/backup  # Make sure there's a global backup directory for vim.
 ln -f vim/abbrev.vim    ~/.vim/abbrev.vim
 ln -f vim/keymaps.vim   ~/.vim/keymaps.vim
 
