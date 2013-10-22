@@ -48,6 +48,10 @@ set visualbell
 set relativenumber
 set number
 
+" Store backup and swap files in a common location.
+set backupdir=~/.vim/backup
+set directory=~/.vim/backup
+
 
 " These are from http://www.vi-improved.org/vimrc.php
 "set autochdir " always switch to the current file directory
