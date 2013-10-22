@@ -77,7 +77,7 @@ shopt -s no_empty_cmd_completion
 export IGNOREEOF=3
 
 
-# When running less, always ignore case on searches; prompt verbosely; display colors; 
+# When running less, always ignore case on searches; prompt verbosely; display colors;
 #  chop long lines; highlight first new line; tabs are 4 chars wide.
 export LESS='-I -M -R -S -W -x4'
 
@@ -157,7 +157,7 @@ alias colorslist="set | egrep 'COLOR_\w*'"  # Lists all the colors.
 # Set prompt with info on current git branch, if any (from http://railstips.org/2009/2/2/bedazzle-your-bash-prompt-with-git-info, http://asemanfar.com/Current-Git-Branch-in-Bash-Prompt).
 function parse_git_branch {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    echo "("${ref#refs/heads/}")" 
+    echo "("${ref#refs/heads/}")"
 }
 # Other possible ways to determine current git branch.
 #function parse_git_branch {
