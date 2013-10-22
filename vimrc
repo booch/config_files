@@ -44,6 +44,11 @@ set whichwrap=b,<,[
 " Use visual bell instead of beeping.
 set visualbell
 
+" Display relative line numbers, except for current line.
+set relativenumber
+set number
+
+
 " These are from http://www.vi-improved.org/vimrc.php
 "set autochdir " always switch to the current file directory
 set clipboard+=unnamed " share windows clipboard
@@ -86,7 +91,6 @@ set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
 set showmode            " Show current mode.
 set ruler               " Show the line and column numbers of the cursor.
-set ignorecase          " Case insensitive matching.
 set modeline            " Enable modeline.
 set esckeys             " Cursor keys in insert mode.
 set gdefault            " Use 'g' flag by default with :s/foo/bar/.
@@ -127,10 +131,12 @@ autocmd FileType html set formatoptions+=tl
 " needed, and have indentation at 8 chars to be sure that all indents are tabs
 " (despite the mappings later):
 autocmd FileType make set noexpandtab shiftwidth=8
+
 " make searches case-insensitive, unless they contain upper-case letters:
 set ignorecase
 set smartcase
 set infercase
+
 " assume the /g flag on :s substitutions to replace all matches in a line:
 set gdefault
 
