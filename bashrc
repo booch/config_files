@@ -257,7 +257,7 @@ fi
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]  ; then source "$HOME/.rvm/scripts/rvm" ; fi
 
 # rbenv Ruby environment manager
-if which rbenv ; then eval "$(rbenv init -)" ; fi
+if which rbenv >/dev/null ; then eval "$(rbenv init -)" ; fi
 
 ## Mac OS X specific settings.
 if [[ "$OSTYPE" = "darwin10.0" ]] ; then
