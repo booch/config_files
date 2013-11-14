@@ -46,6 +46,7 @@
 	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	home = rev-parse --show-toplevel
 	ignore = update-index --assume-unchanged
 	ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
 	ir = rebase -i origin/master
