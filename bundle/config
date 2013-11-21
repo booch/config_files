@@ -1,2 +1,3 @@
 ---
 BUNDLE_BIN: bin
+BUNDLE_JOBS: '1'
