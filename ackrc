@@ -36,6 +36,9 @@
 # When looking for Ruby files, include HAML, Slim, ERB, and rake files.
 --type-add=ruby=.haml,.slim,.erb,.rake
 
+# When looking for HTML files, include Mustache templates.
+--type-add=html=.mustache
+
 # When looking for CSS files, include Sass and Less files (which get compiled into CSS).
 --type-add=css=.sass,.scss,.less
 
