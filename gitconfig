@@ -28,10 +28,12 @@
 	a = add
 	aa = !git add . && git add -u && git status
 	addall = !git add . && git add -u && git status
-	amend = commit --amend --reset-author --reuse-message=HEAD
 	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
+	amend = commit --amend --reset-author --reuse-message=HEAD
+	ap = add --patch
 	br = branch
 	c = commit -m
+	ca = commit --amend
 	changes=diff --name-status -r
 	changed=diff --name-only
 	ci = commit -v
@@ -39,6 +41,8 @@
 	co = checkout
 	cob = checkout -b
 	cp = cherry-pick
+	create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
+	delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
 	di = diff
 	diff-stat = diff -b --stat
 	done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
@@ -59,6 +63,7 @@
 	log-timeline = log --format='%h %an %ar - %s'
 	log-local = log --oneline origin..HEAD
 	log-fetched = log --oneline HEAD..origin/master
+	merge-branch = !git checkout master && git merge @{-1}
 	merged = branch --merged
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
 	next = !git add . && git rebase --continue
@@ -68,6 +73,7 @@
 	patch = log -p --no-walk # Generate patch file from a commit.
 	pick = cherry-pick
 	poh = push origin HEAD
+	pr = !hub pull-request
 	prune = remote prune
 	prune-all = !git remote | xargs -n 1 git remote prune
 	put = push origin HEAD
