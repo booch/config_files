@@ -58,6 +58,7 @@ mkdir -p ~/.vim/backup  # Make sure there's a global backup directory for vim.
 ln -f vim/abbrev.vim    ~/.vim/abbrev.vim
 ln -f vim/keymaps.vim   ~/.vim/keymaps.vim
 
+ln -f psqlrc            ~/.psqlrc
 
 if [ "`uname`"x = "Darwin"x  ]; then
   mkdir -p ~/Library/KeyBindings

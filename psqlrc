@@ -1,0 +1,48 @@
+-- Don't need any output for the meta-commands we execute here.
+\set QUIET 1
+
+-- Set a nice prompt with some color and some info about the DB connection.
+\set PROMPT1 '%[%033[31m%]%m %n@%~%R%#%[%033[0m%] '
+\set PROMPT2 '%[%033[31m%][more] %R%[%033[0m%] '
+
+-- Allow long text values to wrap within their table cells.
+\pset format wrapped
+
+-- Make all table cells fully enclosed by borders.
+\pset border 2
+
+-- Use table format by default, but switch to expanded format as necessary.
+\pset expanded auto
+
+-- Use Unicode box-drawing characters to create tables.
+\pset linestyle unicode
+
+-- Include the row count after table output.
+\pset footer on
+
+-- Include the time the query took after table output.
+\timing on
+
+-- Make a clear distinction between NULL values and empty strings.
+\pset null '[NULL]'
+
+-- If output is more than 1 screen, paginate it (with less).
+\pset pager on
+
+-- Output results in batches of 100 rows.
+\set FETCH_COUNT 100
+
+-- Don't store duplicate commands in history, nor commands starting with whitespace.
+\set HISTCONTROL ignoreboth
+
+-- Allow 10,000 lines of history.
+\set HISTSIZE 10000
+
+-- Autocomplete keywords in upper-case, even if you started typing them in lower case.
+\set COMP_KEYWORD_CASE upper
+
+-- Provide more detailed error messages.
+\set VERBOSITY verbose
+
+-- Restore output for meta-commands.
+\unset QUIET
