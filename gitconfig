@@ -48,6 +48,8 @@
 	diff-stat = diff -b --stat
 	done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	flip = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
+	flip-last = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
@@ -89,6 +91,7 @@
 	stat = status
 	svn-pull = !git svn fetch && git svn rebase
 	svn-push = !git svn dcommit
+	swap = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
 	today = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
 	tr = log --graph --oneline --decorate --color
