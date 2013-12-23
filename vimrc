@@ -158,6 +158,10 @@ if filereadable(expand("~/.vim/local.vim"))
   source ~/.vim/local.vim
 endif
 
+if filereadable(expand("~/.vim/packages.vim"))
+  source ~/.vim/packages.vim
+endif
+
 if filereadable(expand("~/.vim/commands.vim"))
   source ~/.vim/commands.vim
 endif
