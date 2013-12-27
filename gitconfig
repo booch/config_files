@@ -18,6 +18,8 @@
 [merge]
 	tool = opendiff
 	summary = true
+[help]
+	autocorrect = 50  # Automatically correct misspelled git subcommands after 5 seconds.
 [branch]
 	autosetuprebase = always  # Make 'git pull' rebase local commits on top of newly pulled-down commits instead of merging them. (http://www.viget.com/extend/only-you-can-prevent-git-merge-commits/)
 [push]
