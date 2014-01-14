@@ -90,3 +90,9 @@ alias du=_du
 if ! type -P json >/dev/null; then
   alias json='python -mjson.tool'
 fi
+
+# Emulate Mac OS X paste buffer on Linux.
+if [ ! $(uname -s) = "Darwin" ]; then
+  alias pbcopy='xsel --clipboard --input'
+  alias pbpaste='xsel --clipboard --output'
+fi
