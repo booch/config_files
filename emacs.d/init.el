@@ -34,3 +34,10 @@
 (if (file-exists-p custom-file)
   (load custom-file)
 )
+
+;; Make more keys work from the Mac OS X terminal.
+(define-key input-decode-map "\e[H" [home])
+(define-key input-decode-map "\e[F" [end])
+
+(global-set-key (kbd "<home>") 'move-beginning-of-line)
+(global-set-key (kbd "<end>") 'move-end-of-line)
