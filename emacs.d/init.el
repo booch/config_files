@@ -23,6 +23,9 @@
 ;; Set whitespace-mode to highlight (only) hard tabs and trailing whitespace.
 (setq whitespace-style '(face tabs trailing))
 
+;; Set color theme. Acceptable light themes: adwaita. Acceptable dark themes: zenburn tango-dark
+(load-theme 'adwaita)
+
 ;; Store customize UI changes in .emacs.d/custom.el. (Revert Prelude's change.)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
