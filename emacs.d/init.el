@@ -20,6 +20,9 @@
 (require 'prelude-web) ;; Emacs mode for web templates
 (require 'prelude-xml)
 
+;; Set whitespace-mode to highlight (only) hard tabs and trailing whitespace.
+(setq whitespace-style '(face tabs trailing))
+
 ;; Store customize UI changes in .emacs.d/custom.el. (Revert Prelude's change.)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
