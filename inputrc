@@ -39,6 +39,9 @@ set show-all-if-unmodified on
 # Blink to show matching parentheses.
 set blink-matching-paren on
 
+# Consider text after the cursor when doing completion.
+set skip-completed-text on
+
 # Expand out any ! commands on the line when hitting space (only for bash).
 $if Bash
   Space: magic-space
