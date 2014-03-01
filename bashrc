@@ -76,6 +76,9 @@ shopt -u force_fignore
 # Don't try to find all the command possibilities when hitting TAB on an empty line.
 shopt -s no_empty_cmd_completion
 
+# Enable double asterisk (**) to match recursively into subdirectories. (Ignore errors if we don't have Bash 4 yet.)
+shopt -s globstar 2> /dev/null
+
 # Exit the shell if we get 3 CTRL-D in a row.
 export IGNOREEOF=3
 
