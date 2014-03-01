@@ -62,6 +62,9 @@ fi
 if type -P hdiutil >/dev/null; then
   alias eject='hdiutil eject'
 fi
+if [ -x '/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession' ]; then
+  alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+end
 
 
 # Show top 10 most frequent items in the list piped in. Can specify top 20 with 'top10 -20'.
