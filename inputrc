@@ -10,6 +10,11 @@ $include /etc/inputrc
 # Make sure Readline always starts in Emacs mode.
 set editing-mode emacs
 
+# Allow UTF-8 input and output, instead of showing stuff like $'\0123\0456'.
+set input-meta on
+set output-meta on
+set convert-meta off
+
 # Use a single line for readline input, scrolling input horizontally on a single line when it gets longer than screen width.
 # NOTE: Seems to have problems on PuTTY.
 #set horizontal-scroll-mode on
