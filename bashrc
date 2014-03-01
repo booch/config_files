@@ -46,6 +46,9 @@ shopt -s cmdhist
 # I didn't like this, as it messes up completion too.
 #export CDPATH=.:~:~/work:/home/web:/usr/local:/usr/lib:/usr/share:/usr/src:/
 
+# Change to a directory simply by typing its name. (Ignore errors if we don't have Bash 4 yet.)
+shopt -s autocd 2> /dev/null
+
 # Ignore words ending with these suffixes, when doing tab completion.
 export FIGNORE='~:.o:.svn:vmlinuz'
 
