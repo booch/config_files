@@ -34,6 +34,7 @@
 	amend = commit --amend --reset-author --reuse-message=HEAD
 	ap = add --patch
 	br = branch
+	branches = branch -a
 	c = commit -m
 	ca = commit --amend
 	changes=diff --name-status -r
@@ -44,21 +45,30 @@
 	cob = checkout -b
 	cp = cherry-pick
 	create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
+	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	current-branch = rev-parse --abbrev-ref HEAD
+	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
 	delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
 	di = diff
 	diff-stat = diff -b --stat
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 	done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
+	fb = "!f() { git branch -a --contains $1; }; f"
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	flip = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	flip-last = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+	ft = "!f() { git describe --always --contains $1; }; f"
 	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	go = checkout -B
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	home = rev-parse --show-toplevel
 	ignore = update-index --assume-unchanged
 	ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
 	ir = rebase -i origin/master
+	l = log --pretty=oneline -n 20 --graph --abbrev-commit
 	lc = log ORIG_HEAD.. --stat --no-merges
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	llog = log --date=local
@@ -82,9 +92,12 @@
 	prune = remote prune
 	prune-all = !git remote | xargs -n 1 git remote prune
 	put = push origin HEAD
+	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	remotes = remote -v
 	reset-authors = commit --amend --reset-author -CHEAD
 	ri = rebase --interactive
 	rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
+	s = status -s
 	search = log --pretty=short -S
 	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
@@ -94,6 +107,7 @@
 	svn-pull = !git svn fetch && git svn rebase
 	svn-push = !git svn dcommit
 	swap = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
+	tags = tag -l
 	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
 	today = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
 	tr = log --graph --oneline --decorate --color
