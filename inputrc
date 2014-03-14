@@ -67,3 +67,9 @@ $endif
 "\e[6~": next-history
 "\e[7~": beginning-of-line
 "\e[8~": end-of-line
+
+# Control (5) and Option (3) key-bindings.
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[1;3C": forward-word
+"\e[1;3D": backward-word
