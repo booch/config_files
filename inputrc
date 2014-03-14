@@ -47,10 +47,10 @@ $if Bash
   Space: magic-space
 $endif
 
-# If we've already typed something, up should search for that (as a prefix) in our history. (From http://www.ukuug.org/events/linux2003/papers/bash_tips/#S12)
+# If we've already typed something, Shift+Up should search for that (as a prefix) in our history. (From http://www.ukuug.org/events/linux2003/papers/bash_tips/#S12)
 $if Bash
-  "\e[A": history-search-backward
-  "\e[B": history-search-forward
+  "\e[1;2A": history-search-backward
+  "\e[1;2B": history-search-forward
 $endif
 
 ## Extra key-bindings for various terminal types.
