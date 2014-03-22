@@ -3,6 +3,9 @@
 ;; Load Prelude.
 (setq prelude-init-file (expand-file-name "prelude/init.el" user-emacs-directory))
 (if (file-exists-p prelude-init-file)
+
+  (windmove-default-keybindings 'meta) ;; Allow shifted cursor keys to be used to select text.
+
   (load prelude-init-file)
 
   ;; Configure Prelude.
