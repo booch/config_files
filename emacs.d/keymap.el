@@ -1,3 +1,8 @@
+;; Make Home and End keys work as in CUA.
+(global-set-key (kbd "<home>") 'move-beginning-of-line)
+(global-set-key (kbd "<end>") 'move-end-of-line)
+
+
 ;; Make sure all the cursor keys work from various terminals - including with modifiers.
 ;; NOTE: We're treating the Alt/Option key as Meta.
 
