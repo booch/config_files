@@ -22,7 +22,7 @@ imap [1;2C <S-Right>
 map [1;2D  <S-Left>
 imap [1;2D <S-Left>
 map [1;2H  <S-Home>
-imap [1;2H <S-Right>
+imap [1;2H <S-Home>
 map [1;2F  <S-End>
 imap [1;2F <S-End>
 
@@ -40,6 +40,12 @@ vmap <S-Left> h
 vmap <S-Right> l
 vmap <S-Home> <Home>
 vmap <S-End> $
+
+" Handle Control+Shift cursors keys. (Note that vim has no names for these keys.)
+nmap [1;6C vE
+vmap [1;6C E
+nmap [1;6D vB
+vmap [1;6D B
 
 
 " Home key toggles between first nonblank character on line, and first column.
