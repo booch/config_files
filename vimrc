@@ -107,7 +107,11 @@ set ruler               " Show the line and column numbers of the cursor.
 set esckeys             " Cursor keys in insert mode.
 set gdefault            " Use 'g' flag by default with :s/foo/bar/.
 set magic               " Use 'magic' patterns (extended regular expressions).
-set hlsearch            " Highlight search matches.
+
+" Highlight search matches, and search incrementally (as you type).
+set hlsearch
+set incsearch
+
 " Allow backspacing over everything in insert mode.
 set backspace=indent,eol,start
 " Path/file expansion in colon-mode.
