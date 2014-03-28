@@ -69,8 +69,6 @@ set wildmenu " turn on command line completion wild style
 " ignore these list file extensions
 set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
 set wildmode=list:longest " turn on wild mode huge list
-" set cursorcolumn " highlight the current column
-set cursorline " highlight current line
 set matchtime=5 " how many tenths of a second to blink matching brackets
 set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 "              | | | | |  |   |      |  |     |    |
@@ -193,3 +191,9 @@ endif
 if filereadable(expand("~/.vim/abbrev.vim"))
   source ~/.vim/abbrev.vim
 endif
+
+
+" Highlight the current line with a light grey background.
+" NOTE: This has to go after loading of packages for some reason.
+set cursorline
+highlight cursorline term=none cterm=none ctermbg=lightgrey gui=none guibg=lightgrey
