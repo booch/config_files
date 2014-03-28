@@ -1,6 +1,9 @@
 " Allow either the default (\) leader key, or the more commonly used leader key (,).
 nmap , <leader>
 
+" Allow either default (:) or easier-to-type option (;) to start command-line mode.
+nnoremap ; :
+
 " Handle several flavors of cursor keys.
 map [7~  <Home>
 imap [7~ <Home>
