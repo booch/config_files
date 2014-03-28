@@ -36,11 +36,6 @@ set smarttab
 set listchars=tab:>>,trail:. " NOTE: We're unsetting eol here
 set list
 
-" Backspace can go across newlines.
-set backspace=1
-" Wrap cursor on backspace, left cursor
-set whichwrap=b,<,[
-
 " Use visual bell instead of beeping.
 set visualbell
 
@@ -110,8 +105,6 @@ set magic               " Use 'magic' patterns (extended regular expressions).
 set hlsearch
 set incsearch
 
-" Allow backspacing over everything in insert mode.
-set backspace=indent,eol,start
 " Path/file expansion in colon-mode.
 set wildmode=list:longest
 set wildchar=<TAB>
@@ -197,4 +190,9 @@ highlight cursorline term=none cterm=none ctermbg=lightgrey gui=none guibg=light
 " Show indicators for columns 80 and 120.
 set colorcolumn=80,120
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+
+" Wrap cursor on backspace and left and right cursor movements in all modes.
+" NOTE: Something before this is turning this feature off.
+set backspace=indent,eol,start
+set whichwrap=b,<,>,[,],h,l
 
