@@ -1,3 +1,6 @@
+" Allow either the default (\) leader key, or the more commonly used leader key (,).
+nmap , <leader>
+
 " Handle several flavors of cursor keys. TODO: This only handles HOME key.
 map [7~  <Home>
 imap [7~ <Home>
