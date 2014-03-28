@@ -156,6 +156,10 @@ set infercase
 " assume the /g flag on :s substitutions to replace all matches in a line:
 set gdefault
 
+" Use standard regular expressions, instead of weird vim regex extensions.
+nnoremap / /\v
+vnoremap / /\v
+
 
 if filereadable(expand("~/.vim/local.vim"))
   source ~/.vim/local.vim
