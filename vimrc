@@ -134,6 +134,11 @@ set shiftround
 " with comments, at 79 characters:
 set formatoptions-=t
 set textwidth=79
+
+" Show indicators for columns 80 and 120.
+set colorcolumn=80,120
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+
 " enable filetype detection:
 filetype on
 " in human-language files, automatically format everything at 72 chars:
