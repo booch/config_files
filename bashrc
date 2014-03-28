@@ -285,4 +285,4 @@ if [[ -d /Applications/Android/SDK/$ANDROID_SDK_VERSION ]] ; then
 fi
 
 # Homebrew Cask
-export HOMEBREW_CASK_OPTS='--caskroom=/usr/local/Caskroom'
+export HOMEBREW_CASK_OPTS='--appdir=/Applications --caskroom=/usr/local/Caskroom'
