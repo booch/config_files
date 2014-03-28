@@ -104,7 +104,6 @@ set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
 set showmode            " Show current mode.
 set ruler               " Show the line and column numbers of the cursor.
-set modeline            " Enable modeline.
 set esckeys             " Cursor keys in insert mode.
 set gdefault            " Use 'g' flag by default with :s/foo/bar/.
 set magic               " Use 'magic' patterns (extended regular expressions).
@@ -114,6 +113,10 @@ set backspace=indent,eol,start
 " Path/file expansion in colon-mode.
 set wildmode=list:longest
 set wildchar=<TAB>
+
+" Don't allow modelines (lines in files that will run vim commands), due to security issues and principle of least surprise.
+set nomodeline
+set modelines=0
 
 " Got these from http://stripey.com/vim/vimrc.html:
 " use "[RO]" for "[readonly]" to save space in the message line:
