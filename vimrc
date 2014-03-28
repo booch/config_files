@@ -133,10 +133,6 @@ set shiftround
 set formatoptions-=t
 set textwidth=79
 
-" Show indicators for columns 80 and 120.
-set colorcolumn=80,120
-highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
-
 " enable filetype detection:
 filetype on
 " in human-language files, automatically format everything at 72 chars:
@@ -197,3 +193,8 @@ endif
 " NOTE: This has to go after loading of packages for some reason.
 set cursorline
 highlight cursorline term=none cterm=none ctermbg=lightgrey gui=none guibg=lightgrey
+
+" Show indicators for columns 80 and 120.
+set colorcolumn=80,120
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+
