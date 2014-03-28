@@ -2,7 +2,7 @@
 
 ;; Load Prelude.
 (setq prelude-init-file (expand-file-name "prelude/init.el" user-emacs-directory))
-(if (file-exists-p prelude-init-file)
+(if (file-readable-p prelude-init-file)
 
   (windmove-default-keybindings 'meta) ;; Allow shifted cursor keys to be used to select text.
 
@@ -34,13 +34,13 @@
 
 ;; Store customize UI changes in .emacs.d/custom.el. (Revert Prelude's change.)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(if (file-exists-p custom-file)
+(if (file-readable-p custom-file)
   (load custom-file)
 )
 
 ;; Load keymap changes.
 (setq keymap-file (expand-file-name "keymap.el" user-emacs-directory))
-(if (file-exists-p keymap-file)
+(if (file-readable-p keymap-file)
   (load keymap-file)
 )
 
