@@ -1,13 +1,46 @@
 " Allow either the default (\) leader key, or the more commonly used leader key (,).
 nmap , <leader>
 
-" Handle several flavors of cursor keys. TODO: This only handles HOME key.
+" Handle several flavors of cursor keys.
 map [7~  <Home>
 imap [7~ <Home>
 map OH   <Home>
 imap OH  <Home>
-map [1~  <Home>
-imap [1~ <Home>
+map [H   <Home>
+imap [H  <Home>
+map OF   <End>
+imap OF  <End>
+map [F   <End>
+imap [F  <End>
+
+map [1;2A  <S-Up>
+imap [1;2A <S-Up>
+map [1;2B  <S-Down>
+imap [1;2B <S-Down>
+map [1;2C  <S-Right>
+imap [1;2C <S-Right>
+map [1;2D  <S-Left>
+imap [1;2D <S-Left>
+map [1;2H  <S-Home>
+imap [1;2H <S-Right>
+map [1;2F  <S-End>
+imap [1;2F <S-End>
+
+
+" Make shifted cursor keys work, to select text.
+nmap <S-Up> vk
+nmap <S-Down> vj
+nmap <S-Left> vh
+nmap <S-Right> vl
+nmap <S-Home> v^
+nmap <S-End> v$
+vmap <S-Up> k
+vmap <S-Down> j
+vmap <S-Left> h
+vmap <S-Right> l
+vmap <S-Home> <Home>
+vmap <S-End> $
+
 
 " Home key toggles between first nonblank character on line, and first column.
 " From http://vim.wikia.com/wiki/Smart_home:
