@@ -44,11 +44,11 @@ vmap <S-Right> l
 vmap <S-Home> <Home>
 vmap <S-End> $
 
-" Handle Control+Shift cursors keys. (Note that vim has no names for these keys.)
-nmap [1;6C vE
-vmap [1;6C E
-nmap [1;6D vB
-vmap [1;6D B
+" Handle Control+Shift cursors keys.
+nmap <C-S-Right> vE
+vmap <C-S-Right> E
+nmap <C-S-Left> lvB
+vmap <C-S-Left> B
 
 
 " Home key toggles between first nonblank character on line, and first column.
@@ -219,16 +219,6 @@ nnoremap <silent> <F8> :TlistToggle<CR>
 " Alt-][ to increase/decrease indentation
   vmap <A-]> >gv
   vmap <A-[> <gv
-
-" Ctrl-Option-ArrowKey to switch viewports
-  map <C-S-Up> <C-w>k
-  imap <C-S-Up> <Esc> <C-w>k
-  map <C-S-Down> <C-w>j
-  imap <C-S-Down> <Esc> <C-w>j
-  map <C-S-Right> <C-w>l
-  imap <C-S-Right> <Esc> <C-w>l
-  map <C-S-Left> <C-w>h
-  imap <C-S-Left> <C-w>h
 
 " Map j/k combos to get out of insert mode
 inoremap jk <esc>l
