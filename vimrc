@@ -157,33 +157,13 @@ nnoremap / /\v
 vnoremap / /\v
 
 
-if filereadable(expand("~/.vim/local.vim"))
-  source ~/.vim/local.vim
-endif
-
-if filereadable(expand("~/.vim/janus.vim"))
-  source ~/.vim/janus.vim
-endif
-
-if filereadable(expand("~/.vim/packages.vim"))
-  source ~/.vim/packages.vim
-endif
-
-if filereadable(expand("~/.vim/commands.vim"))
-  source ~/.vim/commands.vim
-endif
-
-if filereadable(expand("~/.vim/filetypes.vim"))
-  source ~/.vim/filetypes.vim
-endif
-
-if filereadable(expand("~/.vim/keymaps.vim"))
-  source ~/.vim/keymaps.vim
-endif
-
-if filereadable(expand("~/.vim/abbrev.vim"))
-  source ~/.vim/abbrev.vim
-endif
+" Load other files.
+for file_name in ["local", "janus", "packages", "commands", "filetypes", "keymaps", "abbrev"]
+  let file_path = expand("~/.vim/" . file_name . ".vim")
+  if filereadable(file_path)
+    exe "source " . file_path
+  endif
+endfor
 
 
 " Highlight the current line with a light grey background.
