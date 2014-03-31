@@ -99,6 +99,7 @@
 	pr = !hub pull-request
 	prune = remote prune
 	prune-all = !git remote | xargs -n 1 git remote prune
+	publish = git flow feature publish
 	pullff = pull --ff-only
 	put = push origin HEAD
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
