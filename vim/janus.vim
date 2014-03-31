@@ -9,7 +9,7 @@ let g:janus_path = g:vim_path . "/janus/janus"
 let g:janus_vim_path = g:janus_path . "/vim"
 let g:janus_custom_path = expand("~/.janus")
 
-if filereadable(g:janus_vim_path)
+if filereadable(g:janus_vim_path . '/core/before/plugin/janus.vim')
   exe 'source ' . g:janus_vim_path . '/core/before/plugin/janus.vim'
 
   " NOTE: these groups will be processed by Pathogen in reverse order.
