@@ -58,6 +58,9 @@ mkdir -p ~/.vim/backup  # Make sure there's a global backup directory for vim.
 ln -sf vim/packages.vim  ~/.vim/packages.vim
 ln -sf vim/abbrev.vim    ~/.vim/abbrev.vim
 ln -sf vim/keymaps.vim   ~/.vim/keymaps.vim
+if [ ! -d vim/bundle/vundle ]; then
+  git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
+fi
 
 ln -sf psqlrc            ~/.psqlrc
 
