@@ -33,5 +33,14 @@ Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 nnoremap <silent> <leader>tn :call NumberToggle()<cr>
 
 
+"" Rainbow parentheses - color each matching set of parens differently.
+Plugin 'kien/rainbow_parentheses.vim'
+" Enable by default.
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+
 filetype on
 
