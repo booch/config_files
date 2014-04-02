@@ -28,5 +28,10 @@ let g:airline_symbols.paste = 'PASTE'
 let g:airline_symbols.whitespace = 'Ξ'
 
 
+"" NumberToggle - toggle between absolute and relative line numbers.
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+nnoremap <silent> <leader>tn :call NumberToggle()<cr>
+
+
 filetype on
 
