@@ -51,6 +51,21 @@ nmap <C-S-Left> lvB
 vmap <C-S-Left> B
 
 
+" Handle CUA-style cut and paste. (<S-Del> = Cut, <C-Insert> = Copy, <S-Insert> = Paste)
+map  <Esc>[3;2~ <S-Del>
+imap <Esc>[3;2~ <S-Del>
+map  <Esc>[2;5~ <C-Insert>
+imap <Esc>[2;5~ <C-Insert>
+map  <Esc>[2;2~ <S-Insert>
+imap <Esc>[2;2~ <S-Insert>
+" FIXME: For some reason, the <S-Insert> mappings are being overridden by Janus mappings.
+map  <S-Insert> p
+imap <S-Insert> <Esc>p
+map  <C-Insert> yy
+imap <C-Insert> yy
+vmap <C-Insert> y
+
+
 " Home key toggles between first nonblank character on line, and first column.
 " From http://vim.wikia.com/wiki/Smart_home:
 " FIXME: Doesn't handle lines containing only whitespace.
