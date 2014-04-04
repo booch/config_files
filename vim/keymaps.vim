@@ -5,50 +5,49 @@ nmap , <leader>
 nnoremap ; :
 
 " Handle several flavors of cursor keys.
-map [7~  <Home>
-imap [7~ <Home>
-map OH   <Home>
-imap OH  <Home>
-map [H   <Home>
-imap [H  <Home>
-map OF   <End>
-imap OF  <End>
-map [F   <End>
-imap [F  <End>
+map  <Esc>[7~ <Home>
+imap <Esc>[7~ <Home>
+map  <Esc>OH  <Home>
+imap <Esc>OH  <Home>
+map  <Esc>[H  <Home>
+imap <Esc>[H  <Home>
+map  <Esc>OF  <End>
+imap <Esc>OF  <End>
+map  <Esc>[F  <End>
+imap <Esc>[F  <End>
 
-map [1;2A  <S-Up>
-imap [1;2A <S-Up>
-map [1;2B  <S-Down>
-imap [1;2B <S-Down>
-map [1;2C  <S-Right>
-imap [1;2C <S-Right>
-map [1;2D  <S-Left>
-imap [1;2D <S-Left>
-map [1;2H  <S-Home>
-imap [1;2H <S-Home>
-map [1;2F  <S-End>
-imap [1;2F <S-End>
-
+map  <Esc>[1;2A <S-Up>
+imap <Esc>[1;2A <S-Up>
+map  <Esc>[1;2B <S-Down>
+imap <Esc>[1;2B <S-Down>
+map  <Esc>[1;2C <S-Right>
+imap <Esc>[1;2C <S-Right>
+map  <Esc>[1;2D <S-Left>
+imap <Esc>[1;2D <S-Left>
+map  <Esc>[1;2H <S-Home>
+imap <Esc>[1;2H <S-Home>
+map  <Esc>[1;2F <S-End>
+imap <Esc>[1;2F <S-End>
 
 " Make shifted cursor keys work, to select text.
-nmap <S-Up> vk
-nmap <S-Down> vj
-nmap <S-Left> vh
-nmap <S-Right> vl
-nmap <S-Home> v^
-nmap <S-End> v$
-vmap <S-Up> k
-vmap <S-Down> j
-vmap <S-Left> h
-vmap <S-Right> l
-vmap <S-Home> <Home>
-vmap <S-End> $
+nmap <S-Up>    v<Up>
+nmap <S-Down>  v<Down>
+nmap <S-Left>  v<Left>
+nmap <S-Right> v<Right>
+nmap <S-Home>  v<Home>
+nmap <S-End>   v<End>
+vmap <S-Up>    <Up>
+vmap <S-Down>  <Down>
+vmap <S-Left>  <Left>
+vmap <S-Right> <Right>
+vmap <S-Home>  <Home>
+vmap <S-End>   <End>
 
 " Handle Control+Shift cursors keys.
 nmap <C-S-Right> vE
 vmap <C-S-Right> E
-nmap <C-S-Left> lvB
-vmap <C-S-Left> B
+nmap <C-S-Left>  lvB
+vmap <C-S-Left>  B
 
 
 " Handle CUA-style cut and paste. (<S-Del> = Cut, <C-Insert> = Copy, <S-Insert> = Paste)
@@ -228,8 +227,8 @@ nnoremap <silent> <F8> :TlistToggle<CR>
 " Alt-/ to toggle comments
   map <A-/> <plug>NERDCommenterToggle<CR>
   imap <A-/> <Esc><plug>NERDCommenterToggle<CR>i
-  map /  <plug>NERDCommenterToggle<CR>
-  imap /  <Esc><plug>NERDCommenterToggle<CR>i
+  map <Esc>/  <plug>NERDCommenterToggle<CR>
+  imap <Esc>/  <Esc><plug>NERDCommenterToggle<CR>i
 
 " Alt-][ to increase/decrease indentation
   vmap <A-]> >gv
