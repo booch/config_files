@@ -23,46 +23,42 @@ TODAY=`date +'%Y%m%d'`
 #fi
 
 # Link files to where they belong.
-ln -sf ackrc             ~/.ackrc
+ln -sf config_files/ackrc             ~/.ackrc
 
-ln -sf bash_aliases      ~/.bash_aliases
-ln -sf bash_logout       ~/.bash_logout
-ln -sf bash_profile      ~/.bash_profile
-ln -sf bashrc            ~/.bashrc
-ln -sf profile           ~/.profile
+ln -sf config_files/bash_aliases      ~/.bash_aliases
+ln -sf config_files/bash_logout       ~/.bash_logout
+ln -sf config_files/bash_profile      ~/.bash_profile
+ln -sf config_files/bashrc            ~/.bashrc
+ln -sf config_files/profile           ~/.profile
 
-mkdir -p ~/.bundle
-ln -sf bundle/config     ~/.bundle/config
-ln -sf gemrc             ~/.gemrc
-ln -sf irbrc             ~/.irbrc
-ln -sf aprc              ~/.aprc
-ln -sf railsrc           ~/.railsrc
+rm -rf ~/.bundle
+ln -sf config_files/bundle            ~/.bundle
+ln -sf config_files/gemrc             ~/.gemrc
+ln -sf config_files/irbrc             ~/.irbrc
+ln -sf config_files/aprc              ~/.aprc
+ln -sf config_files/railsrc           ~/.railsrc
 
-ln -sf gitconfig         ~/.gitconfig
-ln -sf gitignore         ~/.gitignore
+ln -sf config_files/gitconfig         ~/.gitconfig
+ln -sf config_files/gitignore         ~/.gitignore
 
-ln -sf inputrc           ~/.inputrc
+ln -sf config_files/inputrc           ~/.inputrc
 
-mkdir -p ~/.mc
-ln -sf mc/ini            ~/.mc/ini
+rm -rf ~/.mc
+ln -sf ../config_files/mc             ~/.mc
 
-ln -sf nanorc            ~/.nanorc
-mkdir -p ~/.nano
-ln -sf nano/css.nanorc   ~/.nano/css.nanorc
-ln -sf nano/php.nanorc   ~/.nano/php.nanorc
-ln -sf nano/xml.nanorc   ~/.nano/xml.nanorc
+rm -rf ~/.nano
+ln -sf config_files/nanorc            ~/.nanorc
+ln -sf config_files/nano              ~/.nano
 
-ln -sf vimrc             ~/.vimrc
-mkdir -p ~/.vim
-mkdir -p ~/.vim/backup  # Make sure there's a global backup directory for vim.
-ln -sf vim/packages.vim  ~/.vim/packages.vim
-ln -sf vim/abbrev.vim    ~/.vim/abbrev.vim
-ln -sf vim/keymaps.vim   ~/.vim/keymaps.vim
+rm -rf ~/.vim
+ln -sf config_files/vimrc             ~/.vimrc
+ln -sf config_files/vim               ~/.vim
 if [ ! -d vim/bundle/vundle ]; then
   git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
 fi
+mkdir -p ~/.vim/backup  # Make sure there's a global backup directory for vim.
 
-ln -sf psqlrc            ~/.psqlrc
+ln -sf config_files/psqlrc            ~/.psqlrc
 
 if [ "`uname`"x = "Darwin"x  ]; then
   mkdir -p ~/Library/KeyBindings
