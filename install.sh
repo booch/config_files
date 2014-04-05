@@ -57,6 +57,8 @@ if [ ! -d vim/bundle/vundle ]; then
   git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
 fi
 mkdir -p ~/.vim/backup  # Make sure there's a global backup directory for vim.
+# Install and update Vundle bundles.
+vim -c 'VundleInstall' -c 'VundleUpdate' -c 'qa!'
 
 ln -sf config_files/psqlrc            ~/.psqlrc
 
