@@ -57,13 +57,18 @@ map  <Esc>[2;5~ <C-Insert>
 imap <Esc>[2;5~ <C-Insert>
 map  <Esc>[2;2~ <S-Insert>
 imap <Esc>[2;2~ <S-Insert>
+" Adapted from http://vim.cybermirror.org/runtime/mswin.vim
+" NOTE: If nothing is selected (not in visual mode), then a whole line is cut or copied.
 " FIXME: For some reason, the <S-Insert> mappings are being overridden by Janus mappings.
-map  <S-Insert> p
-imap <S-Insert> <Esc>p
-map  <C-Insert> yy
-imap <C-Insert> yy
-vmap <C-Insert> y
-
+map  <S-Del>    $v^"+x
+imap <S-Del>    <Esc>$v^"+xi
+vmap <S-Del>    "+x
+map  <C-Insert> $v^"+y
+imap <C-Insert> <Esc>$v^"+yi
+vmap <C-Insert> "+y
+map  <S-Insert> "+gP
+imap <S-Insert> <Esc>"+gPi
+cmap <S-Insert> <C-R>+
 
 " Home key toggles between first nonblank character on line, and first column.
 " From http://vim.wikia.com/wiki/Smart_home:
