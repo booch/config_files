@@ -57,6 +57,7 @@
 	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 	done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
 	ds = diff --stat=160,120
+	dump = cat-file -p
 	fa = fetch --all
 	fb = "!f() { git branch -a --contains $1; }; f"
 	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
@@ -84,6 +85,7 @@
 	log-timeline = log --format='%h %an %ar - %s'
 	log-local = log --oneline origin..HEAD
 	log-fetched = log --oneline HEAD..origin/master
+	lp = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 	merge-branch = !git checkout master && git merge @{-1}
 	merged = branch --merged
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
@@ -122,6 +124,7 @@
 	today = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
 	tr = log --graph --oneline --decorate --color
 	tree = log --graph --oneline --decorate --color --all
+	type = cat-file -t
 	uncommit = reset --soft HEAD^
 	undo = reset --hard
 	unignore = update-index --no-assume-unchanged
