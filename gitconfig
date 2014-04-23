@@ -29,6 +29,7 @@
 [alias]
 	a = add
 	aa = !git add . && git add -u && git status
+	ac = !git add -A && git commit
 	addall = !git add . && git add -u && git status
 	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
 	amend = commit --amend --reset-author --reuse-message=HEAD
@@ -42,6 +43,7 @@
 	changed=diff --name-only
 	ci = commit -v
 	clear = !git add . && git stash && git stash drop
+	cm = commit
 	co = checkout
 	cob = checkout -b
 	cp = cherry-pick
