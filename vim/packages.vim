@@ -4,6 +4,11 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Plugin 'gmarik/vundle'
 
+
+" CtrlP. See docs at http://kien.github.io/ctrlp.vim/.
+Plugin 'kien/ctrlp.vim'
+
+
 " Grab some color themes.
 Plugin 'chriskempson/vim-tomorrow-theme'
 
