@@ -9,6 +9,10 @@ Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
 
 
+" Supertab (make hitting Tab do what I expect)
+Plugin 'ervandew/supertab'
+
+
 " Grab some color themes.
 Plugin 'chriskempson/vim-tomorrow-theme'
 
