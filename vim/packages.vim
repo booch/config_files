@@ -4,6 +4,9 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Plugin 'gmarik/vundle'
 
+" Grab some color themes.
+Plugin 'chriskempson/vim-tomorrow-theme'
+
 
 "" Airline (nice looking modelines)
 Plugin 'vim-airline'
