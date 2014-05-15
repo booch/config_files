@@ -4,12 +4,6 @@ set nocompatible
 " Use UTF-8 encoding.
 set encoding=utf-8
 
-" Turn on syntax highlighting if terminal can handle it.
-if has('syntax') && (&t_Co > 2)
-  syntax on
-  colorscheme elflord " Other acceptable themes: ron
-endif
-
 " Enable a status line that displays the current cursor position. TODO: Add more to the status line.
 set ruler
 
@@ -158,22 +152,12 @@ vnoremap / /\v
 
 
 " Load other files.
-for file_name in ["local", "janus", "packages", "commands", "filetypes", "keymaps", "abbrev"]
+for file_name in ["local", "janus", "packages", "commands", "filetypes", "colors", "keymaps", "abbrev"]
   let file_path = expand("~/.vim/" . file_name . ".vim")
   if filereadable(file_path)
     exe "source " . file_path
   endif
 endfor
-
-
-" Highlight the current line with a light grey background.
-" NOTE: This has to go after loading of packages for some reason.
-set cursorline
-highlight cursorline term=none cterm=none ctermbg=lightgrey gui=none guibg=lightgrey
-
-" Show indicators for columns 80 and 120.
-set colorcolumn=80,120
-highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
 " Wrap cursor on backspace and left and right cursor movements in all modes.
 " NOTE: Something before this is turning this feature off.
