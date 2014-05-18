@@ -33,7 +33,7 @@ set list
 " Use visual bell instead of beeping.
 set visualbell
 
-" Display relative line numbers, except for current line.
+" Display relative line numbers, except for current line (requires vim 7.4+).
 set relativenumber
 set number
 

@@ -40,11 +40,6 @@ let g:airline_symbols.paste = 'PASTE'
 let g:airline_symbols.whitespace = 'Ξ'
 
 
-"" NumberToggle - toggle between absolute and relative line numbers.
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-nnoremap <silent> <leader>tn :call NumberToggle()<cr>
-
-
 "" Rainbow parentheses - color each matching set of parens differently.
 Plugin 'kien/rainbow_parentheses.vim'
 " Enable by default.
