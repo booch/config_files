@@ -82,6 +82,9 @@ inoremap <Tab> <C-T>
 inoremap <S-Tab> <C-D>
 " [<Ctrl>+V <Tab> still inserts an actual tab character.]
 
+" Tab in visual (or select) mode indents the selected block (and keeps it selected).
+vnoremap <Tab>   >gv
+vnoremap <S-Tab> <gv
 
 " Backspace in Visual mode deletes selection.
 "
@@ -126,13 +129,6 @@ vnoremap <F7>   gq
 nnoremap <S-F7>  vipJ
 inoremap <S-F7>  <Esc>vipJi
 vnoremap <S-F7>  J
-
-" Tab/Shift+Tab indent/unindent the highlighted block (and maintain the
-" highlight after changing the indentation). Works for both Visual and Select
-" modes.
-"
-vmap >    >gv
-vmap <  <gv
 
 " Draw lines of dashes or equal signs below us based on the length of the current line
 "
