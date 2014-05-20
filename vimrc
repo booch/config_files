@@ -4,6 +4,15 @@ set nocompatible
 " Use UTF-8 encoding.
 set encoding=utf-8
 
+" Optimize for fast TTY.
+set ttyfast
+
+" Timeout quickly for keycodes, slowly for mappings. Values are in milliseconds.
+set timeout
+set ttimeout
+set timeoutlen=1000
+set ttimeoutlen=20
+
 " Enable a status line that displays the current cursor position. TODO: Add more to the status line.
 set ruler
 
