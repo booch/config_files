@@ -59,10 +59,14 @@ set keymodel=startsel,stopsel
 " Allow shifted cursor keys to act more like Mac/Windows.
 let macvim_hig_shift_movement = 1
 
+" Use the system clipboard, unless we're in tmux.
+if $TMUX == ''
+  set clipboard+=unnamed
+endif
+
 
 " These are from http://www.vi-improved.org/vimrc.php
 "set autochdir " always switch to the current file directory
-set clipboard+=unnamed " share windows clipboard
 set wildmenu " turn on command line completion wild style
 " ignore these list file extensions
 set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
