@@ -283,6 +283,3 @@ export ANDROID_SDK_VERSION='21.0.1'
 if [[ -d /Applications/Android/SDK/$ANDROID_SDK_VERSION ]] ; then
     PATH=$PATH:/Applications/Android/SDK/$ANDROID_SDK_VERSION/tools:/Applications/Android/SDK/$ANDROID_SDK_VERSION/platform-tools
 fi
-
-# Homebrew Cask
-export HOMEBREW_CASK_OPTS='--appdir=/Applications --caskroom=/usr/local/Caskroom'
