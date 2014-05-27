@@ -67,6 +67,15 @@ rescue LoadError => err
 end
 
 
+# Use Pry if we can.
+begin
+  require 'pry'
+  Pry.start || exit
+rescue LoadError
+  warn "Couldn't load Pry: #{err}"
+end
+
+
 # Enable project-specific .irbrc files. From http://greatseth.wordpress.com/2010/02/11/project-specific-irbrc/.
 if Dir.pwd != File.expand_path("~")
   local_irbrc = File.expand_path '.irbrc'
