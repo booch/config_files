@@ -24,6 +24,8 @@
 	autosetuprebase = always  # Make 'git pull' rebase local commits on top of newly pulled-down commits instead of merging them. (http://www.viget.com/extend/only-you-can-prevent-git-merge-commits/)
 [push]
 	default = upstream  # Push only the current branch by default, not all branches.
+[pull]
+	ff = true  # Only do fast-forward merges, so we don't overwrite any local changes.
 [rerere]
 	enabled = true  # Automatically record and replay merge conflict resolutions. (http://git-scm.com/2010/03/08/rerere.html)
 [alias]
