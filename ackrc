@@ -62,6 +62,7 @@
 --type-set=ada=.ada
 --type-set=boo=.boo
 --type-set=clojure=.clj
+--type-set=crystal=.cr
 --type-set=eiffel=.e,.eiffel
 --type-set=factor=.factor
 --type-set=fsharp=.fs
