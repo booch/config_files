@@ -224,7 +224,7 @@ let g:blockle_mapping = '<Leader>bl'
 nnoremap <silent> <F8> :TlistToggle<CR>
 
 " Ctrl-Shift-F for Ack
-  map <C-F> :Ack<space>
+  map <C-F> :Ack! ""<left>
 
 " Alt-/ to toggle comments
   map <A-/> <plug>NERDCommenterToggle<CR>
