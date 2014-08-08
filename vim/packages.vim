@@ -56,5 +56,9 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
 
+" Fugitive
+Plugin 'tpope/vim-fugitive'
+
+
 filetype on
 
