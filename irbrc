@@ -4,6 +4,10 @@ require 'irb/completion'
 # Force use of Readline library, so we get better command-line editing.
 ARGV.concat [ "--readline"]
 
+
+# Automatically indent.
+IRB.conf[:AUTO_INDENT] = true
+
 # Set the IRB console prompt.
 #IRB.conf[:PROMPT_MODE] = :SIMPLE
 
