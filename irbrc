@@ -84,3 +84,11 @@ if Dir.pwd != File.expand_path("~")
     load local_irbrc
   end
 end
+
+
+# Make it easier to get a more useful list of methods.
+class Object
+  def local_methods
+    (methods - Object.instance_methods).sort
+  end
+end
