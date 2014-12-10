@@ -56,9 +56,14 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
 
-" Fugitive
+"" Fugitive
 Plugin 'tpope/vim-fugitive'
 
 
-filetype on
+"" Add support for `s` modifier, to select "surrounding" elements.
+" See https://github.com/tpope/vim-surround for details.
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
 
+
+filetype on
