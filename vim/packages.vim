@@ -66,4 +66,9 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 
 
+"" Use Commentary for commenting out code blocks.
+" See https://github.com/tpope/vim-commentary for details.
+Plugin 'tpope/vim-commentary'
+
+
 filetype on
