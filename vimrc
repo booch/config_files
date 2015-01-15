@@ -163,6 +163,11 @@ set gdefault
 nnoremap / /\v
 vnoremap / /\v
 
+" Allow :Wq to save and quit (because sometimes we let go of the SHIFT key too late). From https://coderwall.com/p/nckasg/map-w-to-w-in-vim
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
 
 " Load other files.
 for file_name in ["local", "packages", "commands", "filetypes", "colors", "keymaps", "abbrev"]
