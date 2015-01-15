@@ -61,6 +61,13 @@ set selectmode=mouse,key
 set mousemodel=popup
 set keymodel=startsel,stopsel
 
+" When splitting, put new windows on the bottom or right.
+set splitbelow
+set splitright
+
+" Resize splits when the terminal is resized.
+au VimResized * :wincmd =
+
 " Allow shifted cursor keys to act more like Mac/Windows.
 let macvim_hig_shift_movement = 1
 
