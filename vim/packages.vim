@@ -13,6 +13,12 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'ervandew/supertab'
 
 
+" Support bracketed paste mode in terminals, so you don't have to manually `:set paste`.
+" See https://cirw.in/blog/bracketed-paste for more details.
+" NOTE: This currently only works in insert mode.
+Plugin 'ConradIrwin/vim-bracketed-paste'
+
+
 " Grab some color themes.
 Plugin 'chriskempson/vim-tomorrow-theme'
 
