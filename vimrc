@@ -79,6 +79,9 @@ if $TMUX == ''
   set clipboard+=unnamed
 endif
 
+" Tab completion. Always show popup menu (with additional info).
+set complete=.,w,b,u,t,i
+set completeopt=menu,menuone,preview
 
 " These are from http://www.vi-improved.org/vimrc.php
 "set autochdir " always switch to the current file directory
