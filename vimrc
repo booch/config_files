@@ -34,10 +34,15 @@ set softtabstop=4
 set expandtab
 set smarttab
 
-" Show periods in place of whitespace at end of line. Show double-chevron in place of hard tabs.
-" TODO: Use UTF-8 characters here. (Can't get them to work in PuTTY.)
-set listchars=tab:>>,trail:. " NOTE: We're unsetting eol here
+" Show periods in place of trailing whitespace (unless in insert mode); double-chevron in place of hard tabs.
+set listchars=tab:>>,trail:. " NOTE: We're unsetting eol here.
 set list
+augroup trailing
+    au!
+    au InsertEnter * :set listchars-=trail:.
+    au InsertLeave * :set listchars+=trail:.
+augroup END
+
 
 " Use visual bell instead of beeping.
 set visualbell
