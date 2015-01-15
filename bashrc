@@ -264,12 +264,6 @@ if [ -f ~/.bashrc-private ]; then
     . ~/.bashrc-private
 fi
 
-# RVM (Ruby Version Manager)
-if [[ -s "$HOME/.rvm/scripts/rvm" ]]  ; then source "$HOME/.rvm/scripts/rvm" ; fi
-
-# rbenv Ruby environment manager
-if which rbenv >/dev/null ; then eval "$(rbenv init -)" ; fi
-
 ## Mac OS X specific settings.
 if [[ "$OSTYPE" = "darwin10.0" ]] ; then
     if [[ "$HOSTTYPE" = "x86_64" ]] ; then
@@ -277,9 +271,15 @@ if [[ "$OSTYPE" = "darwin10.0" ]] ; then
     fi
 fi
 
-
 ## Android SDK.
 export ANDROID_SDK_VERSION='21.0.1'
 if [[ -d /Applications/Android/SDK/$ANDROID_SDK_VERSION ]] ; then
     PATH=$PATH:/Applications/Android/SDK/$ANDROID_SDK_VERSION/tools:/Applications/Android/SDK/$ANDROID_SDK_VERSION/platform-tools
+fi
+
+# Automatically change Ruby versions when changing directories. Set a default Ruby version.
+if [[ -d /usr/local/share/chruby ]]; then
+    source /usr/local/share/chruby/chruby.sh
+    source /usr/local/share/chruby/auto.sh
+    chruby 2.1
 fi
