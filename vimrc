@@ -68,6 +68,9 @@ set splitright
 " Resize splits when the terminal is resized.
 au VimResized * :wincmd =
 
+" Reload file if it's been changed on disk, but not changed in vim.
+set autoread
+
 " Allow shifted cursor keys to act more like Mac/Windows.
 let macvim_hig_shift_movement = 1
 
