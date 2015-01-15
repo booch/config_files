@@ -19,11 +19,20 @@ if (&t_Co > 2)
 
   if has('syntax')
     syntax on
+
+    " Don't try to highlight long lines.
+    set synmaxcol=256
   endif
 
-  " Highlight the current line with a light grey background.
+  " Highlight the current line with a light grey background, only for the current buffer.
   set cursorline
   highlight cursorline term=none cterm=none ctermbg=lightgrey gui=none guibg=lightgrey
+  augroup cline
+    au!
+    au WinLeave * set nocursorline
+    au WinEnter * set cursorline
+  augroup END
+
 
   " Show indicators for columns 80 and 120.
   set colorcolumn=80,120
