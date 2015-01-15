@@ -100,6 +100,8 @@
 	p = pair
 	patch = log -p --no-walk # Generate patch file from a commit.
 	pick = cherry-pick
+	phh = push heroku HEAD
+	phm = push heroku master
 	poh = push origin HEAD
 	pom = push origin master
 	pr = !hub pull-request
