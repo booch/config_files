@@ -1,8 +1,9 @@
 " Turn off vi backwards-compatibility junk.
 set nocompatible
 
-" Use UTF-8 encoding.
+" Use UTF-8 encoding, but allow other encodings.
 set encoding=utf-8
+set fencs=ucs-bom,utf-16le,utf-8,default,latin1
 
 " Optimize for fast TTY.
 set ttyfast
