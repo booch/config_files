@@ -55,6 +55,7 @@
 	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
 	dc = diff --cached
 	delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
+	delete-merged-branches = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 	dh1 = diff HEAD~1
 	di = diff
 	diff-stat = diff -b --stat
