@@ -147,3 +147,5 @@
 	which-tags-contain = name-rev --name-only
 	who = shortlog -s --
 	wipe = !git reset --hard; git clean -fd
+[diff]
+	algorithm = histogram
