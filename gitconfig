@@ -141,6 +141,7 @@
 	unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
 	unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
 	unstage = reset HEAD --
+	unstash = stash pop
 	up = !git fetch origin && git rebase origin/master
 	update = !git fetch origin && git rebase origin/master
 	wdiff = diff --word-diff=color --word-diff-regex=[a-zA-Z_0-9]+
