@@ -107,6 +107,7 @@
 	poh = push origin HEAD
 	pom = push origin master
 	pr = !hub pull-request
+	praise = blame
 	prune = remote prune
 	prune-all = !git remote | xargs -n 1 git remote prune
 	publish = git flow feature publish
