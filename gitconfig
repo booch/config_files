@@ -26,6 +26,8 @@
 	default = upstream  # Push only the current branch by default, not all branches.
 [pull]
 	ff = true  # Only do fast-forward merges, so we don't overwrite any local changes.
+[rebase]
+	autostash = true  # Automatically stash and unstash during a rebase.
 [rerere]
 	enabled = true  # Automatically record and replay merge conflict resolutions. (http://git-scm.com/2010/03/08/rerere.html)
 [alias]
