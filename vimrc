@@ -3,7 +3,7 @@ set nocompatible
 
 " Use UTF-8 encoding, but allow other encodings.
 set encoding=utf-8
-set fencs=ucs-bom,utf-16le,utf-8,default,latin1
+set fencs=ucs-bom,utf-8,utf-16le,default,latin1
 
 " Optimize for fast TTY.
 set ttyfast
