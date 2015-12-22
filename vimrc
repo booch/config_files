@@ -1,6 +1,3 @@
-" Start out in insert mode.
-startinsert
-
 " Turn off vi backwards-compatibility junk.
 set nocompatible
 
