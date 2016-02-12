@@ -62,6 +62,8 @@ vim -c 'VundleInstall' -c 'VundleUpdate' -c 'qa!'
 
 ln -sf config_files/psqlrc            ~/.psqlrc
 
+ln -sf "$HOME/config_files/karabiner.xml" "$HOME/Library/Application Support/Karabiner/private.xml"
+
 if [ "`uname`"x = "Darwin"x  ]; then
   mkdir -p ~/Library/KeyBindings
   ln -f DefaultKeyBinding.Dict ~/Library/KeyBindings/DefaultKeyBinding.Dict

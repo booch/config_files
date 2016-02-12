@@ -29,6 +29,18 @@
       </item>
     </item>
     <item>
+      <name>Hot-Keys</name>
+      <item>
+        <name>Command+Shift+Comma opens System Preferences</name>
+        <identifier>boochtek.command_shift_comma_to_open_system_preferences</identifier>
+        <autogen>
+          __KeyToKey__
+          KeyCode::COMMA, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_COMMAND|MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT,
+          KeyCode::VK_OPEN_URL_System_Preferences,
+        </autogen>
+      </item>
+    </item>
+    <item>
       <name>Application-Specific Key Mappings</name>
       <item>
         <name>Control+PageDown (and PageUp) To Cycle Through Tabs (Control+Tab)</name>
@@ -71,5 +83,10 @@
     <productid>0x024f</productid>
     <productname>Keyboard_with_Numeric_Keypad</productname>
   </deviceproductdef>
+
+  <vkopenurldef>
+    <name>KeyCode::VK_OPEN_URL_System_Preferences</name>
+    <url type="file">/Applications/System Preferences.app</url>
+  </vkopenurldef>
 
 </root>
