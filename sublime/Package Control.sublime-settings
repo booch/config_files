@@ -1,11 +1,19 @@
 {
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
 	"installed_packages":
 	[
 		"Alignment",
 		"Colorcoder",
+		"CTags",
+		"ExpandRegion",
+		"Git",
 		"GitGutter",
 		"HTML5",
 		"Indent XML",
+		"Package Control",
 		"Rails Developer Snippets",
 		"Ruby Slim",
 		"RubyTest",

@@ -1,5 +1,7 @@
 {
 	"color_scheme": "Packages/Colorcoder/Solarized (Light) (Colorcode) (SL) (Colorcode).tmTheme",
+	"dictionary": "Packages/Language - English/en_US.dic",
+	"font_size": 16,
 	"ignored_packages":
 	[
 		"Vintage"

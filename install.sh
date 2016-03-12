@@ -69,6 +69,11 @@ if [ "$(uname)"x = "Darwin"x  ]; then
   ln -f DefaultKeyBinding.Dict ~/Library/KeyBindings/DefaultKeyBinding.Dict
 
   ln -sf "$HOME/config_files/karabiner.xml" "$HOME/Library/Application Support/Karabiner/private.xml"
+
+  ln -sf "$HOME/config_files/sublime/Preferences.sublime-settings" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings"
+  ln -sf "$HOME/config_files/sublime/Package Control.sublime-settings" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Package Control.sublime-settings"
+  ln -sf "$HOME/config_files/sublime/Ruby.sublime-settings" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Ruby.sublime-settings"
+  # ln -sf "$HOME/config_files/sublime/Default (OSX).sublime-keymap" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap"
 fi
 
 # TODO: Need more permission changes?
