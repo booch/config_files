@@ -64,11 +64,11 @@ fi
 
 ln -sf config_files/psqlrc            ~/.psqlrc
 
-ln -sf "$HOME/config_files/karabiner.xml" "$HOME/Library/Application Support/Karabiner/private.xml"
-
 if [ "$(uname)"x = "Darwin"x  ]; then
   mkdir -p ~/Library/KeyBindings
   ln -f DefaultKeyBinding.Dict ~/Library/KeyBindings/DefaultKeyBinding.Dict
+
+  ln -sf "$HOME/config_files/karabiner.xml" "$HOME/Library/Application Support/Karabiner/private.xml"
 fi
 
 # TODO: Need more permission changes?
