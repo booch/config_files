@@ -1,16 +1,16 @@
 #!/bin/sh
 
 # Make certain we're in the config_files directory.
-cd `dirname $0`
+cd "$(dirname $0)"
 
 # Get full path to config_files directory.
-CWD=`pwd`
+CWD="$(pwd)"
 
 # Get full list of config files.
-FILES=`ls -1A | grep -v README | grep -v install.sh | grep -v BACKUPS`
+FILES="$(ls -1A | grep -v README | grep -v install.sh | grep -v BACKUPS)"
 
 # Get today's date in YYYYMMDD format.
-TODAY=`date +'%Y%m%d'`
+TODAY="$(date +'%Y%m%d')"
 
 # FIXME: should be ! -e
 #if [ ! -e ~/BACKUPS-$TODAY ]; then
@@ -64,7 +64,7 @@ ln -sf config_files/psqlrc            ~/.psqlrc
 
 ln -sf "$HOME/config_files/karabiner.xml" "$HOME/Library/Application Support/Karabiner/private.xml"
 
-if [ "`uname`"x = "Darwin"x  ]; then
+if [ "$(uname)"x = "Darwin"x  ]; then
   mkdir -p ~/Library/KeyBindings
   ln -f DefaultKeyBinding.Dict ~/Library/KeyBindings/DefaultKeyBinding.Dict
 fi
