@@ -58,7 +58,9 @@ if [ ! -d vim/bundle/vundle ]; then
 fi
 mkdir -p ~/.vim/backup  # Make sure there's a global backup directory for vim.
 # Install and update Vundle bundles.
-vim -c 'VundleInstall' -c 'VundleUpdate' -c 'qa!'
+if command -v vim >/dev/null 2>&1 ; then
+  vim -c 'VundleInstall' -c 'VundleUpdate' -c 'qa!'
+fi
 
 ln -sf config_files/psqlrc            ~/.psqlrc
 
