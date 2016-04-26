@@ -77,7 +77,7 @@ end
 begin
   require 'pry'
   Pry.start || exit
-rescue LoadError
+rescue LoadError => err
   warn "Couldn't load Pry: #{err}"
 end
 
