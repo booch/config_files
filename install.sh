@@ -37,6 +37,7 @@ ln -sf config_files/gemrc             ~/.gemrc
 ln -sf config_files/irbrc             ~/.irbrc
 ln -sf config_files/aprc              ~/.aprc
 ln -sf config_files/railsrc           ~/.railsrc
+ln -sf config_files/ruby-version      ~/.ruby-version
 
 ln -sf config_files/gitconfig         ~/.gitconfig
 ln -sf config_files/gitignore         ~/.gitignore
@@ -75,6 +76,7 @@ if [ "$(uname)"x = "Darwin"x  ]; then
   ln -sf "$HOME/config_files/sublime/Ruby.sublime-settings" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Ruby.sublime-settings"
   # ln -sf "$HOME/config_files/sublime/Default (OSX).sublime-keymap" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap"
 fi
+
 
 # TODO: Need more permission changes?
 chmod go-rwx ~/.*_history
