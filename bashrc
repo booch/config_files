@@ -44,7 +44,8 @@ shopt -s cmdhist
 
 # When doing a 'cd', look in these directories for the destination.
 # I didn't like this, as it messes up completion too.
-#export CDPATH=.:~:~/work:/home/web:/usr/local:/usr/lib:/usr/share:/usr/src:/
+# WARNING: This should not be exported. https://bosker.wordpress.com/2012/02/12/bash-scripters-beware-of-the-cdpath/.
+#CDPATH=.:~:~/work:/home/web:/usr/local:/usr/lib:/usr/share:/usr/src:/
 
 # Change to a directory simply by typing its name. (Ignore errors if we don't have Bash 4 yet.)
 shopt -s autocd 2> /dev/null
