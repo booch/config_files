@@ -38,6 +38,7 @@ ln -sf config_files/irbrc             ~/.irbrc
 ln -sf config_files/aprc              ~/.aprc
 ln -sf config_files/railsrc           ~/.railsrc
 ln -sf config_files/ruby-version      ~/.ruby-version
+ln -sf config_files/rubocop.yml       ~/.rubocop.yml
 
 ln -sf config_files/gitconfig         ~/.gitconfig
 ln -sf config_files/gitignore         ~/.gitignore
