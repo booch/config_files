@@ -179,11 +179,10 @@ function parse_git_branch {
 #function parse_git_branch() {
 #  git name-rev HEAD 2> /dev/null | awk "{ print \\$2 }"
 #}
-PS1='${chroot:+($chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[0;33m\]$(parse_git_branch)\[\033[00m\]\n\$ '
-
+PS1='\[\033[40m\]${chroot:+($chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[0;33m\]$(parse_git_branch)\[\033[00m\]\n\$ '
 # Change color to red for root, to make it stand out more.
 if [ "`id -u`" -eq 0 ]; then
-    PS1='${chroot:+($chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\[\033[01;31m\]\$\[\033[00m\] '
+    PS1='\[\033[40m\]${chroot:+($chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\[\033[01;31m\]\$\[\033[00m\] '
 fi
 
 
