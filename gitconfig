@@ -30,6 +30,9 @@
 	autostash = true  # Automatically stash and unstash during a rebase.
 [rerere]
 	enabled = true  # Automatically record and replay merge conflict resolutions. (http://git-scm.com/2010/03/08/rerere.html)
+[diff]
+	algorithm = histogram
+	compactionHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read.
 [alias]
 	a = add
 	aa = !git add . && git add -u && git status
@@ -153,5 +156,4 @@
 	which-tags-contain = name-rev --name-only
 	who = shortlog -s --
 	wipe = !git reset --hard; git clean -fd
-[diff]
-	algorithm = histogram
+
