@@ -1,0 +1,36 @@
+---
+
+parserOptions:
+    ecmaVersion: 6
+    sourceType: module
+    ecmaFeatures:
+        impliedStrict: true
+        jsx: true
+
+env:
+    es6: true
+    browser: true
+    commonjs: true
+    jasmine: true
+    jquery: true
+    node: true
+    phantomjs: true
+
+extends: 'eslint:recommended'
+
+rules:
+    eqeqeq:
+        - error
+        - smart
+    indent:
+        - error
+        - 4
+    linebreak-style:
+        - error
+        - unix
+    quotes:
+        - warning
+        - smart
+    semi:
+        - error
+        - always

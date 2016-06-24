@@ -1,0 +1,20 @@
+{
+    "maxErrors": 50,
+
+    "preset": "airbnb",
+
+    "fileExtensions": [".js", ".jsx"],
+
+    "maximumLineLength": {
+        "value": 120,
+        "allExcept": ["comments", "require"]
+    },
+
+    "validateQuoteMarks": {
+        "mark": true,
+        "escape": true,
+        "ignoreJSX": true
+    },
+
+    "disallowMultipleLineBreaks": false
+}

@@ -1,0 +1,78 @@
+{
+    // Assume we're working with ES6.
+    "esversion"     : 6,
+
+    // Stop after reporting more than 50 errors.
+    "maxerr"        : 50,
+
+    // Enforcing - when true, these will make JSHint produce more warnings.
+    "bitwise"       : true,     // Prohibit use of bitwise operators.
+    "camelcase"     : true,     // Prohibit snake_case identifiers.
+    "curly"         : true,     // Require blocks (with curly braces) for all conditionals and loops.
+    "eqeqeq"        : true,     // Prohibit use of `==` and `!=` in favor of `===` and `!==` operators.
+    "forin"         : true,     // Require filtering `for` .. `in` loops with `obj.hasOwnProperty()`.
+    "freeze"        : false,    // Allow overwriting prototypes of native objects such as Array, Date, etc.
+    "futurehostile" : true,     // Warn about the use of identifiers which are defined in future versions of JavaScript.
+    "latedef"       : true,     // Require variables and functions to be defined before being used.
+    "maxcomplexity" : 10,       // Max 10 cyclomatic complexity per function definition.
+    "maxdepth"      : 4,        // Max 4 nested blocks within function definitions.
+    "maxparams"     : 5,        // Max 5 formal params allowed per function definition.
+    "maxstatements" : 12,       // Max 12 statements per function definition.
+    "noarg"         : true,     // Prohibit use of `arguments.caller` and `arguments.callee`.
+    "nocomma"       : true,     // Prohibit use of comma operator.
+    "nonbsp"        : true,     // Prohibit non-breaking whitespace characters.
+    "nonew"         : true,     // Prohibit use of constructors for side-effects (without assignment).
+    "notypeof"      : false,    // Prohibit invalid `typeof` operator values.
+    "plusplus"      : true,     // Prohibit use of `++` and `--` operators.
+    "singleGroups"  : true,     // Prohibit use of parentheses as grouping operator when not strictly required.
+    "strict"        : true,     // Require `"use strict";` directive at function level.
+    "undef"         : true,     // Require all non-global variables to be declared.
+    "unused"        : "strict", // Warn about all unused variables, including formal function parameters.
+    "varstmt"       : false,    // Allow `var` in addition to ES6 replacements `let` and `const`.
+
+    // Relaxing - when true, these will make JSHint produce fewer warnings.
+    "asi"           : false,    // Prohibit automatic semicolon insertion - require semicolon statement terminators.
+    "boss"          : false,    // Prohibit assignments where comparisons would be expected.
+    "debug"         : false,    // Prohibit debugger statements e.g. browser breakpoints.
+    "elision"       : false,    // Prohibit empty elements in array literals.
+    "eqnull"        : false,    // Prohibit checking if a value is equal to `null`.
+    "evil"          : false,    // Prohibit use of `eval` and `new Function()`.
+    "expr"          : false,    // Prohibit expressions where you would normally expect assignments or function calls.
+    "funcscope"     : false,    // Prohibit defining variables inside control statements.
+    "iterator"      : false,    // Prohibit use of the `__iterator__` property.
+    "lastsemic"     : false,    // Prohibit omitting a semicolon for the last statement of a 1-line block.
+    "loopfunc"      : false,    // Prohibit functions being defined in loops.
+    "moz"           : false,    // Prohibit Mozilla-specific syntax.
+    "noyield"       : false,    // Prohibit generator functions with no `yield` statement.
+    "proto"         : false,    // Prohibit using the `__proto__` property.
+    "scripturl"     : false,    // Prohibit URLs with `javascript`  scheme.
+    "shadow"        : false,    // Prohibit re-defining variables (within the same scope).
+    "supernew"      : false,    // Prohibit `new function () { ... };` and `new Object;`.
+    "withstmt"      : false,    // Prohibit `with` statements.
+
+    // Environments
+    "browser"       : true,
+    "browserify"    : false,
+    "couch"         : false,
+    "devel"         : true,
+    "dojo"          : false,
+    "jasmine"       : true,
+    "jquery"        : true,
+    "mocha"         : true,
+    "mootools"      : false,
+    "node"          : true,
+    "nonstandard"   : false,
+    "phantom"       : true,
+    "prototypejs"   : false,
+    "qunit"         : false,
+    "rhino"         : false,
+    "shelljs"       : false,
+    "typed"         : false,
+    "worker"        : false,
+    "wsh"           : false,
+    "yui"           : false,
+
+    // Allow these additional predefined global variables and functions.
+    "globals"       : { },
+    "predef"        : [ ]
+}

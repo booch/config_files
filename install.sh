@@ -39,6 +39,9 @@ ln -sf config_files/aprc              ~/.aprc
 ln -sf config_files/railsrc           ~/.railsrc
 ln -sf config_files/ruby-version      ~/.ruby-version
 ln -sf config_files/rubocop.yml       ~/.rubocop.yml
+ln -sf config_files/eslintrc.yml      ~/.eslintrc.yml
+ln -sf config_files/jscsrc            ~/.jscsrc
+ln -sf config_files/jshintrc          ~/.jshintrc
 
 ln -sf config_files/gitconfig         ~/.gitconfig
 ln -sf config_files/gitignore         ~/.gitignore
