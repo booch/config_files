@@ -42,6 +42,7 @@
 	amend = commit --amend --reset-author --reuse-message=HEAD
 	ap = add --patch
 	b = branch
+	bclean = "!f(){ git branch --merged master | awk '$NF !~ /master/ {print $NF}' | xargs git branch -d; }; f"
 	br = branch
 	branches = branch -a
 	c = commit -m
