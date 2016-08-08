@@ -130,6 +130,7 @@
 	sh = show
 	sho = show
 	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+	sq = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	st = status
 	staged = diff --staged
