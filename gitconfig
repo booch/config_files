@@ -99,6 +99,7 @@
 	log-local = log --oneline origin..HEAD
 	log-fetched = log --oneline HEAD..origin/master
 	lp = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	ls = log --oneline
 	merge-branch = !git checkout master && git merge @{-1}
 	merged = branch --merged
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
