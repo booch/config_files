@@ -55,13 +55,16 @@ Style/EmptyLines:
 # Use `[]` for `%w`, to remind us that we're creating an Array.
 # Use `[]` for `%x`, because it looks kind of like an input box.
 # Use `{}` for `%q`, because it's set off a bit nicer than `()`.
+# Use `{}` for `%r`, because regular expressions might have unbalanced `()` or `<>`.
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     '%w': []
     '%W': []
     '%x': []
+    '%': '{}'
     '%q': '{}'
     '%Q': '{}'
+    '%r': '{}'
 
 # Allow explicit `self`, as it adds clarity on occasion.
 Style/RedundantSelf:
