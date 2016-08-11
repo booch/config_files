@@ -48,7 +48,7 @@ Style/EmptyLinesAroundClassBody:
 Style/EmptyLinesAroundModuleBody:
   EnforcedStyle: empty_lines
 
-# Allow extra empty lines.
+# Allow (but don't require) extra empty lines.
 Style/EmptyLines:
   Enabled: false
 
@@ -86,13 +86,20 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   Enabled: false
 
-# Don't allow a space before a block brace.
+# Allow (but don't require) a space before a block brace.
 Style/SpaceBeforeBlockBraces:
-  EnforcedStyle: no_space
+  Enabled: false
 
 # Don't allow a space directly inside a Hash literal.
 Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
+
+# Require a space directly inside a block delineated with braces.
+# This is the default, but I wanted to call it out in contrast to Hash literals.
+Style/SpaceInsideBlockBraces:
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: no_space
+  SpaceBeforeBlockParameters: true
 
 # When using multi-line Arrays and Hashes, ensure the first element is also on its own line.
 Style/FirstArrayElementLineBreak:
@@ -100,7 +107,7 @@ Style/FirstArrayElementLineBreak:
 Style/FirstHashElementLineBreak:
   Enabled: true
 
-# Allow trailing comma in Array and Hash literals.
+# Allow (but don't require) trailing comma in Array and Hash literals.
 Style/TrailingCommaInLiteral:
   Enabled: false
 
