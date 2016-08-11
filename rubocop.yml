@@ -118,3 +118,7 @@ Style/Send:
 Style/PredicateName:
   NameWhitelist:
     - has_many
+
+# Ensure there's a newline at the end of the file, but not a blank line.
+Style/TrailingBlankLines:
+  EnforcedStyle: final_newline
