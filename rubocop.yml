@@ -25,6 +25,10 @@ Style/BlockDelimiters:
   EnforcedStyle: semantic
   FunctionalMethods:
     - expect
+  IgnoredMethods:
+    - let
+    - let!
+    - subject
 
 # Don't require `freeze` on every immutable constant.
 Style/MutableConstant:
