@@ -109,9 +109,10 @@
 	ours = "!f() { git co --ours $@ && git add $@; }; f"
 	p = pair
 	patch = log -p --no-walk # Generate patch file from a commit.
-	pick = cherry-pick
+	pf = push --force-with-lease
 	phh = push heroku HEAD
 	phm = push heroku master
+	pick = cherry-pick
 	poh = push origin HEAD
 	pom = push origin master
 	pr = !hub pull-request
