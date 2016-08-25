@@ -146,7 +146,7 @@
 	tree = log --graph --oneline --decorate --color --all
 	type = cat-file -t
 	uncommit = reset --soft HEAD^
-	undo = reset --hard
+	undo = '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f'
 	unignore = update-index --no-assume-unchanged
 	unmerge = reset --hard ORIG_HEAD
 	unmerged = branch --no-merged
