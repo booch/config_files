@@ -44,7 +44,7 @@
 	b = branch
 	bclean = "!f(){ git branch --merged master | awk '$NF !~ /master/ {print $NF}' | xargs git branch -d; }; f"
 	br = branch
-	branches = branch -a
+	branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/master refs/remotes
 	c = commit -m
 	ca = commit --amend
 	changes=diff --name-status -r
