@@ -19,8 +19,7 @@ echo -e "${COLOR_PURPLE}${OS}${COLOR_NONE} - ${COLOR_BROWN}bash ${BASH_VERSION}$
 
 # Pull in settings from other (possibly system-specific or private) files.
 if [[ -d $HOME/.profile.d ]]; then
-    profile_files=$(find -L $HOME/.profile.d/ -type file)
-    for profile_file in $profile_files; do
+    for profile_file in $(find -L $HOME/.profile.d/ -type file); do
         source $profile_file
     done
 fi
