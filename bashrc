@@ -276,10 +276,3 @@ export ANDROID_SDK_VERSION='21.0.1'
 if [[ -d /Applications/Android/SDK/$ANDROID_SDK_VERSION ]] ; then
     PATH=$PATH:/Applications/Android/SDK/$ANDROID_SDK_VERSION/tools:/Applications/Android/SDK/$ANDROID_SDK_VERSION/platform-tools
 fi
-
-# Automatically change Ruby versions when changing directories. Set a default Ruby version.
-if [[ -d /usr/local/share/chruby ]]; then
-    source /usr/local/share/chruby/chruby.sh
-    source /usr/local/share/chruby/auto.sh
-    chruby 2.3
-fi
