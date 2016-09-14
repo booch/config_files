@@ -113,6 +113,7 @@
 	phh = push heroku HEAD
 	phm = push heroku master
 	pick = cherry-pick
+	pickaxe = log -p -S
 	poh = push origin HEAD
 	pom = push origin master
 	pr = !hub pull-request
