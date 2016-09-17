@@ -203,7 +203,7 @@ autocmd FileType c set formatoptions+=ro
 " leave it alone.
 autocmd FileType html set formatoptions+=tl
 
-" In Mmakefiles, don't expand tabs to spaces, since actual tab characters are
+" In Makefiles, don't expand tabs to spaces, since actual tab characters are
 " needed, and have indentation at 8 chars to be sure that all indents are tabs
 autocmd FileType make set noexpandtab shiftwidth=8
 
