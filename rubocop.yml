@@ -34,6 +34,10 @@ Style/BlockDelimiters:
 Style/MutableConstant:
   Enabled: false
 
+# I don't want to add `# frozen_string_literal: true` to every file in Ruby 2.3+.
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 # Don't use backticks -- they're too hard to distinguish.
 Style/CommandLiteral:
   EnforcedStyle: percent_x
@@ -42,7 +46,7 @@ Style/CommandLiteral:
 Style/NumericLiterals:
   Enabled: false
 
-# Require a blank lines inside class/module definitions.
+# Require blank lines inside class/module definitions.
 Style/EmptyLinesAroundClassBody:
   EnforcedStyle: empty_lines
 Style/EmptyLinesAroundModuleBody:
