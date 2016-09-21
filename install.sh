@@ -53,6 +53,9 @@ ln -sf config_files/gitignore         ~/.gitignore
 
 ln -sf config_files/inputrc           ~/.inputrc
 
+mkdir -p ~/.docker
+ln -sf ../config_files/docker/config.json ~/.docker/config.json
+
 rm -rf ~/.mc
 ln -sf ../config_files/mc             ~/.mc
 
