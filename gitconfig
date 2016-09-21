@@ -116,6 +116,7 @@
 	pick = cherry-pick
 	pickaxe = log -p -S
 	poh = push origin HEAD
+	pohf = push origin HEAD --force-with-lease
 	pom = push origin master
 	pr = !hub pull-request
 	praise = blame
@@ -164,4 +165,3 @@
 	which-tags-contain = name-rev --name-only
 	who = shortlog -s --
 	wipe = !git reset --hard; git clean -fd
-
