@@ -6,9 +6,10 @@ ab date         <c-r>=strftime("%F")<CR>
 " Code signing:
 ab cbsign       Craig Buchek @booch <craig@boochtek.com>
 ab aksign       Amos King @adkron <amos@binarynoggin.com>
-ab bmsign       Bryan Maynard @bsgbryan <bsgbryan@gmail.com>
-ab gksign       Gene Kelly @volcanobean <Gene.Kelly@mercy.net>
-ab vssign       Vineel Sonnathi @vineelsonnathi <sonnathivinil@gmail.com>
+ab geers        Chris Geers @cgeers <christopher.geers@ctl.io>
+ab litton       Tom Litton @thomaslitton <thomas.litton@ctl.io>
+ab grimes       Chris Grimes @halis <chris.grimes@ctl.io>
+ab williams     Andrew Williams @williamsandrew <andrew.williams@ctl.io>
 
 " Fix typos:
 iab beacuse     because
