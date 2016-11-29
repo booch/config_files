@@ -98,17 +98,17 @@ fi
 
 
 
-# Set the default editor to nano, if it exists. Next best choice is pico, then vim.
-if type -P nano >/dev/null; then
+# Set the default editor to vim, if it exists. Next best choice is nano.
+if type -P vim >/dev/null; then
+    export EDITOR=vim
+    alias nano=vim
+    alias pico=vim
+elif type -P nano >/dev/null; then
     export EDITOR=nano
     alias pico=nano
 elif type -P pico >/dev/null; then
     export EDITOR=pico
     alias nano=pico
-elif type -P vim >/dev/null; then
-    export EDITOR=vim
-    alias nano=vim
-    alias pico=vim
 fi
 
 
