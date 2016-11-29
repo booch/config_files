@@ -63,6 +63,7 @@ Plugin 'honza/vim-snippets'
 
 
 "" Fugitive
+Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
 
 
