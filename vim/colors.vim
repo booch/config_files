@@ -33,6 +33,9 @@ if (&t_Co > 2)
     au WinEnter * set cursorline
   augroup END
 
+  " Highlight the current line more clearly in insert mode. (Match Airline colors.)
+  au InsertEnter * highlight cursorline term=none cterm=none ctermbg=45 gui=none guibg=#00DFFF
+  au InsertLeave * highlight cursorline term=none cterm=none ctermbg=lightgrey gui=none guibg=lightgrey
 
   " Show indicators for columns 80 and 120.
   set colorcolumn=80,120
