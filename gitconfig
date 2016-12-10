@@ -33,6 +33,7 @@
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read.
+    renames = copies  # Detect copies as well as renames.
 [alias]
 	a = add
 	aa = !git add . && git add -u && git status
@@ -43,6 +44,7 @@
 	anw = !git diff -U0 -w --no-color -- \"$@\" | git apply --cached --ignore-whitespace --unidiff-zero "#"
 	ap = add --patch
 	b = branch
+	back = checkout "-"
 	bclean = "!f(){ git branch --merged master | awk '$NF !~ /master/ {print $NF}' | xargs git branch -d; }; f"
 	br = branch
 	branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/master refs/remotes
@@ -56,6 +58,7 @@
 	co = checkout
 	cob = checkout -b
 	com = checkout master
+	contributors = shortlog --summary --numbered
 	cp = cherry-pick
 	create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
@@ -68,6 +71,7 @@
 	dh1 = diff HEAD~1
 	di = diff
 	diff-stat = diff -b --stat
+	discard = checkout --
 	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 	done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
 	ds = diff --stat=160,120
@@ -76,6 +80,7 @@
 	fb = "!f() { git branch -a --contains $1; }; f"
 	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
 	ff = merge --ff-only
+	file-trail = git log --follow -p -w
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	flip = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	flip-last = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
@@ -91,6 +96,7 @@
 	ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
 	ir = rebase -i origin/master
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+	last = log -1 HEAD --format=format:"%Cred%H"
 	lc = log ORIG_HEAD.. --stat --no-merges
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	llog = log --date=local
@@ -103,8 +109,10 @@
 	lp = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 	ls = log --oneline
 	merge-branch = !git checkout master && git merge @{-1}
+	merge-trail = log --ancestry-path --merges
 	merged = branch --merged
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+	nevermind = !git reset --hard HEAD && git clean -d -f
 	next = !git add . && git rebase --continue
 	noff = merge --no-ff
 	oneline = log --oneline
@@ -121,6 +129,8 @@
 	pom = push origin master
 	pr = !hub pull-request
 	praise = blame
+	precommit = diff --cached -w --word-diff=color --word-diff-regex='[^[:space:]<>]+'
+	prestage = diff -w --word-diff=color
 	prune = remote prune
 	prune-all = !git remote | xargs -n 1 git remote prune
 	publish = git flow feature publish
@@ -128,7 +138,10 @@
 	put = push origin HEAD
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
 	remotes = remote -v
+	remove = rm
 	reset-authors = commit --amend --reset-author -CHEAD
+	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
+	rewrite = rebase -i
 	ri = rebase --interactive
 	rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
 	s = status -s
@@ -140,7 +153,9 @@
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	st = status
 	staged = diff --staged
+	stashes = stash list
 	stat = status
+	summary = status -u -s
 	svn-pull = !git svn fetch && git svn rebase
 	svn-push = !git svn dcommit
 	swap = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
@@ -159,9 +174,12 @@
 	unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
 	unstage = reset HEAD --
 	unstash = stash pop
+	untrack = rm -r --cached
 	up = !git fetch origin && git rebase origin/master
 	update = !git fetch origin && git rebase origin/master
 	wdiff = diff --word-diff=color --word-diff-regex=[a-zA-Z_0-9]+
+	what = show -w
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 	which-branches-contain = branch -a --contains
 	which-tags-contain = name-rev --name-only
 	who = shortlog -s --
