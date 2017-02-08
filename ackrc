@@ -24,6 +24,7 @@
 --ignore-dir=mock_data
 --ignore-dir=stress_test_scripts
 --ignore-dir=vendor
+--ignore-dir=node_modules
 
 ## Add some new file types and file extensions.
 
