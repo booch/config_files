@@ -180,6 +180,10 @@ function parse_git_branch {
 #  git name-rev HEAD 2> /dev/null | awk "{ print \\$2 }"
 #}
 
+function display_X_if_error() {
+    [ "$?" -ne 0 ] && echo "❌ "
+}
+
 function ps1() {
     # \u = username
     # \h = hostname
@@ -195,7 +199,7 @@ function ps1() {
     local NORMAL='\[\e[0m\]'
     local CWD='\[\e[1;34m\]\w'
     local GIT='\[\e[1;33m\]$(parse_git_branch)'
-    echo "${BLACK_BG}${USER}${NORMAL}:${CWD}${GIT}${NORMAL}\n\\$ "
+    echo "${BLACK_BG}\$(display_X_if_error)${USER}${NORMAL}:${CWD}${GIT}${NORMAL}\n\\$ "
 }
 PS1="$(ps1)"
 
