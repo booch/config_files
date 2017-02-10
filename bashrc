@@ -179,11 +179,25 @@ function parse_git_branch {
 #function parse_git_branch() {
 #  git name-rev HEAD 2> /dev/null | awk "{ print \\$2 }"
 #}
-PS1='\[\033[40m\]${chroot:+($chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[0;33m\]$(parse_git_branch)\[\033[00m\]\n\$ '
-# Change color to red for root, to make it stand out more.
-if [ "`id -u`" -eq 0 ]; then
-    PS1='\[\033[40m\]${chroot:+($chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\[\033[01;31m\]\$\[\033[00m\] '
-fi
+
+function ps1() {
+    # \u = username
+    # \h = hostname
+    # \w = current working directory, with $HOME abbreviates as `~`
+    # \$ = `$`, or `#` if root
+    if [ "$(id -u)" -ne 0 ]; then
+        local USER_COLOR='\[\e[1;32m\]' # Use green for normal users.
+    else
+        local USER_COLOR='\[\e[1;31m\]' # Change color to red for root, to make it stand out more.
+    fi
+    local USER="${USER_COLOR}\\u@\\h${NORMAL}"
+    local BLACK_BG='\[\e[40m\]'
+    local NORMAL='\[\e[0m\]'
+    local CWD='\[\e[1;34m\]\w'
+    local GIT='\[\e[1;33m\]$(parse_git_branch)'
+    echo "${BLACK_BG}${USER}${NORMAL}:${CWD}${GIT}${NORMAL}\n\\$ "
+}
+PS1="$(ps1)"
 
 
 ## Handle PuTTY oddities.
