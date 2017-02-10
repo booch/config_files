@@ -203,6 +203,16 @@ function ps1() {
 }
 PS1="$(ps1)"
 
+function ps0() {
+    # \A = current time (24 hour)
+    local BLACK_BG='\[\e[40m\]'
+    local CYAN='\[\e[1;36m\]'
+    local TIME='\A'
+    local NORMAL='\[\e[00m\]'
+    echo "${BLACK_BG}${CYAN}${TIME}${NORMAL}\n"
+}
+PS0="$(ps0)"
+
 
 ## Handle PuTTY oddities.
 
