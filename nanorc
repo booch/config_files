@@ -51,3 +51,4 @@ set smarthome
 include "~/.nano/php.nanorc"
 include "~/.nano/css.nanorc"
 include "~/.nano/xml.nanorc"
+include "~/.nano/ruby.nanorc"
