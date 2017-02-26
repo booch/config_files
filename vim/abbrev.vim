@@ -1,7 +1,7 @@
 " Personal abbreviations:
 ab lnx          Linux
 ab cmb          Craig Buchek
-ab date         <c-r>=strftime("%F")<CR>
+ab ddate        <c-r>=strftime("%F")<CR>
 
 " Code signing:
 ab cbsign       Craig Buchek @booch <craig@boochtek.com>
