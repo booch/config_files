@@ -1,6 +1,7 @@
 " Allow either the default (\) leader key, or the more commonly used leader key (,).
 " FIXME: Sadly, this doesn't work in some situations.
 "nmap , <leader>
+nmap , \
 
 " Allow either default (:) or easier-to-type option (;) to start command-line mode.
 nnoremap ; :
