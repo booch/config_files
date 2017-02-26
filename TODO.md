@@ -1,3 +1,36 @@
+Git
+===
+
+* Use diff-so-fancy
+    * Take a look at the below settings I snagged from somewhere.
+        ~~~
+        [pager]
+            diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
+        [color "diff"]
+            meta = yellow bold
+            commit = green bold
+            frag = magenta bold
+            old = red bold
+            new = green bold
+            whitespace = red reverse
+        [color "diff-highlight"]
+            oldNormal = red bold
+            oldHighlight = "red bold 52"
+            newNormal = "green bold"
+            newHighlight = "green bold 22"
+        [color "branch"]
+            current = yellow reverse
+            local = yellow
+            remote = green
+        [color "status"]
+            added = yellow
+            changed = green
+            untracked = cyan
+        [alias]
+            patch = !git --no-pager diff --no-color
+        ~~~
+
+
 Vim
 ===
 
@@ -27,5 +60,3 @@ Keymapping
 	defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Select Previous Tab"  '^~\U21E5'
 	defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Next Tab"             '^\U21E5'
 	defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Previous Tab"         '^~\U21E5'
-
-
