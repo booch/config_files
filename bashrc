@@ -184,6 +184,10 @@ function display_X_if_error() {
     [ "$?" -ne 0 ] && echo "❌ "
 }
 
+function display_kubernetes_context_if_prod() {
+    type -P vim >/dev/null && kubectl config get-contexts | grep '^\*' | awk '{print $2}' | tr a-z A-Z | grep 'PROD'
+}
+
 function ps1() {
     # \u = username
     # \h = hostname
@@ -199,7 +203,8 @@ function ps1() {
     local NORMAL='\[\e[0m\]'
     local CWD='\[\e[1;34m\]\w'
     local GIT='\[\e[1;33m\]$(parse_git_branch)'
-    echo "${BLACK_BG}\$(display_X_if_error)${USER}${NORMAL}:${CWD}${GIT}${NORMAL}\n\\$ "
+    local KUBE='\[\e[1;31m\]$(display_kubernetes_context_if_prod)'
+    echo "${BLACK_BG}\$(display_X_if_error)${USER}${NORMAL}:${CWD}${GIT}\n${KUBE}${NORMAL}\\$ "
 }
 PS1="$(ps1)"
 
