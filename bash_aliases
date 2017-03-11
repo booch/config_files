@@ -39,6 +39,9 @@ alias tree='tree -Csu'		# nice alternative to 'ls'
 # If we've got vim (which we hopefully do!), alias vi as vim.
 which vim > /dev/null && alias vi=vim
 
+# If we call Emacs from the command line, don't open it in a GUI window.
+alias emacs='emacs -nw'
+
 # Typos
 alias more='less'
 alias kess='less'
