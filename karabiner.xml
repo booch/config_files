@@ -6,6 +6,21 @@
     <item>
       <name>Insert Key Emulation</name>
       <item>
+        <name>Shift+Delete To Cut (Command+X)</name>
+        <identifier>boochtek.shift_delete_to_cut</identifier>
+        <autogen>__KeyToKey__ KeyCode::FORWARD_DELETE, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::X, ModifierFlag::COMMAND_L</autogen>
+      </item>
+      <item>
+        <name>Shift+Help To Paste (Command+V)</name>
+        <identifier>boochtek.shift_help_to_paste</identifier>
+        <autogen>__KeyToKey__ KeyCode::HELP, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::V, ModifierFlag::COMMAND_L</autogen>
+      </item>
+      <item>
+        <name>Control+Help To Copy (Command+C)</name>
+        <identifier>boochtek.control_help_to_copy</identifier>
+        <autogen>__KeyToKey__ KeyCode::HELP, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::C, ModifierFlag::COMMAND_L</autogen>
+      </item>
+      <item>
         <name>Shift+Fn To Paste (Command+V)</name>
         <identifier>boochtek.shift_fn_to_paste</identifier>
         <autogen>__KeyToKey__ KeyCode::FN, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::V, ModifierFlag::COMMAND_L</autogen>
