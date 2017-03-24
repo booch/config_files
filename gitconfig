@@ -22,6 +22,11 @@
 	autocorrect = 50  # Automatically correct misspelled git subcommands after 5 seconds.
 [branch]
 	autosetuprebase = always  # Make 'git pull' rebase local commits on top of newly pulled-down commits instead of merging them. (http://www.viget.com/extend/only-you-can-prevent-git-merge-commits/)
+[pretty]
+	oneline-details = format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+	sha = format:%Cred%H\n
+	subject = format:%s
+	timeline = format:%h %an %ar - %s
 [push]
 	default = upstream  # Push only the current branch by default, not all branches.
 [pull]
@@ -78,35 +83,35 @@
 	dump = cat-file -p
 	fa = fetch --all
 	fb = "!f() { git branch -a --contains $1; }; f"
-	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+	fc = "!f() { git log --pretty=oneline-details --decorate --date=short -S$1; }; f"
 	ff = merge --ff-only
 	file-trail = git log --follow -p -w
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	flip = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	flip-last = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
-	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+	fm = "!f() { git log --pretty=oneline-details --decorate --date=short --grep=$1; }; f"
 	ft = "!f() { git describe --always --contains $1; }; f"
 	git = "!f() { git \"$@\"; }; f"
-	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	graph = log --graph --pretty=oneline-details --abbrev-commit --date=relative
 	go = checkout -B
-	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-	history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	hist = log --pretty=oneline-details --graph --date=short
+	history = log --pretty=oneline-details --graph --date=short
 	home = rev-parse --show-toplevel
 	ignore = update-index --assume-unchanged
 	ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
 	ir = rebase -i origin/master
-	l = log --pretty=oneline -n 20 --graph --abbrev-commit
-	last = log -1 HEAD --format=format:"%Cred%H"
+	l = log --pretty=oneline-details -n 20 --graph --abbrev-commit
+	last = !git --no-pager log -1 HEAD --format=sha
 	lc = log ORIG_HEAD.. --stat --no-merges
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	lg = log --graph --pretty=oneline-details --abbrev-commit --date=relative
 	llog = log --date=local
-	ln = log --pretty=format:'%Cblue%h %Cred* %C(yellow)%s'
+	ln = log --pretty=oneline-details
 	log-graph = log --all --graph --decorate
 	log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
-	log-timeline = log --format='%h %an %ar - %s'
+	log-timeline = log --format=timeline
 	log-local = log --oneline origin..HEAD
 	log-fetched = log --oneline HEAD..origin/master
-	lp = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	lp = log --pretty=oneline-details --abbrev-commit --date=relative
 	ls = log --oneline
 	merge-branch = !git checkout master && git merge @{-1}
 	merge-trail = log --ancestry-path --merges
@@ -145,7 +150,7 @@
 	ri = rebase --interactive
 	rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
 	s = status -s
-	search = log --pretty=short -S
+	search = log --pretty=oneline-details -S
 	sh = show
 	sho = show
 	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
@@ -161,7 +166,7 @@
 	swap = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	tags = tag -l
 	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
-	today = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
+	today = log --stat --since='1 Day Ago' --graph --pretty=oneline-details --abbrev-commit --date=relative
 	tr = log --graph --oneline --decorate --color
 	tree = log --graph --oneline --decorate --color --all
 	type = cat-file -t
@@ -179,7 +184,7 @@
 	update = !git fetch origin && git rebase origin/master
 	wdiff = diff --word-diff=color --word-diff-regex=[a-zA-Z_0-9]+
 	what = show -w
-	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+	whatis = show -s --pretty=oneline-details --date=short
 	which-branches-contain = branch -a --contains
 	which-tags-contain = name-rev --name-only
 	who = shortlog -s --
