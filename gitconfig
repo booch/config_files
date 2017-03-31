@@ -59,6 +59,7 @@
 	ca = commit --amend
 	changes=diff --name-status -r
 	changed=diff --name-only
+	cheddar = commit --amend -CHEAD
 	ci = commit -v
 	clear = !git add . && git stash && git stash drop
 	cm = commit
@@ -80,6 +81,7 @@
 	diff-stat = diff -b --stat
 	discard = checkout --
 	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	doff = reset head^
 	done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
 	ds = diff --stat=160,120
 	dump = cat-file -p
