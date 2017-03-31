@@ -51,7 +51,9 @@
 	b = branch
 	back = checkout "-"
 	bclean = "!f(){ git branch --merged master | awk '$NF !~ /master/ {print $NF}' | xargs git branch -d; }; f"
+	bn = !git branch-name
 	br = branch
+	branch-name = !git for-each-ref --format='%(refname:short)' $(git symbolic-ref HEAD)
 	branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/master refs/remotes
 	c = commit -m
 	ca = commit --amend
@@ -113,9 +115,12 @@
 	log-fetched = log --oneline HEAD..origin/master
 	lp = log --pretty=oneline-details --abbrev-commit --date=relative
 	ls = log --oneline
+	me = !git my-name
 	merge-branch = !git checkout master && git merge @{-1}
 	merge-trail = log --ancestry-path --merges
 	merged = branch --merged
+	my-email = config user.email
+	my-name = config user.name
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
 	nevermind = !git reset --hard HEAD && git clean -d -f
 	next = !git add . && git rebase --continue
@@ -166,7 +171,8 @@
 	swap = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	tags = tag -l
 	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
-	today = log --stat --since='1 Day Ago' --graph --pretty=oneline-details --abbrev-commit --date=relative
+	today = log --stat --since='12am' --graph --pretty=oneline-details --abbrev-commit --date=relative
+	today-all = log --all --since='12am' --graph --pretty=oneline-details --abbrev-commit --date=relative
 	tr = log --graph --oneline --decorate --color
 	tree = log --graph --oneline --decorate --color --all
 	type = cat-file -t
