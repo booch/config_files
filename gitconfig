@@ -154,6 +154,7 @@
 	remove = rm
 	reset-authors = commit --amend --reset-author -CHEAD
 	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
+	review = diff master..HEAD
 	rewrite = rebase -i
 	ri = rebase --interactive
 	rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
@@ -161,6 +162,8 @@
 	search = log --pretty=oneline-details -S
 	sh = show
 	sho = show
+	shove = push origin HEAD
+	ski = stash --keep-index
 	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
 	sq = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
@@ -195,6 +198,7 @@
 	wdiff = diff --word-diff=color --word-diff-regex=[a-zA-Z_0-9]+
 	what = show -w
 	whatis = show -s --pretty=oneline-details --date=short
+	whatsnew = log origin/master@{1}..origin/master@{0}
 	which-branches-contain = branch -a --contains
 	which-tags-contain = name-rev --name-only
 	who = shortlog -s --
