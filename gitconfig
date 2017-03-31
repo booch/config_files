@@ -116,6 +116,8 @@
 	log-timeline = log --format=timeline
 	log-local = log --oneline origin..HEAD
 	log-fetched = log --oneline HEAD..origin/master
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	lp = log --pretty=oneline-details --abbrev-commit --date=relative
 	ls = log --oneline
 	me = !git my-name
