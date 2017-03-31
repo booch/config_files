@@ -167,6 +167,7 @@
 	staged = diff --staged
 	stashes = stash list
 	stat = status
+	sub = submodule
 	summary = status -u -s
 	svn-pull = !git svn fetch && git svn rebase
 	svn-push = !git svn dcommit
