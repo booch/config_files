@@ -90,6 +90,7 @@
 	fc = "!f() { git log --pretty=oneline-details --decorate --date=short -S$1; }; f"
 	ff = merge --ff-only
 	file-trail = git log --follow -p -w
+	fix = !_() { c=$(git rev-parse $1) && git commit --fixup $c && git diff-index --quiet HEAD; s=$?; [ $s != 0 ] && git stash; git -c core.editor=cat rebase -i --autosquash $c~; [ $s != 0 ] && git stash pop; }; _
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	flip = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	flip-last = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
