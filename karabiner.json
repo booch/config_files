@@ -139,6 +139,24 @@
                                 "type": "basic"
                             },
                             {
+                                "description": "Map right Option to Control",
+                                "from": {
+                                    "key_code": "right_option",
+                                    "modifiers": {
+                                        "mandatory": [
+                                        ],
+                                        "optional": [
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_control"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
                                 "description": "Fn+A",
                                 "from": {
                                     "key_code": "a",
