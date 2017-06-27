@@ -55,7 +55,49 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+Tab",
+                                "description": "Alt+Tab cycles through applications (like Windows)",
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "tab",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Alt+Shift+Tab cycles through applications (in reverse) (like Windows)",
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option",
+                                            "shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "tab",
+                                        "modifiers": [
+                                            "command",
+                                            "shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Fn+Tab cycles through tabs (like Control+Tab)",
                                 "from": {
                                     "key_code": "tab",
                                     "modifiers": {
@@ -75,7 +117,7 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+Shift+Tab",
+                                "description": "Fn+Shift+Tab cycles through tabs (in reverse) (like Control+Shift+Tab)",
                                 "from": {
                                     "key_code": "tab",
                                     "modifiers": {
