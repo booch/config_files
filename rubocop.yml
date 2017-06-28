@@ -140,3 +140,12 @@ Style/PreferredHashMethods:
 # Ensure there's a newline at the end of the file, but not a blank line.
 Style/TrailingBlankLines:
   EnforcedStyle: final_newline
+
+
+#### Uncomment these if using with someone else's code.
+#Style/EmptyLinesAroundClassBody:
+#  Enabled: false
+#Style/EmptyLinesAroundModuleBody:
+#  Enabled: false
+#Stlye/StringLiterals:
+#  Enabled: false
