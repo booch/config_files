@@ -133,6 +133,10 @@ Style/PredicateName:
   NameWhitelist:
     - has_many
 
+# Allow `has_key?` and `has_value?` on Hash, as they read better than `key?` and `value?`.
+Style/PreferredHashMethods:
+  Enabled: false
+
 # Ensure there's a newline at the end of the file, but not a blank line.
 Style/TrailingBlankLines:
   EnforcedStyle: final_newline
