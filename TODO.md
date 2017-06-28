@@ -50,13 +50,114 @@ Mac Config
 Keymapping
 ----------
 
-* CapsLock -> Control
-* Right Option -> Control (laptop only)
-* Keyboard preferences -> Shortcuts
-  * Disable most of them
-    * Especially the Ctrl+Shift cursor keys, which override Sublime block selection mode.
+* System Preferences -> Keyboard -> Shortcuts
+    * Disable Mission Control / Mission Control
+        * The Ctrl+Up conflicts with Atom/Sublime block selection mode
+    * Disable Mission Control / Application Windows
+        * The Ctrl+Down conflicts with Atom/Sublime block selection mode
+    * Disable Mission Control / Move left a space
+    * Disable Mission Control / Move right a space
+    * Disable Mission Control / Show Desktop
+        * F11 should be a regular function key
+        * I don't keep anything on my desktop
+    * Disable Mission Control / Show Dashboard
+        * F12 should be a regular function key
+    * Change shortcut for Mission Control / Switch to Desktop 1
+        * Command+1
+    * Change shortcut for Mission Control / Switch to Desktop 2
+        * Command+2
 * Set some global app key-bindings (can also set them per app) (preferences calls tab \U21E5, but it should probably be \U0011):
-	defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Select Next Tab"      '^\U21E5'
-	defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Select Previous Tab"  '^~\U21E5'
-	defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Next Tab"             '^\U21E5'
-	defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Previous Tab"         '^~\U21E5'
+    ~~~ shell
+    defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Select Next Tab"      '^\U21E5'
+    defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Select Previous Tab"  '^~\U21E5'
+    defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Next Tab"             '^\U21E5'
+    defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Previous Tab"         '^~\U21E5'
+    ~~~
+* Limit to built-in laptop keyboard(s):
+    * Fn to Control mappings
+    * Right Option to Right Control
+* Finder fixes
+    * F2 to rename
+    * Enter to open (Command+O)
+        * https://github.com/tekezo/Files/blob/master/Karabiner/private.finder_return_to_open/private.xml
+    * Command+X to cut?
+* Windows equivalents
+    * F5 to Command+R (for refreshing pages) (and shifted variant) (and Command+F5)
+    * Alt+F4 to Command+Q (and Command+F4)
+* Restore settings from old Karabiner XML
+    * Only for Apple Keyboard with Numeric Keypad (device ID 0x024f)
+        * Shift+Fn to Paste (Command+V)
+        * Control+Fn to Copy (Command+C)
+        * Shift+ForwardDelete to Cut (Command+X)
+        * Fn To F19 (terminal apps only) (to work as Insert)
+    * Same thing for PC keyboards
+        * Use `PC Insert` instead of `Fn`
+    * Hot Keys (runs a command)
+        * Command+Shift+Comma opens System Preferences
+            * /Applications/System Preferences.app
+        * Lock screen (maybe Command+Shift+L)
+            * /usr/bin/pmset displaysleepnow
+            * /usr/bin/osascript -e 'tell application "System Events" to sleep'
+    * Others
+        * Control+PageDown (and PageUp) to Cycle Through Tabs (Control+Tab)
+        * Control+Return To Send Email (Command+Shift+D) (Apple Mail app only)
+* Decide what to do with a Hyper key
+    * Emacs?
+    * Vim mappings?
+    * App launching?
+    * System actions?
+        * Change Desktops (Spaces)
+        * Change window sizes/locations (remap Magnet key-bindings)
+* Space bar as modifier
+    * Hyper?
+    * Control?
+    * Shift?
+    * HJKL and WASD to cursor keys?
+* Tab key as modifier
+* Chording?
+    * See some examples at https://pqrs.org/osx/karabiner/list.html.en
+        * Simultaneous Key Presses
+            * Simultaneous arrow keys presses to Home/End/PageUp/PageDown
+            * Simultaneous Key Presses [F+HJKL] to Left/Down/Up/Right
+        * [ASETNIOP](http://asetniop.com/)
+        * [Engelbart](https://github.com/gabrielelana/engelbart/)
+* Return as Control modifier?
+* Mouse keys
+    * Example at https://github.com/tekezo/Files/blob/master/Karabiner/private.mouse_keys_mode_v2_option/private.xml
+    * Example at https://github.com/tekezo/Files/blob/master/Karabiner/private.mouse_keys_mode_v2_ijkl/private.xml
+* Command+\ to mirror Command+Tab
+    * Example at https://github.com/tekezo/Files/blob/master/Karabiner/private.command_backslash_to_command_tab/private.xml
+* Fix shortcuts to beginning/end of file
+    * Example at https://github.com/tekezo/Files/blob/master/Karabiner/private.control_home_end_to_beginning_end_of_file/private.xml
+* Ensure I use the correct Shift keys
+    * See http://stevelosh.com/blog/2012/10/a-modern-space-cadet/#better-shifting
+    * Also try the Shift to Parentheses that he suggests
+        * Or maybe Shift+Space for open/close parentheses
+* Sticky modifiers
+-* Alternate key layouts
+-    * Dvorak ([Programmer Dvorak](http://www.kaufmann.no/roland/dvorak/) specifically)
+-    * [Colemak](https://colemak.com/)
+-    * [Norman](https://normanlayout.info/)
+-    * [Capewell](http://www.michaelcapewell.com/projects/keyboard/layout_capewell.htm)
+-    * [QGMLWY](http://mkweb.bcgsc.ca/carpalx/?full_optimization)
+-* Buy a chording keyer
+-    * [Twiddler 3](http://twiddler.tekgear.com/)
+-    * [In10did DecaTxt](http://in10did.com/decatxt.html)
+-* Build a chording keyer
+-    * Use an [Adafruit Feather 32u4 Bluefruit LE](https://www.adafruit.com/product/3379) controller
+-    * Use Arduino code based on [SpiffChorder code](https://github.com/clc/chorder/blob/master/FeatherChorder/FeatherCh
+-    * See if we can get 2 buttons on the index and middle fingers
+-        * Or at least 2 different "on" positions
+-        * This would give 30-60 combinations (not including the thumb)
+-    * See if we can get 4 buttons on the thumb
+-        * Or something like a joystick with 4 positions
+-        * Or 2 rocker switches with 2 "on" positions each
+-    * See if we can get the thumb buttons to be toggles
+-        * They'll remain in "on" position until we press them a 2nd time
+-        * It should be easy to feel them to determine what state they're in
+-    * Ideal modifiers:
+-        * letters (no modifiers)
+-        * shift
+-        * number/punctuation (plus shifted variants)
+-        * control
+-        * command (and movements and actions)
