@@ -27,6 +27,14 @@ Atom
     * Like when I type `tab` and hit *Tab*, it expands to `table`, then to a Markdown table
 
 
+RuboCop
+=======
+
+* Change `Style` to `Layout` as appropriate
+    * Version 0.49 moved a lot of rules into a new `Layout` section
+* Review new rules (added since about 0.37) to see how I want them configured
+
+
 Git
 ===
 
