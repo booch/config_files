@@ -46,6 +46,10 @@ let g:airline_symbols.paste = 'PASTE'
 let g:airline_symbols.whitespace = 'Ξ'
 
 
+"" NerdTree - easier file navigation.
+Plugin 'scrooloose/nerdtree'
+
+
 "" Rainbow parentheses - color each matching set of parens differently.
 Plugin 'kien/rainbow_parentheses.vim'
 " Enable by default.
