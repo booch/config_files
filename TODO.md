@@ -1,3 +1,14 @@
+Shell
+=====
+
+* Break `bashrc` up like we're breaking up `profile.d`
+* Determine what really belongs in `bashrc` and what belongs in `profile`
+* Make a command to return ANSI color codes, instead of VARIABLES
+    * echo "$(color green)Hello, $(color green on black)World!$(color none)"
+    * Also allow for `prompt`, which will surround it with `'\['` and `'\]'`
+* Move setting of prompt to its own file (in `profile.d` or `bashrc.d`)
+
+
 Git
 ===
 
