@@ -1,7 +1,7 @@
 " Only use color if the terminal can handle it.
 if (&t_Co > 2)
 
-  " Force a light background. (Antique white on GUI, white otherwise.)
+  " Force a light background. (Antique white where possible, white otherwise.)
   if (&t_Co > 16)
     highlight Normal ctermfg=black ctermbg=231 guifg=black guibg=#FAEBD7
   else
@@ -25,12 +25,15 @@ if (&t_Co > 2)
   endif
 
   " Highlight the current line with a light grey background, only for the current buffer.
+  " Change the current line background to white when in INSERT mode.
   set cursorline
-  highlight cursorline term=none cterm=none ctermbg=lightgrey gui=none guibg=lightgrey
   augroup cline
     au!
-    au WinLeave * set nocursorline
-    au WinEnter * set cursorline
+    au WinLeave * setlocal nocursorline
+    au VimEnter,WinEnter,BufWinEnter,InsertLeave * highlight cursorline term=none cterm=none ctermbg=white gui=none guibg=white
+    au VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
+    au InsertEnter * highlight cursorline term=none cterm=none ctermbg=lightgrey gui=none guibg=lightgrey
+    au InsertEnter * setlocal cursorline
   augroup END
 
   " Highlight the current line more clearly in insert mode. (Match Airline colors.)
@@ -39,6 +42,6 @@ if (&t_Co > 2)
 
   " Show indicators for columns 80 and 120.
   set colorcolumn=80,120
-  highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+  highlight ColorColumn ctermbg=white guibg=white
 
 endif
