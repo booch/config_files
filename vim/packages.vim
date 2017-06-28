@@ -82,4 +82,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 
 
+"" Ack
+Plugin 'mileszs/ack.vim'
+
+
 filetype on
