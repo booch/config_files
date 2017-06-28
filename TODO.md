@@ -13,6 +13,8 @@ Atom
 ====
 
 * Ensure Atom config is saved in config_files
+* Change key-binding for Edit / Bookmark / View All
+    * The default `Control+F2` conflicts with the `Move focus to the menu bar` global shortcut
 * Remove key-bindings for Ctrl+Tab
     * Can now do that by unchecking **Enable MRU Tab Switching** in `Tabs` package
 * Restore Cmd+Shift+T back to reopening the most-recently closed tab
@@ -30,6 +32,7 @@ Atom
 RuboCop
 =======
 
+* Use 4-space indentation
 * Change `Style` to `Layout` as appropriate
     * Version 0.49 moved a lot of rules into a new `Layout` section
 * Review new rules (added since about 0.37) to see how I want them configured
@@ -80,44 +83,15 @@ Install more plugins (via Vundle):
 * tpope/vim-sensible - Defaults everyone can agree on
 
 
+Karabiner
+=========
 
-Mac Config
-==========
-
-Keymapping
-----------
-
-* System Preferences -> Keyboard -> Shortcuts
-    * Disable Mission Control / Mission Control
-        * The Ctrl+Up conflicts with Atom/Sublime block selection mode
-    * Disable Mission Control / Application Windows
-        * The Ctrl+Down conflicts with Atom/Sublime block selection mode
-    * Disable Mission Control / Move left a space
-    * Disable Mission Control / Move right a space
-    * Disable Mission Control / Show Desktop
-        * F11 should be a regular function key
-        * I don't keep anything on my desktop
-    * Disable Mission Control / Show Dashboard
-        * F12 should be a regular function key
-    * Change shortcut for Mission Control / Switch to Desktop 1
-        * Command+1
-    * Change shortcut for Mission Control / Switch to Desktop 2
-        * Command+2
-* Set some global app key-bindings (can also set them per app) (preferences calls tab \U21E5, but it should probably be \U0011):
-    ~~~ shell
-    defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Select Next Tab"      '^\U21E5'
-    defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Select Previous Tab"  '^~\U21E5'
-    defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Next Tab"             '^\U21E5'
-    defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Previous Tab"         '^~\U21E5'
-    ~~~
 * Limit to built-in laptop keyboard(s):
     * Fn to Control mappings
     * Right Option to Right Control
 * Finder fixes
-    * F2 to rename
     * Enter to open (Command+O)
         * https://github.com/tekezo/Files/blob/master/Karabiner/private.finder_return_to_open/private.xml
-    * Command+X to cut?
 * Windows equivalents
     * F5 to Command+R (for refreshing pages) (and shifted variant) (and Command+F5)
     * Alt+F4 to Command+Q (and Command+F4)
@@ -132,6 +106,7 @@ Keymapping
     * Hot Keys (runs a command)
         * Command+Shift+Comma opens System Preferences
             * /Applications/System Preferences.app
+            * Because Command+Comma is the standard keystroke to open Preferences in applications
         * Lock screen (maybe Command+Shift+L)
             * /usr/bin/pmset displaysleepnow
             * /usr/bin/osascript -e 'tell application "System Events" to sleep'
@@ -151,6 +126,9 @@ Keymapping
     * Shift?
     * HJKL and WASD to cursor keys?
 * Tab key as modifier
+    * Super?
+* Esc key as modifier
+    * Hyper?
 * Chording?
     * See some examples at https://pqrs.org/osx/karabiner/list.html.en
         * Simultaneous Key Presses
