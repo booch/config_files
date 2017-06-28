@@ -9,6 +9,24 @@ Shell
 * Move setting of prompt to its own file (in `profile.d` or `bashrc.d`)
 
 
+Atom
+====
+
+* Ensure Atom config is saved in config_files
+* Remove key-bindings for Ctrl+Tab
+    * Can now do that by unchecking **Enable MRU Tab Switching** in `Tabs` package
+* Restore Cmd+Shift+T back to reopening the most-recently closed tab
+    * Terminal-plus is overriding it
+* If in Terminal-plus, have Cmd+W close the terminal, instead of the current tab
+* Fix YAML Semanticolor settings
+    * Only colorize left side of key/value pairs
+        * Leave everything else normal color
+* Default Markdown to 4-space indentation
+* Default YAML to 4-space indentation
+* Make completion/expansion less aggressive
+    * Like when I type `tab` and hit *Tab*, it expands to `table`, then to a Markdown table
+
+
 Git
 ===
 
