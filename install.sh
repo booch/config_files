@@ -92,4 +92,5 @@ fi
 
 
 # TODO: Need more permission changes?
-chmod -f go-rwx ~/.*_history
+touch ~/.bash_history
+chmod go-rwx ~/.*_history
