@@ -185,7 +185,7 @@ function display_X_if_error() {
 }
 
 function display_kubernetes_context_if_prod() {
-    type -P vim >/dev/null && kubectl config get-contexts | grep '^\*' | awk '{print $2}' | tr a-z A-Z | grep 'PROD'
+    type -P kubectl >/dev/null && kubectl config get-contexts | grep '^\*' | awk '{print $2}' | tr a-z A-Z | grep 'PROD'
 }
 
 function ps1() {
