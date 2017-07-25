@@ -15,7 +15,11 @@ if (&t_Co > 2)
   "     LuciusLight
   " Acceptable dark color schemes:
   "     CodeSchool - http://astonj.com/tech/vim-for-ruby-rails-and-a-sexy-theme/
-  colorscheme Tomorrow
+  try
+    colorscheme Tomorrow
+  catch /^Vim\%((\a\+)\)\=:E185/
+    " Use default colorscheme for now.
+  endtry
 
   if has('syntax')
     syntax on
