@@ -31,7 +31,7 @@ ln -sf config_files/bash_profile      ~/.bash_profile
 ln -sf config_files/bashrc            ~/.bashrc
 ln -sf config_files/profile           ~/.profile
 mkdir -p ~/.profile.d
-for profile_file in $(find -L profile.d -type file); do
+for profile_file in $(find -L profile.d -type f); do
   ln -sf ../config_files/$profile_file ~/.profile.d/
 done
 ln -sf config_files/profile.d         ~/.profile.d
