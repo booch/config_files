@@ -81,7 +81,7 @@ if [ "$(uname)"x = "Darwin"x  ]; then
   mkdir -p ~/Library/KeyBindings
   ln -f DefaultKeyBinding.Dict ~/Library/KeyBindings/DefaultKeyBinding.Dict
 
-  ln -sf "$HOME/config_files/karabiner.xml" "$HOME/Library/Application Support/Karabiner/private.xml"
+  mkdir -p "$HOME/.config/karabiner"
   ln -sf "$HOME/config_files/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
 fi
 
