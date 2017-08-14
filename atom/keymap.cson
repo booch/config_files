@@ -1,7 +1,9 @@
 # Disable the default most-recently-used tab switching. (See http://blog.atom.io/2016/04/12/atom-1-7-and-1-8-beta.html for details.)
 
-'atom-text-editor':
+'atom-workspace':
     'ctrl-f2': 'unset!'                 # Make sure we can activate the menu through system keyboard shortcut.
+    'cmd-t': 'platformio-ide-terminal:toggle'
+'atom-text-editor':
     'cmd-b': 'goto-definition:go'
     'shift-delete': 'core:cut'          # This is a CUA standard.
     'shift-insert': 'core:paste'        # This is a CUA standard.
