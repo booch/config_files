@@ -1,0 +1,75 @@
+"*":
+  "atom-beautify":
+    _analyticsUserId: "be6897e7-321b-49db-9e4d-d108c1e1d7c2"
+    beautifyEntireFileOnSave: false
+  "autocomplete-ruby":
+    rsensePath: "/Users/booch/.gem/ruby/2.4.0/bin/rsense"
+  core:
+    telemetryConsent: "limited"
+    themes: [
+      "one-light-ui"
+      "one-light-syntax"
+    ]
+  editor:
+    fontSize: 16
+    invisibles: {}
+    preferredLineLength: 100
+    showInvisibles: true
+    tabLength: 4
+  "exception-reporting":
+    userId: "7b830b38-440b-41d0-3a18-986bcff58334"
+  linter: {}
+  "linter-rubocop":
+    command: "/Users/booch/.gem/ruby/2.4.1/bin/rubocop"
+  "linter-ui-default":
+    showPanel: true
+  minimap:
+    plugins:
+      "find-and-replace": true
+      "find-and-replaceDecorationsZIndex": 0
+      "git-diff": true
+      "git-diffDecorationsZIndex": 0
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
+      "minimap-autohide": true
+      "minimap-autohideDecorationsZIndex": 0
+      pigments: true
+      pigmentsDecorationsZIndex: 0
+      selection: true
+      selectionDecorationsZIndex: 0
+  "platformio-ide-terminal":
+    core: {}
+  "spell-check":
+    addKnownWords: true
+    knownWords: [
+      "Kanban"
+      "Ansible"
+      "Nginx"
+      "microservices"
+      "refactorings"
+      "Avdi"
+      "onboarding"
+    ]
+  tabs:
+    enableMruTabSwitching: false
+    enableVcsColoring: true
+  "terminal-plus":
+    core:
+      shell: "/bin/bash"
+      shellArguments: "-i --noprofile --norc --verbose"
+  welcome:
+    showOnStartup: false
+".c.source":
+  editor:
+    tabLength: 8
+".erb.html.text":
+  editor:
+    tabLength: 2
+".gfm.source":
+  editor:
+    autoIndentOnPaste: false
+    softWrap: false
+    tabLength: 4
+".ruby.source":
+  editor:
+    tabLength: 2

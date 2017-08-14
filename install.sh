@@ -75,6 +75,10 @@ if command -v vim >/dev/null 2>&1 ; then
   vim -c 'VundleInstall' -c 'VundleUpdate' -c 'qa!'
 fi
 
+mkdir -p ~/.atom
+ln -sf ../config_files/atom/config.cson  ~/.atom/config.cson
+ln -sf ../config_files/atom/keymap.cson  ~/.atom/keymap.cson
+
 ln -sf config_files/psqlrc            ~/.psqlrc
 
 if [ "$(uname)"x = "Darwin"x  ]; then
