@@ -35,6 +35,7 @@
 	autostash = true  # Automatically stash and unstash during a rebase.
 [rerere]
 	enabled = true  # Automatically record and replay merge conflict resolutions. (http://git-scm.com/2010/03/08/rerere.html)
+	autoupdate = true  # Automatically stage any resolutions that rerere solves.
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read.
