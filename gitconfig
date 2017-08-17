@@ -53,6 +53,12 @@
 	algorithm = histogram
 	compactionHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read.
 	renames = copies  # Detect copies as well as renames.
+[diff "plist"]
+	textconv = "plutil -convert xml1 -o -"
+[diff "zip"]
+	textconv = unzip -c -a
+[diff "localizablestrings"]
+	textconv = "iconv -f utf-16 -t utf-8"
 [alias]
 	a = add
 	aa = !git add --intent-to-add . && git add -u && git status

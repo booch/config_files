@@ -1,2 +1,5 @@
 db/schema.rb merge=railsschema
 Gemfile.lock merge=bundleinstall
+*.plist diff=plist
+*.strings diff=localizablestrings
+*.zip diff=zip
