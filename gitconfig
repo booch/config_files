@@ -18,6 +18,9 @@
 [merge]
 	tool = opendiff
 	summary = true
+[merge "bundleinstall"]
+	name = bundle install
+	driver = bundle install
 [merge "railsschema"]
 	name = newer Rails schema version
 	driver = "ruby -e '\n\
