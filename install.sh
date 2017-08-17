@@ -50,6 +50,7 @@ ln -sf config_files/jshintrc          ~/.jshintrc
 
 ln -sf config_files/gitconfig         ~/.gitconfig
 ln -sf config_files/gitignore         ~/.gitignore
+ln -sf config_files/gitattributes     ~/.gitattributes
 
 ln -sf config_files/inputrc           ~/.inputrc
 
