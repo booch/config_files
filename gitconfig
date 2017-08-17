@@ -42,35 +42,44 @@
 	renames = copies  # Detect copies as well as renames.
 [alias]
 	a = add
-	aa = !git add . && git add -u && git status
+	aa = !git add --intent-to-add . && git add -u && git status
 	ac = !git add -A && git commit
-	addall = !git add . && git add -u && git status
+	addall = !git add --intent-to-add . && git add -u && git status
+	ae = add --edit
+	ai = add --interactive
 	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
 	amend = commit --amend --reset-author --reuse-message=HEAD
 	anw = !git diff -U0 -w --no-color -- \"$@\" | git apply --cached --ignore-whitespace --unidiff-zero "#"
 	ap = add --patch
-	b = branch
+	at = add --intent-to-add
+	au = add --update
+	authors = "!git log --pretty=format:%aN | sort | uniq -c | sort -rn"
+	b = branch -vv
 	back = checkout "-"
 	bclean = "!f(){ git branch --merged master | awk '$NF !~ /master/ {print $NF}' | xargs git branch -d; }; f"
 	bn = !git branch-name
 	br = branch
 	branch-name = !git for-each-ref --format='%(refname:short)' $(git symbolic-ref HEAD)
 	branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/master refs/remotes
-	c = commit -m
+	c = commit
 	ca = commit --amend
 	changes=diff --name-status -r
 	changed=diff --name-only
+	check = diff --check
 	cheddar = commit --amend -CHEAD
 	cherry-lick = !sh -c 'hub checkout HEAD^{} -- && hub cherry-pick \"$@\"' _
 	ci = commit -v
 	clear = !git add . && git stash && git stash drop
-	cm = commit
+	cm = commit --message
 	co = checkout
 	cob = checkout -b
 	com = checkout master
+	conflicted = grep --name-only --full-name '<<<<<<< HEAD'
+	conflicts = grep --name-only --full-name '<<<<<<< HEAD'
 	continue = rebase --continue
 	contributors = shortlog --summary --numbered
 	cp = cherry-pick
+	cpc = cherry-pick --signoff
 	create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
@@ -84,19 +93,23 @@
 	di = diff
 	diff-stat = diff -b --stat
 	discard = checkout --
+	div = divergence
 	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 	doff = reset head^
 	done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
 	ds = diff --stat=160,120
+	dt = difftool
 	dump = cat-file -p
 	extend = commit -v --amend --no-edit
 	fa = fetch --all
 	fb = "!f() { git branch -a --contains $1; }; f"
 	fc = "!f() { git log --pretty=oneline-details --decorate --date=short -S$1; }; f"
 	ff = merge --ff-only
+	filelog = log -u
 	file-trail = log --follow -p -w
 	fix = "!_() { c=$(git rev-parse $1) && git commit --fixup $c && git diff-index --quiet HEAD; s=$?; [ $s != 0 ] && git stash; git -c core.editor=cat rebase -i --autosquash $c~; [ $s != 0 ] && git stash pop; }; _"
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	fl = log -u
 	flip = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	flip-last = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	fm = "!f() { git log --pretty=oneline-details --decorate --date=short --grep=$1; }; f"
@@ -104,12 +117,14 @@
 	git = "!f() { git \"$@\"; }; f"
 	graph = log --graph --pretty=oneline-details --abbrev-commit --date=relative
 	go = checkout -B
+	h = help
 	hist = log --pretty=oneline-details --graph --date=short
 	history = log --pretty=oneline-details --graph --date=short
 	home = rev-parse --show-toplevel
 	ignore = update-index --assume-unchanged
 	ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
 	ir = rebase -i origin/master
+	irb = rebase --interactive
 	l = log --pretty=oneline-details -n 20 --graph --abbrev-commit
 	last = !git --no-pager log -1 HEAD --format=sha
 	lc = log ORIG_HEAD.. --stat --no-merges
@@ -126,12 +141,16 @@
 	lp = log --pretty=oneline-details --abbrev-commit --date=relative
 	ls = log --oneline
 	me = !git my-name
+	m = merge -s recursive -X patience
 	merge-branch = !git checkout master && git merge @{-1}
 	merge-trail = log --ancestry-path --merges
 	merged = branch --merged
+	mm = merge --no-ff
+	mt = mergetool
 	my-email = config user.email
 	my-name = config user.name
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+	news = log -p HEAD@{1}..HEAD@{0}
 	nevermind = !git reset --hard HEAD && git clean -d -f
 	next = !git add . && git rebase --continue
 	noff = merge --no-ff
@@ -156,9 +175,16 @@
 	prune-all = !git remote | xargs -n 1 git remote prune
 	publish = git flow feature publish
 	pullff = pull --ff-only
+	push = push --tags
 	put = push origin HEAD
+	r = remote
+	rb = rebase
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbs = rebase --skip
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
 	recursive-update = "!sh -c 'find \"${@:-.}\" -type d -name .git -exec dirname {} \\; -exec git --git-dir={} remote update \\;' _"
+	regret = reset
 	remotes = remote -v
 	remove = rm
 	reset-authors = commit --amend --reset-author -CHEAD
@@ -166,23 +192,34 @@
 	review = diff master..HEAD
 	reword = commit -v --amend --only
 	rewrite = rebase -i
+	rh = reset --hard
 	ri = rebase --interactive
 	rlog = !sh -c 'git log --color \"$@\" | fmt -s -w 79 | less -FRSX' _
 	rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
+	root = rev-parse --show-toplevel
+	ru = remote update --prune
 	s = status -s
 	search = log --pretty=oneline-details -S
 	sh = show
+	sha1 = "!sh -c 'git rev-parse --short ${1:-HEAD}' --"
 	sho = show
 	shove = push origin HEAD
+	sl = shortlog
 	ski = stash --keep-index
 	skip = rebase --skip
+	sm = submodule
+	sma = submodule add
+	smu = submodule update --init --recursive
 	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
 	sq = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	st = status
+	sta = stash
 	staged = diff --staged
 	stashes = stash list
 	stat = status
+	stl = stash list
+	stp = stash pop
 	sub = submodule
 	summary = status -u -s
 	svn-pull = !git svn fetch && git svn rebase
@@ -208,6 +245,8 @@
 	untrack = rm -r --cached
 	up = !git fetch origin && git rebase origin/master
 	update = !git fetch origin && git rebase origin/master
+	wd = diff --word-diff="color"
+	wdc = diff --word-diff="color" --cached
 	wdiff = diff --word-diff=color --word-diff-regex=[a-zA-Z_0-9]+
 	what = show -w
 	whatis = show -s --pretty=oneline-details --date=short
