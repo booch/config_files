@@ -54,6 +54,8 @@ ln -sf config_files/gitattributes     ~/.gitattributes
 
 ln -sf config_files/inputrc           ~/.inputrc
 
+ln -sf config_files/ctags             ~/.ctags
+
 mkdir -p ~/.docker
 ln -sf ../config_files/docker/config.json ~/.docker/config.json
 
