@@ -227,6 +227,47 @@
                                 "type": "basic"
                             },
                             {
+                                "description": "Control+PageDown cycles through tabs (like Control+Tab)",
+                                "from": {
+                                    "key_code": "page_down",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "tab",
+                                        "modifiers": [
+                                            "control"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Control+PageUp cycles through tabs (in reverse) (like Control+Shift+Tab)",
+                                "from": {
+                                    "key_code": "page_up",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "tab",
+                                        "modifiers": [
+                                            "control",
+                                            "shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
                                 "description": "Right Option (alt) works as Control, or activates menu (Control+F2) if pressed alone and released",
                                 "from": {
                                     "key_code": "right_option",
