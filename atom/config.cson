@@ -4,6 +4,8 @@
     beautifyEntireFileOnSave: false
   "autocomplete-ruby":
     rsensePath: "/Users/booch/.gem/ruby/2.4.0/bin/rsense"
+  "autocomplete-plus":
+    confirmCompletion: "tab always, enter when suggestion explicitly selected"
   core:
     telemetryConsent: "limited"
     themes: [
