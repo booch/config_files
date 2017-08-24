@@ -8,11 +8,11 @@ set fencs=ucs-bom,utf-8,utf-16le,default,latin1
 " Optimize for fast TTY.
 set ttyfast
 
-" Timeout quickly for keycodes, slowly for mappings. Values are in milliseconds.
+" Timeout quickly for keycodes, slower for mappings. Values are in milliseconds.
 set timeout
 set ttimeout
-set timeoutlen=1000
-set ttimeoutlen=20
+set timeoutlen=100
+set ttimeoutlen=10
 
 " Enable a status line that displays the current cursor position. TODO: Add more to the status line.
 set ruler
