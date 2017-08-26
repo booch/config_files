@@ -102,3 +102,12 @@ if [ ! $(uname -s) = "Darwin" ]; then
   alias pbcopy='xsel --clipboard --input'
   alias pbpaste='xsel --clipboard --output'
 fi
+
+# Make Ripgrep (rg) output pretty, and pipe it to `less`, unless output is being piped elsewhere.
+function rg() {
+    if [[ -t 1 ]]; then
+        command rg --pretty "$@" | less -R
+    else
+        command rg --pretty "$@"
+    fi
+}
