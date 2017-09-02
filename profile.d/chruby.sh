@@ -5,7 +5,7 @@ if [[ -d /usr/local/share/chruby ]]; then
     # Automatically change Ruby versions when changing directories.
     source /usr/local/share/chruby/auto.sh
 
-    # See if we need to change Ruby versions for the directory we're in now.
-    [[ -r ~/.ruby-version ]] && chruby $(cat ~/.ruby-version)
-    [[ -r ./.ruby-version ]] && chruby $(cat ./.ruby-version)
+    # Change Ruby version for the directory we're in now.
+    unset RUBY_AUTO_VERSION
+    chruby_auto
 fi
