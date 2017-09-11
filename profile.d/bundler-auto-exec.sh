@@ -23,7 +23,9 @@ within-bundled-project()
 
 run-with-bundler()
 {
-    if bundler-installed && within-bundled-project; then
+    if [ -x "./.git/safe/../../bin/$0" ]; then
+        "./.git/safe/../../bin/$@"
+    elif bundler-installed && within-bundled-project; then
         bundle exec "$@"
     else
         "$@"
@@ -68,6 +70,7 @@ knife
 middleman
 pry
 rackup
+rails
 rake
 rake2thor
 rspec
@@ -79,6 +82,7 @@ shotgun
 sidekiq
 spec
 spork
+spring
 strainer
 thin
 thor
