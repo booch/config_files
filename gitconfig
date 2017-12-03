@@ -40,8 +40,11 @@
 	sha = format:%Cred%H\n
 	subject = format:%s
 	timeline = format:%h %an %ar - %s
+[fetch]
+	recurseSubmodules = on-demand  # Only pull submodule changes if the main project updates the submodule reference.
 [push]
 	default = upstream  # Push only the current branch by default, not all branches.
+	recurseSubmodules = on-demand  # Push any submodule changes first; if that fails, main project will not be pushed.
 [pull]
 	ff = true  # Only do fast-forward merges, so we don't overwrite any local changes.
 [rebase]
@@ -49,10 +52,13 @@
 [rerere]
 	enabled = true  # Automatically record and replay merge conflict resolutions. (http://git-scm.com/2010/03/08/rerere.html)
 	autoupdate = true  # Automatically stage any resolutions that rerere solves.
+[status]
+	submoduleSummary = true  # Show status of submodules in `git status` output.
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read.
 	renames = copies  # Detect copies as well as renames.
+	submodule = diff  # Show submodules changes in diffs just like any other changes.
 [diff "plist"]
 	textconv = "plutil -convert xml1 -o -"
 [diff "zip"]
