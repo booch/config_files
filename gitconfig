@@ -79,6 +79,7 @@
 	ap = add --patch
 	at = add --intent-to-add
 	au = add --update
+	authored-by = "!f(){ git log --no-merges --stat --author=\"$1\" --name-only --pretty=format:'' | sort -u | grep -v '^$' }; f"
 	authors = "!git log --pretty=format:%aN | sort | uniq -c | sort -rn"
 	b = branch -vv
 	back = checkout "-"
@@ -87,6 +88,7 @@
 	br = branch
 	branch-name = !git for-each-ref --format='%(refname:short)' $(git symbolic-ref HEAD)
 	branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/master refs/remotes
+	by = !git authored-by
 	c = commit
 	ca = commit --amend
 	changes=diff --name-status -r
@@ -100,6 +102,7 @@
 	co = checkout
 	cob = checkout -b
 	com = checkout master
+	committed-by = "!f(){ git log --no-merges --stat --committer=\"$1\" --name-only --pretty=format:'' | sort -u | grep -v '^$' }; f"
 	conflicted = grep --name-only --full-name '<<<<<<< HEAD'
 	conflicts = grep --name-only --full-name '<<<<<<< HEAD'
 	continue = rebase --continue
@@ -172,6 +175,7 @@
 	merge-trail = log --ancestry-path --merges
 	merged = branch --merged
 	mm = merge --no-ff
+	modified-by = !git authored-by
 	mt = mergetool
 	my-email = config user.email
 	my-name = config user.name
