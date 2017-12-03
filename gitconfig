@@ -202,6 +202,7 @@
 	rbc = rebase --continue
 	rbs = rebase --skip
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	recent = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 	recursive-update = "!sh -c 'find \"${@:-.}\" -type d -name .git -exec dirname {} \\; -exec git --git-dir={} remote update \\;' _"
 	regret = reset
 	remotes = remote -v
@@ -235,6 +236,7 @@
 	st = status
 	sta = stash
 	staged = diff --staged
+	stash-all = stash save --include-untracked
 	stashes = stash list
 	stat = status
 	stl = stash list
