@@ -48,6 +48,10 @@ alias kess='less'
 alias ks='ls'
 alias xs='cd'
 
+# If we aren't on MacOS, create an `open` alias.
+if [[ $(uname -a) =~ 'Linux' ]]; then
+    alias open='xdg-open'
+fi
 
 # Other Mac OS X stuff.
 if [ -x '/Applications/Komodo Edit.app/Contents/MacOS/komodo' ]; then
