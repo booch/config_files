@@ -1,4 +1,6 @@
 ---
-BUNDLE_BIN: bin
-BUNDLE_JOBS: '4'
+BUNDLE_JOBS: 4
 BUNDLE_PATH: vendor/bundle
+BUNDLE_GEM__COC: false
+BUNDLE_GEM__MIT: false
+BUNDLE_GEM__TEST: rspec
