@@ -165,6 +165,9 @@
 	log-timeline = log --format=timeline
 	log-local = log --oneline origin..HEAD
 	log-fetched = log --oneline HEAD..origin/master
+	logp = log --pretty=nice --date-order
+	logsf = log --stat --format=oneline --abbrev-commit
+	logst = log --stat
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	lp = log --pretty=oneline-details --abbrev-commit --date=relative
@@ -265,6 +268,7 @@
 	tree = log --graph --oneline --decorate --color --all
 	trust = !mkdir -p .git/safe
 	type = cat-file -t
+	unadd = reset HEAD --
 	uncommit = reset --soft HEAD^
 	undo = '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f'
 	unignore = update-index --no-assume-unchanged
@@ -285,5 +289,5 @@
 	whatsnew = log origin/master@{1}..origin/master@{0}
 	which-branches-contain = branch -a --contains
 	which-tags-contain = name-rev --name-only
-	who = shortlog -s --
+	who = shortlog -s --no-merges --numbered --
 	wipe = !git reset --hard; git clean -fd
