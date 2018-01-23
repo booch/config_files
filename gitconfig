@@ -210,6 +210,8 @@
 	pullff = pull --ff-only
 	push = push --tags
 	put = push origin HEAD
+	pwip = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" && git reset HEAD^ --'
+	pwipf = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" --force-with-lease && reset HEAD^ --'
 	r = remote
 	rb = rebase
 	rba = rebase --abort
