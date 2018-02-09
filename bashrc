@@ -210,11 +210,13 @@ PS1="$(ps1)"
 
 function ps0() {
     # \A = current time (24 hour)
+    # \D{format} = date (strfmt)
     local BLACK_BG='\[\e[40m\]'
     local CYAN='\[\e[1;36m\]'
+    local DATE='\D{%F}'
     local TIME='\A'
     local NORMAL='\[\e[00m\]'
-    echo "${BLACK_BG}${CYAN}${TIME}${NORMAL}\n"
+    echo "${BLACK_BG}${CYAN}${DATE} ${TIME}${NORMAL}\n"
 }
 PS0="$(ps0)"
 
