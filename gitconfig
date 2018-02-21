@@ -16,6 +16,7 @@
 	whitespace = strip
 	whitespace = nowarn
 [merge]
+	conflictstyle = diff3
 	tool = opendiff
 	summary = true
 [merge "bundleinstall"]
