@@ -31,6 +31,11 @@ imap <Esc>[1;2H <S-Home>
 map  <Esc>[1;2F <S-End>
 imap <Esc>[1;2F <S-End>
 
+map  <Esc>b <C-Left>
+imap <Esc>b <C-Left>
+map  <Esc>f <C-Right>
+imap <Esc>f <C-Right>
+
 " Make shifted cursor keys work, to select text.
 nmap <S-Up>    v<Up>
 nmap <S-Down>  v<Down>
