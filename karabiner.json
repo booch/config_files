@@ -882,7 +882,26 @@
                                     }
                                 ],
                                 "type": "basic"
+                            },
+                            {
+                                "description": "Command+Shift+comma opens System Preferences",
+                                "from": {
+                                    "key_code": "comma",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command",
+                                            "shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -b com.apple.systempreferences"
+                                    }
+                                ],
+                                "type": "basic"
                             }
+
                         ]
                     }
                 ]
