@@ -284,90 +284,6 @@
                         ]
                     },
                     {
-<<<<<<< HEAD
-||||||| parent of 9e8b764... Fixiu
-                        "description": "CUA cut and paste (on PC keyboard): Shift+Delete = Command+X, Shift+Insert = Command+V, Control+Insert = Command+C, Control+Delete = Command+C",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "delete_forward",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "shift"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "x",
-                                        "modifiers": [
-                                            "command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "insert",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "shift"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "v",
-                                        "modifiers": [
-                                            "command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "delete_forward",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "control"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "c",
-                                        "modifiers": [
-                                            "command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "insert",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "control"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "c",
-                                        "modifiers": [
-                                            "command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-=======
                         "description": "CUA cut and paste (on PC keyboard): Shift+Delete = Command+X, Shift+Insert = Command+V, Control+Insert = Command+C, Control+Delete = Command+C",
                         "manipulators": [
                             {
@@ -450,7 +366,6 @@
                     },
                     {
                         "TODO": "I'd REALLY like this to not affect left and right cursor keys",
->>>>>>> 9e8b764... Fixiu
                         "description": "Right Option (alt) works as Control, or activates menu (Control+F2) if pressed alone and released",
                         "manipulators": [
                             {
