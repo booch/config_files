@@ -9,9 +9,9 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Space bar with both Shift keys toggles Caps Lock",
                         "manipulators": [
                             {
-                                "description": "Space bar with both Shift keys toggles Caps Lock",
                                 "from": {
                                     "key_code": "spacebar",
                                     "modifiers": {
@@ -31,9 +31,13 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Command plus both Shift keys toggles Caps Lock",
+                        "manipulators": [
                             {
-                                "description": "Command plus both Shift keys toggles Caps Lock",
                                 "from": {
                                     "key_code": "left_shift",
                                     "modifiers": {
@@ -55,7 +59,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Command plus both Shift keys toggles Caps Lock",
                                 "from": {
                                     "key_code": "right_shift",
                                     "modifiers": {
@@ -77,7 +80,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Command plus both Shift keys toggles Caps Lock",
                                 "from": {
                                     "key_code": "left_command",
                                     "modifiers": {
@@ -99,7 +101,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Command plus both Shift keys toggles Caps Lock",
                                 "from": {
                                     "key_code": "right_command",
                                     "modifiers": {
@@ -119,9 +120,13 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Caps Lock as Control, or Escape if no other key pressed",
+                        "manipulators": [
                             {
-                                "description": "Caps Lock as Control, or Escape if no other key pressed",
                                 "from": {
                                     "key_code": "caps_lock",
                                     "modifiers": {
@@ -141,9 +146,13 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Windows-style cycling through applications (Alt+Tab, Shift+Alt+Tab)",
+                        "manipulators": [
                             {
-                                "description": "Alt+Tab cycles through applications (like Windows)",
                                 "from": {
                                     "key_code": "tab",
                                     "modifiers": {
@@ -163,7 +172,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Alt+Shift+Tab cycles through applications (in reverse) (like Windows)",
                                 "from": {
                                     "key_code": "tab",
                                     "modifiers": {
@@ -183,9 +191,13 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Fn+Tab cycles through tabs (like Control+Tab) (and shifted to reverse)",
+                        "manipulators": [
                             {
-                                "description": "Fn+Tab cycles through tabs (like Control+Tab)",
                                 "from": {
                                     "key_code": "tab",
                                     "modifiers": {
@@ -205,7 +217,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+Shift+Tab cycles through tabs (in reverse) (like Control+Shift+Tab)",
                                 "from": {
                                     "key_code": "tab",
                                     "modifiers": {
@@ -225,9 +236,13 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Control+PageUp/PageDown cycles through tabs (like Control+Tab)",
+                        "manipulators": [
                             {
-                                "description": "Control+PageDown cycles through tabs (like Control+Tab)",
                                 "from": {
                                     "key_code": "page_down",
                                     "modifiers": {
@@ -247,7 +262,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Control+PageUp cycles through tabs (in reverse) (like Control+Shift+Tab)",
                                 "from": {
                                     "key_code": "page_up",
                                     "modifiers": {
@@ -266,9 +280,180 @@
                                     }
                                 ],
                                 "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+<<<<<<< HEAD
+||||||| parent of 9e8b764... Fixiu
+                        "description": "CUA cut and paste (on PC keyboard): Shift+Delete = Command+X, Shift+Insert = Command+V, Control+Insert = Command+C, Control+Delete = Command+C",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "delete_forward",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "x",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
                             },
                             {
-                                "description": "Right Option (alt) works as Control, or activates menu (Control+F2) if pressed alone and released",
+                                "from": {
+                                    "key_code": "insert",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "v",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "delete_forward",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "c",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "insert",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "c",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+=======
+                        "description": "CUA cut and paste (on PC keyboard): Shift+Delete = Command+X, Shift+Insert = Command+V, Control+Insert = Command+C, Control+Delete = Command+C",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "delete_forward",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "x",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "insert",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "v",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "delete_forward",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "c",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "insert",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "c",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "TODO": "I'd REALLY like this to not affect left and right cursor keys",
+>>>>>>> 9e8b764... Fixiu
+                        "description": "Right Option (alt) works as Control, or activates menu (Control+F2) if pressed alone and released",
+                        "manipulators": [
+                            {
                                 "from": {
                                     "key_code": "right_option",
                                     "modifiers": {
@@ -292,9 +477,13 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Option (Alt) activates menu (Control+F2) if pressed alone and released",
+                        "manipulators": [
                             {
-                                "description": "Option (Alt) activates menu (Control+F2) if pressed alone and released",
                                 "from": {
                                     "key_code": "left_option",
                                     "modifiers": {
@@ -318,9 +507,13 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Fn+Shift+Up/Down acts as Control+Shift+Up/Down (Atom/Sublime block selection mode)",
+                        "manipulators": [
                             {
-                                "description": "Fn+Shift+Up acts as Control+Shift+Up (Atom/Sublime block selection mode)",
                                 "from": {
                                     "key_code": "up_arrow",
                                     "modifiers": {
@@ -342,7 +535,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+Shift+Down acts as Control+Shift+Down (Atom/Sublime block selection mode)",
                                 "from": {
                                     "key_code": "down_arrow",
                                     "modifiers": {
@@ -362,9 +554,13 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Fn acts as Control for letter keys",
+                        "manipulators": [
                             {
-                                "description": "Fn+A",
                                 "from": {
                                     "key_code": "a",
                                     "modifiers": {
@@ -384,7 +580,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+B",
                                 "from": {
                                     "key_code": "b",
                                     "modifiers": {
@@ -404,7 +599,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+C",
                                 "from": {
                                     "key_code": "c",
                                     "modifiers": {
@@ -424,7 +618,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+D",
                                 "from": {
                                     "key_code": "d",
                                     "modifiers": {
@@ -444,7 +637,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+E",
                                 "from": {
                                     "key_code": "e",
                                     "modifiers": {
@@ -464,7 +656,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+F",
                                 "from": {
                                     "key_code": "f",
                                     "modifiers": {
@@ -484,7 +675,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+G",
                                 "from": {
                                     "key_code": "g",
                                     "modifiers": {
@@ -504,7 +694,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+H",
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": {
@@ -524,7 +713,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+I",
                                 "from": {
                                     "key_code": "i",
                                     "modifiers": {
@@ -544,7 +732,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+J",
                                 "from": {
                                     "key_code": "j",
                                     "modifiers": {
@@ -564,7 +751,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+K",
                                 "from": {
                                     "key_code": "k",
                                     "modifiers": {
@@ -584,7 +770,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+L",
                                 "from": {
                                     "key_code": "l",
                                     "modifiers": {
@@ -604,7 +789,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+M",
                                 "from": {
                                     "key_code": "m",
                                     "modifiers": {
@@ -624,7 +808,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+N",
                                 "from": {
                                     "key_code": "n",
                                     "modifiers": {
@@ -644,7 +827,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+O",
                                 "from": {
                                     "key_code": "o",
                                     "modifiers": {
@@ -664,7 +846,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+P",
                                 "from": {
                                     "key_code": "p",
                                     "modifiers": {
@@ -684,7 +865,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+Q",
                                 "from": {
                                     "key_code": "q",
                                     "modifiers": {
@@ -704,7 +884,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+R",
                                 "from": {
                                     "key_code": "r",
                                     "modifiers": {
@@ -724,7 +903,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+S",
                                 "from": {
                                     "key_code": "s",
                                     "modifiers": {
@@ -744,7 +922,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+T",
                                 "from": {
                                     "key_code": "t",
                                     "modifiers": {
@@ -764,7 +941,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+U",
                                 "from": {
                                     "key_code": "u",
                                     "modifiers": {
@@ -784,7 +960,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+V",
                                 "from": {
                                     "key_code": "v",
                                     "modifiers": {
@@ -804,7 +979,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+W",
                                 "from": {
                                     "key_code": "w",
                                     "modifiers": {
@@ -824,7 +998,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+X",
                                 "from": {
                                     "key_code": "x",
                                     "modifiers": {
@@ -844,7 +1017,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+Y",
                                 "from": {
                                     "key_code": "y",
                                     "modifiers": {
@@ -864,7 +1036,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "Fn+Z",
                                 "from": {
                                     "key_code": "z",
                                     "modifiers": {
@@ -882,9 +1053,13 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Command+Shift+comma opens System Preferences",
+                        "manipulators": [
                             {
-                                "description": "Command+Shift+comma opens System Preferences",
                                 "from": {
                                     "key_code": "comma",
                                     "modifiers": {
