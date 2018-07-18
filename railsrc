@@ -7,6 +7,8 @@ def routes
   ActionController::Routing::Routes.routes
 end
 
+# Allow us to access routes directly. From https://stackoverflow.com/a/13553422/26311
+include Rails.application.routes.url_helpers
+
 # Log database access to the console. From http://rubyquicktips.tumblr.com/post/379756937/always-turn-on-activerecord-logging-in-the-console
 ActiveRecord::Base.logger = Logger.new(STDOUT) if Object.const_defined?('ActiveRecord')
-
