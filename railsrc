@@ -1,14 +1,34 @@
-# From recipe #37 in Advanced Rails Recipes
+# Get SQL for a given query. From recipe #37 in Advanced Rails Recipes.
+# Examples: `sql(User.where(first_name: 'Craig'))`, `sql(customer.users.inactive)`
 def sql(query)
-  ActiveRecord::Base.connection.select_all(query)
+  query.to_sql
 end
 
+# List known routes, including HTTP request template, route name, and action.
+# Based on idea from https://coderwall.com/p/hajwva/find-routes-in-rails-console.
+# TODO: Turn this into a formatter (like ActionDispatch::Routing::ConsoleFormatter) and use that instead.
 def routes
-  ActionController::Routing::Routes.routes
+  routes = Rails.application.routes.routes.map{ |r|
+    w = ActionDispatch::Routing::RouteWrapper.new(r)
+    [
+      w.path,
+      "#{r.verb.presence || '(ANY)'} #{w.path}",
+      r.name&.+("_path"),
+      w.reqs
+    ]
+  }
+  routes.map{ |_path, http, name, action|
+    [
+        http,
+        name ? name : routes.select{ |path, _, name, _| path == "/" && name }.first&.fetch(2){ nil },
+        action
+    ]
+  }
 end
 
-# Allow us to access routes directly. From https://stackoverflow.com/a/13553422/26311
+# Allow us to access URL helpers directly. From https://stackoverflow.com/a/13553422/26311.
+# This lets us access things like `customers_url` and `user_url(1)`.
 include Rails.application.routes.url_helpers
 
-# Log database access to the console. From http://rubyquicktips.tumblr.com/post/379756937/always-turn-on-activerecord-logging-in-the-console
-ActiveRecord::Base.logger = Logger.new(STDOUT) if Object.const_defined?('ActiveRecord')
+# Log database access to the console. From http://rubyquicktips.tumblr.com/post/379756937/always-turn-on-activerecord-logging-in-the-console.
+ActiveRecord::Base.logger = Logger.new(STDOUT) if Object.const_defined?('ActiveRecord') unless Rails.env.test?
