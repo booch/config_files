@@ -19,7 +19,7 @@ Metrics/LineLength:
 Style/Documentation:
   Enabled: false
 
-# Outdent `private`/`'protected`/`public`.
+# Outdent `private`/`protected`/`public`.
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
 
@@ -58,6 +58,10 @@ Layout/EmptyLinesAroundModuleBody:
 
 # Allow (but don't require) extra empty lines.
 Layout/EmptyLines:
+  Enabled: false
+
+# Don't require empty methods to have the `def` and `end` on a single line.
+Style/EmptyMethod:
   Enabled: false
 
 # Use `[]` for `%w`, to remind us that we're creating an Array.
@@ -142,6 +146,20 @@ Style/PreferredHashMethods:
 # Ensure there's a newline at the end of the file, but not a blank line.
 Layout/TrailingBlankLines:
   EnforcedStyle: final_newline
+
+# Allow assigning to the same variable in multiple branches of an `if` or `case`.
+Style/ConditionalAssignment:
+  Enabled: false
+
+# Allow long blocks in specs and tests.
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - test/**/*
+
+# Don't require use of Ruby 2.3+ safe navigation operator.
+Style/SafeNavigation:
+  Enabled: false
 
 
 #### Uncomment these if using with someone else's code.
