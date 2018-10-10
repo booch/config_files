@@ -36,6 +36,7 @@ rm -rf ~/.bundle
 ln -sf config_files/bundle            ~/.bundle
 ln -sf config_files/gemrc             ~/.gemrc
 ln -sf config_files/irbrc             ~/.irbrc
+ln -sf config_files/pryrc             ~/.pryrc
 ln -sf config_files/aprc              ~/.aprc
 ln -sf config_files/railsrc           ~/.railsrc
 ln -sf config_files/ruby-version      ~/.ruby-version
