@@ -26,7 +26,8 @@ end
 require 'pp'
 
 
-# The 'ap' extension is even nicer for pretty-printing output. Requires config to be in ~/.aprc though. See http://github.com/michaeldv/awesome_print for details.
+# The 'ap' extension is even nicer for pretty-printing output.
+# See http://github.com/michaeldv/awesome_print for details.
 extend_console 'ap' do
   AwesomePrint.defaults = {
     :sorted_hash_keys => true
@@ -49,15 +50,6 @@ extend_console 'ap' do
       end
     end
   end
-end
-
-
-# Enable Wirble: colorize IRB output; save history across sessions in ~/.irb_history file.
-# Automatically loads rubygems, pp, and irb/completion.
-# Adds a fewe aliases: ri (run ri docs), po (print object methods), poc (print object constants).
-# See http://pablotron.org/software/wirble/ for details.
-extend_console 'wirble' do
-  Wirble.init :init_colors => true, :colors => {:number => :nothing}
 end
 
 
@@ -98,3 +90,6 @@ class Object
     (methods - Object.instance_methods).sort
   end
 end
+
+
+load '~/.pryrc' if defined?(Pry)
