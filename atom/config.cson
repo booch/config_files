@@ -20,6 +20,8 @@
     tabLength: 4
   "exception-reporting":
     userId: "7b830b38-440b-41d0-3a18-986bcff58334"
+  "language-elm":
+    autocompleteEnabled: false
   linter: {}
   "linter-rubocop":
     command: "/Users/booch/.gem/ruby/2.4.1/bin/rubocop"
