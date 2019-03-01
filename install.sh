@@ -44,6 +44,7 @@ ln -sf config_files/rubocop.yml       ~/.rubocop.yml
 ln -sf config_files/eslintrc.yml      ~/.eslintrc.yml
 ln -sf config_files/jscsrc            ~/.jscsrc
 ln -sf config_files/jshintrc          ~/.jshintrc
+ln -sf config_files/racketrc          ~/.racketrc
 
 ln -sf config_files/gitconfig         ~/.gitconfig
 ln -sf config_files/gitignore         ~/.gitignore
