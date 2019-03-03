@@ -50,6 +50,8 @@ ln -sf config_files/gitconfig         ~/.gitconfig
 ln -sf config_files/gitignore         ~/.gitignore
 ln -sf config_files/gitattributes     ~/.gitattributes
 
+ln -sf config_files/spelling/dictionary.txt ~/Library/Spelling/LocalDictionary
+
 ln -sf config_files/inputrc           ~/.inputrc
 
 ln -sf config_files/ctags             ~/.ctags

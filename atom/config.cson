@@ -47,15 +47,7 @@
     core: {}
   "spell-check":
     addKnownWords: true
-    knownWords: [
-      "Kanban"
-      "Ansible"
-      "Nginx"
-      "microservices"
-      "refactorings"
-      "Avdi"
-      "onboarding"
-    ]
+    knownWords: []
   tabs:
     enableMruTabSwitching: false
     enableVcsColoring: true
