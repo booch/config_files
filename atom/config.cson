@@ -2,10 +2,10 @@
   "atom-beautify":
     _analyticsUserId: "be6897e7-321b-49db-9e4d-d108c1e1d7c2"
     beautifyEntireFileOnSave: false
-  "autocomplete-ruby":
-    rsensePath: "/Users/booch/.gem/ruby/2.4.0/bin/rsense"
   "autocomplete-plus":
     confirmCompletion: "tab always, enter when suggestion explicitly selected"
+  "autocomplete-ruby":
+    suggestionPriority: true
   core:
     telemetryConsent: "limited"
     themes: [
@@ -24,7 +24,7 @@
     autocompleteEnabled: false
   linter: {}
   "linter-rubocop":
-    command: "/Users/booch/.gem/ruby/2.4.1/bin/rubocop"
+    command: "/usr/local/bin/rubocop"
   "linter-ui-default":
     showPanel: true
   minimap:
