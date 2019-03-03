@@ -2,6 +2,8 @@
   "atom-beautify":
     _analyticsUserId: "be6897e7-321b-49db-9e4d-d108c1e1d7c2"
     beautifyEntireFileOnSave: false
+  "autocomplete-paths":
+    maxFileCount: 5000
   "autocomplete-plus":
     confirmCompletion: "tab always, enter when suggestion explicitly selected"
   "autocomplete-ruby":
