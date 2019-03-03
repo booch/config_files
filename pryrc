@@ -20,16 +20,27 @@ AWESOME_PRINT_COLORS = {
   variable:   :cyanish
 }
 
-Pry.config.color = false unless STDIN.tty?
-Pry.config.prompt = [
-  proc { |target_self, nesting_level, pry|
-    "[#{pry.input_array.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}> "
-  },
-  proc { |target_self, nesting_level, pry|
-    "[#{pry.input_array.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}* "
-  }
-]
 
+## Custom Prompts
+if STDIN.tty?
+  Pry.config.prompt = [
+    proc { |target_self, nesting_level, pry|
+      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}> "
+    },
+    proc { |target_self, nesting_level, pry|
+      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}* "
+    }
+  ]
+end
+
+
+## Non-interactive Sessions
+Pry.config.color = false unless STDIN.tty?
+
+
+## Hooks
+
+# Show Ruby version on startup
 Pry.hooks.add_hook(:before_session, "show_versions") do |output, _binding, _pry|
   unless @pry_versions_shown
     output.puts("Ruby #{RUBY_VERSION}")
@@ -37,11 +48,13 @@ Pry.hooks.add_hook(:before_session, "show_versions") do |output, _binding, _pry|
   end
 end
 
+# Show current time before executing each command
 Pry.hooks.add_hook(:after_read, "show_time") do |_input_string, pry|
   pry.output.puts("\x1b[40m\x1b[1;36m#{Time.now.getlocal.strftime("%Y-%m-%d %H:%M")}\x1b[00m")
 end
 
 
+## AwesomePrint
 begin
   require "awesome_print"
 
@@ -68,5 +81,6 @@ rescue LoadError
 end
 
 
+## Rails
 # Load Rails config if we're running Rails console.
 load "~/.railsrc" if defined?(Rails) && Rails.env
