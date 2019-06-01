@@ -2,6 +2,9 @@
   "atom-beautify":
     _analyticsUserId: "be6897e7-321b-49db-9e4d-d108c1e1d7c2"
     beautifyEntireFileOnSave: false
+    general:
+      _analyticsUserId: "c95fd716-87b6-47ab-95e9-c35ae0c6f4d5"
+  "atom-pair": {}
   "autocomplete-paths":
     maxFileCount: 5000
   "autocomplete-plus":
@@ -15,7 +18,7 @@
       "one-light-syntax"
     ]
   editor:
-    fontSize: 16
+    fontSize: 19
     invisibles: {}
     preferredLineLength: 100
     showInvisibles: true
@@ -28,7 +31,7 @@
   "linter-rubocop":
     command: "/usr/local/bin/rubocop"
   "linter-ui-default":
-    showPanel: true
+    panelHeight: 187
   minimap:
     plugins:
       "find-and-replace": true
@@ -61,6 +64,9 @@
   editor:
     tabLength: 8
 ".erb.html.text":
+  editor:
+    tabLength: 2
+".gemfile.ruby.source":
   editor:
     tabLength: 2
 ".gfm.source":
