@@ -75,6 +75,8 @@
 	ae = add --edit
 	ai = add --interactive
 	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
+	all-ours = !for file in $(git status -s | grep UU | cut -c4-); do git checkout --ours $file && git add $file; done
+	all-theirs = !for file in $(git status -s | grep UU | cut -c4-); do git checkout --theirs $file && git add $file; done
 	amend = commit --amend --reset-author --reuse-message=HEAD
 	anw = !git diff -U0 -w --no-color -- \"$@\" | git apply --cached --ignore-whitespace --unidiff-zero "#"
 	ap = add --patch
