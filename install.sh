@@ -81,6 +81,7 @@ fi
 mkdir -p ~/.atom
 ln -sf ../config_files/atom/config.cson  ~/.atom/config.cson
 ln -sf ../config_files/atom/keymap.cson  ~/.atom/keymap.cson
+ln -sf ../../../../config_files/atom/touchbar.js  ~/.atom/packages/touchbar-utility/lib/configuration.js
 
 ln -sf config_files/psqlrc            ~/.psqlrc
 
