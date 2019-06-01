@@ -15,7 +15,7 @@ within-bundled-project()
 {
     local dir="$(pwd)"
     while [ "$(dirname $dir)" != "/" ]; do
-        [ -f "$dir/Gemfile" ] && return
+        [ -f "$dir/Gemfile" ] || [ -f "$dir/gems.rb" ] && return
         dir="$(dirname $dir)"
     done
     false
