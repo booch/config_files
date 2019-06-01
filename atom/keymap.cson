@@ -4,6 +4,14 @@
     'ctrl-f2': 'unset!'                 # Make sure we can activate the menu through system keyboard shortcut.
     'cmd-t': 'platformio-ide-terminal:toggle'
 'atom-text-editor':
+    'cmd-home': 'core:move-to-top'
+    'cmd-end': 'core:move-to-bottom'
+    'cmd-pageup': 'core:move-to-top'
+    'cmd-pagedown': 'core:move-to-bottom'
+    'shift-cmd-home': 'core:select-to-top'
+    'shift-cmd-end': 'core:select-to-bottom'
+    'shift-cmd-pageup': 'core:select-to-top'
+    'shift-cmd-pagedown': 'core:select-to-bottom'
     'cmd-b': 'goto-definition:go'
     'shift-delete': 'core:cut'          # This is a CUA standard.
     'shift-insert': 'core:paste'        # This is a CUA standard.
