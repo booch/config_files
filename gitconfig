@@ -146,6 +146,7 @@
 	flip-last = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	fm = "!f() { git log --pretty=oneline-details --decorate --date=short --grep=$1; }; f"
 	ft = "!f() { git describe --always --contains $1; }; f"
+	gclone = "!gclone() { mkdir -p $1; git clone git@github.com:$1.git; }; gclone";
 	git = "!f() { git \"$@\"; }; f"
 	grab = "!f() { file=\"$1\"; branch=\"$2\"; git checkout \"$branch\" -- \"$file\"; git reset HEAD -- \"$file\"; }; f"
 	graph = log --graph --pretty=oneline-details --abbrev-commit --date=relative
