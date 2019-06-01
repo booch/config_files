@@ -3,6 +3,7 @@ Ansible
 ApplicationController
 arity
 ArityError
+attr_reader
 Avdi
 Ballwin
 Belkin
@@ -11,6 +12,8 @@ Boilerplatter
 BoochTek
 Brydge
 cdr
+changeset
+composable
 connascence
 connascent
 Deech
@@ -33,10 +36,12 @@ JRuby
 Jupyter
 Kanban
 Kaysers
+kloc
 Kotlin
 Kubernetes
 Leingang
 Mambazo
+Matz
 meetup
 MetroTix
 microservice
@@ -63,6 +68,7 @@ serverless
 Sidekiq
 Silverline
 Siram
+Stifel
 sudoers
 Sussman
 systemctl
