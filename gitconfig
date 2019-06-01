@@ -147,6 +147,7 @@
 	fm = "!f() { git log --pretty=oneline-details --decorate --date=short --grep=$1; }; f"
 	ft = "!f() { git describe --always --contains $1; }; f"
 	git = "!f() { git \"$@\"; }; f"
+	grab = "!f() { file=\"$1\"; branch=\"$2\"; git checkout \"$branch\" -- \"$file\"; git reset HEAD -- \"$file\"; }; f"
 	graph = log --graph --pretty=oneline-details --abbrev-commit --date=relative
 	go = checkout -B
 	h = help
