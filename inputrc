@@ -47,6 +47,9 @@ $if Bash
   Space: magic-space
 $endif
 
+# Use colors for tab file completion. Bash uses $LS_COLORS.
+set colored-stats
+
 # If we've already typed something, Shift+Up should search for that (as a prefix) in our history. (From http://www.ukuug.org/events/linux2003/papers/bash_tips/#S12)
 $if Bash
   "\e[1;2A": history-search-backward
