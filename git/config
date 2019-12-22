@@ -1,7 +1,5 @@
 [include]
-	path = ~/.gitconfig.local
-[core]
-	excludesfile = ~/.gitignore
+	path = ~/.config/git.private/config
 [color]
 	ui = auto
 	diff = auto
@@ -305,3 +303,6 @@
 	which-tags-contain = name-rev --name-only
 	who = shortlog -s --no-merges --numbered --
 	wipe = !git reset --hard; git clean -fd
+[user]
+	email = craig@boochtek.com
+	name = Craig Buchek

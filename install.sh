@@ -46,9 +46,8 @@ ln -sf config_files/jscsrc            ~/.jscsrc
 ln -sf config_files/jshintrc          ~/.jshintrc
 ln -sf config_files/racketrc          ~/.racketrc
 
-ln -sf config_files/gitconfig         ~/.gitconfig
-ln -sf config_files/gitignore         ~/.gitignore
-ln -sf config_files/gitattributes     ~/.gitattributes
+mkdir -p ~/.config
+ln -sf ../config_files/git            ~/.config/git
 
 ln -sf ../../config_files/spelling/dictionary.txt ~/Library/Spelling/LocalDictionary
 
