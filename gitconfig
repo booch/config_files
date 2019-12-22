@@ -58,9 +58,15 @@
 	submoduleSummary = true  # Show status of submodules in `git status` output.
 [diff]
 	algorithm = histogram
-	compactionHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read.
+	compactionHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read. (Removed in Git 2.12.)
+	indentHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read. (Added in Git 2.11.)
 	renames = copies  # Detect copies as well as renames.
 	submodule = diff  # Show submodules changes in diffs just like any other changes.
+	mnemonicPrefix = true  # Use `i` (index), `c` (commit), and `w` (working tree) instead of `a` and `b` for "directory" names.
+	suppressBlankEmpty = true  # Omit space before blank lines (makes copy & paste work better).
+	colorMoved = zebra  # Use different colors to show lines that have moved.
+	colorMovedWS = ignore-all-space  # If a line has moved and had whitespace changes, show it as moved.
+	wsErrorHighlight = all  # Show whitespace errors in deleted lines.
 [diff "plist"]
 	textconv = "plutil -convert xml1 -o -"
 [diff "zip"]
