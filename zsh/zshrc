@@ -1,0 +1,20 @@
+# I've made my entire ZSH configuration modular!
+if [[ -d $HOME/.zsh/zshrc.d ]]; then
+    for file in $(find -L $HOME/.zsh/zshrc.d/*.zsh -type f); do
+        source $file
+    done
+fi
+
+# Enable command auto-correction.
+ENABLE_CORRECTION="true"
+
+
+# function current_branch() {
+#   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+#   echo ${ref#refs/heads/}
+# }
+#
+# function current_repository() {
+#   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+#   echo $(git remote -v | cut -d':' -f 2)
+# }

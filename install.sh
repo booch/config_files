@@ -25,6 +25,9 @@ TODAY="$(date +'%Y%m%d')"
 # Link files to where they belong.
 ln -sf config_files/ackrc             ~/.ackrc
 
+ln -sf config_files/zsh/zshrc         ~/.zshrc
+ln -sf config_files/zsh/zshrc.d       ~/.zsh/zshrc.d
+
 ln -sf config_files/bash_aliases      ~/.bash_aliases
 ln -sf config_files/bash_logout       ~/.bash_logout
 ln -sf config_files/bash_profile      ~/.bash_profile
