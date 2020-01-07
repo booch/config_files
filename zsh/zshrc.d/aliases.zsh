@@ -92,3 +92,6 @@ function rg() {
         command rg --pretty "$@"
     fi
 }
+
+# The kubernetes Oh My ZSH plugin adds `k` and a ton of other aliases, but the rest aren't used much.
+alias k='kubectl'
