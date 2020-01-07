@@ -85,13 +85,14 @@ if [ ! $(uname -s) = 'Darwin' ]; then
 fi
 
 # Make Ripgrep (rg) output pretty, and pipe it to `less`, unless output is being piped elsewhere.
-function rg() {
+function _rg() {
     if [[ -t 1 ]]; then
         command rg --pretty "$@" | less -R
     else
         command rg --pretty "$@"
     fi
 }
+alias rg=_rg
 
 # The kubernetes Oh My ZSH plugin adds `k` and a ton of other aliases, but the rest aren't used much.
 alias k='kubectl'
