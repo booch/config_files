@@ -1,6 +1,12 @@
 Shell
 =====
 
+* Move all bash stuff into `bash` directory
+* Create an alias for `diff` to use `git diff`
+    * `alias diff='git diff --no-index --color=always --no-ext-diff'`
+    * See https://sgeb.io/posts/2016/11/til-git-diff-anywhere/
+    * The `--no-index` is the important bit
+        * It tells git not to compare to the index (staged files)
 * Break `bashrc` up like we're breaking up `profile.d`
 * Determine what really belongs in `bashrc` and what belongs in `profile`
 * Make a command to return ANSI color codes, instead of VARIABLES
