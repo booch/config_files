@@ -1,1 +1,0 @@
-config_files/zsh/zshrc.d

@@ -1,5 +1,5 @@
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# NOTE: Powelevel10k is completely backweards-compatible with Powelevel9k; hence the variable names.
+# NOTE: Powelevel10k is completely backwards-compatible with Powelevel9k; hence the variable names.
 
 # Load p10k.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

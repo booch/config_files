@@ -25,8 +25,12 @@ TODAY="$(date +'%Y%m%d')"
 # Link files to where they belong.
 ln -sf config_files/ackrc             ~/.ackrc
 
+mkdir -p ~/.zsh/custom/themes
+if [ ! -d ~/.zsh/custom/themes/powerlevel10k ]; then
+  git clone https://github.com/romkatv/powerlevel10k.git ~/.zsh/custom/themes/powerlevel10k
+fi
 ln -sf config_files/zsh/zshrc         ~/.zshrc
-ln -sf config_files/zsh/zshrc.d       ~/.zsh/zshrc.d
+ln -sf ../config_files/zsh/zshrc.d       ~/.zsh/zshrc.d
 
 ln -sf config_files/bash_aliases      ~/.bash_aliases
 ln -sf config_files/bash_logout       ~/.bash_logout
