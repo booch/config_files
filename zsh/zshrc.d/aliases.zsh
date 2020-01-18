@@ -3,9 +3,9 @@ alias ll='ls -lAFGh'
 alias l='ls -lAFGh'
 alias ltr='ls -ltrAFGh'
 
-# alias cd='pushd'
-# alias pop='popd'
-# alias home='pushd ~'
+alias cd='pushd'
+alias pop='popd'
+alias home='pushd ~'
 # alias ..='cd ..'
 
 alias du='du -kh'   # See du replacement below.
