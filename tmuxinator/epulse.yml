@@ -1,0 +1,19 @@
+name: epulse
+root: ~/Work/KnowInk/epulse2
+
+# Integrate with iTerm2
+attach: false
+on_project_exit: tmux -CC attach -t epulse
+
+# Something weird is causing the first 5 characters of every command to get dropped.
+#pre_window: '     '
+
+windows:
+  - Shell:
+  - Specs:         '    bundle exec guard'
+  - Rails-Console: '    bundle exec rails console'
+  - DB-Console:    '    bundle exec rails dbconsole'
+  - Rails-Server:  '    bundle exec rails server -b 127.0.0.1'
+  - Sidekiq:       '    bundle exec sidekiq -c 2'
+  - Webpacker:     '    yarn start'
+  - Logs:          '    tail -f log/development.log'

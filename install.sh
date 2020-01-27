@@ -55,6 +55,7 @@ ln -sf config_files/racketrc          ~/.racketrc
 
 mkdir -p ~/.config
 ln -sf ../config_files/git            ~/.config/git
+ln -sf ../config_files/tmuxinator     ~/.config/tmuxinator
 
 ln -sf ../../config_files/spelling/dictionary.txt ~/Library/Spelling/LocalDictionary
 
