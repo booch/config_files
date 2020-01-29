@@ -150,6 +150,44 @@
                         ]
                     },
                     {
+                        "description": "Fn key as Insert if pressed alone on external Apple keyboard",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "device_if",
+                                        "identifiers": [
+                                            {
+                                                "description": "Apple Magic Keyboard with Numeric Keypad",
+                                                "product_id": 620,
+                                                "vendor_id": 1452
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "fn",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "fn"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "insert"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Windows-style cycling through applications (Alt+Tab, Shift+Alt+Tab)",
                         "manipulators": [
                             {
