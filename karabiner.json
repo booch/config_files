@@ -403,6 +403,73 @@
                         ]
                     },
                     {
+                        +                        "description": "CUA paste (on Apple Magic Keyboard): Shift+Fn = Command+V, Control+Fn = Command+C",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "device_if",
+                                        "identifiers": [
+                                            {
+                                                "description": "Apple Magic Keyboard with Numeric Keypad",
+                                                "vendor_id": 1452,
+                                                "product_id": 620
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "fn",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "v",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "device_if",
+                                        "identifiers": [
+                                            {
+                                                "description": "Apple Magic Keyboard with Numeric Keypad",
+                                                "vendor_id": 1452,
+                                                "product_id": 620
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "fn",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "c",
+                                        "modifiers": [
+                                            "command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "TODO": "I'd REALLY like this to not affect left and right cursor keys",
                         "description": "Right Option (alt) works as Control, or activates menu (Control+F2) if pressed alone and released",
                         "manipulators": [
