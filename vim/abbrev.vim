@@ -1,15 +1,23 @@
 " Personal abbreviations:
 ab lnx          Linux
-ab cmb          Craig Buchek
 ab ddate        <c-r>=strftime("%F")<CR>
 
 " Code signing:
-ab cbsign       Craig Buchek @booch <craig@boochtek.com>
-ab aksign       Amos King @adkron <amos@binarynoggin.com>
-ab geers        Chris Geers @cgeers <christopher.geers@ctl.io>
-ab litton       Tom Litton @thomaslitton <thomas.litton@ctl.io>
-ab grimes       Chris Grimes @halis <chris.grimes@ctl.io>
-ab williams     Andrew Williams @williamsandrew <andrew.williams@ctl.io>
+ab 'co-craig'   Co-authored-by: Craig Buchek <craig@boochtek.com>
+ab 'co-amos'    Co-authored-by: Amos King <amos@binarynoggin.com>
+ab 'co-daniel'  Co-authored-by: Daniel Errante <daniel.errante@knowink.com>
+ab 'co-kevin'   Co-authored-by: Kevin Compton <kevin.compton@knowink.com>
+ab 'co-brian'   Co-authored-by: Brian Compton <brian.compton@knowink.com>
+ab 'co-caleb'   Co-authored-by: Caleb Broyles <caleb.broyles@knowink.com>
+ab 'co-connor'  Co-authored-by: Connor Rigby <connor@binarynoggin.com>
+ab cab:         Co-authored-by:
+ab cmb          Craig Buchek <craig@boochtek.com>
+ab alk          Amos King <amos@binarynoggin.com>
+ab dce          Daniel Errante <daniel.errante@knowink.com>
+ab klc          Kevin Compton <kevin.compton@knowink.com>
+ab bkc          Brian Compton <brian.compton@knowink.com>
+ab cjb          Caleb Broyles <caleb.broyles@knowink.com>
+ab cjr          Connor Rigby <connor@binarynoggin.com>
 
 " Fix typos:
 iab beacuse     because
