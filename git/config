@@ -271,6 +271,7 @@
 	summary = status -u -s
 	svn-pull = !git svn fetch && git svn rebase
 	svn-push = !git svn dcommit
+	sw = switch
 	swap = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
 	tags = tag -l
 	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
