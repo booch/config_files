@@ -3,13 +3,15 @@ ab lnx          Linux
 ab ddate        <c-r>=strftime("%F")<CR>
 
 " Code signing:
-ab 'co-craig'   Co-authored-by: Craig Buchek <craig@boochtek.com>
-ab 'co-amos'    Co-authored-by: Amos King <amos@binarynoggin.com>
-ab 'co-daniel'  Co-authored-by: Daniel Errante <daniel.errante@knowink.com>
-ab 'co-kevin'   Co-authored-by: Kevin Compton <kevin.compton@knowink.com>
-ab 'co-brian'   Co-authored-by: Brian Compton <brian.compton@knowink.com>
-ab 'co-caleb'   Co-authored-by: Caleb Broyles <caleb.broyles@knowink.com>
-ab 'co-connor'  Co-authored-by: Connor Rigby <connor@binarynoggin.com>
+" NOTE: We have to include `-` as a keyword character to be able to use it in abbreviations.
+set iskeyword+=-
+ab co-craig     Co-authored-by: Craig Buchek <craig@boochtek.com>
+ab co-amos      Co-authored-by: Amos King <amos@binarynoggin.com>
+ab co-daniel    Co-authored-by: Daniel Errante <daniel.errante@knowink.com>
+ab co-kevin     Co-authored-by: Kevin Compton <kevin.compton@knowink.com>
+ab co-brian     Co-authored-by: Brian Compton <brian.compton@knowink.com>
+ab co-caleb     Co-authored-by: Caleb Broyles <caleb.broyles@knowink.com>
+ab co-connor    Co-authored-by: Connor Rigby <connor@binarynoggin.com>
 ab cab:         Co-authored-by:
 ab cmb          Craig Buchek <craig@boochtek.com>
 ab alk          Amos King <amos@binarynoggin.com>
