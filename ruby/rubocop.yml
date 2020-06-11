@@ -8,8 +8,8 @@ AllCops:
   ExtraDetails: true
 
 # Enable all the Rails cops.
-Rails:
-  Enabled: true
+# Rails:
+#   Enabled: true
 
 # Allow longer lines.
 Metrics/LineLength:
@@ -90,6 +90,11 @@ Style/RegexpLiteral:
 Style/SignalException:
   EnforcedStyle: semantic
 
+# Don't allow raising exceptions of bare Exception class.
+# Lint/RaiseException:
+#   Description: 
+#   Enabled: true
+
 # Default to double quotes, as they require less incidental changes.
 Style/StringLiterals:
   EnforcedStyle: double_quotes
@@ -144,8 +149,8 @@ Style/PreferredHashMethods:
   Enabled: false
 
 # Ensure there's a newline at the end of the file, but not a blank line.
-Layout/TrailingBlankLines:
-  EnforcedStyle: final_newline
+# Layout/TrailingEmptyLines:
+#   EnforcedStyle: final_newline
 
 # Allow assigning to the same variable in multiple branches of an `if` or `case`.
 Style/ConditionalAssignment:
@@ -162,6 +167,17 @@ Style/SafeNavigation:
   Enabled: false
 
 
+# Disable/enable some of the newer cops. You'll get a warning if you don't explicitly enable/disable these.
+# Lint/StructNewOverride:
+#   Enabled: false
+# Style/HashEachMethods:
+#   Enabled: true
+# Style/HashTransformKeys:
+#   Enabled: true
+# Style/HashTransformValues:
+#   Enabled: true
+
+
 #### Uncomment these if using with someone else's code.
 #Style/EmptyLinesAroundClassBody:
 #  Enabled: false
@@ -169,3 +185,5 @@ Style/SafeNavigation:
 #  Enabled: false
 #Stlye/StringLiterals:
 #  Enabled: false
+
+

@@ -403,7 +403,7 @@
                         ]
                     },
                     {
-                        +                        "description": "CUA paste (on Apple Magic Keyboard): Shift+Fn = Command+V, Control+Fn = Command+C",
+                        "description": "CUA paste (on Apple Magic Keyboard): Shift+Fn = Command+V, Control+Fn = Command+C",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -414,6 +414,11 @@
                                                 "description": "Apple Magic Keyboard with Numeric Keypad",
                                                 "vendor_id": 1452,
                                                 "product_id": 620
+                                            },
+                                            {
+                                                "description": "WASD V2",
+                                                "vendor_id": 1241,
+                                                "product_id": 617
                                             }
                                         ]
                                     }

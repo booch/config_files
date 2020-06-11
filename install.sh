@@ -23,81 +23,81 @@ TODAY="$(date +'%Y%m%d')"
 #fi
 
 # Link files to where they belong.
-ln -sf config_files/ackrc             ~/.ackrc
+ln -sf $CWD/ack/ackrc                           ~/.ackrc
 
 mkdir -p ~/.zsh/custom/themes
 if [ ! -d ~/.zsh/custom/themes/powerlevel10k ]; then
-  git clone https://github.com/romkatv/powerlevel10k.git ~/.zsh/custom/themes/powerlevel10k
+    git clone https://github.com/romkatv/powerlevel10k.git ~/.zsh/custom/themes/powerlevel10k
 fi
-ln -sf config_files/zsh/zshrc         ~/.zshrc
-ln -sf ../config_files/zsh/zshrc.d       ~/.zsh/zshrc.d
+ln -sf $CWD/zsh/zshrc                           ~/.zshrc
+ln -sF $CWD/zsh/zshrc.d                         ~/.zsh/zshrc.d
 
-ln -sf config_files/bash_aliases      ~/.bash_aliases
-ln -sf config_files/bash_logout       ~/.bash_logout
-ln -sf config_files/bash_profile      ~/.bash_profile
-ln -sf config_files/bashrc            ~/.bashrc
-ln -sf config_files/profile           ~/.profile
-ln -sf config_files/profile.d         ~/.profile.d
+ln -sf $CWD/bash/aliases                        ~/.bash_aliases
+ln -sf $CWD/bash/bash_logout                    ~/.bash_logout
+ln -sf $CWD/bash/bash_profile                   ~/.bash_profile
+ln -sf $CWD/bash/bashrc                         ~/.bashrc
+ln -sf $CWD/bash/profile                        ~/.profile
+ln -sF $CWD/bash/profile.d                      ~/.profile.d
+ln -sf $CWD/bash/inputrc                        ~/.inputrc
 
-rm -rf ~/.bundle
-ln -sf config_files/bundle            ~/.bundle
-ln -sf config_files/gemrc             ~/.gemrc
-ln -sf config_files/irbrc             ~/.irbrc
-ln -sf config_files/pryrc             ~/.pryrc
-ln -sf config_files/aprc              ~/.aprc
-ln -sf config_files/railsrc           ~/.railsrc
-ln -sf config_files/ruby-version      ~/.ruby-version
-ln -sf config_files/rubocop.yml       ~/.rubocop.yml
-ln -sf config_files/eslintrc.yml      ~/.eslintrc.yml
-ln -sf config_files/jscsrc            ~/.jscsrc
-ln -sf config_files/jshintrc          ~/.jshintrc
-ln -sf config_files/racketrc          ~/.racketrc
+mkdir -p ~/.bundle
+ln -sf $CWD/ruby/bundler/config                 ~/.bundle/config
+ln -sf $CWD/ruby/gemrc                          ~/.gemrc
+ln -sf $CWD/ruby/irbrc                          ~/.irbrc
+ln -sf $CWD/ruby/pryrc                          ~/.pryrc
+ln -sf $CWD/ruby/aprc                           ~/.aprc
+ln -sf $CWD/ruby/railsrc                        ~/.railsrc
+ln -sf $CWD/ruby/ruby-version                   ~/.ruby-version
+ln -sf $CWD/ruby/rubocop.yml                    ~/.rubocop.yml
+
+ln -sf $CWD/js/eslintrc.yml                     ~/.eslintrc.yml
+ln -sf $CWD/js/jscsrc                           ~/.jscsrc
+ln -sf $CWD/js/jshintrc                         ~/.jshintrc
+
+ln -sf $CWD/racket/racketrc                     ~/.racketrc
+
+ln -sf $CWD/markdown/markdownlint.yaml          ~/.markdownlint.yaml
 
 mkdir -p ~/.config
-ln -sf ../config_files/git            ~/.config/git
-ln -sf ../config_files/tmuxinator     ~/.config/tmuxinator
+ln -sF $CWD/git                                 ~/.config/git
+ln -sF $CWD/tmuxinator                          ~/.config/tmuxinator
 
-ln -sf ../../config_files/spelling/dictionary.txt ~/Library/Spelling/LocalDictionary
+ln -sf $CWD/spelling/dictionary.txt             ~/Library/Spelling/LocalDictionary
 
-ln -sf config_files/inputrc           ~/.inputrc
-
-ln -sf config_files/ctags             ~/.ctags
+ln -sf $CWD/ctags                               ~/.ctags
 
 mkdir -p ~/.docker
-ln -sf ../config_files/docker/config.json ~/.docker/config.json
+ln -sf $CWD/docker/config.json                  ~/.docker/config.json
 
-rm -rf ~/.mc
-ln -sf ../config_files/mc             ~/.mc
+ln -sF $CWD/mc                                  ~/.mc
 
-rm -rf ~/.nano
-ln -sf config_files/nanorc            ~/.nanorc
-ln -sf config_files/nano              ~/.nano
+ln -sf $CWD/nano/nanorc                         ~/.nanorc
+ln -sF $CWD/nano                                ~/.nano
 
-rm -rf ~/.vim
-ln -sf config_files/vimrc             ~/.vimrc
-ln -sf config_files/vim               ~/.vim
+ln -sf $CWD/vim/vimrc                           ~/.vimrc
+ln -sF $CWD/vim                                 ~/.vim
 if [ ! -d vim/bundle/vundle ]; then
-  git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
+    git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
 fi
 mkdir -p ~/.vim/backup  # Make sure there's a global backup directory for vim.
 # Install and update Vundle bundles.
 if command -v vim >/dev/null 2>&1 ; then
-  vim -c 'VundleInstall' -c 'VundleUpdate' -c 'qa!'
+    vim -c 'VundleInstall' -c 'VundleUpdate' -c 'qa!'
 fi
 
 mkdir -p ~/.atom
-ln -sf ../config_files/atom/config.cson  ~/.atom/config.cson
-ln -sf ../config_files/atom/keymap.cson  ~/.atom/keymap.cson
-ln -sf ../../../../config_files/atom/touchbar.js  ~/.atom/packages/touchbar-utility/lib/configuration.js
+ln -sf $CWD/atom/config.cson                    ~/.atom/config.cson
+ln -sf $CWD/atom/keymap.cson                    ~/.atom/keymap.cson
+ln -sf $CWD/atom/touchbar.js                    ~/.atom/packages/touchbar-utility/lib/configuration.js
 
-ln -sf config_files/psqlrc            ~/.psqlrc
+ln -sf $CWD/postgresql/psqlrc                   ~/.psqlrc
 
 if [ "$(uname)"x = "Darwin"x  ]; then
-  mkdir -p ~/Library/KeyBindings
-  ln -f DefaultKeyBinding.Dict ~/Library/KeyBindings/DefaultKeyBinding.Dict
+    mkdir -p ~/Library/KeyBindings
+    ln -f $CWD/keyboard/DefaultKeyBinding.Dict  ~/Library/KeyBindings/DefaultKeyBinding.Dict
 
-  mkdir -p "$HOME/.config/karabiner"
-  ln -sf "$HOME/config_files/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+    mkdir -p ~/.config/karabiner
+    ln -sf $CWD/keyboard/karabiner.json         ~/.config/karabiner/karabiner.json
 fi
 
 

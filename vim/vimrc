@@ -118,7 +118,6 @@ endif
 set nocompatible        " Disable vi compatibility.
 set history=100         " Number of lines of command line history.
 set undolevels=200      " Number of undo levels.
-set textwidth=0         " Don't wrap words by default.
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
 set showmode            " Show current mode.
@@ -149,7 +148,7 @@ set nowrap
 set shiftround
 " normally don't automatically format `text' as it is typed, IE only do this
 " with comments, at 79 characters:
-set formatoptions-=t
+"set formatoptions-=t
 set textwidth=79
 
 " make searches case-insensitive, unless they contain upper-case letters:

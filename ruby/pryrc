@@ -1,15 +1,15 @@
 ALIASES = {
-  cc: "continue",
-  ff: "finish", # Step *out* of current stack frame.
-  ii: "step", # Step *into* next method.
-  into: "step",
-  nn: "next",
   qq: "exit",
-  qqq: "exit-all",
+#  qqq: "exit-all",
   rr: -> { reload! }, # Reload Rails app.
   ss: "show-source",
-  xx: "exit-program"
-}
+  xx: "exit-program",
+  cc: (defined?(PryByebug) ? "continue" : nil),   # Step out of *everything*.
+  ff: (defined?(PryByebug) ? "finish" : nil),     # Step *out* of current stack frame.
+  ii: (defined?(PryByebug) ? "step" : nil),       # Step *into* next method call.
+  nn: (defined?(PryByebug) ? "next" : nil),       # Step to next statement.
+  into: (defined?(PryByebug) ? "step" : nil),     # Step *into* next method call.
+}.compact
 
 AWESOME_PRINT_COLORS = {
   args:       :pale,

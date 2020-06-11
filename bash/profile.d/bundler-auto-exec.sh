@@ -4,6 +4,7 @@
 # http://effectif.com/ruby/automating-bundle-exec
 # Github: https://github.com/gma/bundler-exec
 
+
 ## Functions
 
 bundler-installed()
@@ -49,7 +50,7 @@ define-bundler-aliases()
 
 ## Main program
 
-BUNDLED_COMMANDS="${BUNDLED_COMMANDS:-
+# BUNDLED_COMMANDS="${BUNDLED_COMMANDS:-
 cap
 capify
 chef
@@ -80,6 +81,7 @@ sass-convert
 serve
 shotgun
 sidekiq
+solargraph
 spec
 spork
 spring
