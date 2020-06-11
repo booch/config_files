@@ -46,7 +46,7 @@
     create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
     credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
     ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
-    current-branch = rev-parse --abbrev-ref HEAD
+    current-branch = branch --show-current
     d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
     dc = diff --cached
     delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
