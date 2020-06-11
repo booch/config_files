@@ -1,0 +1,14 @@
+---
+
+# Start with the default set of rules turned on.
+default: true
+
+# Set list indentation to 4 spaces. (MD007)
+ul-indent:
+    indent: 4
+
+# Don't worry about lines longer than 80 characters. (MD013)
+line-length: false
+
+# Allow multiple blank lines. (MD012)
+no-multiple-blanks: false
