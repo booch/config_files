@@ -11,6 +11,8 @@ Bitly
 Boilerplatter
 BoochTek
 Brydge
+Busey
+certbot
 cdr
 changeset
 composable
@@ -22,6 +24,7 @@ deprovisioned
 deprovisioning
 devs
 Ecto
+Edarbi
 foldl
 Formtastic
 Gemfile
@@ -29,6 +32,8 @@ Hanami
 Heroku
 Homebrew
 Honeybadger
+hotfix
+hotfixes
 interactor
 interactors
 Jira
@@ -65,6 +70,7 @@ rspec
 RuboCop
 RubyConf
 serverless
+SFTP
 Sidekiq
 Silverline
 Siram
@@ -74,12 +80,15 @@ Sussman
 systemctl
 systemd
 Thoughtbot
+tmux
 TunnelBlick
 Twilio
 undeployed
+Viberzi
 vipw
 visudo
 Weedmaps
 Westbrooke
 Wildey
 Zagg
+Zaphod
