@@ -4,7 +4,15 @@
     beautifyEntireFileOnSave: false
     general:
       _analyticsUserId: "c95fd716-87b6-47ab-95e9-c35ae0c6f4d5"
+      muteAllErrors: true
+      showLoadingView: false
+    haskell:
+      beautify_on_save: true
+  "atom-haskell":
+    hasAddedConfiguration: true
   "atom-pair": {}
+  "autocomplete-haskell":
+    hideHintPanelIfEmpty: false
   "autocomplete-paths":
     maxFileCount: 5000
   "autocomplete-plus":
@@ -18,6 +26,7 @@
       "one-light-syntax"
     ]
   editor:
+    fontFamily: "Hasklig"
     fontSize: 19
     invisibles: {}
     preferredLineLength: 100
@@ -25,13 +34,27 @@
     tabLength: 4
   "exception-reporting":
     userId: "7b830b38-440b-41d0-3a18-986bcff58334"
+  "haskell-ghc-mod":
+    lowMemorySystem: true
+    onChangeCheck: true
+    onChangeLint: true
+  "ide-haskell":
+    messageDisplayFrontend: "linter"
+    startupMessageIdeBackend: false
+    switchTabOnCheck: false
+  "ide-haskell-cabal":
+    cabal:
+      activeGhcVersion: "8.0"
+  "ide-haskell-repl":
+    defaultRepl: "stack"
   "language-elm":
     autocompleteEnabled: false
   linter: {}
   "linter-rubocop":
     command: "/usr/local/bin/rubocop"
   "linter-ui-default":
-    panelHeight: 187
+    hidePanelWhenEmpty: false
+    panelHeight: 177
   minimap:
     plugins:
       "find-and-replace": true
