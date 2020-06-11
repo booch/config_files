@@ -1,6 +1,8 @@
 
 TODO
 ----
+Fix error on install:
+    ln: /Users/booch/.atom/packages/touchbar-utility/lib/configuration.js: No such file or directory:
 Move /usr/local before /usr in $PATH.
 Consider pulling in somone else's dotfiles framework.
     Would ease the burden of updating the install script.

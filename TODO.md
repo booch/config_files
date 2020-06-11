@@ -1,7 +1,12 @@
+Installer
+=========
+
+* Make sure we're not creating circular soft links, like `zshrc.d/zshrc.d`.
+
+
 Shell
 =====
 
-* Move all bash stuff into `bash` directory
 * Create an alias for `diff` to use `git diff`
     * `alias diff='git diff --no-index --color=always --no-ext-diff'`
     * See https://sgeb.io/posts/2016/11/til-git-diff-anywhere/
@@ -18,7 +23,6 @@ Shell
 Atom
 ====
 
-* Ensure Atom config is saved in config_files
 * Change key-binding for Edit / Bookmark / View All
     * The default `Control+F2` conflicts with the `Move focus to the menu bar` global shortcut
 * Remove key-bindings for Ctrl+Tab
@@ -155,30 +159,30 @@ Karabiner
     * Also try the Shift to Parentheses that he suggests
         * Or maybe Shift+Space for open/close parentheses
 * Sticky modifiers
--* Alternate key layouts
--    * Dvorak ([Programmer Dvorak](http://www.kaufmann.no/roland/dvorak/) specifically)
--    * [Colemak](https://colemak.com/)
--    * [Norman](https://normanlayout.info/)
--    * [Capewell](http://www.michaelcapewell.com/projects/keyboard/layout_capewell.htm)
--    * [QGMLWY](http://mkweb.bcgsc.ca/carpalx/?full_optimization)
--* Buy a chording keyer
--    * [Twiddler 3](http://twiddler.tekgear.com/)
--    * [In10did DecaTxt](http://in10did.com/decatxt.html)
--* Build a chording keyer
--    * Use an [Adafruit Feather 32u4 Bluefruit LE](https://www.adafruit.com/product/3379) controller
--    * Use Arduino code based on [SpiffChorder code](https://github.com/clc/chorder/blob/master/FeatherChorder/FeatherCh
--    * See if we can get 2 buttons on the index and middle fingers
--        * Or at least 2 different "on" positions
--        * This would give 30-60 combinations (not including the thumb)
--    * See if we can get 4 buttons on the thumb
--        * Or something like a joystick with 4 positions
--        * Or 2 rocker switches with 2 "on" positions each
--    * See if we can get the thumb buttons to be toggles
--        * They'll remain in "on" position until we press them a 2nd time
--        * It should be easy to feel them to determine what state they're in
--    * Ideal modifiers:
--        * letters (no modifiers)
--        * shift
--        * number/punctuation (plus shifted variants)
--        * control
--        * command (and movements and actions)
+* Alternate key layouts
+    * Dvorak ([Programmer Dvorak](http://www.kaufmann.no/roland/dvorak/) specifically)
+    * [Colemak](https://colemak.com/)
+    * [Norman](https://normanlayout.info/)
+    * [Capewell](http://www.michaelcapewell.com/projects/keyboard/layout_capewell.htm)
+    * [QGMLWY](http://mkweb.bcgsc.ca/carpalx/?full_optimization)
+* Use my chording keyers
+    * [Twiddler 3](http://twiddler.tekgear.com/)
+    * [In10did DecaTxt](http://in10did.com/decatxt.html)
+* Build a chording keyer
+    * Use an [Adafruit Feather 32u4 Bluefruit LE](https://www.adafruit.com/product/3379) controller
+    * Use Arduino code based on [SpiffChorder code](https://github.com/clc/chorder/blob/master/FeatherChorder/FeatherChorder.ino)
+    * See if we can get 2 buttons on the index and middle fingers
+        * Or at least 2 different "on" positions
+        * This would give 30-60 combinations (not including the thumb)
+    * See if we can get 4 buttons on the thumb
+        * Or something like a joystick with 4 positions
+        * Or 2 rocker switches with 2 "on" positions each
+    * See if we can get the thumb buttons to be toggles
+        * They'll remain in "on" position until we press them a 2nd time
+        * It should be easy to feel them to determine what state they're in
+    * Ideal modifiers:
+        * letters (no modifiers)
+        * shift
+        * number/punctuation (plus shifted variants)
+        * control
+        * command (and movements and actions)
