@@ -8,6 +8,8 @@ fi
 # Enable command auto-correction.
 ENABLE_CORRECTION="true"
 
+# TODO: Not sure how /sbin and /usr/sbin already got added.
+export PATH=$PATH:/usr/local/sbin
 
 # function current_branch() {
 #   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
