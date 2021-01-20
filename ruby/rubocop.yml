@@ -1,5 +1,8 @@
 ---
 
+require:
+  - rubocop-rspec
+  - rubocop-performance
 
 # Provide more details in output.
 AllCops:
@@ -7,21 +10,18 @@ AllCops:
   DisplayStyleGuide: true
   ExtraDetails: true
 
-# Enable all the Rails cops.
-# Rails:
-#   Enabled: true
-
 # Allow longer lines.
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 # Don't require documentation for everything.
 Style/Documentation:
   Enabled: false
 
-# Outdent `private`/`protected`/`public`.
-Layout/AccessModifierIndentation:
-  EnforcedStyle: outdent
+# Require `private` to be used as a prefix to private method definitions.
+# We find this easier to read and move code.
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
 
 # Use `{}` for blocks that return a value; otherwise use `do` and `end`.
 # We make a few exceptions, mostly for RSpec.
@@ -38,17 +38,17 @@ Style/BlockDelimiters:
 Style/MutableConstant:
   Enabled: false
 
-# I don't want to add `# frozen_string_literal: true` to every file in Ruby 2.3+.
+# Don't require adding `# frozen_string_literal: true` to every file in Ruby 2.3+.
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-# Don't use backticks -- they're too hard to distinguish.
+# Don't use backticks for shell commands -- they're too hard to distinguish.
 Style/CommandLiteral:
   EnforcedStyle: percent_x
 
-# Don't require underscores for long numeric literals.
+# Don't require underscores for long numeric literals (but warn about them).
 Style/NumericLiterals:
-  Enabled: false
+  Severity: warning
 
 # Require blank lines inside class/module definitions.
 Layout/EmptyLinesAroundClassBody:
@@ -90,16 +90,16 @@ Style/RegexpLiteral:
 Style/SignalException:
   EnforcedStyle: semantic
 
-# Don't allow raising exceptions of bare Exception class.
-# Lint/RaiseException:
-#   Description: 
-#   Enabled: true
+# Provide a better description, due to high probability of false positives.
+Lint/RaiseException:
+  Enabled: true
+  Description: Use `StandardError`, or prefix `Exception` with a namespace.
 
 # Default to double quotes, as they require less incidental changes.
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-# Allow either type of quotes within the Ruby code inside interpolations.
+# Allow either type of quotes within Ruby code inside interpolations.
 Style/StringLiteralsInInterpolation:
   Enabled: false
 
@@ -141,16 +141,16 @@ Style/Send:
 
 # Don't complain that `has_many` doesn't end with a question mark.
 Naming/PredicateName:
-  NameWhitelist:
+  AllowedMethods:
     - has_many
 
-# Allow `has_key?` and `has_value?` on Hash, as they read better than `key?` and `value?`.
+# Allow `has_key?` and `has_value?` on Hash, as I think they read better than `key?` and `value?`.
 Style/PreferredHashMethods:
   Enabled: false
 
 # Ensure there's a newline at the end of the file, but not a blank line.
-# Layout/TrailingEmptyLines:
-#   EnforcedStyle: final_newline
+Layout/TrailingEmptyLines:
+  EnforcedStyle: final_newline
 
 # Allow assigning to the same variable in multiple branches of an `if` or `case`.
 Style/ConditionalAssignment:
@@ -166,24 +166,29 @@ Metrics/BlockLength:
 Style/SafeNavigation:
   Enabled: false
 
+# Allow `!!` to force a boolean result.
+Style/DoubleNegation:
+  Enabled: false
 
-# Disable/enable some of the newer cops. You'll get a warning if you don't explicitly enable/disable these.
-# Lint/StructNewOverride:
-#   Enabled: false
-# Style/HashEachMethods:
-#   Enabled: true
-# Style/HashTransformKeys:
-#   Enabled: true
-# Style/HashTransformValues:
-#   Enabled: true
+# I prefer to order my gems in order of "importance".
+Bundler/OrderedGems:
+  Enabled: false
 
+# Don't require an empty line after a guard clause. TODO: Perhaps reconsider this decision.
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
 
-#### Uncomment these if using with someone else's code.
-#Style/EmptyLinesAroundClassBody:
-#  Enabled: false
-#Style/EmptyLinesAroundModuleBody:
-#  Enabled: false
-#Stlye/StringLiterals:
-#  Enabled: false
+# Allow (but don't require) putting each accessor on its own line.
+Style/AccessorGrouping:
+  Enabled: false
 
+# I don't see any good reason to call `super` when the superclass has no explicit `initialize`.
+# TODO: If possible, submit a PR with a config option so the cop will allow (only) this case to pass.
+#       Probably not possible; static analysis probably can't inspect the superclass.
+# See https://github.com/rubocop-hq/rubocop/issues/8506 for more details.
+Lint/MissingSuper:
+  Enabled: false
 
+# Don't require any specific format when using exponential notation (like `10e6` or `1.0e7`).
+Style/ExponentialNotation:
+  Enabled: false
