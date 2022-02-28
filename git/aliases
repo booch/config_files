@@ -21,6 +21,7 @@
     bn = !git branch-name
     br = branch
     branch-name = !git for-each-ref --format='%(refname:short)' $(git symbolic-ref HEAD)
+    branch-clean = !git fetch && git remote prune origin && git branch --merged staging | grep -v staging | xargs git branch -d
     branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/master refs/remotes
     by = !git authored-by
     c = commit
@@ -30,6 +31,7 @@
     check = diff --check
     cheddar = commit --amend -CHEAD
     cherry-lick = !sh -c 'hub checkout HEAD^{} -- && hub cherry-pick \"$@\"' _
+    cho = checkout
     ci = commit -v
     clear = !git add . && git stash && git stash drop
     cm = commit --message
@@ -114,6 +116,7 @@
     merge-trail = log --ancestry-path --merges
     merged = branch --merged
     mm = merge --no-ff
+    mnf = merge --no-ff
     modified-by = !git authored-by
     mt = mergetool
     my-email = config user.email
@@ -123,6 +126,7 @@
     nevermind = !git reset --hard HEAD && git clean -d -f
     next = !git add . && git rebase --continue
     noff = merge --no-ff
+    nuke = reset --hard origin/HEAD
     one = show -s --pretty='format:%h (%s)'
     oneline = log --oneline
     ours = "!f() { git co --ours $@ && git add $@; }; f"
@@ -133,6 +137,7 @@
     phm = push heroku master
     pick = cherry-pick
     pickaxe = log -p -S
+    please = push --force-with-lease
     poh = push origin HEAD
     pohf = push origin HEAD --force-with-lease
     pom = push origin master
@@ -144,6 +149,7 @@
     prune-all = !git remote | xargs -n 1 git remote prune
     publish = git flow feature publish
     pullff = pull --ff-only
+    pu = push -u origin HEAD
     push = push --tags
     put = push origin HEAD
     pwip = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" && git reset HEAD^ --'
@@ -200,6 +206,7 @@
     svn-push = !git svn dcommit
     sw = switch
     swap = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
+    t = status
     tags = tag -l
     theirs = "!f() { git co --theirs $@ && git add $@; }; f"
     today = log --stat --since='12am' --graph --pretty=oneline-details --abbrev-commit --date=relative
