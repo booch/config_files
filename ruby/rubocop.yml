@@ -18,6 +18,10 @@ Layout/LineLength:
 Style/Documentation:
   Enabled: false
 
+# Allow any Unicode in comments.
+Style/AsciiComments:
+  Enabled: false
+
 # Require `private` to be used as a prefix to private method definitions.
 # We find this easier to read and move code.
 Style/AccessModifierDeclarations:
