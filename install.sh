@@ -30,14 +30,14 @@ if [ ! -d ~/.zsh/custom/themes/powerlevel10k ]; then
     git clone https://github.com/romkatv/powerlevel10k.git ~/.zsh/custom/themes/powerlevel10k
 fi
 ln -sf $CWD/zsh/zshrc                           ~/.zshrc
-ln -sF $CWD/zsh/zshrc.d                         ~/.zsh/zshrc.d
+ln -sFn $CWD/zsh/zshrc.d                        ~/.zsh/zshrc.d
 
 ln -sf $CWD/bash/aliases                        ~/.bash_aliases
 ln -sf $CWD/bash/bash_logout                    ~/.bash_logout
 ln -sf $CWD/bash/bash_profile                   ~/.bash_profile
 ln -sf $CWD/bash/bashrc                         ~/.bashrc
 ln -sf $CWD/bash/profile                        ~/.profile
-ln -sF $CWD/bash/profile.d                      ~/.profile.d
+ln -sFn $CWD/bash/profile.d                     ~/.profile.d
 ln -sf $CWD/bash/inputrc                        ~/.inputrc
 
 mkdir -p ~/.bundle
@@ -59,8 +59,8 @@ ln -sf $CWD/racket/racketrc                     ~/.racketrc
 ln -sf $CWD/markdown/markdownlint.yaml          ~/.markdownlint.yaml
 
 mkdir -p ~/.config
-ln -sF $CWD/git                                 ~/.config/git
-ln -sF $CWD/tmuxinator                          ~/.config/tmuxinator
+ln -sFn $CWD/git                                ~/.config/git
+ln -sFn $CWD/tmuxinator                         ~/.config/tmuxinator
 
 ln -sf $CWD/spelling/dictionary.txt             ~/Library/Spelling/LocalDictionary
 
@@ -69,13 +69,13 @@ ln -sf $CWD/ctags                               ~/.ctags
 mkdir -p ~/.docker
 ln -sf $CWD/docker/config.json                  ~/.docker/config.json
 
-ln -sF $CWD/mc                                  ~/.mc
+ln -sFn $CWD/mc                                 ~/.mc
 
 ln -sf $CWD/nano/nanorc                         ~/.nanorc
-ln -sF $CWD/nano                                ~/.nano
+ln -sFn $CWD/nano                               ~/.nano
 
 ln -sf $CWD/vim/vimrc                           ~/.vimrc
-ln -sF $CWD/vim                                 ~/.vim
+ln -sFn $CWD/vim                                ~/.vim
 if [ ! -d vim/bundle/vundle ]; then
     git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
 fi
@@ -88,7 +88,7 @@ fi
 mkdir -p ~/.atom
 ln -sf $CWD/atom/config.cson                    ~/.atom/config.cson
 ln -sf $CWD/atom/keymap.cson                    ~/.atom/keymap.cson
-ln -sf $CWD/atom/touchbar.js                    ~/.atom/packages/touchbar-utility/lib/configuration.js
+#ln -sf $CWD/atom/touchbar.js                    ~/.atom/packages/touchbar-utility/lib/configuration.js
 
 ln -sf $CWD/postgresql/psqlrc                   ~/.psqlrc
 

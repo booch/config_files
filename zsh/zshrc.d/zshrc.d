@@ -1,1 +1,0 @@
-/Users/booch/config_files/zsh/zshrc.d
