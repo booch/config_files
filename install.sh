@@ -90,6 +90,11 @@ ln -sf $CWD/atom/config.cson                    ~/.atom/config.cson
 ln -sf $CWD/atom/keymap.cson                    ~/.atom/keymap.cson
 #ln -sf $CWD/atom/touchbar.js                    ~/.atom/packages/touchbar-utility/lib/configuration.js
 
+mkdir -p "$HOME/Library/Application Support/Code/User"
+ln -sf $CWD/vscode/settings.json                "$HOME/Library/Application Support/Code/User/settings.json"
+ln -sf $CWD/vscode/keybindings.json             "$HOME/Library/Application Support/Code/User/keybindings.json"
+ln -sFn $CWD/vscode/snippets                    "$HOME/Library/Application Support/Code/User/snippets"
+
 ln -sf $CWD/postgresql/psqlrc                   ~/.psqlrc
 
 if [ "$(uname)"x = "Darwin"x  ]; then

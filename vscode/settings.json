@@ -1,0 +1,67 @@
+/* This file allows comments. Yay! */
+{
+    "files.defaultLanguage": "markdown",
+    "workbench.colorTheme": "Default Light+",
+    "editor.fontSize": 18,
+    "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
+    "workbench.activityBar.visible": true,
+    "breadcrumbs.enabled": true,
+    "editor.renderControlCharacters": true,
+    "editor.rulers": [
+
+        { "column": 80, "color": "#dddddd" },
+        { "column": 100, "color": "#888888" },
+        { "column": 120, "color": "#ff0000" }
+      ],
+    "files.trimTrailingWhitespace": true,
+    "editor.linkedEditing": true,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "ruby.format": "rubocop",
+    "[ruby]": {
+        "editor.tabSize": 2
+    },
+    "[markdown]": {
+        "editor.wordWrapColumn": 80,
+        "editor.wordWrap": "bounded",
+        "editor.quickSuggestions": {
+            "comments": false,
+            "strings": false,
+            "other": false
+        }
+    },
+    "markdownlint.config": {
+        "extends": "/Users/booch/.markdownlint.yaml"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.printWidth": 120,
+    "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.default.cppStandard": "c++20",
+    "C_Cpp.experimentalFeatures": "Enabled",
+    "c-cpp-flylint.clang.pedantic": true,
+    "editor.wrappingStrategy": "advanced",
+    "prettier.tabWidth": 4,
+    "editor.snippetSuggestions": "top", // Show snippets first, per https://www.roboleary.net/2021/08/23/vscode-snippets-are-not-aliases.html
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.codeActionsOnSave": {},
+    "editor.autoClosingBrackets": "always",
+    "editor.autoSurround": "languageDefined",
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.scrollbar.scrollByPage": true,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "window.zoomLevel": 1 // TODO: Change this to "always" when that becomes available.
+}
