@@ -1,3 +1,5 @@
+# TODO: Add some color. See https://www.nano-editor.org/dist/v3/nanorc.5.html for details.
+
 # Use 4-character wide tabs.
 set tabsize 4
 
@@ -17,7 +19,7 @@ set backup
 set const
 
 # CTRL+K cuts to end of line, not entire line.
-set cut
+set cutfromcursor
 
 # When wordwrap is turned on, have it wrap at 72 columns.
 set fill 72
@@ -39,6 +41,12 @@ set nowrap
 
 # Enable smart home-key -- toggle between column 1 and first non-whitespace column.
 set smarthome
+
+# Remember cursor position of 200 most recent files between editing sessions.
+set positionlog
+
+# Use smooth scrolling .
+set smooth
 
 # Include syntax color highlighting for various file types.
 #include "/usr/share/nano/html.nanorc"
