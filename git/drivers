@@ -1,0 +1,18 @@
+# These drivers are referenced via git attributes.
+
+[diff "plist"]
+	textconv = "plutil -convert xml1 -o -"
+
+[diff "zip"]
+	textconv = unzip -c -a
+
+[diff "localizablestrings"]
+	textconv = "iconv -f utf-16 -t utf-8"
+
+[merge "ours"]
+	name = 'Resolves merge conflicts by taking _our_ latest version'
+	driver = true
+
+[merge "Gemfile.lock"]
+	name = 'Resolves Gemfile.lock merge conflicts by running `bundle install`'
+	driver = 'echo "Gemfile.lock merge conflict, running bundle install" && bundle install --quiet'

@@ -1,6 +1,7 @@
 [include]
-	path = ~/.config/git.private/config
+	path = ~/.config/git/local
 	path = ~/.config/git/aliases
+	path = ~/.config/git/drivers
 [color]
 	ui = true
 	diff = auto
@@ -24,19 +25,6 @@
 	conflictstyle = diff3
 	tool = opendiff
 	summary = true
-[merge "bundleinstall"]
-	name = bundle install
-	driver = bundle install
-[merge "railsschema"]
-	name = newer Rails schema version
-	driver = "ruby -e '\n\
-		system %(git), %(merge-file), %(--marker-size=%L), %(%A), %(%O), %(%B)\n\
-		b = File.read(%(%A))\n\
-		b.sub!(/^<+ .*\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n=+\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n>+ .*/) do\n\
-		%(ActiveRecord::Schema.define(:version => #{[$1, $2].max}) do)\n\
-		end\n\
-		File.open(%(%A), %(w)) {|f| f.write(b)}\n\
-		exit 1 if b.include?(%(<)*%L)'"
 [help]
 	autocorrect = 50  # Automatically correct misspelled git subcommands after 5 seconds.
 [branch]
