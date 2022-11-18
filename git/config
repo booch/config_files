@@ -2,6 +2,8 @@
 	path = ~/.config/git/local
 	path = ~/.config/git/aliases
 	path = ~/.config/git/drivers
+[core]
+	excludesFile = ~/.config/git/ignore
 [color]
 	ui = true
 	diff = auto

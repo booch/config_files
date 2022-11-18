@@ -1,4 +1,17 @@
-*~
+# MacOS
 .DS_Store
+
+# Backup files
+*~
+
+# Visual Studio Code
+.vscode/
+
+# IntelliJ
 .idea/
+
+# Bundler
 vendor/bundle
+
+# GPG
+secring.*
