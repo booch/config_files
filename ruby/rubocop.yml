@@ -297,7 +297,7 @@ Lint/TripleQuotes: # (new in 1.9)
 Style/IfWithBooleanLiteralBranches: # (new in 1.9)
   Enabled: true
 
-Gemspec/DateAssignment: # (new in 1.10)
+Gemspec/DeprecatedAttributeAssignment: # (new in 1.10)
   Enabled: true
 Style/HashConversion: # (new in 1.10)
   Enabled: true
