@@ -4,7 +4,6 @@
     "workbench.colorTheme": "Default Light+",
     "editor.fontSize": 18,
     "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
-    "workbench.activityBar.visible": true,
     "breadcrumbs.enabled": true,
     "editor.renderControlCharacters": true,
     "editor.rulers": [
@@ -12,9 +11,10 @@
         { "column": 80, "color": "#dddddd" },
         { "column": 100, "color": "#888888" },
         { "column": 120, "color": "#ff0000" }
-      ],
+    ],
     "files.trimTrailingWhitespace": true,
     "editor.linkedEditing": true,
+    "workbench.activityBar.visible": true,
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "ruby.format": "rubocop",
@@ -30,6 +30,7 @@
             "other": false
         }
     },
+    "markdown.occurrencesHighlight.enabled": true,
     "markdownlint.config": {
         "extends": "/Users/booch/.markdownlint.yaml"
     },
@@ -63,5 +64,5 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "window.zoomLevel": 1 // TODO: Change this to "always" when that becomes available.
+    "npm.keybindingsChangedWarningShown": true
 }
