@@ -33,7 +33,7 @@ Style/BlockDelimiters:
   EnforcedStyle: semantic
   FunctionalMethods:
     - expect
-  IgnoredMethods:
+  AllowedMethods:
     - let
     - let!
     - subject
