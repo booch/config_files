@@ -13,6 +13,7 @@ ab co-cb    Co-authored-by: Craig Buchek <craig.buchek@debtbook.com>
 ab co-mr    Co-authored-by: Michael Ramuta <michael.ramuta@debtbook.com>
 ab co-pn    Co-authored-by: Patrick Neugebauer <patrick.neugebauer@debtbook.com>
 ab co-lr    Co-authored-by: Leigh Ryffel <leigh.ryffel@debtbook.com>
+ab co-st    Co-authored-by: Shireen Taha <shireen.taha@debtbook.com>
 "ab co-craig     Co-authored-by: Craig Buchek <craig@boochtek.com>
 "ab co-amos      Co-authored-by: Amos King <amos@binarynoggin.com>
 
