@@ -43,6 +43,7 @@
     conflicts = grep --name-only --full-name '<<<<<<< HEAD'
     continue = rebase --continue
     contributors = shortlog --summary --numbered
+    count = shortlog -sn
     cp = cherry-pick
     cpc = cherry-pick --signoff
     create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
@@ -212,7 +213,8 @@
     today = log --stat --since='12am' --graph --pretty=oneline-details --abbrev-commit --date=relative
     today-all = log --all --since='12am' --graph --pretty=oneline-details --abbrev-commit --date=relative
     tr = log --graph --oneline --decorate --color
-    tree = log --graph --oneline --decorate --color --all
+    track = !branch=$(git rev-parse --abbrev-ref HEAD); git branch $branch --set-upstream-to origin/$branch
+    tree = log --graph --simplify-by-decoration --oneline --decorate --color --all
     trust = !mkdir -p .git/safe
     type = cat-file -t
     unadd = reset HEAD --
@@ -228,6 +230,7 @@
     untrack = rm -r --cached
     up = !git fetch origin && git rebase origin/master
     update = !git fetch origin && git rebase origin/master
+    url = remote get-url origin
     wd = diff --word-diff="color"
     wdc = diff --word-diff="color" --cached
     wdiff = diff --word-diff=color --word-diff-regex=[a-zA-Z_0-9]+
