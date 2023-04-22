@@ -35,4 +35,4 @@ plugins=(asdf bundler common-aliases)
 ZSH_THEME='powerlevel10k/powerlevel10k'
 
 # Start up Oh My Zsh.
-source $ZSH/oh-my-zsh.sh
+#source $ZSH/oh-my-zsh.sh

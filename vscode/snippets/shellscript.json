@@ -1,15 +1,101 @@
 {
-	// Place your snippets for shellscript here. Each snippet is defined under a snippet name and has a prefix, body and 
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
-	// same ids are connected.
-	// Example:
-	// "Print to console": {
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
+    // Place your snippets for shellscript here. Each snippet is defined under a snippet name and has a prefix, body and
+    // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+    // same ids are connected.
+    // Example:
+    // "Print to console": {
+    // 	"prefix": "log",
+    // 	"body": [
+    // 		"console.log('$1');",
+    // 		"$2"
+    // 	],
+    // 	"description": "Log output to console"
+    // }
+
+    "unofficial Bash strict mode": {
+        "description": "See http://redsymbol.net/articles/unofficial-bash-strict-mode/.",
+        "prefix": ["set", "strict"],
+        "body": ["set -euo pipefail; IFS=$'\\n\\t'"]
+    },
+    "variables for ANSI colors": {
+        "description": "Set variables for various ANSI colors.",
+        "prefix": ["colors", "ansi"],
+        "body": [
+            "if [ -t 1 ]; then",
+            "    RED=\"\\$(tput setaf 1)\"",
+            "    GREEN=\"\\$(tput setaf 2)\"",
+            "    YELLOW=\"\\$(tput setaf 3)\"",
+            "    BLUE=\"\\$(tput setaf 4)\"",
+            "    PURPLE=\"\\$(tput setaf 5)\"",
+            "    CYAN=\"\\$(tput setaf 6)\"",
+            "    WHITE=\"\\$(tput setaf 7)\"",
+            "    BOLD=\"\\$(tput bold)\"",
+            "    REVERSE=\"\\$(tput rev)\"",
+            "    DIM=\"\\033[2m\"  # Terminfo entry is missing",
+            "    UNDERLINE=\"\\$(tput smul)\"",
+            "    ITALIC=\"\\033[3m\"  # No terminfo entry",
+            "    STRIKE=\"\\033[9m\"  # No terminfo entry",
+            "    RESET=\"\\$(tput sgr0)\"",
+            "else",
+            "    RED=''",
+            "    GREEN=''",
+            "    YELLOW=''",
+            "    BLUE=''",
+            "    PURPLE=''",
+            "    CYAN=''",
+            "    WHITE=''",
+            "    BOLD=''",
+            "    REVERSE=''",
+            "    DIM=''",
+            "    UNDERLINE=''",
+            "    ITALIC=''",
+            "    STRIKE=''",
+            "    RESET=''",
+            "fi"
+        ]
+    },
+    "trap signals to clean up": {
+        "description": "Set up cleanup function to trap on POSIX signals the script receives.",
+        "prefix": ["cleanup", "trap"],
+        "body": [
+            "# Clean up when receiving a POSIX signal.",
+            "cleanup () {",
+            "    ${0:exit 1;}",
+            "}",
+            "# Trap on signals: 0=EXIT 1=HUP 2=INT 3=QUIT 6=ABRT 13=PIPE 15=TERM.",
+            "trap cleanup 0 1 2 3 6 13 15"
+        ]
+    },
+    "confirmation prompt": {
+        "description": "Add confirm function to prompt for user to confirm whether to continue.",
+        "prefix": ["confirm", "prompt"],
+        "body": [
+            "confirm () {",
+            "    read -rp \"\\$1 (y/N)? \" ask",
+            "    [[ \"\\$ask\" == [yY] ]]",
+            "    return",
+            "}",
+            "confirm \"continue\" || log debug \"user exit\" && exit"
+        ]
+    },
+    "script source directory": {
+        "description": "See https://stackoverflow.com/a/246128/295807.",
+        "prefix": "script",
+        "body": [
+            "SCRIPT_DIR=\"\\$(cd -- \"\\$(dirname -- \"\\${BASH_SOURCE[0]}\")\" &> /dev/null && pwd)\"",
+            "readonly SCRIPT_DIR"
+        ]
+    },
+    "log": {
+        "description": "Simple logging function.",
+        "prefix": "log",
+        "body": [
+            "log () {",
+            "    typeset loglevel=\"\\${1^^}\"",
+            "    typeset timestamp=\"\\$(date +'%FT%T.%3NZ')\" # ISO_8601",
+            "    printf '[%s][%s] %s' \"\\$loglevel\" \"\\$timestamp\" \"\\$2\" >&2",
+            "}"
+        ]
+    }
 }

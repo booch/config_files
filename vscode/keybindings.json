@@ -20,5 +20,18 @@
     { "key": "cmd+8",               "command": "workbench.action.openEditorAtIndex8" },
     { "key": "cmd+9",               "command": "workbench.action.openEditorAtIndex9" },
 
-    { "key": "shift+f12",           "command": "workbench.action.navigateBack" }  // NOTE: This is normally bound to Ctrl+-.
+    {
+        "key": "shift+f12",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "ctrl+end",
+        "command": "cursorBottom",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+home",
+        "command": "cursorTop",
+        "when": "textInputFocus"
+    } // NOTE: This is normally bound to Ctrl+-.
 ]

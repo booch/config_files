@@ -3,13 +3,13 @@ stty ixany
 
 
 # If the terminal supports xterm-style setting of the title, set it to user@host:dir after every command.
-case "$TERM" in
-xterm*|rxvt*|putty*)
-    PROMPT_COMMAND="${PROMPT_COMMAND:-:} echo -ne \"\\033]0;${USER}@${HOSTNAME%%.*}: \${PWD/\$HOME/~}\\007\" ;"
-    ;;
-*)
-    ;;
-esac
+# case "$TERM" in
+# xterm*|rxvt*|putty*)
+#     PROMPT_COMMAND="${PROMPT_COMMAND:-:} echo -ne \"\\033]0;${USER}@${HOSTNAME%%.*}: \${PWD/\$HOME/~}\\007\" ;"
+#     ;;
+# *)
+#     ;;
+# esac
 
 
 ## Handle PuTTY oddities.

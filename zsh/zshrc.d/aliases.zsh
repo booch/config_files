@@ -1,7 +1,12 @@
 # Some more `ls` aliases.
+# TODO: Pipe these to `less -FX` (don't clear screen, exit if one screen).
+#       Use this style: https://stackoverflow.com/a/39395740/26311
 alias ll='ls -lAFGh'
 alias l='ls -lAFGh'
 alias ltr='ls -ltrAFGh'
+# Completion colors should match $LS_COLORS.
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
 
 alias cd='pushd'
 alias pop='popd'
@@ -96,3 +101,19 @@ alias rg=_rg
 
 # The kubernetes Oh My ZSH plugin adds `k` and a ton of other aliases, but the rest aren't used much.
 alias k='kubectl'
+
+if whence ack-grep &> /dev/null; then
+    alias ack=ack-grep
+fi
+
+# Don't glob with `find`.
+alias find='noglob find'
+
+# Print the name of the current (in focus) app.
+frontmost_app() {
+  osascript 2>/dev/null <<EOF
+    tell application "System Events"
+      name of first item of (every process whose frontmost is true)
+    end tell
+EOF
+}

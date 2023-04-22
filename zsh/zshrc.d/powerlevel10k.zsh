@@ -2,7 +2,7 @@
 # NOTE: Powelevel10k is completely backwards-compatible with Powelevel9k; hence the variable names.
 
 # Load p10k.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Define what to show in the prompt.
 # p9k default = (context dir vcs) / (status root_indicator background_jobs history time).
@@ -21,4 +21,4 @@ POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND='9'
 POWERLEVEL9K_CONTEXT__FOREGROUND='9'
 
 # Load our custom settings.
-p10k reload
+#p10k reload

@@ -7,7 +7,6 @@
     "breadcrumbs.enabled": true,
     "editor.renderControlCharacters": true,
     "editor.rulers": [
-
         { "column": 80, "color": "#dddddd" },
         { "column": 100, "color": "#888888" },
         { "column": 120, "color": "#ff0000" }
@@ -43,7 +42,7 @@
     "prettier.printWidth": 120,
     "C_Cpp.default.cStandard": "c11",
     "C_Cpp.default.cppStandard": "c++20",
-    "C_Cpp.experimentalFeatures": "Enabled",
+    "C_Cpp.experimentalFeatures": "enabled",
     "c-cpp-flylint.clang.pedantic": true,
     "editor.wrappingStrategy": "advanced",
     "prettier.tabWidth": 4,
@@ -64,5 +63,12 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "npm.keybindingsChangedWarningShown": true
+    "npm.keybindingsChangedWarningShown": true,
+    "redhat.telemetry.enabled": false,
+    "markdown-preview-enhanced.liveUpdate": false,
+    "shellcheck.ignorePatterns": {
+        "**/*.zsh": false,
+        "**/zshrc": false
+    },
+    "shellcheck.useWorkspaceRootAsCwd": true
 }
