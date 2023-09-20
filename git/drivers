@@ -16,3 +16,9 @@
 [merge "Gemfile.lock"]
 	name = 'Resolves Gemfile.lock merge conflicts by running `bundle install`'
 	driver = 'echo "Gemfile.lock merge conflict, running bundle install" && bundle install --quiet'
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
