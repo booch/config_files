@@ -1,3 +1,6 @@
+# Make sure we don't accidentally encrypt or otherwise filter our .gitattributes files.
+.gitattributes !filter !diff
+
 Gemfile.lock merge=Gemfile.lock
 *.plist diff=plist
 *.strings diff=localizablestrings
