@@ -29,13 +29,14 @@
     changes=diff --name-status -r
     changed=diff --name-only
     check = diff --check
+    checkout = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
     cheddar = commit --amend -CHEAD
     cherry-lick = !sh -c 'hub checkout HEAD^{} -- && hub cherry-pick \"$@\"' _
-    cho = checkout
+    cho = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
     ci = commit -v
     clear = !git add . && git stash && git stash drop
     cm = commit --message
-    co = checkout
+    co = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
     cob = checkout -b
     com = checkout master
     committed-by = "!f(){ git log --no-merges --stat --committer=\"$1\" --name-only --pretty=format:'' | sort -u | grep -v '^$' }; f"
