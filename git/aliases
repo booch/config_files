@@ -1,8 +1,8 @@
 [alias]
     a = add
-    aa = !git add --intent-to-add . && git add -u && git status
+    aa = add --all
     ac = !git add -A && git commit
-    addall = !git add --intent-to-add . && git add -u && git status
+    addall = add --all
     ae = add --edit
     ai = add --interactive
     aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
