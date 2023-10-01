@@ -4,8 +4,11 @@ if type brew &>/dev/null; then
     FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 fi
 
-autoload -Uz compinit
-compinit
+# Make tab completion case insensitive. (From https://scriptingosx.com/2019/07/moving-to-zsh-part-5-completions/.)
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+
+# Enable tab completion.
+autoload -Uz compinit && compinit
 
 # Display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS='true'
