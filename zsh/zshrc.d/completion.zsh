@@ -7,6 +7,9 @@ fi
 # Make tab completion case insensitive. (From https://scriptingosx.com/2019/07/moving-to-zsh-part-5-completions/.)
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 
+# Allow tab completion of multiple partial matches (/u/lo/b -> /usr/local/bin).
+zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
+
 # Enable tab completion.
 autoload -Uz compinit && compinit
 
