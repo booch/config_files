@@ -1,5 +1,5 @@
 # Automatically send output through less (with processing of ANSI color codes) unless piping.
---pager=less -R
+--pager=less -RX
 
 # Always display the files in alphabetical order.
 --sort-files

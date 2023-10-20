@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -12,8 +14,8 @@ export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 
 # Add personal bin directory, if it exists.
-if [ -d $HOME/bin ]; then
-    export PATH=$HOME/bin:$PATH
+if [ -d "$HOME/bin" ]; then
+    export PATH="$HOME/bin:$PATH"
 fi
 
 
@@ -175,33 +177,33 @@ alias colorslist="set | egrep 'COLOR_\w*'"  # Lists all the colors.
 
 
 # Set prompt with info on current git branch, if any (from http://railstips.org/2009/2/2/bedazzle-your-bash-prompt-with-git-info, http://asemanfar.com/Current-Git-Branch-in-Bash-Prompt).
-function parse_git_branch {
+parse_git_branch() {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
     echo "("${ref#refs/heads/}")"
 }
 # Other possible ways to determine current git branch.
-#function parse_git_branch {
+#parse_git_branch() {
 #  git branch &>/dev/null
 #  if [ $? -eq 0 ]; then
 #    echo " ($(git branch | grep ^*|sed s/\*\ //))"
 #  fi
 #}
-#function parse_git_branch() {
-#  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+#parse_git_branch() {
+#  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 #}
-#function parse_git_branch() {
+#parse_git_branch() {
 #  git name-rev HEAD 2> /dev/null | awk "{ print \\$2 }"
 #}
 
-function display_X_if_error() {
+display_X_if_error() {
     [ "$?" -ne 0 ] && echo "❌ "
 }
 
-function display_kubernetes_context_if_prod() {
-    type -P kubectl >/dev/null && kubectl config get-contexts | grep '^\*' | awk '{print $2}' | tr a-z A-Z | grep 'PROD'
+display_kubernetes_context_if_prod() {
+    type -P kubectl >/dev/null && kubectl config get-contexts | grep '^\*' | awk '{print $2}' | tr '[:lower:]' '[:upper:]' | grep 'PROD'
 }
 
-function ps1() {
+ps1() {
     # \u = username
     # \h = hostname
     # \w = current working directory, with $HOME abbreviates as `~`
@@ -221,7 +223,7 @@ function ps1() {
 }
 PS1="$(ps1)"
 
-function ps0() {
+ps0() {
     # \A = current time (24 hour)
     # \D{format} = date (strfmt)
     local BLACK_BG='\[\e[40m\]'
@@ -237,7 +239,7 @@ PS0="$(ps0)"
 ## Handle PuTTY oddities.
 
 # Get the first 5 characters of the terminal answerback string. (PuTTY's default answerback string is "PuTTY", without a terminating return character.)
-echo -ne '\005' ; read -s -t1 -n5 TERMINAL_ANSWERBACK_5
+echo -ne '\005' ; read -rs -t1 -n5 TERMINAL_ANSWERBACK_5
 
 # See if we got the PuTTY answerback.
 if [[ "$TERMINAL_ANSWERBACK_5" == 'PuTTY' ]]; then
@@ -284,32 +286,32 @@ esac
 
 # Pull in shell alias definitions.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f "$HOME/.bash_aliases" ]; then
+    . "$HOME/.bash_aliases"
 fi
 
 
 # Enable programmable completion features.
-if [ -r /etc/bash_completion -a ! -z "$BASH_COMPLETION" ]; then
+if [ -r /etc/bash_completion ] && [ -n "$BASH_COMPLETION" ]; then
     . /etc/bash_completion
 elif [ -r /usr/local/etc/bash_completion ]; then
     . /usr/local/etc/bash_completion # Homebrew for Mac installs here.
 elif [ -r /usr/local/bin/bash_completion ]; then
     export BASH_COMPLETION=/usr/local/bin/bash_completion
-    export BASH_COMPLETION_DIR=~/bin/bash_completion.d
+    export BASH_COMPLETION_DIR="$HOME/bin/bash_completion.d"
     . /usr/local/bin/bash_completion
-elif [ -r ~/bin/bash_completion ]; then
-    export BASH_COMPLETION=~/bin/bash_completion
-    export BASH_COMPLETION_DIR=~/bin/bash_completion.d
-    . ~/bin/bash_completion
+elif [ -r "$HOME/bin/bash_completion" ]; then
+    export BASH_COMPLETION="$HOME/bin/bash_completion"
+    export BASH_COMPLETION_DIR="$HOME/bin/bash_completion.d"
+    . "$HOME/bin/bash_completion"
 fi
 
 # If we stop console output with Ctrl+S, allow any key to restart the output.
 stty ixany
 
 # Allow pulling in some private settings.
-if [ -f ~/.bashrc-private ]; then
-    . ~/.bashrc-private
+if [ -f "$HOME/.bashrc-private" ]; then
+    . "$HOME/.bashrc-private"
 fi
 
 ## Mac OS X specific settings.

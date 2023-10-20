@@ -1,111 +1,129 @@
 #!/bin/sh
 
-# Make certain we're in the config_files directory.
-cd "$(dirname $0)"
+# Make certain we're in the directory containing this file.
+cd "$(dirname "$0")" || ( echo "$(tput setaf 1)Could not change to script directory$(tput sgr0)" && exit )
 
-# Get full path to config_files directory.
+# Get full path to the directory.
 CWD="$(pwd)"
 
-# Get full list of config files.
-FILES="$(ls -1A | grep -v README | grep -v install.sh | grep -v BACKUPS)"
+TODAY="$(date +%Y%m%d)"
 
-# Get today's date in YYYYMMDD format.
-TODAY="$(date +'%Y%m%d')"
+# We've added backups of any existing files/directories.
+# This should work for regular files and directories.
+ln_sf() {
+    src="$1"; dst="$2"
+    if [ -e "$dst" ]; then
+        if [ ! -e "${dst}-${TODAY}" ] ; then
+            mv "$dst" "${dst}-${TODAY}"
+        else
+            rm -rf "$dst"
+        fi
+    fi
+    ln -s "$src" "$dst"
+}
 
-# FIXME: should be ! -e
-#if [ ! -e ~/BACKUPS-$TODAY ]; then
-#  mkdir -p ~/BACKUPS-$TODAY
-#  for file in $FILES; do
-#    # TODO: Back up current config files to BACKUPS dir.
-#    echo Need to back up ~/.$file to ~/BACKUPS-$TODAY/$file
-#    cp -a ~/.$file ~/BACKUPS-$TODAY/$file
-#  done
-#fi
+# We'd use `ln -sfT` on Linux, if we didn't want the backups.
+# According to the macOS man page, `ln -sfF` should work the same, but it does not.
+ln_sfT() {
+    ln_sf "$1" "$2"
+}
 
-# Link files to where they belong.
-ln -sf $CWD/ack/ackrc                           ~/.ackrc
 
-mkdir -p ~/.zsh/custom/themes
-if [ ! -d ~/.zsh/custom/themes/powerlevel10k ]; then
-    git clone https://github.com/romkatv/powerlevel10k.git ~/.zsh/custom/themes/powerlevel10k
+rm -f test-src.txt test-dest.txt
+touch test-src.txt
+ls_sf test-src.txt test-dest.txt
+ls_sf test-src.txt test-dest.txt
+ls_sf test-src.txt test-dest.txt
+
+ls -ltr | tail -5
+
+# ln_sfT test-src test-dest
+
+exit
+
+
+# Link files to where they "belong". Hopefully some day, all commands will support `~/.config` or `$XDG_CONFIG_HOME`.
+ln_sf "$CWD/ack/ackrc"                   "$HOME/.ackrc"
+
+ln_sf "$CWD/zsh/zshrc"                   "$HOME/.zshrc"
+ln_sfT "$CWD/zsh"                        "$HOME/.zsh"
+
+ln_sf "$CWD/bash/aliases"                "$HOME/.bash_aliases"
+ln_sf "$CWD/bash/bash_logout"            "$HOME/.bash_logout"
+ln_sf "$CWD/bash/bash_profile"           "$HOME/.bash_profile"
+ln_sf "$CWD/bash/bashrc"                 "$HOME/.bashrc"
+ln_sf "$CWD/bash/profile"                "$HOME/.profile"
+ln_sfT "$CWD/bash/profile.d"             "$HOME/.profile.d"
+ln_sf "$CWD/bash/inputrc"                "$HOME/.inputrc"
+
+ln_sfT "$CWD/ruby/bundler"               "$HOME/.bundle"
+ln_sf "$CWD/ruby/gemrc"                  "$HOME/.gemrc"
+ln_sf "$CWD/ruby/irbrc"                  "$HOME/.irbrc"
+ln_sf "$CWD/ruby/pryrc"                  "$HOME/.pryrc"
+ln_sf "$CWD/ruby/aprc"                   "$HOME/.aprc"
+ln_sf "$CWD/ruby/railsrc"                "$HOME/.railsrc"
+ln_sf "$CWD/ruby/ruby-version"           "$HOME/.ruby-version"
+ln_sf "$CWD/ruby/rubocop.yml"            "$HOME/.rubocop.yml"
+
+# NOTE: Global elintrc files are deprecated and give a warning.
+# ln_sf "$CWD/js/eslintrc.yml"             "$HOME/.eslintrc.yml"
+ln_sf "$CWD/js/jscsrc"                   "$HOME/.jscsrc"
+ln_sf "$CWD/js/jshintrc"                 "$HOME/.jshintrc"
+
+ln_sf "$CWD/racket/racketrc"             "$HOME/.racketrc"
+
+ln_sf "$CWD/markdown/markdownlint.yaml"  "$HOME/.markdownlint.yaml"
+
+ln_sf "$CWD/spelling/dictionary.txt"     "$HOME/Library/Spelling/LocalDictionary"
+
+ln_sf "$CWD/ctags"                       "$HOME/.ctags"
+
+ln_sf "$CWD/finicky/finicky.js"          "$HOME/.finicky.js"
+
+ln_sfT "$CWD/docker"                     "$HOME/.docker"
+
+ln_sfT "$CWD/mc"                         "$HOME/.mc"
+
+ln_sf "$CWD/nano/nanorc"                 "$HOME/.nanorc"
+ln_sfT "$CWD/nano"                       "$HOME/.nano"
+
+ln_sf "$CWD/vim/vimrc"                   "$HOME/.vimrc"
+ln_sfT "$CWD/vim"                        "$HOME/.vim"
+
+ln_sfT "$CWD/atom"                       "$HOME/.atom"
+
+mkdir -p "$HOME/Library/Application Support/Code"
+ln_sfT "$CWD/vscode"                     "$HOME/Library/Application Support/Code/User"
+
+ln_sf "$CWD/postgresql/psqlrc"           "$HOME/.psqlrc"
+
+if [ "$(uname)"x = "Darwin"x  ]; then
+    mkdir -p "$HOME/Library/KeyBindings"
+    ln_sf "$CWD/keyboard/DefaultKeyBinding.Dict"  "$HOME/Library/KeyBindings/DefaultKeyBinding.Dict"
+
+    ln_sfT "$CWD/keyboard/karabiner" "$CWD/karabiner"
 fi
-ln -sf $CWD/zsh/zshrc                           ~/.zshrc
-ln -sFn $CWD/zsh/zshrc.d                        ~/.zsh/zshrc.d
 
-ln -sf $CWD/bash/aliases                        ~/.bash_aliases
-ln -sf $CWD/bash/bash_logout                    ~/.bash_logout
-ln -sf $CWD/bash/bash_profile                   ~/.bash_profile
-ln -sf $CWD/bash/bashrc                         ~/.bashrc
-ln -sf $CWD/bash/profile                        ~/.profile
-ln -sFn $CWD/bash/profile.d                     ~/.profile.d
-ln -sf $CWD/bash/inputrc                        ~/.inputrc
-
-mkdir -p ~/.bundle
-ln -sf $CWD/ruby/bundler/config                 ~/.bundle/config
-ln -sf $CWD/ruby/gemrc                          ~/.gemrc
-ln -sf $CWD/ruby/irbrc                          ~/.irbrc
-ln -sf $CWD/ruby/pryrc                          ~/.pryrc
-ln -sf $CWD/ruby/aprc                           ~/.aprc
-ln -sf $CWD/ruby/railsrc                        ~/.railsrc
-ln -sf $CWD/ruby/ruby-version                   ~/.ruby-version
-ln -sf $CWD/ruby/rubocop.yml                    ~/.rubocop.yml
-
-ln -sf $CWD/js/eslintrc.yml                     ~/.eslintrc.yml
-ln -sf $CWD/js/jscsrc                           ~/.jscsrc
-ln -sf $CWD/js/jshintrc                         ~/.jshintrc
-
-ln -sf $CWD/racket/racketrc                     ~/.racketrc
-
-ln -sf $CWD/markdown/markdownlint.yaml          ~/.markdownlint.yaml
-
-mkdir -p ~/.config
-ln -sFn $CWD/git                                ~/.config/git
-ln -sFn $CWD/tmuxinator                         ~/.config/tmuxinator
-
-ln -sf $CWD/spelling/dictionary.txt             ~/Library/Spelling/LocalDictionary
-
-ln -sf $CWD/ctags                               ~/.ctags
-
-mkdir -p ~/.docker
-ln -sf $CWD/docker/config.json                  ~/.docker/config.json
-
-ln -sFn $CWD/mc                                 ~/.mc
-
-ln -sf $CWD/nano/nanorc                         ~/.nanorc
-ln -sFn $CWD/nano                               ~/.nano
-
-ln -sf $CWD/vim/vimrc                           ~/.vimrc
-ln -sFn $CWD/vim                                ~/.vim
 if [ ! -d vim/bundle/vundle ]; then
+    mkdir -p "vim/bundle"
     git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
 fi
-mkdir -p ~/.vim/backup  # Make sure there's a global backup directory for vim.
+
+# Make sure there's a global backup directory for vim.
+mkdir -p "vim/backup"
+
 # Install and update Vundle bundles.
 if command -v vim >/dev/null 2>&1 ; then
     vim -c 'VundleInstall' -c 'VundleUpdate' -c 'qa!'
 fi
 
-mkdir -p ~/.atom
-ln -sf $CWD/atom/config.cson                    ~/.atom/config.cson
-ln -sf $CWD/atom/keymap.cson                    ~/.atom/keymap.cson
-#ln -sf $CWD/atom/touchbar.js                    ~/.atom/packages/touchbar-utility/lib/configuration.js
+# nvim --headless '+Lazy! sync' +qa
 
-mkdir -p "$HOME/Library/Application Support/Code/User"
-ln -sf $CWD/vscode/settings.json                "$HOME/Library/Application Support/Code/User/settings.json"
-ln -sf $CWD/vscode/keybindings.json             "$HOME/Library/Application Support/Code/User/keybindings.json"
-ln -sFn $CWD/vscode/snippets                    "$HOME/Library/Application Support/Code/User/snippets"
-
-ln -sf $CWD/postgresql/psqlrc                   ~/.psqlrc
-
-if [ "$(uname)"x = "Darwin"x  ]; then
-    mkdir -p ~/Library/KeyBindings
-    ln -f $CWD/keyboard/DefaultKeyBinding.Dict  ~/Library/KeyBindings/DefaultKeyBinding.Dict
-
-    mkdir -p ~/.config/karabiner
-    ln -sf $CWD/keyboard/karabiner.json         ~/.config/karabiner/karabiner.json
-fi
+touch "$HOME/.bash_history"
+chmod -f go-rwx "$HOME/.*_history"
 
 
-# TODO: Need more permission changes?
-touch ~/.bash_history
-chmod go-rwx ~/.*_history
+
+# TODO/FIXME:
+# rm: $HOME/Library/Application Support/Code/User: Permission denied
+# $HOME/Library/Spelling/en

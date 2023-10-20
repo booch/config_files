@@ -1,12 +1,14 @@
+#!/bin/zsh
+
 # Change datestamp format for `history` output.
-HIST_STAMPS='yyyy-mm-dd'
+export HIST_STAMPS='yyyy-mm-dd'
 
 # Keep my home directory clean.
-HISTFILE=$HOME/.zsh/history
+export HISTFILE="$HOME/.zsh/history"
 
 # Allow for a really large history file.
-HISTSIZE=20000
-SAVEHIST=10000
+export HISTSIZE=20000
+export SAVEHIST=10000
 
 # From https://gitlab.com/sytses/dotfiles/-/blob/master/zsh/config.zsh
 setopt HIST_VERIFY

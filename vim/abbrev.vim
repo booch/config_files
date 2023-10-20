@@ -5,11 +5,10 @@ ab ddate        <c-r>=strftime("%F")<CR>
 " Code signing:
 " NOTE: We have to include `-` as a keyword character to be able to use it in abbreviations.
 set iskeyword+=-
-ab co-              Co-authored-by: 
+ab co-              Co-authored-by:
 
 ab co-buchek        Co-authored-by: Craig Buchek <craig.buchek@debtbook.com>
 ab co-buckner       Co-authored-by: Kate Buckner <kate.buckner@debtbook.com>
-ab co-cann          Co-authored-by: James Cann <james.cann@debtbook.com>
 ab co-carpenter     Co-authored-by: Lilith Carpenter <lilith.carpenter@debtbook.com>
 ab co-charnetzki    Co-authored-by: Meara Charnetzki <meara.charnetzki@debtbook.com>
 ab co-ieong         Co-authored-by: Calvin Ieong <calvin.ieong@debtbook.com>
@@ -25,7 +24,6 @@ ab co-taha          Co-authored-by: Shireen Taha <shireen.taha@debtbook.com>
 
 ab co-craig         Co-authored-by: Craig Buchek <craig.buchek@debtbook.com>
 ab co-kate          Co-authored-by: Kate Buckner <kate.buckner@debtbook.com>
-ab co-james         Co-authored-by: James Cann <james.cann@debtbook.com>
 ab co-lilith        Co-authored-by: Lilith Carpenter <lilith.carpenter@debtbook.com>
 ab co-meara         Co-authored-by: Meara Charnetzki <meara.charnetzki@debtbook.com>
 ab co-calvin        Co-authored-by: Calvin Ieong <calvin.ieong@debtbook.com>
@@ -41,7 +39,6 @@ ab co-shireen       Co-authored-by: Shireen Taha <shireen.taha@debtbook.com>
 
 ab co-cb            Co-authored-by: Craig Buchek <craig.buchek@debtbook.com>
 ab co-kb            Co-authored-by: Kate Buckner <kate.buckner@debtbook.com>
-ab co-jc            Co-authored-by: James Cann <james.cann@debtbook.com>
 ab co-lc            Co-authored-by: Lilith Carpenter <lilith.carpenter@debtbook.com>
 ab co-mc            Co-authored-by: Meara Charnetzki <meara.charnetzki@debtbook.com>
 ab co-ci            Co-authored-by: Calvin Ieong <calvin.ieong@debtbook.com>

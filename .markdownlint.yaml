@@ -1,0 +1,19 @@
+---
+
+# Start with the default set of rules turned on.
+default: true
+
+# Use Setext (underlines) for H1 and H2, and ATX (hashes) for all headings. (MD003)
+# NOTE: I'd prefer to use Setext for H1, and ATX for everything else, but that's not a supported option.
+heading-style:
+    style: setext_with_atx
+
+# Set list indentation to 4 spaces. (MD007)
+ul-indent:
+    indent: 4
+
+# Don't worry about lines longer than 80 characters. (MD013)
+line-length: false
+
+# Allow multiple blank lines. (MD012)
+no-multiple-blanks: false

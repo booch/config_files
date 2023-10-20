@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 ## Mac OS X specific settings.
 if [[ "$OSTYPE" = "darwin10.0" ]] ; then
     if [[ "$HOSTTYPE" = "x86_64" ]] ; then

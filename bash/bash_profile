@@ -1,11 +1,13 @@
+#!/bin/bash
+
 # NOTE: This .bash_profile is executed only for bash login shells.
 
 # By default, do not let others on the system write files I create, but let them read.
 umask 022
 
 # Include .bashrc if it exists, because all login shells are interactive.
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
 fi
 
 # Output some info about the system.
@@ -19,10 +21,7 @@ echo -e "${COLOR_PURPLE}${OS}${COLOR_NONE} - ${COLOR_BROWN}bash ${BASH_VERSION}$
 
 # Pull in settings from other (possibly system-specific or private) files.
 if [[ -d $HOME/.profile.d ]]; then
-    for profile_file in $(find -L $HOME/.profile.d/ -type f); do
-        source $profile_file
+    for profile_file in $(find -L "$HOME"/.profile.d/ -type f); do
+        source "$profile_file"
     done
 fi
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
-export BUNDLE_PATH=vendor/bundle

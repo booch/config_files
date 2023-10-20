@@ -1,27 +1,42 @@
-/* This file allows comments. Yay! */
+/* This file allows comments. Yay! I think it also allows trailing commas. */
 {
+    // General
     "files.defaultLanguage": "markdown",
-    "workbench.colorTheme": "Default Light+",
+    "editor.linkedEditing": true,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.pinnedTabsOnSeparateRow": true,
+    "editor.accessibilitySupport": "off",
+    "editor.scrollbar.scrollByPage": true,
+    "redhat.telemetry.enabled": false,
+    "vsicons.dontShowNewVersionMessage": true,
+
+    // Appearance
+    "workbench.colorTheme": "Default Light Modern",
+    "window.zoomLevel": 1,
     "editor.fontSize": 18,
     "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
     "breadcrumbs.enabled": true,
+    "editor.wrappingStrategy": "advanced",
     "editor.renderControlCharacters": true,
     "editor.rulers": [
-
         { "column": 80, "color": "#dddddd" },
         { "column": 100, "color": "#888888" },
         { "column": 120, "color": "#ff0000" }
     ],
-    "files.trimTrailingWhitespace": true,
-    "editor.linkedEditing": true,
     "workbench.activityBar.visible": true,
-    "workbench.editor.enablePreview": false,
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-    "ruby.format": "rubocop",
-    "[ruby]": {
-        "editor.tabSize": 2
-    },
+
+    // Formatting
+    "editor.formatOnType": true,
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
+    "prettier.printWidth": 120,
+    "prettier.tabWidth": 4,
+
+    // Markdown
     "[markdown]": {
+        "editor.tabSize": 4,
         "editor.wordWrapColumn": 80,
         "editor.wordWrap": "bounded",
         "editor.quickSuggestions": {
@@ -32,37 +47,110 @@
     },
     "markdown.occurrencesHighlight.enabled": true,
     "markdownlint.config": {
-        "extends": "/Users/booch/.markdownlint.yaml"
+        "extends": "~/.markdownlint.yaml"
+    },
+    "markdownlint.focusMode": true,
+    "markdown-preview-enhanced.liveUpdate": false,
+
+    // JavaScript (and JSON)
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2
+        // "editor.formatOnSave": true,
+        // "editor.codeActionsOnSave": {
+        //     "source.fixAll.eslint": true
+        // }
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        // "editor.formatOnSave": true
     },
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
+        // "editor.formatOnSave": true
     },
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "prettier.printWidth": 120,
+    "eslint.format.enable": true,
+    "npm.keybindingsChangedWarningShown": true,
+
+    // C/C++
     "C_Cpp.default.cStandard": "c11",
     "C_Cpp.default.cppStandard": "c++20",
-    "C_Cpp.experimentalFeatures": "Enabled",
+    "C_Cpp.experimentalFeatures": "enabled",
     "c-cpp-flylint.clang.pedantic": true,
-    "editor.wrappingStrategy": "advanced",
-    "prettier.tabWidth": 4,
-    "editor.snippetSuggestions": "top", // Show snippets first, per https://www.roboleary.net/2021/08/23/vscode-snippets-are-not-aliases.html
-    "editor.suggestSelection": "first",
+
+    // IntelliSense - see https://code.visualstudio.com/docs/editor/intellisense#_customizing-intellisense
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.snippetSuggestions": "top", // Show snippets before other suggestions, per https://www.roboleary.net/2021/08/23/vscode-snippets-are-not-aliases.html
+    "editor.quickSuggestions": {
+        "comments": false,
+        "strings": false,
+        "other": true
     },
+    "editor.tabCompletion": "on",
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "editor.acceptSuggestionOnEnter": "smart", // I probably want to turn this off.
+    "editor.suggest.localityBonus": true,
+    "editor.acceptSuggestionOnCommitCharacter": true,
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.wordBasedSuggestions": true,
+    "editor.parameterHints.enabled": true,
+
     "editor.codeActionsOnSave": {},
     "editor.autoClosingBrackets": "always",
     "editor.autoSurround": "languageDefined",
-    "editor.acceptSuggestionOnEnter": "off",
-    "editor.scrollbar.scrollByPage": true,
     "files.exclude": {
         "**/.classpath": true,
         "**/.project": true,
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "npm.keybindingsChangedWarningShown": true
+
+    // Shell
+    "shellcheck.ignorePatterns": {
+        "**/*.zsh": false,
+        "**/zshrc": false
+    },
+    "shellcheck.useWorkspaceRootAsCwd": true,
+
+    // Ruby
+    "ruby.useLanguageServer": true,
+    "ruby.lint": {
+        "rubocop": {
+            "useBundler": true
+        }
+    },
+    "ruby.intellisense": "rubyLocate",
+    "[ruby]": {
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "Shopify.ruby-lsp", // Could also choose "castwide.solargraph", probably rubocop.
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.insertSpaces": true,
+        "editor.semanticHighlighting.enabled": true
+    },
+    "solargraph.useBundler": false,
+    "solargraph.commandPath": "~/bin/solargraph",
+    "solargraph.transport": "stdio",
+    "solargraph.formatting": true,
+    "rubyLsp.bundleGemfile": "~/.ruby-lsp/Gemfile",
+    "rubyLsp.rubyVersionManager": "asdf",
+    "rubyLsp.enabledFeatures": {
+        "codeActions": true,
+        "diagnostics": true,
+        "documentHighlights": true,
+        "documentLink": true,
+        "documentSymbols": true,
+        "foldingRanges": true,
+        "formatting": true,
+        "hover": true,
+        "inlayHint": true,
+        "onTypeFormatting": true,
+        "selectionRanges": true,
+        "semanticHighlighting": true,
+        "completion": true,
+        "codeLens": true,
+        "definition": true,
+        "workspaceSymbol": true
+    },
+    "rubyLsp.enableExperimentalFeatures": true
 }

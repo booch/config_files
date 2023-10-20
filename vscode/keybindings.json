@@ -20,5 +20,48 @@
     { "key": "cmd+8",               "command": "workbench.action.openEditorAtIndex8" },
     { "key": "cmd+9",               "command": "workbench.action.openEditorAtIndex9" },
 
-    { "key": "shift+f12",           "command": "workbench.action.navigateBack" }  // NOTE: This is normally bound to Ctrl+-.
+    {
+        "key": "shift+f12",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "ctrl+end",
+        "command": "cursorBottom",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+home",
+        "command": "cursorTop",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+alt+cmd+c",
+        "command": "copyRelativeFilePath",
+        "when": "!editorFocus"
+    },
+    {
+        "key": "shift+alt+cmd+c",
+        "command": "-copyRelativeFilePath",
+        "when": "!editorFocus"
+    },
+    {
+        "key": "ctrl+alt+cmd+c",
+        "command": "copyRelativeFilePath",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+k shift+alt+cmd+c",
+        "command": "-copyRelativeFilePath",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+alt+cmd+c",
+        "command": "java.view.package.copyRelativeFilePath",
+        "when": "focusedView == 'javaProjectExplorer' && java:serverMode == 'Standard'"
+    },
+    {
+        "key": "shift+alt+cmd+c",
+        "command": "-java.view.package.copyRelativeFilePath",
+        "when": "focusedView == 'javaProjectExplorer' && java:serverMode == 'Standard'"
+    } // NOTE: This is normally bound to Ctrl+-.
 ]

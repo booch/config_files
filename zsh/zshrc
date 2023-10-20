@@ -1,22 +1,31 @@
+#!/bin/zsh
+
 # I've made my entire ZSH configuration modular!
 if [[ -d $HOME/.zsh/zshrc.d ]]; then
-    for file in $(find -L $HOME/.zsh/zshrc.d/*.zsh -type f); do
-        source $file
+    for file in $(\find -L "$HOME"/.zsh/zshrc.d/*.zsh -type f); do
+        # shellcheck source=/dev/null
+        . "$file"
     done
 fi
 
 # Enable command auto-correction.
-ENABLE_CORRECTION="true"
+export ENABLE_CORRECTION="true"
 
 # TODO: Not sure how /sbin and /usr/sbin already got added.
-export PATH=$PATH:/usr/local/sbin
+export PATH="$PATH:/usr/local/sbin"
 
-# function current_branch() {
-#   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-#   echo ${ref#refs/heads/}
-# }
-#
-# function current_repository() {
-#   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-#   echo $(git remote -v | cut -d':' -f 2)
-# }
+# Prefer my local commands over everything else.
+if [[ -d "$HOME/bin" ]]; then
+    export PATH="$HOME/bin:$PATH"
+fi
+
+export CLICOLOR=true
+
+setopt NO_BG_NICE # don't nice background tasks
+setopt NO_HUP
+setopt NO_LIST_BEEP
+setopt LOCAL_OPTIONS # allow functions to have local options
+setopt LOCAL_TRAPS # allow functions to have local traps
+setopt CORRECT
+setopt COMPLETE_IN_WORD
+setopt IGNORE_EOF

@@ -3,3 +3,10 @@
 vim/janus
 vim/backup
 vim/bundle
+karabiner
+!keyboard/karabiner
+keyboard/karabiner/assets
+vscode/History
+vscode/globalStorage
+vscode/workspaceStorage
+zsh/history

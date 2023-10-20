@@ -13,19 +13,18 @@
 [color "status"]
 	untracked = blue
 [color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = 146 bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+#	meta = 11
+#	frag = magenta bold
+#	func = 146 bold
+#	commit = yellow bold
+#	old = red bold
+#	new = green bold
+#	whitespace = red reverse
 [apply]
 	whitespace = strip
 	whitespace = nowarn
 [merge]
 	conflictstyle = diff3
-	tool = opendiff
 	summary = true
 [help]
 	autocorrect = 50  # Automatically correct misspelled git subcommands after 5 seconds.
@@ -38,6 +37,7 @@
 	timeline = format:%h %an %ar - %s
 [fetch]
 	recurseSubmodules = on-demand  # Only pull submodule changes if the main project updates the submodule reference.
+	prune = true  # If a remote branch is deleted, allow `git fetch` to remove the remote ref.
 [push]
 	default = upstream  # Push only the current branch by default, not all branches.
 	recurseSubmodules = on-demand  # Push any submodule changes first; if that fails, main project will not be pushed.
@@ -45,6 +45,7 @@
 	ff = true  # Only do fast-forward merges, so we don't overwrite any local changes.
 [rebase]
 	autostash = true  # Automatically stash and unstash during a rebase.
+	updateRefs = true # When rebasing a branch, also update any branches based on that branch. See https://github.blog/2022-10-03-highlights-from-git-2-38/#rebase-dependent-branches-with-update-refs.
 [rerere]
 	enabled = true  # Automatically record and replay merge conflict resolutions. (http://git-scm.com/2010/03/08/rerere.html)
 	autoupdate = true  # Automatically stage any resolutions that rerere solves.
@@ -62,23 +63,14 @@
 	colorMoved = zebra  # Use different colors to show lines that have moved.
 	colorMovedWS = ignore-all-space  # If a line has moved and had whitespace changes, show it as moved.
 	wsErrorHighlight = all  # Show whitespace errors in deleted lines.
-[diff "plist"]
-	textconv = "plutil -convert xml1 -o -"
-[diff "zip"]
-	textconv = unzip -c -a
-[diff "localizablestrings"]
-	textconv = "iconv -f utf-16 -t utf-8"
-[user]
-	email = craig@boochtek.com
-	name = Craig Buchek
 [core]
-	pager = diff-so-fancy | less --tabs=4 -RFX
+#	pager = diff-so-fancy | less --tabs=4 -RFX
 [interactive]
-	diffFilter = diff-so-fancy --patch
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+#	diffFilter = diff-so-fancy --patch
+#[color "diff-highlight"]
+#	oldNormal = red bold
+#	oldHighlight = red bold 52
+#	newNormal = green bold
+#	newHighlight = green bold 22
 [init]
 	defaultBranch = main

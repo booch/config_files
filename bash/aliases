@@ -1,24 +1,40 @@
-# Enable color support of ls and also add handy aliases
+#!/bin/bash
+
+set -uo pipefail
+IFS=$'\n\t'
+[[ -n "${DEBUG+unset}" ]] && set -x
+# trap 'RC=$? ; echo "$0: Error on line "$LINENO": $BASH_COMMAND" ; exit $RC' ERR
+
+
+# Enable color support of ls and also add handy aliases.
 if [ "$TERM" != "dumb" ]; then
-    if type -P dircolors >/dev/null; then
-        eval "`dircolors -b`"
-    fi
+    type -p dircolors >/dev/null && eval "$(dircolors -b)"
     if ls --color=auto 2> /dev/null > /dev/null ; then
         # See http://www.linux-sxs.org/housekeeping/lscolors.html
         export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'
-        alias ls='ls --color=auto -h'
-        alias dir='ls --color=auto --format=vertical'
+        alias ls='ls --color=auto -h -1'
     else
         # Mac OS X
-        alias ls='ls -G -h'
-        alias dir='ls -G'
+        alias ls='ls -G -h -1'
     fi
 fi
 
-# Some more ls aliases
-alias ll='ls -lAFGh'
-alias l='ls -lAFGh'
-alias ltr='ls -ltrAFGh'
+# Some more `ls` aliases. Use `eza` if it's available.
+if type -p eza >/dev/null; then
+  # TODO: Set EZA_COLORS. See https://man.archlinux.org/man/extra/eza/eza_colors-explanation.5.en
+  # Eza has no way to suppress showing the source of soft links, so fall back to `ls`.
+  alias l1='ls -1A'
+  alias l='eza -lahF --no-user --git --group-directories-first --time-style=relative'
+  alias ltr='eza -lahF --no-user --git --sort=time --time-style=relative'
+  alias ll='eza -lahFo --git --group-directories-first --time-style=long-iso'
+  alias dir='eza -1'
+else
+  alias l1='ls -1A'
+  alias l='ls -lAFGh'
+  alias ltr='ls -ltrAFGh'
+  alias ll='ls -lAFGh'
+  alias dir='ls -1'
+fi
 
 alias cd='pushd'
 alias pop='popd'
@@ -55,22 +71,22 @@ fi
 
 # Other Mac OS X stuff.
 if [ -x '/Applications/Komodo Edit.app/Contents/MacOS/komodo' ]; then
-  alias komodo='/Applications/Komodo\ Edit.app/Contents/MacOS/komodo'
+    alias komodo='/Applications/Komodo\ Edit.app/Contents/MacOS/komodo'
 fi
 if [ -x '/Applications/Firefox.app/Contents/MacOS/firefox' ]; then
-  alias firefox='/Applications/Firefox.app/Contents/MacOS/firefox'
+    alias firefox='/Applications/Firefox.app/Contents/MacOS/firefox'
 fi
 if [ -x '/Applications/TextMate.app/Contents/SharedSupport/Support/bin/mate' ]; then
-  alias mate='/Applications/TextMate.app/Contents/SharedSupport/Support/bin/mate'
+    alias mate='/Applications/TextMate.app/Contents/SharedSupport/Support/bin/mate'
 fi
 if [ -x '/Applications/VLC.app/Contents/MacOS/VLC' ]; then
-  alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
+    alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 fi
 if type -P hdiutil >/dev/null; then
-  alias eject='hdiutil eject'
+    alias eject='hdiutil eject'
 fi
 if [ -x '/System/Library/CoreServices/Menu Extras/User.menu/Contents/Resources/CGSession' ]; then
-  alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+    alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 fi
 
 
@@ -81,36 +97,38 @@ alias top10='sort | uniq -c | sort -nr | head'
 # From RailsTips.org:
 # Use: cdgem <gem name>, cd's into your gems directory and opens gem that best matches the gem name provided.
 function cdgem {
-  cd $GEM_HOME/gems/; cd `ls|grep $1|sort|tail -1`
+    cd "$GEM_HOME/gems/" || exit
+    # shellcheck disable=SC2164 disable=SC2010
+    cd "$(ls | grep "$1" | sort | tail -1)"
 }
 
 
 # If htop is installed, use it instead of top.
 if type -P htop >/dev/null; then
-  alias top=htop
+    alias top=htop
 fi
 
 # Make du print in human readable form, and sorted by size (largest last). From http://www.earthinfo.org/linux-disk-usage-sorted-by-size-and-human-readable/.
 function _du {
-  \du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=`echo "scale=1; $size / 1024" | bc`; done; done
+    \du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ "$size" -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=$(echo "scale=1; $size / 1024" | bc); done; done
 }
 alias du=_du
 
 # Unless we already have a json formatter, add a simple one.
 if ! type -P json >/dev/null; then
-  alias json='python -mjson.tool'
+    alias json='python -mjson.tool'
 fi
 
 # Emulate Mac OS X paste buffer on Linux.
-if [ ! $(uname -s) = "Darwin" ]; then
-  alias pbcopy='xsel --clipboard --input'
-  alias pbpaste='xsel --clipboard --output'
+if [ ! "$(uname -s)" = "Darwin" ]; then
+    alias pbcopy='xsel --clipboard --input'
+    alias pbpaste='xsel --clipboard --output'
 fi
 
 # Make Ripgrep (rg) output pretty, and pipe it to `less`, unless output is being piped elsewhere.
 function rg() {
     if [[ -t 1 ]]; then
-        command rg --pretty "$@" | less -R
+        command rg --pretty "$@" | less -RX
     else
         command rg --pretty "$@"
     fi
@@ -118,3 +136,6 @@ function rg() {
 
 # The kubernetes Oh My ZSH plugin adds `k` and a ton of other aliases, but the rest aren't used much.
 alias k='kubectl'
+
+# Aliases for voice control.
+alias Get='git'
