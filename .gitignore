@@ -1,5 +1,10 @@
 *~
 #*#
-vim/janus
-vim/backup
-vim/bundle
+/docker/buildx
+/vscode/History
+/vscode/globalStorage
+/vscode/workspaceStorage
+/zsh/history
+/vim/janus
+/vim/backup
+/vim/bundle
