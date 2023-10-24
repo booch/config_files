@@ -31,5 +31,35 @@
         "key": "ctrl+home",
         "command": "cursorTop",
         "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+alt+cmd+c",
+        "command": "copyRelativeFilePath",
+        "when": "!editorFocus"
+    },
+    {
+        "key": "shift+alt+cmd+c",
+        "command": "-copyRelativeFilePath",
+        "when": "!editorFocus"
+    },
+    {
+        "key": "ctrl+alt+cmd+c",
+        "command": "copyRelativeFilePath",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+k shift+alt+cmd+c",
+        "command": "-copyRelativeFilePath",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+alt+cmd+c",
+        "command": "java.view.package.copyRelativeFilePath",
+        "when": "focusedView == 'javaProjectExplorer' && java:serverMode == 'Standard'"
+    },
+    {
+        "key": "shift+alt+cmd+c",
+        "command": "-java.view.package.copyRelativeFilePath",
+        "when": "focusedView == 'javaProjectExplorer' && java:serverMode == 'Standard'"
     }
 ]
