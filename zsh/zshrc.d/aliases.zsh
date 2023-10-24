@@ -87,7 +87,7 @@ fi
 # Make Ripgrep (rg) output pretty, and pipe it to `less`, unless output is being piped elsewhere.
 function _rg() {
     if [[ -t 1 ]]; then
-        command rg --pretty "$@" | less -R
+        command rg --pretty "$@" | less -RX
     else
         command rg --pretty "$@"
     fi

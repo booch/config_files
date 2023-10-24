@@ -82,7 +82,7 @@ begin
   require "awesome_print"
 
   # Force use of `less` as our pager, and allow color.
-  ENV["PAGER"] = "less -R"
+  ENV["PAGER"] = "less -RX"
 
   # Hook into Pry, so Pry output will automatically use `AwesomePrint.ap`.
   # NOTE: This does what `AwesomePrint.pry!` does, but doesn't override auto-pagination.
