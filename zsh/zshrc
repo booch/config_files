@@ -1,15 +1,18 @@
+#!/bin/zsh
+
 # I've made my entire ZSH configuration modular!
 if [[ -d $HOME/.zsh/zshrc.d ]]; then
-    for file in $(find -L $HOME/.zsh/zshrc.d/*.zsh -type f); do
-        source $file
+    for file in $(\find -L "$HOME"/.zsh/zshrc.d/*.zsh -type f); do
+        # shellcheck source=/dev/null
+        . "$file"
     done
 fi
 
 # Enable command auto-correction.
-ENABLE_CORRECTION="true"
+export ENABLE_CORRECTION="true"
 
 # TODO: Not sure how /sbin and /usr/sbin already got added.
-export PATH=$PATH:/usr/local/sbin
+export PATH="$PATH:/usr/local/sbin"
 
 # function current_branch() {
 #   ref=$(git symbolic-ref HEAD 2> /dev/null) || return

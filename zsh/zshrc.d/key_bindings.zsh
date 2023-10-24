@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # Use Emacs-style keybindings.
 bindkey -e
 

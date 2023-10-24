@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # Enable command completion for everything in Homebrew.
 if type brew &>/dev/null; then
     FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
@@ -14,7 +16,7 @@ zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 autoload -Uz compinit && compinit
 
 # Display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS='true'
+export COMPLETION_WAITING_DOTS='true'
 
 # Enable automatic suggestions (a la Fish), selected with right arrow.
 # TODO: Configure zsh-autosuggestions. See https://github.com/zsh-users/zsh-autosuggestions.

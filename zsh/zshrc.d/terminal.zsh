@@ -1,22 +1,24 @@
+#!/bin/zsh
+
 # If we stop console output with Ctrl+S, allow any key to restart the output.
 stty ixany
 
 
 # If the terminal supports xterm-style setting of the title, set it to user@host:dir after every command.
-case "$TERM" in
-xterm*|rxvt*|putty*)
-    PROMPT_COMMAND="${PROMPT_COMMAND:-:} echo -ne \"\\033]0;${USER}@${HOSTNAME%%.*}: \${PWD/\$HOME/~}\\007\" ;"
-    ;;
-*)
-    ;;
-esac
+# case "$TERM" in
+# xterm*|rxvt*|putty*)
+#     PROMPT_COMMAND="${PROMPT_COMMAND:-:} echo -ne \"\\033]0;${USER}@${HOSTNAME%%.*}: \${PWD/\$HOME/~}\\007\" ;"
+#     ;;
+# *)
+#     ;;
+# esac
 
 
 ## Handle PuTTY oddities.
 
 # Get the first 5 characters of the terminal answerback string. (PuTTY's default answerback string is "PuTTY", without a terminating return character.)
 # NOTE: It's `read -k5` for ZSH, and `read -n5` for Bash.
-echo -ne '\005' ; read -s -t1 -k5 TERMINAL_ANSWERBACK
+echo -ne '\005' ; read -rs -t1 -k5 TERMINAL_ANSWERBACK
 
 # See if we got the PuTTY answerback.
 if [[ "$TERMINAL_ANSWERBACK" == 'PuTTY' ]]; then

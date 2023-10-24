@@ -38,16 +38,16 @@ fi
 
 # Other Mac OS X stuff.
 if [ -x '/Applications/Firefox.app/Contents/MacOS/firefox' ]; then
-  alias firefox='/Applications/Firefox.app/Contents/MacOS/firefox'
+    alias firefox='/Applications/Firefox.app/Contents/MacOS/firefox'
 fi
 if [ -x '/Applications/VLC.app/Contents/MacOS/VLC' ]; then
-  alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
+    alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 fi
 if where hdiutil >/dev/null; then
-  alias eject='hdiutil eject'
+    alias eject='hdiutil eject'
 fi
 if [ -x '/System/Library/CoreServices/Menu Extras/User.menu/Contents/Resources/CGSession' ]; then
-  alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+    alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 fi
 
 
@@ -57,35 +57,37 @@ alias top10='sort | uniq -c | sort -nr | head'
 
 # From RailsTips.org:
 # Use: cdgem <gem name>, cd's into your gems directory and opens gem that best matches the gem name provided.
-function cdgem {
-  cd $GEM_HOME/gems/; cd `ls|grep $1|sort|tail -1`
+cdgem() {
+    cd "$GEM_HOME/gems/" || exit
+    # shellcheck disable=SC2164 disable=SC2010
+    cd "$(ls | grep "$1" | sort | tail -1)"
 }
 
 
 # If htop is installed, use it instead of top.
 if which htop >/dev/null; then
-  alias top=htop
+    alias top=htop
 fi
 
 # Make du print in human readable form, and sorted by size (largest last). From http://www.earthinfo.org/linux-disk-usage-sorted-by-size-and-human-readable/.
-function _du {
-  \du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=`echo "scale=1; $size / 1024" | bc`; done; done
+_du() {
+    \du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ "$size" -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size="$(echo "scale=1; $size / 1024" | bc)"; done; done
 }
 alias du=_du
 
 # Unless we already have a json formatter, add a simple one.
 if ! which json >/dev/null; then
-  alias json='python -mjson.tool'
+    alias json='python -mjson.tool'
 fi
 
 # Emulate Mac OS X paste buffer on Linux.
-if [ ! $(uname -s) = 'Darwin' ]; then
-  alias pbcopy='xsel --clipboard --input'
-  alias pbpaste='xsel --clipboard --output'
+if [ ! "$(uname -s)" = 'Darwin' ]; then
+    alias pbcopy='xsel --clipboard --input'
+    alias pbpaste='xsel --clipboard --output'
 fi
 
 # Make Ripgrep (rg) output pretty, and pipe it to `less`, unless output is being piped elsewhere.
-function _rg() {
+_rg() {
     if [[ -t 1 ]]; then
         command rg --pretty "$@" | less -RX
     else

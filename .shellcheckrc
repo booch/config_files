@@ -1,0 +1,5 @@
+# Shellcheck (as of 0.9.0) doesn't support Zsh, but it's good enough for checking startup scripts.
+disable=SC1071
+
+# Allow `export X='y'`, instead of requiring the assignment and export on separate lines.
+disable=SC2155

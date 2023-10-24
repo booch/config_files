@@ -15,17 +15,19 @@ bundler-installed()
 within-bundled-project()
 {
     local dir="$(pwd)"
-    while [ "$(dirname $dir)" != "/" ]; do
+    while [ "$(dirname "$dir")" != "/" ]; do
         [ -f "$dir/Gemfile" ] || [ -f "$dir/gems.rb" ] && return
-        dir="$(dirname $dir)"
+        dir="$(dirname "$dir")"
     done
     false
 }
 
 run-with-bundler()
 {
-    if [ -x "./.git/safe/../../bin/$0" ]; then
-        "./.git/safe/../../bin/$@"
+    if [ -x "./.git/safe/../../bin/$1" ]; then
+        cmd_name="$1"
+        shift
+        "./.git/safe/../../bin/$cmd_name" "$@"
     elif bundler-installed && within-bundled-project; then
         bundle exec "$@"
     else
@@ -42,7 +44,8 @@ define-bundler-aliases()
 
     for command in $BUNDLED_COMMANDS; do
         if [[ $command != "bundle" && $command != "gem" ]]; then
-            alias $command="run-with-bundler $command"
+            # shellcheck disable=SC2139
+            alias "$command"="run-with-bundler $command"
         fi
     done
 }
@@ -50,7 +53,7 @@ define-bundler-aliases()
 
 ## Main program
 
-# BUNDLED_COMMANDS="${BUNDLED_COMMANDS:-
+BUNDLED_COMMANDS="${BUNDLED_COMMANDS:-
 cap
 capify
 chef
