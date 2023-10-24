@@ -171,7 +171,7 @@ vnoremap / /\v
 
 " Load other files.
 filetype on | filetype off
-for file_name in ["local", "packages", "commands", "filetypes", "colors", "keymaps", "abbrev"]
+for file_name in ["local", "packages", "commands", "filetypes", "colors", "keymaps", "abbrev", "debtbook"]
   let file_path = expand("~/.vim/" . file_name . ".vim")
   if filereadable(file_path)
     exe "source " . file_path
