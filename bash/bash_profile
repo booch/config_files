@@ -25,6 +25,3 @@ if [[ -d $HOME/.profile.d ]]; then
         source "$profile_file"
     done
 fi
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
-export BUNDLE_PATH=vendor/bundle
