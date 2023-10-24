@@ -1,7 +1,45 @@
-# Some more `ls` aliases.
-alias ll='ls -lAFGh'
-alias l='ls -lAFGh'
-alias ltr='ls -ltrAFGh'
+#!/bin/zsh
+
+command-exists() {
+    type -p "$1" >/dev/null
+}
+
+
+# Enable color support of ls and also add handy aliases.
+if [ "$TERM" != "dumb" ]; then
+    command-exists dircolors && eval "$(dircolors -b)"
+    if ls --color=auto 2> /dev/null > /dev/null ; then
+        # See http://www.linux-sxs.org/housekeeping/lscolors.html
+        export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'
+        alias ls='ls --color=auto -h -1'
+    else
+        # Mac OS X
+        alias ls='ls -G -h -1'
+    fi
+fi
+
+# Some more `ls` aliases. Use `eza` if it's available.
+# TODO: Pipe these to `less -FX` (don't clear screen, exit if one screen).
+#       Use this style: https://stackoverflow.com/a/39395740/26311
+if command-exists eza ; then
+    # TODO: Set EZA_COLORS. See https://man.archlinux.org/man/extra/eza/eza_colors-explanation.5.en
+    # Eza has no way to suppress showing the source of soft links, so fall back to `ls`.
+    alias l1='ls -1A'
+    alias l='eza -lahF --no-user --no-permissions --git --group-directories-first --time-style=relative'
+    alias ll='eza -lahFo --git --group-directories-first --time-style=long-iso'
+    alias ltr='eza -lahF --no-user --no-permissions --group-directories-first --git --sort=time --time-style=relative'
+    alias dir='eza -1'
+else
+    alias l1='ls -1A'
+    alias l='ls -lAFGh'
+    alias ll='ls -lAFGh'
+    alias ltr='ls -ltrAFGh'
+    alias dir='ls -1'
+fi
+
+# Completion colors should match $LS_COLORS.
+zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
+
 
 alias cd='pushd'
 alias pop='popd'
