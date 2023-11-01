@@ -36,6 +36,8 @@
 	sha = format:%Cred%H\n
 	subject = format:%s
 	timeline = format:%h %an %ar - %s
+[commit]
+	verbose = true  # Show branch name and diff as comments in default commit message.
 [fetch]
 	recurseSubmodules = on-demand  # Only pull submodule changes if the main project updates the submodule reference.
 [push]

@@ -33,7 +33,7 @@
     cheddar = commit --amend -CHEAD
     cherry-lick = !sh -c 'hub checkout HEAD^{} -- && hub cherry-pick \"$@\"' _
     cho = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
-    ci = commit -v
+    ci = commit
     clear = !git add . && git stash && git stash drop
     cm = commit --message
     co = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
@@ -67,7 +67,7 @@
     ds = diff --stat=160,120
     dt = difftool
     dump = cat-file -p
-    extend = commit -v --amend --no-edit
+    extend = commit --amend --no-edit
     fa = fetch --all
     fb = "!f() { git branch -a --contains $1; }; f"
     fc = "!f() { git log --pretty=oneline-details --decorate --date=short -S$1; }; f"
@@ -171,7 +171,7 @@
     reset-authors = commit --amend --reset-author -CHEAD
     retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
     review = diff master..HEAD
-    reword = commit -v --amend --only
+    reword = commit --amend --only
     rewrite = rebase -i
     rh = reset --hard
     ri = rebase --interactive
