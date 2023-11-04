@@ -1,11 +1,30 @@
-Installer
-=========
+TODO
+====
+
+* Move /usr/local before /usr in $PATH.
+
+* Adding -X to less is causing DEL to stop working after we exit less.
+
+* Include private settings using git-encrypt.
+    * git/local
+
+* Hook in spelling/dictionary.txt to the MacOS spelling dictionary (~/Library/Spelling/LocalDictionary)
+
+* Add script/alias to push/pull new versions of this repo.
+
+* Add Firefox stuff:
+    * userChrome.css
+    * user.js
+
+
+## Installer
 
 * Make sure we're not creating circular soft links, like `zshrc.d/zshrc.d`.
+* Fix error on install:
+    ln: /Users/booch/.atom/packages/touchbar-utility/lib/configuration.js: No such file or directory:
 
 
-Shell
-=====
+## Shell
 
 * Create an alias for `diff` to use `git diff`
     * `alias diff='git diff --no-index --color=always --no-ext-diff'`
@@ -20,27 +39,7 @@ Shell
 * Move setting of prompt to its own file (in `profile.d` or `bashrc.d`)
 
 
-Atom
-====
-
-* Change key-binding for Edit / Bookmark / View All
-    * The default `Control+F2` conflicts with the `Move focus to the menu bar` global shortcut
-* Remove key-bindings for Ctrl+Tab
-    * Can now do that by unchecking **Enable MRU Tab Switching** in `Tabs` package
-* Restore Cmd+Shift+T back to reopening the most-recently closed tab
-    * Terminal-plus is overriding it
-* If in Terminal-plus, have Cmd+W close the terminal, instead of the current tab
-* Fix YAML Semanticolor settings
-    * Only colorize left side of key/value pairs
-        * Leave everything else normal color
-* Default Markdown to 4-space indentation
-* Default YAML to 4-space indentation
-* Make completion/expansion less aggressive
-    * Like when I type `tab` and hit *Tab*, it expands to `table`, then to a Markdown table
-
-
-RuboCop
-=======
+## RuboCop
 
 * Use 4-space indentation
 * Change `Style` to `Layout` as appropriate
@@ -48,8 +47,7 @@ RuboCop
 * Review new rules (added since about 0.37) to see how I want them configured
 
 
-Git
-===
+## Git
 
 * Use diff-so-fancy
     * Take a look at the below settings I snagged from somewhere.
@@ -81,8 +79,7 @@ Git
         ~~~
 
 
-Vim
-===
+## Vim
 
 Install more plugins (via Vundle):
 
@@ -93,8 +90,7 @@ Install more plugins (via Vundle):
 * tpope/vim-sensible - Defaults everyone can agree on
 
 
-Karabiner
-=========
+## Karabiner
 
 * Limit to built-in laptop keyboard(s):
     * Fn to Control mappings
@@ -186,3 +182,23 @@ Karabiner
         * number/punctuation (plus shifted variants)
         * control
         * command (and movements and actions)
+
+
+## Atom
+
+[I don't really use Atom any more, so these can probably be deleted.]
+
+* Change key-binding for Edit / Bookmark / View All
+    * The default `Control+F2` conflicts with the `Move focus to the menu bar` global shortcut
+* Remove key-bindings for Ctrl+Tab
+    * Can now do that by unchecking **Enable MRU Tab Switching** in `Tabs` package
+* Restore Cmd+Shift+T back to reopening the most-recently closed tab
+    * Terminal-plus is overriding it
+* If in Terminal-plus, have Cmd+W close the terminal, instead of the current tab
+* Fix YAML Semanticolor settings
+    * Only colorize left side of key/value pairs
+        * Leave everything else normal color
+* Default Markdown to 4-space indentation
+* Default YAML to 4-space indentation
+* Make completion/expansion less aggressive
+    * Like when I type `tab` and hit *Tab*, it expands to `table`, then to a Markdown table
