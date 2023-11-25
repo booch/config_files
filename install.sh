@@ -87,8 +87,6 @@ ln_sf "$CWD/postgresql/psqlrc" "$HOME/.psqlrc"
 if [ "$(uname)"x = "Darwin"x ]; then
     mkdir -p "$HOME/Library/KeyBindings"
     ln_sf "$CWD/keyboard/DefaultKeyBinding.Dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.Dict"
-
-    ln_sfT "$CWD/keyboard/karabiner" "$CWD/karabiner"
 fi
 
 if [ ! -d vim/bundle/vundle ]; then
