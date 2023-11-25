@@ -1,14 +1,19 @@
 /*
-From http://heisencoder.net/2008/04/fixing-up-mac-key-bindings-for-windows.html
 
-This file remaps the key bindings of a single user on Mac OS X 10.5 to more closely
-match default behavior on Windows systems.
+Symlinks may not work. If so, use a git hook to copy this to the right place.
+See https://apple.stackexchange.com/a/224074.
+
+Portions adapted from https://github.com/ttscoff/KeyBindings,
+http://heisencoder.net/2008/04/fixing-up-mac-key-bindings-for-windows.html,
+https://github.com/sparanoid/DefaultKeyBinding.dict/,
+and others.
 
 Here is a rough cheatsheet for syntax.
-Key Modifiers
+
+Key Modifiers (in order that Mac shows them in menus):
 ^ : Ctrl
-$ : Shift
 ~ : Option (Alt)
+$ : Shift
 @ : Command (Apple)
 # : Numeric Keypad
 
@@ -29,9 +34,20 @@ Help:         \UF746
 NOTE: typically the Windows 'Insert' key is mapped to what Macs call 'Help'.
 Regular Mac keyboards don't even have the Insert key, but provide 'Fn' instead,
 which is completely different.
+
+The commands are (mostly) action methods of [NSResponder](https://developer.apple.com/documentation/appkit/nsresponder),
+or [NSTextView](https://developer.apple.com/documentation/appkit/nstextview),
+or [NSText](https://developer.apple.com/documentation/appkit/nstext).
+Also see https://web.archive.org/web/20220518204932/http://www.hcs.harvard.edu/~jrus/Site/selectors.html,
+and https://github.com/dplusic/hammerspoon-DefaultKeyBinding/blob/main/DefaultKeyBinding.spoon/init.lua#L109-L197.
+
+See `/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict` for the system defaults.
 */
 
 {
+
+/// Windows-like (CUA) bindings
+
 "@\UF702"  = "moveToBeginningOfLine:";                       /* Cmd + Left */
 "$@\UF702" = "moveToBeginningOfLineAndModifySelection:";     /* Shift + Cmd + Left */
 "@\UF703"  = "moveToEndOfLine:";                             /* Cmd + Right */
@@ -59,8 +75,79 @@ which is completely different.
 "@\UF727"  = "copy:";                                        /* Cmd  + Ins   */
 "$\UF746"  = "paste:";                                       /* Shift + Help */
 "@\UF746"  = "copy:";                                        /* Cmd  + Help (Ins) */
-"^\UF702"  = "moveWordBackward:";                            /* Ctrl + LeftArrow */
-"^\UF703"  = "moveWordForward:";                             /* Ctrl + RightArrow */
-"$^\UF702" = "moveWordBackwardAndModifySelection:";   /* Shift + Ctrl + Leftarrow */
-"$^\UF703" = "moveWordForwardAndModifySelection:";   /* Shift + Ctrl + Rightarrow */
+"^\UF702"  = "moveWordBackward:";                            // Ctrl + Left
+"^\UF703"  = "moveWordForward:";                             // Ctrl + Right
+"$^\UF702" = "moveWordBackwardAndModifySelection:";          // Shift + Ctrl + Left
+"$^\UF703" = "moveWordForwardAndModifySelection:";           // Shift + Ctrl + Right
+"~\010" = "deleteWordBackward:";                             // Option + Backspace
+"~\177" = "deleteWordForward:";                              // Option + Delete
+
+    /// Emacs-like bindings
+
+    "^/"        = "undo:";
+    "^_"        = "undo:";
+    "^g"        = ("setMark:", "selectToMark:");
+    "^k"        = ("setMark:", "moveToEndOfLine:", "deleteToMark:"); // Kill to end of line
+    "^w"        = "deleteToMark:";
+    "^y"        = "yank:";
+
+    "~b"        = "moveWordBackward:";
+    "~d"        = "deleteWordForward:";
+    "~f"        = "moveWordForward:";
+    "~t"        = "transposeWords:";
+    "~v"        = "pageUp:";
+
+    "^x" = {
+        "k"     = "performClose:";      // C-x k
+        "m"     = "setMark:";           // C-x m    (C-space and C-@ in Emacs, but those are in use)
+        "u"     = "undo:";              // C-x u
+
+        "^f"    = "openDocument:";      // C-x C-f  (find file)
+        "^m"    = "selectToMark:";      // C-x C-m
+        "^s"    = "saveDocument:";      // C-x C-s
+        "^S"    = "saveDocumentAs:";    // C-x C-S
+        "^w"    = "saveDocumentAs:";    // C-x C-w
+        "^x"    = "swapWithMark:";      // C-x C-x
+
+        "^c"    = "capitalizeWord:";    // C-x C-c  (exit in Emacs, but we don't need that)
+        "^l"    = "lowercaseWord:";     // C-x C-l  (will also lowercase the selection)
+        "^u"    = "uppercaseWord:";     // C-x C-u  (will also uppercase the selection)
+    };
+
+    /// Other
+
+    // Change case of current selection, or current word if nothing is selected
+    "^~@c" = {                          // Ctrl + Option + Cmd + C
+        "c"     = "capitalizeWord:";
+        "l"     = "lowercaseWord:";
+        "u"     = "uppercaseWord:";
+        "t"     = "capitalizeWord:";    // T for title-case
+    };
+
+    // Curly quotes
+    "^["        = ("insertText:", "“");
+    "^]"        = ("insertText:", "”");
+    "^{"        = ("insertText:", "‘");
+    "^}"        = ("insertText:", "’");
+
+    // Special characters
+    "~*"        = ("insertText:", "×");
+
 }
+
+/*
+
+Possible key-bindings to add:
+
+- startSpeaking, stopSpeaking (speak selected text, interrupt speaking)
+- underline, bold, italic, strikethrough
+- zoomIn, zoomOut
+- alignLeft, alignCenter, alignRight, alignJustified
+- copyFont, pasteFont
+- copyRuler, pasteRuler
+- superscript, subscript, unscript
+- printDocument
+- pasteAsPlainText, pasteAsRichText
+- toggleAutomaticSpellingCorrection, toggleAutomaticTextReplacement, toggleContinuousSpellChecking, toggleGrammarChecking, showGuessPanel
+
+*/
