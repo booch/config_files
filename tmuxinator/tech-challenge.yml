@@ -1,0 +1,15 @@
+name: tech-assessment
+root: ~/Work/DebtBook/technical-assessment
+
+# Integrate with iTerm2
+attach: false
+on_project_exit: tmux -CC attach -t epulse
+
+# Something weird is causing the first 5 characters of every command to get dropped.
+pre_window: '     '
+
+windows:
+  - "Tests":      'ruby back-end/back_end.rb'
+  - "Yarn Run":   'yarn --cwd front-end && yarn --cwd front-end start'
+  - "Git":        ''
+  - "Shell":      ''

@@ -1,0 +1,20 @@
+name: debtbook
+root: ~/Work/DebtBook/fifthasset-web
+
+# Integrate with iTerm2
+attach: false
+on_project_exit: tmux -CC attach -t epulse
+
+# Something weird is causing the first 5 characters of every command to get dropped.
+pre_window: '     '
+
+windows:
+  - "Docker":         'up && lazydocker'
+  - "Rails Console":  'bundle exec rails console'
+  - "Tests":          'bundle exec rails test'
+  - "Specs":          'bundle exec guard'
+  - "Git":            'lazygit'
+  - "Shell":          ''
+  - "RFCs":           'cd ~/Work/DebtBook/rfcs'
+  - "Dev Utils":      'cd ~/Work/DebtBook/developer-utilities'
+  - "Logs":           'tail -f log/development.log'
