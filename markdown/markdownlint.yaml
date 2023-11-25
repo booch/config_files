@@ -3,10 +3,9 @@
 # Start with the default set of rules turned on.
 default: true
 
-# Use Setext (underlines) for H1 and H2, and ATX (hashes) for all headings. (MD003)
-# NOTE: I'd prefer to use Setext for H1, and ATX for everything else, but that's not a supported option.
-heading-style:
-    style: setext_with_atx
+# I edit a lot of Markdown, some with Setext (underlines), some with ATX (hashes), so I'm allowing either. (MD003)
+# I personally prefer to use Setext for H1 (and sometimes H2), and ATX for everything else.
+heading-style: false
 
 # Set list indentation to 4 spaces. (MD007)
 ul-indent:
@@ -17,3 +16,11 @@ line-length: false
 
 # Allow multiple blank lines. (MD012)
 no-multiple-blanks: false
+
+# Allow bare links. If we're not publishing the file, we don't really care. (MD034)
+no-bare-urls: false
+
+# Allow varying styles for list items, as long as each level uses the same symbol (`-`, `*`, `+`). (MD004)
+# NOTE: VS Code seems to require consistency **between files**. I'm not happy about that!
+ul-style:
+    style: "sublist"
