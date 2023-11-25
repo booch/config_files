@@ -1,93 +1,95 @@
 /*
+    Symlinks may not work. If so, use a git hook to copy this to the right place.
+    See https://apple.stackexchange.com/a/224074.
 
-Symlinks may not work. If so, use a git hook to copy this to the right place.
-See https://apple.stackexchange.com/a/224074.
+    Portions adapted from https://github.com/ttscoff/KeyBindings,
+    http://heisencoder.net/2008/04/fixing-up-mac-key-bindings-for-windows.html,
+    https://github.com/sparanoid/DefaultKeyBinding.dict/,
+    and others.
 
-Portions adapted from https://github.com/ttscoff/KeyBindings,
-http://heisencoder.net/2008/04/fixing-up-mac-key-bindings-for-windows.html,
-https://github.com/sparanoid/DefaultKeyBinding.dict/,
-and others.
+    Here is a rough cheatsheet for syntax.
 
-Here is a rough cheatsheet for syntax.
+    Key Modifiers (in order that Mac shows them in menus):
+    ^ : Ctrl
+    ~ : Option (Alt)
+    $ : Shift
+    @ : Command (Apple)
+    # : Numeric Keypad
 
-Key Modifiers (in order that Mac shows them in menus):
-^ : Ctrl
-~ : Option (Alt)
-$ : Shift
-@ : Command (Apple)
-# : Numeric Keypad
+    Non-Printable Key Codes
 
-Non-Printable Key Codes
+    Up Arrow:     \UF700        Backspace:    \U0008        F1:           \UF704
+    Down Arrow:   \UF701        Tab:          \U0009        F2:           \UF705
+    Left Arrow:   \UF702        Escape:       \U001B        F3:           \UF706
+    Right Arrow:  \UF703        Enter:        \U000A        ...
+    Insert:       \UF727        Page Up:      \UF72C
+    Delete:       \UF728        Page Down:    \UF72D
+    Home:         \UF729        Print Screen: \UF72E
+    End:          \UF72B        Scroll Lock:  \UF72F
+    Break:        \UF732        Pause:        \UF730
+    SysReq:       \UF731        Menu:         \UF735
+    Help:         \UF746
 
-Up Arrow:     \UF700        Backspace:    \U0008        F1:           \UF704
-Down Arrow:   \UF701        Tab:          \U0009        F2:           \UF705
-Left Arrow:   \UF702        Escape:       \U001B        F3:           \UF706
-Right Arrow:  \UF703        Enter:        \U000A        ...
-Insert:       \UF727        Page Up:      \UF72C
-Delete:       \UF728        Page Down:    \UF72D
-Home:         \UF729        Print Screen: \UF72E
-End:          \UF72B        Scroll Lock:  \UF72F
-Break:        \UF732        Pause:        \UF730
-SysReq:       \UF731        Menu:         \UF735
-Help:         \UF746
+    NOTE: Typically the Windows 'Insert' key is mapped to what Macs call 'Help'.
+    Regular Mac keyboards don't even have the Insert key, but provide 'Fn' instead,
+    which is completely different.
 
-NOTE: typically the Windows 'Insert' key is mapped to what Macs call 'Help'.
-Regular Mac keyboards don't even have the Insert key, but provide 'Fn' instead,
-which is completely different.
+    The commands are (mostly) action methods of [NSResponder](https://developer.apple.com/documentation/appkit/nsresponder),
+    or [NSTextView](https://developer.apple.com/documentation/appkit/nstextview),
+    or [NSText](https://developer.apple.com/documentation/appkit/nstext).
+    Also see https://web.archive.org/web/20220518204932/http://www.hcs.harvard.edu/~jrus/Site/selectors.html,
+    and https://github.com/dplusic/hammerspoon-DefaultKeyBinding/blob/main/DefaultKeyBinding.spoon/init.lua#L109-L197.
 
-The commands are (mostly) action methods of [NSResponder](https://developer.apple.com/documentation/appkit/nsresponder),
-or [NSTextView](https://developer.apple.com/documentation/appkit/nstextview),
-or [NSText](https://developer.apple.com/documentation/appkit/nstext).
-Also see https://web.archive.org/web/20220518204932/http://www.hcs.harvard.edu/~jrus/Site/selectors.html,
-and https://github.com/dplusic/hammerspoon-DefaultKeyBinding/blob/main/DefaultKeyBinding.spoon/init.lua#L109-L197.
-
-See `/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict` for the system defaults.
+    See `/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict` for the system defaults.
 */
 
 {
+    /// Windows-like (CUA) bindings
 
-/// Windows-like (CUA) bindings
+    "^\UF702"   = "moveWordBackward:";                                  // Ctrl + Left
+    "^\UF703"   = "moveWordForward:";                                   // Ctrl + Right
+    "@\UF702"   = "moveToBeginningOfLine:";                             // Cmd + Left
+    "@\UF703"   = "moveToEndOfLine:";                                   // Cmd + Right
+    "$^\UF702"  = "moveWordBackwardAndModifySelection:";                // Shift + Ctrl + Left
+    "$^\UF703"  = "moveWordForwardAndModifySelection:";                 // Shift + Ctrl + Right
+    "$@\UF702"  = "moveToBeginningOfLineAndModifySelection:";           // Shift + Cmd + Left
+    "$@\UF703"  = "moveToEndOfLineAndModifySelection:";                 // Shift + Cmd + Right
 
-"@\UF702"  = "moveToBeginningOfLine:";                       /* Cmd + Left */
-"$@\UF702" = "moveToBeginningOfLineAndModifySelection:";     /* Shift + Cmd + Left */
-"@\UF703"  = "moveToEndOfLine:";                             /* Cmd + Right */
-"$@\UF703" = "moveToEndOfLineAndModifySelection:";           /* Shift + Cmd + Right */
-"\UF729"   = "moveToBeginningOfLine:";                       /* Home         */
-"^\UF729"  = "moveToBeginningOfDocument:";                   /* Ctrl + Home  */
-"@\UF729"  = "moveToBeginningOfDocument:";                   /* Cmd + Home   */
-"@\UF72C"  = "moveToBeginningOfDocument:";                   /* Cmd + PageUp */
-"$\UF729"  = "moveToBeginningOfLineAndModifySelection:";     /* Shift + Home */
-"$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Ctrl + Home */
-"$@\UF729" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Cmd + Home */
-"$@\UF72C" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Cmd + PageUp */
-"\UF72B"   = "moveToEndOfLine:";                             /* End          */
-"^\UF72B"  = "moveToEndOfDocument:";                         /* Ctrl + End   */
-"@\UF72B"  = "moveToEndOfDocument:";                         /* Cmd + End    */
-"@\UF72D"  = "moveToEndOfDocument:";                         /* Cmd + PageDown */
-"$\UF72B"  = "moveToEndOfLineAndModifySelection:";           /* Shift + End  */
-"$^\UF72B" = "moveToEndOfDocumentAndModifySelection:";       /* Shift + Ctrl + End */
-"$@\UF72B" = "moveToEndOfDocumentAndModifySelection:";       /* Shift + Cmd + End */
-"$@\UF72D" = "moveToEndOfDocumentAndModifySelection:";       /* Shift + Cmd + PageDown */
-"\UF72C"   = "pageUp:";                                      /* PageUp       */
-"\UF72D"   = "pageDown:";                                    /* PageDown     */
-"$\UF728"  = "cut:";                                         /* Shift + Del  */
-"$\UF727"  = "paste:";                                       /* Shift + Ins  */
-"@\UF727"  = "copy:";                                        /* Cmd  + Ins   */
-"$\UF746"  = "paste:";                                       /* Shift + Help */
-"@\UF746"  = "copy:";                                        /* Cmd  + Help (Ins) */
-"^\UF702"  = "moveWordBackward:";                            // Ctrl + Left
-"^\UF703"  = "moveWordForward:";                             // Ctrl + Right
-"$^\UF702" = "moveWordBackwardAndModifySelection:";          // Shift + Ctrl + Left
-"$^\UF703" = "moveWordForwardAndModifySelection:";           // Shift + Ctrl + Right
-"~\010" = "deleteWordBackward:";                             // Option + Backspace
-"~\177" = "deleteWordForward:";                              // Option + Delete
+    "\UF729"    = "moveToBeginningOfLine:";                             // Home
+    "\UF72B"    = "moveToEndOfLine:";                                   // End
+    "^\UF729"   = "moveToBeginningOfDocument:";                         // Ctrl + Home
+    "^\UF72B"   = "moveToEndOfDocument:";                               // Ctrl + End
+    "@\UF729"   = "moveToBeginningOfDocument:";                         // Cmd + Home
+    "@\UF72B"   = "moveToEndOfDocument:";                               // Cmd + End
+    "$\UF729"   = "moveToBeginningOfLineAndModifySelection:";           // Shift + Home
+    "$\UF72B"   = "moveToEndOfLineAndModifySelection:";                 // Shift + End
+    "$^\UF729"  = "moveToBeginningOfDocumentAndModifySelection:";       // Shift + Ctrl + Home
+    "$^\UF72B"  = "moveToEndOfDocumentAndModifySelection:";             // Shift + Ctrl + End
+    "$@\UF729"  = "moveToBeginningOfDocumentAndModifySelection:";       // Shift + Cmd + Home
+    "$@\UF72B"  = "moveToEndOfDocumentAndModifySelection:";             // Shift + Cmd + End
+
+    "\UF72C"    = "pageUp:";                                            // PageUp
+    "\UF72D"    = "pageDown:";                                          // PageDown
+    "@\UF72C"   = "moveToBeginningOfDocument:";                         // Cmd + PageUp
+    "@\UF72D"   = "moveToEndOfDocument:";                               // Cmd + PageDown
+    "$@\UF72C"  = "moveToBeginningOfDocumentAndModifySelection:";       // Shift + Cmd + PageUp
+    "$@\UF72D"  = "moveToEndOfDocumentAndModifySelection:";             // Shift + Cmd + PageDown
+
+    "@\UF727"   = "copy:";                                              // Cmd  + Ins
+    "@\UF746"   = "copy:";                                              // Cmd  + Help (Ins)
+    "$\UF727"   = "paste:";                                             // Shift + Ins
+    "$\UF746"   = "paste:";                                             // Shift + Help (Ins)
+
+    "~\010"     = "deleteWordBackward:";                                // Option + Backspace
+    "~\177"     = "deleteWordForward:";                                 // Option + Delete
+    "$\UF728"   = "cut:";                                               // Shift + Del
 
     /// Emacs-like bindings
 
     "^/"        = "undo:";
     "^_"        = "undo:";
     "^g"        = ("setMark:", "selectToMark:");
-    "^k"        = ("setMark:", "moveToEndOfLine:", "deleteToMark:"); // Kill to end of line
+    "^k"        = ("setMark:", "moveToEndOfLine:", "deleteToMark:");    // Kill to end of line
     "^w"        = "deleteToMark:";
     "^y"        = "yank:";
 
@@ -132,22 +134,19 @@ See `/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.di
 
     // Special characters
     "~*"        = ("insertText:", "×");
-
 }
 
 /*
+    Possible key-bindings to add:
 
-Possible key-bindings to add:
-
-- startSpeaking, stopSpeaking (speak selected text, interrupt speaking)
-- underline, bold, italic, strikethrough
-- zoomIn, zoomOut
-- alignLeft, alignCenter, alignRight, alignJustified
-- copyFont, pasteFont
-- copyRuler, pasteRuler
-- superscript, subscript, unscript
-- printDocument
-- pasteAsPlainText, pasteAsRichText
-- toggleAutomaticSpellingCorrection, toggleAutomaticTextReplacement, toggleContinuousSpellChecking, toggleGrammarChecking, showGuessPanel
-
+    - startSpeaking, stopSpeaking (speak selected text, interrupt speaking)
+    - underline, bold, italic, strikethrough
+    - zoomIn, zoomOut
+    - alignLeft, alignCenter, alignRight, alignJustified
+    - copyFont, pasteFont
+    - copyRuler, pasteRuler
+    - superscript, subscript, unscript
+    - printDocument
+    - pasteAsPlainText, pasteAsRichText
+    - toggleAutomaticSpellingCorrection, toggleAutomaticTextReplacement, toggleContinuousSpellChecking, toggleGrammarChecking, showGuessPanel
 */
