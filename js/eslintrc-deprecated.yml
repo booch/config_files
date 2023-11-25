@@ -1,4 +1,5 @@
 ---
+# NOTE: Having a global .eslintrc file is deprecated.
 
 parserOptions:
     ecmaVersion: 6
