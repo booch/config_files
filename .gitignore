@@ -9,6 +9,10 @@
 /docker/devenvironments
 /docker/run
 /docker/scout
+/docker/.token_seed
+/docker/.token_seed.lock
+
+/ruby/bundler/cache
 
 /vscode/History
 /vscode/globalStorage
