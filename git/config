@@ -40,6 +40,7 @@
 	verbose = true  # Show branch name and diff as comments in default commit message.
 [fetch]
 	recurseSubmodules = on-demand  # Only pull submodule changes if the main project updates the submodule reference.
+	prune = true  # If a remote branch is deleted, allow `git fetch` to remove the remote ref.
 [push]
 	default = upstream  # Push only the current branch by default, not all branches.
 	recurseSubmodules = on-demand  # Push any submodule changes first; if that fails, main project will not be pushed.
