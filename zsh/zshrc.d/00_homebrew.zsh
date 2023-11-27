@@ -1,7 +1,14 @@
+#!/bin/bash
 #!/bin/zsh
+# This file gets sourced by both Bash and Zsh startup scripts.
+
+# We only use Homebrew on macOS.
+if [[ "$(uname)" != 'Darwin' ]]; then
+    return
+fi
 
 # Determine if we're on Apple Silicon or Intel. Homebrew gets installed different places for each.
-if [[ $(arch) == 'i386' ]]; then
+if [[ "$(arch)" == 'i386' ]]; then
     export HOMEBREW_ARCH='x86_64'
     export HOMEBREW_PREFIX='/usr/local'
 else
