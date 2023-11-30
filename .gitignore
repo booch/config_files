@@ -25,3 +25,6 @@
 /vim/bundle
 
 /zed/embeddings
+
+# Used by VS Code markdown-preview-enhanced plugin:
+/crossnote
