@@ -13,14 +13,23 @@ stty ixany
 #     ;;
 # esac
 
+# Get the terminal answerback string.
+# I configure iTerm to return "iterm2".
+terminal_answerback() {
+    local ENQ="$(printf '\005')"
+    local original_stty="$(stty -g)"
+    local answerback
+    # Set raw mode (don't process control characters); don't print typed characters; don't require any characters to be read; time out after 0.5 seconds.
+    stty raw -echo min 0 time 5
+    echo -ne "$ENQ" > /dev/tty && read -s answerback
+    stty cooked
+    stty "$original_stty"
+    echo "$answerback"
+}
+TERMINAL_ANSWERBACK="$(terminal_answerback)"
 
 ## Handle PuTTY oddities.
-
-# Get the first 5 characters of the terminal answerback string. (PuTTY's default answerback string is "PuTTY", without a terminating return character.)
-# NOTE: It's `read -k5` for ZSH, and `read -n5` for Bash.
-echo -ne '\005' ; read -rs -t1 -k5 TERMINAL_ANSWERBACK
-
-# See if we got the PuTTY answerback.
+# PuTTY's default answerback string is "PuTTY", without a terminating return character.
 if [[ "$TERMINAL_ANSWERBACK" == 'PuTTY' ]]; then
     # Use a PuTTY-specific terminal type if we can.
     if [[ -f '/usr/share/terminfo/p/putty-256color' ]]; then
