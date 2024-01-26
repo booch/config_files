@@ -26,6 +26,6 @@ export GIT_COMPLETION_IGNORE_CASE=1
 
 # Enable automatic suggestions (a la Fish), selected with right arrow.
 # TODO: Configure zsh-autosuggestions. See https://github.com/zsh-users/zsh-autosuggestions.
-if [[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
-    source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-fi
+# if [[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+#     source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# fi

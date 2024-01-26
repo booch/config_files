@@ -1,9 +1,50 @@
 TODO
 ====
 
+- BUG: Starting up Zsh gives an error
+    - `compinit:527: no such file or directory: /opt/homebrew/share/zsh/site-functions/_docker_compose`
+    - The file points at `/opt/homebrew/Caskroom/docker/4.22.1,118664/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion`
+        - But that file doesn't exist
+            - Only `docker.zsh-completion` exists
+            - This is because I'm no longer installing docker-desktop
+
+~~~ shell
+~~~
+
+
+$ l /opt/homebrew/Caskroom/docker/4.22.1,118664/Docker.app/Contents/Resources/etc/docker.
+docker.bash-completion*  docker.fish-completion   docker.zsh-completion
+
+
+
+- COMMIT: Configure VS Code to highlight some more things:
+    - QUESTION: (blue)
+    - ANSWER: (green)
+    - PROBLEM: (orange red)
+    - SOLUTION: (green)
+    - NOTE: (dark magenta)
+    - It already highlights `TODO:` and `FIXME:`.
+    - See https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight
+    - Works in Markdown, despite it not being listed
+
+* Commit XDG stuff.
+
 * Move /usr/local before /usr in $PATH.
 
-* Adding -X to less is causing DEL to stop working after we exit less.
+* iTerm2
+    * Saving a setting re-writes "$HOME/Library/Preferences/com.googlecode.iterm2.plist"
+        * It won't honor a symlink in that location
+        * Will need to write a pre-commit and post-pull hook, I think
+    * Use correct TERM if possible
+        * See terminfo in /opt/homebrew/Cellar/ncurses/6.4/share/terminfo
+            * Has iTerm2.app, iterm2-direct
+            * Has Apple_Terminal
+            * Has tmux-256color and tmux-direct
+            * Should have `RGB` and/or `Tc`
+                * https://github.com/tmux/tmux/wiki/FAQ#how-do-i-use-rgb-colour
+
+* Adding -X to less is causing DEL to stop working after we exit less
+    * Or maybe it isn't?
 
 * Include private settings using git-encrypt.
     * git/local
@@ -16,10 +57,13 @@ TODO
     * userChrome.css
     * user.js
 
+* Create a [pgcli/config](https://www.pgcli.com/config) file.
+    * Ignore `pgcli/log`
 
 ## Installer
 
 * Make sure we're not creating circular soft links, like `zshrc.d/zshrc.d`.
+    * And Work/Work
 * Fix error on install:
     ln: /Users/booch/.atom/packages/touchbar-utility/lib/configuration.js: No such file or directory:
 

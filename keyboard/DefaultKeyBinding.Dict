@@ -88,6 +88,7 @@
 
     "^/"        = "undo:";
     "^_"        = "undo:";
+    "^\\@"      = "setMark:";                                           // Ctrl + Shift + 2
     "^g"        = ("setMark:", "selectToMark:");
     "^k"        = ("setMark:", "moveToEndOfLine:", "deleteToMark:");    // Kill to end of line
     "^w"        = "deleteToMark:";
@@ -127,13 +128,38 @@
     };
 
     // Curly quotes
-    "^["        = ("insertText:", "“");
-    "^]"        = ("insertText:", "”");
-    "^{"        = ("insertText:", "‘");
-    "^}"        = ("insertText:", "’");
+    "^{"        = ("insertText:", "“");
+    "^}"        = ("insertText:", "”");
+    "^["        = ("insertText:", "‘");
+    "^]"        = ("insertText:", "’");
 
     // Special characters
     "~*"        = ("insertText:", "×");
+
+    // Wrapping (idea from Brett Terpstra)
+    "^~@w" = {                          // Ctrl + Option + Cmd + W
+        "("     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "(", yank:, insertText:, " ", moveLeft:, insertText:, ")", moveRight:, deleteBackward:);
+        "["     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "[", yank:, insertText:, " ", moveLeft:, insertText:, "]", moveRight:, deleteBackward:);
+        "{"     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "{", yank:, insertText:, " ", moveLeft:, insertText:, "}", moveRight:, deleteBackward:);
+        "\""    = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "\"", yank:, insertText:, " ", moveLeft:, insertText:, "\"", moveRight:, deleteBackward:);
+        "'"     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "'", yank:, insertText:, " ", moveLeft:, insertText:, "'", moveRight:, deleteBackward:);
+        "`"     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "`", yank:, insertText:, " ", moveLeft:, insertText:, "`", moveRight:, deleteBackward:);
+        "\~"    = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "~", yank:, insertText:, " ", moveLeft:, insertText:, "~", moveRight:, deleteBackward:);
+        "<"     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "<", yank:, insertText:, " ", moveLeft:, insertText:, ">", moveRight:, deleteBackward:);
+        "*"     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "**", yank:, insertText:, " ", moveLeft:, insertText:, "**", moveRight:, deleteBackward:);
+        "b"     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "**", yank:, insertText:, " ", moveLeft:, insertText:, "**", moveRight:, deleteBackward:);
+        "_"     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "_", yank:, insertText:, " ", moveLeft:, insertText:, "_", moveRight:, deleteBackward:);
+        "i"     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "_", yank:, insertText:, " ", moveLeft:, insertText:, "_", moveRight:, deleteBackward:);
+        "/"     = (selectWord:, setMark:, swapWithMark:, deleteToMark:, insertText:, "/*", yank:, insertText:, " ", moveLeft:, insertText:, "*/", moveRight:, deleteBackward:);
+    };
+
+    // Comments (idea from Brett Terpstra)
+    "^~@/" = {                          // Ctrl + Option + Cmd + /
+        "/"     = (moveToBeginningOfParagraph:, insertText:, "// ", moveToEndOfParagraph:, moveForward:);
+        "\#"    = (moveToBeginningOfParagraph:, insertText:, "# ", moveToEndOfParagraph:, moveForward:);
+        "!"     = (setMark:, swapWithMark:, delete:, insertText:, "<!-- ", yank:, insertText:, " -->", swapWithMark:, moveRight:, moveRight:, moveRight:, moveRight:, moveRight:);
+        "*"     = (setMark:, swapWithMark:, delete:, insertText:, "/* ", yank:, insertText:, " */", swapWithMark:, moveRight:, moveRight:, moveRight:);
+    };
 }
 
 /*

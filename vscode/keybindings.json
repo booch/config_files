@@ -61,5 +61,9 @@
         "key": "shift+alt+cmd+c",
         "command": "-java.view.package.copyRelativeFilePath",
         "when": "focusedView == 'javaProjectExplorer' && java:serverMode == 'Standard'"
+    },
+    {
+        "key": "cmd+c",
+        "command": "-execCopy"
     }
 ]

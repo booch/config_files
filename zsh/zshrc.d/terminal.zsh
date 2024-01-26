@@ -1,17 +1,9 @@
+#!/bin/bash
 #!/bin/zsh
+# This file gets sourced by both Bash and Zsh startup scripts.
 
 # If we stop console output with Ctrl+S, allow any key to restart the output.
 stty ixany
-
-
-# If the terminal supports xterm-style setting of the title, set it to user@host:dir after every command.
-# case "$TERM" in
-# xterm*|rxvt*|putty*)
-#     PROMPT_COMMAND="${PROMPT_COMMAND:-:} echo -ne \"\\033]0;${USER}@${HOSTNAME%%.*}: \${PWD/\$HOME/~}\\007\" ;"
-#     ;;
-# *)
-#     ;;
-# esac
 
 # Get the terminal answerback string.
 # I configure iTerm to return "iterm2".
@@ -27,6 +19,39 @@ terminal_answerback() {
     echo "$answerback"
 }
 TERMINAL_ANSWERBACK="$(terminal_answerback)"
+
+# NOTE: Apple Terminal.app returns "Apple_Terminal".
+# TODO: Also check that the terminfo exists, or fall back to xterm-truecolor, xterm-256color, iterm, or xterm.
+# TODO: See https://stackoverflow.com/a/76107983 and https://iterm2.com/utilities/it2check to better determine if we're running iTerm.
+# NOTE: If we're in tmux, we'll get "tmux".
+if [[ "$TERM_PROGRAM" == 'iTerm.app' ]]; then
+    # export TERM='iterm-truecolor'
+    # export TERM='iterm-direct' # This one exists in Homebrew ncurses.
+    export TERM='xterm-256color'
+    export TERM='iterm'
+fi
+
+# Set COLORTERM; some terminal programs use it.
+case $TERM in
+    *-truecolor | vte*)
+        export COLORTERM='truecolor' ;;
+    *-256color)
+        export COLORTERM='256color' ;;
+esac
+
+# # If the terminal supports xterm-style setting of the title, set it to user@host:dir after every command.
+# # TODO: This doesn't catch most terminals that support this. Is there a terminfo entry we can check?
+# case "$TERM" in
+# xterm*|rxvt*|putty*)
+#    PROMPT_COMMAND="${PROMPT_COMMAND:-:} echo -ne \"\\033]0;${USER}@${HOSTNAME%%.*}: \${PWD/\$HOME/~}\\007\" ;"
+#    ;;
+# *)
+#    ;;
+# esac
+# # Or set the window title to the current directory.
+# function settitle() { echo -ne "\033]2;$@\a\033]1;$@\a"; }
+# function cd() { command cd "$@"; settitle `pwd -P`; }
+
 
 ## Handle PuTTY oddities.
 # PuTTY's default answerback string is "PuTTY", without a terminating return character.

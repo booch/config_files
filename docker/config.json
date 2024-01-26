@@ -3,5 +3,10 @@
 	"psFormat": "table {{.ID}}\\t{{.Names}}\\t{{.Image}}\\t{{.Status}}\\t{{.Ports}}",
 	"imagesFormat": "table {{.ID}}\\t{{.Repository}}\\t{{.Tag}}\\t{{.CreatedSince}} ago\\t{{.Size}}",
 	"credsStore": "desktop",
-	"currentContext": "desktop-linux"
+	"currentContext": "desktop-linux",
+	"plugins": {
+		"-x-cli-hints": {
+			"enabled": "true"
+		}
+	}
 }

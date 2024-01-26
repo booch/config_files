@@ -37,6 +37,7 @@ module.exports = {
                 "gitlab.com/*",
                 "*.datadoghq.com/*",
                 "*.rollbar.com/*",
+                "rollbar.com/*",
                 "mailtrap.io/*",
                 "docs.google.com/*",
                 "debtbook.slack.com/*",
@@ -52,7 +53,11 @@ module.exports = {
                 "debtbook.okta.com/*",
                 "auth.nordlayer.com/*",
                 "*.loom.com/*",
-                "debtbook.awsapps.com/*"
+                "*.amazonaws.com/*",
+                "heap.io/*",
+                "*.heap.io/*",
+                "heapanalytics.com/*",
+                "debtbook.latticehq.com",
             ],
             browser: WORK
         },

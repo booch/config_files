@@ -1,5 +1,14 @@
 #!/bin/zsh
 
+# TODO: Make sure this makes sense. Verify what the defaults are.
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
+
+# TODO: Investigate why these are in my $PATH:
+#  - /System/Cryptexes/App/usr/bin - safaridriver
+#  - /Library/Apple/usr/bin - rvictl
+#       Remote Virtual Interface Tool starts and stops a remote packet capture instance for any set of attached mobile devices.
+#  - /var/run/com.apple.security.cryptexd/codex.system/bootstrap/* - does not exist
+
 # I've made my entire ZSH configuration modular!
 if [[ -d $HOME/.zsh/zshrc.d ]]; then
     for file in $(\find -L "$HOME"/.zsh/zshrc.d/*.zsh -type f); do
@@ -8,11 +17,16 @@ if [[ -d $HOME/.zsh/zshrc.d ]]; then
     done
 fi
 
+# Prefer my personal commands over everything else.
+if [[ -d "$HOME/bin" ]]; then
+    export PATH="$HOME/bin:$PATH"
+fi
+
 # Enable command auto-correction.
 export ENABLE_CORRECTION="true"
 
-# TODO: Not sure how /sbin and /usr/sbin already got added.
-export PATH="$PATH:/usr/local/sbin"
+# Ignore comments in interactive shells.
+export INTERACTIVE_COMMENTS=1
 
 # function current_branch() {
 #   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -23,3 +37,14 @@ export PATH="$PATH:/usr/local/sbin"
 #   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
 #   echo $(git remote -v | cut -d':' -f 2)
 # }
+
+export CLICOLOR=true
+
+setopt NO_BG_NICE # don't nice background tasks
+setopt NO_HUP
+setopt NO_LIST_BEEP
+setopt LOCAL_OPTIONS # allow functions to have local options
+setopt LOCAL_TRAPS   # allow functions to have local traps
+setopt CORRECT
+setopt COMPLETE_IN_WORD
+setopt IGNORE_EOF

@@ -25,7 +25,7 @@ if type -p eza >/dev/null; then
     alias l1='ls -1A'
     alias l='eza -lahF --no-user --git --group-directories-first --time-style=relative'
     alias ltr='eza -lahF --no-user --git --sort=time --time-style=relative'
-    alias ll='eza -lahFo --git --group-directories-first --time-style=long-iso'
+    alias ll='eza -lahFo --group --git --group-directories-first --time-style=long-iso'
     alias dir='eza -1'
 else
     alias l1='ls -1A'
