@@ -36,14 +36,19 @@ AMAZING_PRINT_COLORS = {
 
 ## Custom Prompts
 if STDIN.tty?
-  Pry.config.prompt = [
-    proc { |target_self, nesting_level, pry|
-      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}> "
-    },
-    proc { |target_self, nesting_level, pry|
-      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}* "
-    }
-  ]
+  Pry::Prompt.add(:boochtek) do |context, nesting_level, pry, separator|
+    "[#{pry.input_ring.size}] (#{Pry.view_clip(context)})#{":#{nesting_level}" unless nesting_level.zero?}#{separator} "
+  end
+  Pry.config.prompt = Pry::Prompt[:boochtek]
+  puts "YAY!"
+#  Pry.config.prompt = [
+#    proc { |target_self, nesting_level, pry|
+#      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}> "
+#    },
+#    proc { |target_self, nesting_level, pry|
+#      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}* "
+#    }
+#  ]
 end
 
 
