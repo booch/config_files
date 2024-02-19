@@ -27,16 +27,16 @@ require 'pp'
 
 
 # The 'ap' extension is even nicer for pretty-printing output.
-# See http://github.com/michaeldv/awesome_print for details.
+# See http://github.com/amazing-print/amazing_print for details.
 extend_console 'ap' do
-  AwesomePrint.defaults = {
+  AmazingPrint.defaults = {
     :sorted_hash_keys => true
   }
 
-  # Use AwesomePrint in place of PrettyPrint.
+  # Use AmazingPrint in place of PrettyPrint.
   alias pp ap
 
-  # Make IRB output use AwesomePrint automagically. From http://stackoverflow.com/questions/123494/whats-your-favourite-irb-trick/3091252#3091252
+  # Make IRB output use AmazingPrint automagically. From http://stackoverflow.com/questions/123494/whats-your-favourite-irb-trick/3091252#3091252
   if IRB.version.include?('DietRB') # MacRuby
     IRB.formatter = Class.new(IRB::Formatter) do
       def inspect_object(object)
@@ -92,4 +92,6 @@ class Object
 end
 
 
-load '~/.pryrc' if defined?(Pry)
+puts "Loading Pry RC"
+require '~/.pryrc' if defined?(Pry)
+

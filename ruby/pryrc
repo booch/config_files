@@ -11,7 +11,7 @@ ALIASES = {
   into: (defined?(PryByebug) ? "step" : nil),     # Step *into* next method call.
 }.compact
 
-AWESOME_PRINT_COLORS = {
+AMAZING_PRINT_COLORS = {
   args:       :pale,
   array:      :white,
   bigdecimal: :blue,
@@ -77,33 +77,34 @@ Pry.hooks.add_hook(:after_read, "show_time") do |_input_string, pry|
 end
 
 
-## AwesomePrint
+## AmazingPrint
 begin
-  require "awesome_print"
+  require "amazing_print"
 
   # Force use of `less` as our pager, and allow color.
   ENV["PAGER"] = "less -RX"
 
-  # Hook into Pry, so Pry output will automatically use `AwesomePrint.ap`.
-  # NOTE: This does what `AwesomePrint.pry!` does, but doesn't override auto-pagination.
+  # Hook into Pry, so Pry output will automatically use `AmazingPrint.ap`.
+  # NOTE: This does what `AmazingPrint.pry!` does, but doesn't override auto-pagination.
   # TODO: See https://github.com/awesome-print/awesome_print/issues/347 if has been fixed.
   Pry.config.print = proc do |_output, value, pry|
     # Don't show Array indexes, and indent 2, so it looks like normal Ruby.
     # TODO: Once https://github.com/awesome-print/awesome_print/issues/209 is fixed:
     #         * We should move this out of the `Pry.config.print` block.
-    #         * We can remove the AWESOME_PRINT_COLORS, unless we want to customize them.
-    AwesomePrint.defaults = {
+    #         * We can remove the AMAZING_PRINT_COLORS, unless we want to customize them.
+    AmazingPrint.defaults = {
       index: false,
       indent: 2,
-      color: AWESOME_PRINT_COLORS
+      color: AMAZING_PRINT_COLORS
     }
-    pry.pager.page(value.awesome_inspect)
+    pry.pager.page(value.amazing_inspect)
   end
 rescue LoadError
-  puts "Can't find awesome_print. :("
+  puts "Can't find amazing_print. :("
 end
 
 
 ## Rails
 # Load Rails config if we're running Rails console.
 load "~/.railsrc" if defined?(Rails) && Rails.env
+
