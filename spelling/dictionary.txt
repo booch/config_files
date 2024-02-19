@@ -7,6 +7,7 @@ attr_reader
 Avdi
 Ballwin
 Belkin
+biconditional
 Bitly
 Boilerplatter
 BoochTek
@@ -63,13 +64,17 @@ Padrino
 postmap
 RailsConf
 Rappin
+Redis
 refactorings
 Riverport
 Rollbar
+Rose-Hulman
 rspec
 RuboCop
 RubyConf
 serverless
+setlist
+setlists
 SFTP
 Sidekiq
 Silverline
@@ -90,6 +95,7 @@ visudo
 Weedmaps
 Westbrooke
 Wildey
+xnor
 Zagg
 Zaphod
 Datadog
