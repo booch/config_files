@@ -7,7 +7,6 @@
     "breadcrumbs.enabled": true,
     "editor.renderControlCharacters": true,
     "editor.rulers": [
-
         { "column": 80, "color": "#dddddd" },
         { "column": 100, "color": "#888888" },
         { "column": 120, "color": "#ff0000" }
@@ -19,8 +18,14 @@
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "ruby.format": "rubocop",
     "[ruby]": {
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "Shopify.ruby-lsp", // Use the Ruby LSP as the default formatter
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.insertSpaces": true, // Use spaces and not tabs for indentantion
+        "editor.semanticHighlighting.enabled": true // Enable semantic highlighting
     },
+    "rubyLsp.rubyVersionManager": "asdf",
     "[markdown]": {
         "editor.wordWrapColumn": 80,
         "editor.wordWrap": "bounded",
@@ -43,7 +48,7 @@
     "prettier.printWidth": 120,
     "C_Cpp.default.cStandard": "c11",
     "C_Cpp.default.cppStandard": "c++20",
-    "C_Cpp.experimentalFeatures": "Enabled",
+    "C_Cpp.experimentalFeatures": "enabled",
     "c-cpp-flylint.clang.pedantic": true,
     "editor.wrappingStrategy": "advanced",
     "prettier.tabWidth": 4,
@@ -64,5 +69,16 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "npm.keybindingsChangedWarningShown": true
+    "npm.keybindingsChangedWarningShown": true,
+    "window.zoomLevel": 1,  // TODO: Change this to "always" when that becomes available.
+    "terminal.integrated.env.osx": {
+    },
+    "editor.minimap.enabled": false,
+    "spellright.addToSystemDictionary": true,
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
+    "editor.accessibilitySupport": "off"
 }
