@@ -12,6 +12,9 @@
     amend = commit --amend --reset-author --reuse-message=HEAD
     anw = !git diff -U0 -w --no-color -- \"$@\" | git apply --cached --ignore-whitespace --unidiff-zero "#"
     ap = add --patch
+    assume = update-index --assume-unchanged
+    assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
     at = add --intent-to-add
     au = add --update
     authored-by = "!f(){ git log --no-merges --stat --author=\"$1\" --name-only --pretty=format:'' | sort -u | grep -v '^$' }; f"
@@ -19,8 +22,10 @@
     b = branch -vv
     back = checkout "-"
     bclean = "!f(){ git branch --merged master | awk '$NF !~ /master/ {print $NF}' | xargs git branch -d; }; f"
+    blame = blame -w -C -C -C
     bn = !git branch-name
     br = branch
+    bra = branch -ra
     branch-name = !git for-each-ref --format='%(refname:short)' $(git symbolic-ref HEAD)
     branch-clean = !git fetch && git remote prune origin && git branch --merged staging | grep -v staging | xargs git branch -d
     branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/master refs/remotes
@@ -38,6 +43,7 @@
     ci = commit
     clear = !git add . && git stash && git stash drop
     cm = commit --message
+    cma = commit -a -m
     co = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
     cob = checkout -b
     com = checkout master
@@ -60,16 +66,22 @@
     delete-remote-merged-branches = "!git branch -r --merged | grep -v '\\*' | sed 's/origin\\//:/' | xargs git push origin"
     dh1 = diff HEAD~1
     di = diff
+    diff = diff --word-diff
+    diffr  = "!f() { git diff "$1"^.."$1"; }; f"
     diff-stat = diff -b --stat
     discard = checkout --
     div = divergence
+    dl = "!git ll -1"  # Show modified files in last commit.
+    dlc = diff --cached HEAD^  # Show diff of last commit.
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
     doff = reset head^
     done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
+    dr  = "!f() { git diff "$1"^.."$1"; }; f"
     ds = diff --stat=160,120
     dt = difftool
     dump = cat-file -p
     extend = commit --amend --no-edit
+    f = "!git ls-files | grep -i"  # Find a file path in the index.
     fa = fetch --all
     fb = "!f() { git branch -a --contains $1; }; f"
     fc = "!f() { git log --pretty=oneline-details --decorate --date=short -S$1; }; f"
@@ -82,11 +94,15 @@
     flip = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
     flip-last = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
     fm = "!f() { git log --pretty=oneline-details --decorate --date=short --grep=$1; }; f"
+    fp = push --force-with-lease
     ft = "!f() { git describe --always --contains $1; }; f"
     gclone = "!gclone() { mkdir -p $1; git clone git@github.com:$1.git; }; gclone";
     git = "!f() { git \"$@\"; }; f"
+    gra = "!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f"
+    gr = grep -Ii
     grab = "!f() { file=\"$1\"; branch=\"$2\"; git checkout \"$branch\" -- \"$file\"; git reset HEAD -- \"$file\"; }; f"
     graph = log --graph --pretty=oneline-details --abbrev-commit --date=relative
+    grep = grep -Ii
     go = checkout -B
     h = help
     hist = log --pretty=oneline-details --graph --date=short
@@ -97,11 +113,19 @@
     ir = rebase -i origin/master
     irb = rebase --interactive
     l = log --pretty=oneline-details -n 20 --graph --abbrev-commit
+    la = "!git config -l | grep alias | cut -c 7-"
+    lap = "!f() { git --git-dir=$1 format-patch -k -1 --stdout $2 | git am -3 -k; }; f"  # Apply patch from other local repo.
     last = !git --no-pager log -1 HEAD --format=sha
+    lasttag = describe --tags --abbrev=0
     lc = log ORIG_HEAD.. --stat --no-merges
+    ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+    le = log --oneline --decorate
+    lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
     lg = log --graph --pretty=oneline-details --abbrev-commit --date=relative
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     llog = log --date=local
     ln = log --pretty=oneline-details
+    lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
     log-graph = log --all --graph --decorate
     log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
     log-timeline = log --format=timeline
@@ -114,6 +138,7 @@
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     lp = log --pretty=oneline-details --abbrev-commit --date=relative
     ls = log --oneline
+    lt = describe --tags --abbrev=0
     me = !git my-name
     m = merge -s recursive -X patience
     merge-branch = !git checkout master && git merge @{-1}
@@ -147,7 +172,7 @@
     pom = push origin master
     poof = pohf  # For voice control.
     pr = !hub pull-request
-    praise = blame
+    praise = blame -w -C -C -C
     precommit = diff --cached -w --word-diff=color --word-diff-regex='[^[:space:]<>]+'
     prestage = diff -w --word-diff=color
     proof = pohf  # For voice control.
@@ -161,6 +186,8 @@
     pwip = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" && git reset HEAD^ --'
     pwipf = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" --force-with-lease && reset HEAD^ --'
     r = remote
+    r1 = reset HEAD^
+    r2 = reset HEAD^^
     rb = rebase
     rba = rebase --abort
     rbc = rebase --continue
@@ -169,6 +196,7 @@
     recent = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     recursive-update = "!sh -c 'find \"${@:-.}\" -type d -name .git -exec dirname {} \\; -exec git --git-dir={} remote update \\;' _"
     regret = reset
+    rem = "!git config -l | grep remote.*url | tail -n +2"  # List remotes.
     remotes = remote -v
     remove = rm
     repush = !git pull --rebase && git push
@@ -178,18 +206,22 @@
     reword = commit --amend --only
     rewrite = rebase -i
     rh = reset --hard
+    rh1 = reset HEAD^ --hard
+    rh2 = reset HEAD^^ --hard
     ri = rebase --interactive
     rlog = !sh -c 'git log --color \"$@\" | fmt -s -w 79 | less -FRSX' _
     rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
     root = rev-parse --show-toplevel
     ru = remote update --prune
     s = status -s
+    sa = stash apply
+    sbu = "!f() { git subtree pull --prefix $2 $1 master --squash; }; f"
     search = log --pretty=oneline-details -S
     sh = show
     sha1 = "!sh -c 'git rev-parse --short ${1:-HEAD}' --"
     sho = show
     shove = push origin HEAD
-    sl = shortlog
+    sl = stash list
     ski = stash --keep-index
     skip = rebase --skip
     sm = submodule
@@ -198,8 +230,10 @@
     snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
     sq = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
     squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+    ss = stash save
     st = status
     sta = stash
+    staash = stash --all
     staged = diff --staged
     stash-all = stash save --include-untracked
     stashes = stash list
@@ -208,6 +242,9 @@
     stp = stash pop
     sub = submodule
     summary = status -u -s
+    svnr = svn rebase
+    svnd = svn dcommit
+    svnl = svn log --oneline --show-commit
     svn-pull = !git svn fetch && git svn rebase
     svn-push = !git svn dcommit
     sw = switch
@@ -223,6 +260,8 @@
     trust = !mkdir -p .git/safe
     type = cat-file -t
     unadd = reset HEAD --
+    unassume = update-index --no-assume-unchanged
+    unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
     uncommit = reset --soft HEAD^
     undo = '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f'
     unignore = update-index --no-assume-unchanged

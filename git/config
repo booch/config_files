@@ -10,8 +10,14 @@
 	status = auto
 	branch = auto
 	interactive = auto
+[color "branch"]
+    current = bold
+    local = green
+    remote = blue
 [color "status"]
-	untracked = blue
+    added = green
+    changed = red
+    untracked = blue
 [color "diff"]
 	meta = 11
 	frag = magenta bold
