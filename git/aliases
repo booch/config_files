@@ -32,6 +32,7 @@
     by = !git authored-by
     c = commit
     ca = commit --amend
+    caa = commit -a --amend -C HEAD
     changes=diff --name-status -r
     changed=diff --name-only
     check = diff --check
@@ -215,6 +216,7 @@
     ru = remote update --prune
     s = status -s
     sa = stash apply
+    sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
     sbu = "!f() { git subtree pull --prefix $2 $1 master --squash; }; f"
     search = log --pretty=oneline-details -S
     sh = show
@@ -228,6 +230,7 @@
     sma = submodule add
     smu = submodule update --init --recursive
     snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+    sortdiff = !sh -c 'git diff "$@" | grep "^[+-]" | sort --key=1.2 | uniq -u -s1'
     sq = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
     squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
     ss = stash save
