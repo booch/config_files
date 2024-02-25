@@ -3,7 +3,11 @@
 	path = ~/.config/git/aliases
 	path = ~/.config/git/drivers
 [core]
-	excludesFile = ~/.config/git/ignore
+	excludesFile = ~/.config/git/ignore  # This is actually the default now.
+	fsmonitor = true  # Run FSMonitor daemon to track file updates in the background.
+	untrackedcache = true  # Have FSMonitor also monitor untracked files.
+	whitespace = trailing-space,space-before-tab
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [color]
 	ui = true
 	diff = auto
@@ -30,13 +34,14 @@
 	whitespace = strip
 	whitespace = nowarn
 [merge]
-	conflictstyle = diff3
 	tool = opendiff
+	conflictstyle = zdiff3
 	summary = true
 [help]
 	autocorrect = 50  # Automatically correct misspelled git subcommands after 5 seconds.
 [branch]
 	autosetuprebase = always  # Make 'git pull' rebase local commits on top of newly pulled-down commits instead of merging them. (http://www.viget.com/extend/only-you-can-prevent-git-merge-commits/)
+	sort = -committerdate  # Sort branches to show the most recent updates at the top.
 [pretty]
 	oneline-details = format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
 	sha = format:%Cred%H\n
@@ -44,22 +49,37 @@
 	timeline = format:%h %an %ar - %s
 [commit]
 	verbose = true  # Show branch name and diff as comments in default commit message.
+	cleanup = scissors  # Allow commit message to contain comment lines. A line w/ `# === >8 ===` separates the commit message from the diff.
 [fetch]
 	recurseSubmodules = on-demand  # Only pull submodule changes if the main project updates the submodule reference.
-	prune = true  # If a remote branch is deleted, allow `git fetch` to remove the remote ref.
+	prune = true  # If a remote branch is deleted, allow `git fetch` to remove the tracking branch.
+	prunetags = true  # If a remote tag is deleted, allow `git fetch` to remove it locally.
+	fsckobjects = true  # Check for corrupt objects.
 [push]
 	default = upstream  # Push only the current branch by default, not all branches.
 	recurseSubmodules = on-demand  # Push any submodule changes first; if that fails, main project will not be pushed.
+	followtags = true  # Push new tags along with commits being pushed.
 [pull]
 	ff = true  # Only do fast-forward merges, so we don't overwrite any local changes.
 [rebase]
 	autostash = true  # Automatically stash and unstash during a rebase.
+	autoSquash = true  # Automatically squash any commit with a `squash!` / `fixup!` / `amend!` prefix that matches another commit. Use `git commit --fixup or --squash`.
+	updateRefs = true  # When rebasing a branch, also update any branches based on that branch. See https://github.blog/2022-10-03-highlights-from-git-2-38/#rebase-dependent-branches-with-update-refs.
+	backend = merge  # Use newer backend to perform rebases.
+	stat = true  # Show a diffstat of what changed upstream since the last rebase.
+	missingCommitsCheck = error  # Don't allow deleting commits when rebasing.
+[receive]
+	fsckobjects = true  # Check for corrupt objects.
 [rerere]
 	enabled = true  # Automatically record and replay merge conflict resolutions. (http://git-scm.com/2010/03/08/rerere.html)
 	autoupdate = true  # Automatically stage any resolutions that rerere solves.
 [status]
 	showStash = true  # Show number of stashes currently.
 	submoduleSummary = true  # Show status of submodules in `git status` output.
+[submodule]
+	recurse = true  # Recurse into submodules when running `git status`.
+[transfer]
+	fsckobjects = true  # Check for corrupt objects.
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read. (Removed in Git 2.12.)
