@@ -34,9 +34,11 @@
 	whitespace = strip
 	whitespace = nowarn
 [merge]
-	tool = opendiff
+	tool = nvimdiff  # Very few of the options work without a GUI. I use NeoVim.
 	conflictstyle = zdiff3
 	summary = true
+[mergetool "nvimdiff"]
+	layout = '(LOCAL/BASE/REMOTE),MERGED'  # Show all 3 versions on left, merged result on right.
 [help]
 	autocorrect = 50  # Automatically correct misspelled git subcommands after 5 seconds.
 [branch]
