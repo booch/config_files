@@ -21,14 +21,14 @@
     authors = "!git log --pretty=format:%aN | sort | uniq -c | sort -rn"
     b = branch -vv
     back = checkout "-"
-    bclean = "!f(){ git branch --merged master | awk '$NF !~ /master/ {print $NF}' | xargs git branch -d; }; f"
+    bclean = "!f(){ git branch --merged main | awk '$NF !~ /main/ {print $NF}' | xargs git branch -d; }; f"
     blame = blame -w -C -C -C
     bn = !git branch-name
     br = branch
     bra = branch -ra
     branch-name = !git for-each-ref --format='%(refname:short)' $(git symbolic-ref HEAD)
     branch-clean = !git fetch && git remote prune origin && git branch --merged staging | grep -v staging | xargs git branch -d
-    branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/master refs/remotes
+    branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/main refs/remotes
     by = !git authored-by
     c = commit
     ca = commit --amend
@@ -47,7 +47,7 @@
     cma = commit -a -m
     co = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
     cob = checkout -b
-    com = checkout master
+    com = checkout main
     committed-by = "!f(){ git log --no-merges --stat --committer=\"$1\" --name-only --pretty=format:'' | sort -u | grep -v '^$' }; f"
     conflicted = grep --name-only --full-name '<<<<<<< HEAD'
     conflicts = grep --name-only --full-name '<<<<<<< HEAD'
@@ -76,7 +76,7 @@
     dlc = diff --cached HEAD^  # Show diff of last commit.
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
     doff = reset head^
-    done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
+    done = !git fetch && git rebase origin/main && git checkout main && git merge @{-1} && git push
     dr  = "!f() { git diff "$1"^.."$1"; }; f"
     ds = diff --stat=160,120
     dt = difftool
@@ -111,7 +111,7 @@
     home = rev-parse --show-toplevel
     ignore = update-index --assume-unchanged
     ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
-    ir = rebase -i origin/master
+    ir = rebase -i origin/main
     irb = rebase --interactive
     l = log --pretty=oneline-details -n 20 --graph --abbrev-commit
     la = "!git config -l | grep alias | cut -c 7-"
@@ -131,7 +131,7 @@
     log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
     log-timeline = log --format=timeline
     log-local = log --oneline origin..HEAD
-    log-fetched = log --oneline HEAD..origin/master
+    log-fetched = log --oneline HEAD..origin/main
     logp = log --pretty=nice --date-order
     logsf = log --stat --format=oneline --abbrev-commit
     logst = log --stat
@@ -142,7 +142,7 @@
     lt = describe --tags --abbrev=0
     me = !git my-name
     m = merge -s recursive -X patience
-    merge-branch = !git checkout master && git merge @{-1}
+    merge-branch = !git checkout main && git merge @{-1}
     merge-trail = log --ancestry-path --merges
     merged = branch --merged
     mm = merge --no-ff
@@ -164,13 +164,13 @@
     patch = log -p --no-walk # Generate patch file from a commit.
     pf = push --force-with-lease
     phh = push heroku HEAD
-    phm = push heroku master
+    phm = push heroku main
     pick = cherry-pick
     pickaxe = log -p -S
     please = push --force-with-lease
     poh = push origin HEAD
     pohf = push origin HEAD --force-with-lease
-    pom = push origin master
+    pom = push origin main
     poof = pohf  # For voice control.
     pr = !hub pull-request
     praise = blame -w -C -C -C
@@ -203,7 +203,7 @@
     repush = !git pull --rebase && git push
     reset-authors = commit --amend --reset-author -CHEAD
     retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
-    review = diff master..HEAD
+    review = diff main..HEAD
     reword = commit --amend --only
     rewrite = rebase -i
     rh = reset --hard
@@ -216,8 +216,8 @@
     ru = remote update --prune
     s = status -s
     sa = stash apply
-    sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
-    sbu = "!f() { git subtree pull --prefix $2 $1 master --squash; }; f"
+    sba = "!f() { git subtree add --prefix $2 $1 main --squash; }; f"
+    sbu = "!f() { git subtree pull --prefix $2 $1 main --squash; }; f"
     search = log --pretty=oneline-details -S
     sh = show
     sha1 = "!sh -c 'git rev-parse --short ${1:-HEAD}' --"
@@ -275,8 +275,8 @@
     unstage = reset HEAD --
     unstash = stash pop
     untrack = rm -r --cached
-    up = !git fetch origin && git rebase origin/master
-    update = !git fetch origin && git rebase origin/master
+    up = !git fetch origin && git rebase origin/main
+    update = !git fetch origin && git rebase origin/main
     url = remote get-url origin
     US = unstage  # For voice control.
     wd = diff --word-diff="color"
@@ -284,7 +284,7 @@
     wdiff = diff --word-diff=color --word-diff-regex=[a-zA-Z_0-9]+
     what = show -w
     whatis = show -s --pretty=oneline-details --date=short
-    whatsnew = log origin/master@{1}..origin/master@{0}
+    whatsnew = log origin/main@{1}..origin/main@{0}
     which-branches-contain = branch -a --contains
     which-tags-contain = name-rev --name-only
     who = shortlog -s --no-merges --numbered --
