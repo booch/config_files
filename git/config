@@ -111,3 +111,7 @@
 	newHighlight = green bold 22
 [init]
 	defaultBranch = main
+[log]
+	date = format-local:%Y-%m-%d %a %H:%M  # Display dates like `2024-02-25 Sun 15:55`, in local time zone.
+[blame]
+	date = format-local:%Y-%m-%d %a  # Display dates like `2024-02-25 Sun`, in local time zone.
