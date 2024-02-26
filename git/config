@@ -52,6 +52,16 @@
 [commit]
 	verbose = true  # Show branch name and diff as comments in default commit message.
 	cleanup = scissors  # Allow commit message to contain comment lines. A line w/ `# === >8 ===` separates the commit message from the diff.
+[credential]
+	# This is used implicitly when connecting to an HTTPS-based upstream repository.
+	# Git will use the first helper that returns an answer to a query, and attempt to save credentials in ALL helpers that support saving.
+	helper = cache --timeout 3600  # Cache credentials for 1 hour.
+	helper = 1password  # Use 1Password to find/store credentials.
+	helper = oskeychain  # Use macOS Keychain to find/store credentials.
+	helper = gnome-keyring  # Use Gnome Keyring to find/store credentials.
+	helper = wincred  # Use Windows Credential Manager to find/store credentials.
+	helper = oauth  # Use OAuth to authenticate to GitHub, GitLab, or BitBucket.
+	helper = manager  # Use Git Credential Manager to find/store credentials for GitHub, GitLab, BitBucket, or Azure.
 [fetch]
 	recurseSubmodules = on-demand  # Only pull submodule changes if the main project updates the submodule reference.
 	prune = true  # If a remote branch is deleted, allow `git fetch` to remove the tracking branch.
