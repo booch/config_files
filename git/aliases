@@ -53,6 +53,7 @@
     conflicts = grep --name-only --full-name '<<<<<<< HEAD'
     continue = rebase --continue
     contributors = shortlog --summary --numbered
+    copilot = !gh copilot
     count = shortlog -sn
     cp = cherry-pick
     cpc = cherry-pick --signoff
@@ -98,6 +99,7 @@
     fp = push --force-with-lease
     ft = "!f() { git describe --always --contains $1; }; f"
     gclone = "!gclone() { mkdir -p $1; git clone git@github.com:$1.git; }; gclone";
+    gh = !gh
     git = "!f() { git \"$@\"; }; f"
     gra = "!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f"
     gr = grep -Ii
@@ -109,6 +111,7 @@
     hist = log --pretty=oneline-details --graph --date=short
     history = log --pretty=oneline-details --graph --date=short
     home = rev-parse --show-toplevel
+    hub = !gh
     ignore = update-index --assume-unchanged
     ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
     ir = rebase -i origin/main
