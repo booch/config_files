@@ -2,6 +2,7 @@
     a = add
     aa = add --all
     ac = !git add -A && git commit
+    add-untracked = !git untracked | xargs -r -e'\n' git add
     addall = add --all
     ae = add --edit
     ai = add --interactive
@@ -22,6 +23,7 @@
     b = branch -vv
     back = checkout "-"
     bclean = "!f(){ git branch --merged main | awk '$NF !~ /main/ {print $NF}' | xargs git branch -d; }; f"
+    bl = branch --list
     blame = blame -w -C -C -C
     bn = !git branch-name
     br = branch
@@ -33,14 +35,16 @@
     c = commit
     ca = commit --amend
     caa = commit -a --amend -C HEAD
-    changes=diff --name-status -r
-    changed=diff --name-only
+    changes = diff --name-status -r
+    changed = diff --name-only
     check = diff --check
     checkout = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
     cheddar = commit --amend -CHEAD
     cherry-lick = !sh -c 'hub checkout HEAD^{} -- && hub cherry-pick \"$@\"' _
     chicken = ci  # For voice control.
     cho = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
+    choose-branch = "!f() { git branch --sort=-committerdate | fzf | sed 's/^\\* //g' | xargs echo -n ; }; f"
+    change-branch = "!f() { git checkout $(git choose-branch) ; }; f"
     ci = commit
     clear = !git add . && git stash && git stash drop
     cm = commit --message
@@ -87,6 +91,7 @@
     fa = fetch --all
     fb = "!f() { git branch -a --contains $1; }; f"
     fc = "!f() { git log --pretty=oneline-details --decorate --date=short -S$1; }; f"
+    fe = fetch --all --prune
     ff = merge --ff-only
     filelog = log -u
     file-trail = log --follow -p -w
@@ -114,8 +119,10 @@
     hub = !gh
     ignore = update-index --assume-unchanged
     ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
+    ilog = log --pretty=format:'%h - %an, %ai : %s'
     ir = rebase -i origin/main
     irb = rebase --interactive
+    is-tracked = ls-files --error-unmatch
     l = log --pretty=oneline-details -n 20 --graph --abbrev-commit
     la = "!git config -l | grep alias | cut -c 7-"
     lap = "!f() { git --git-dir=$1 format-patch -k -1 --stdout $2 | git am -3 -k; }; f"  # Apply patch from other local repo.
@@ -151,6 +158,7 @@
     mm = merge --no-ff
     mnf = merge --no-ff
     modified-by = !git authored-by
+    mr = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/merge-requests/$1/head:mr/$1 && git checkout mr/$1; }; f"
     mt = mergetool
     my-email = config user.email
     my-name = config user.name
@@ -179,12 +187,14 @@
     praise = blame -w -C -C -C
     precommit = diff --cached -w --word-diff=color --word-diff-regex='[^[:space:]<>]+'
     prestage = diff -w --word-diff=color
+    pristine = "!git reset --hard && git clean -fxd && git submodule foreach 'git pristine'"
     proof = pohf  # For voice control.
     prune = remote prune
     prune-all = !git remote | xargs -n 1 git remote prune
     publish = git flow feature publish
     pullff = pull --ff-only
     pu = push -u origin HEAD
+    pupush = !git push && git push --tags
     push = push --tags
     put = push origin HEAD
     pwip = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" && git reset HEAD^ --'
@@ -201,6 +211,7 @@
     recursive-update = "!sh -c 'find \"${@:-.}\" -type d -name .git -exec dirname {} \\; -exec git --git-dir={} remote update \\;' _"
     regret = reset
     rem = "!git config -l | grep remote.*url | tail -n +2"  # List remotes.
+    remi = rebase origin/master --interactive
     remotes = remote -v
     remove = rm
     repush = !git pull --rebase && git push
@@ -227,6 +238,7 @@
     sho = show
     shove = push origin HEAD
     sl = stash list
+    slog = log --pretty=format:'%h - %an, %ar : %s'
     ski = stash --keep-index
     skip = rebase --skip
     sm = submodule
@@ -278,6 +290,7 @@
     unstage = reset HEAD --
     unstash = stash pop
     untrack = rm -r --cached
+    untracked = ls-files --other --exclude-standard
     up = !git fetch origin && git rebase origin/main
     update = !git fetch origin && git rebase origin/main
     url = remote get-url origin
