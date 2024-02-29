@@ -31,6 +31,7 @@
     branch-name = !git for-each-ref --format='%(refname:short)' $(git symbolic-ref HEAD)
     branch-clean = !git fetch && git remote prune origin && git branch --merged staging | grep -v staging | xargs git branch -d
     branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)%(color:black)\t%(refname:strip=3)\t%(color:red)%(authorname)\" --no-merged origin/main refs/remotes
+    bugfix = "!f() { git co main; git pull; git switch -c bug/$1; git poh; }; f"
     by = !git authored-by
     c = commit
     ca = commit --amend
@@ -46,11 +47,13 @@
     choose-branch = "!f() { git branch --sort=-committerdate | fzf | sed 's/^\\* //g' | xargs echo -n ; }; f"
     change-branch = "!f() { git checkout $(git choose-branch) ; }; f"
     ci = commit
+    cl = clone
     clear = !git add . && git stash && git stash drop
     cm = commit --message
     cma = commit -a -m
     co = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
     cob = checkout -b
+    cod = checkout develop
     com = checkout main
     committed-by = "!f(){ git log --no-merges --stat --committer=\"$1\" --name-only --pretty=format:'' | sort -u | grep -v '^$' }; f"
     conflicted = grep --name-only --full-name '<<<<<<< HEAD'
@@ -92,6 +95,7 @@
     fb = "!f() { git branch -a --contains $1; }; f"
     fc = "!f() { git log --pretty=oneline-details --decorate --date=short -S$1; }; f"
     fe = fetch --all --prune
+    feature = "!f() { git co main; git pull; git switch -c feature/$1; git poh; }; f"
     ff = merge --ff-only
     filelog = log -u
     file-trail = log --follow -p -w
@@ -116,6 +120,7 @@
     hist = log --pretty=oneline-details --graph --date=short
     history = log --pretty=oneline-details --graph --date=short
     home = rev-parse --show-toplevel
+    hotfix = "!f() { git co main; git pull; git switch -c hotfix/$1; git poh; }; f"
     hub = !gh
     ignore = update-index --assume-unchanged
     ignored = !git ls-files -v | grep '^[[:lower:]]' | awk '{print $2}'
@@ -193,9 +198,11 @@
     prune-all = !git remote | xargs -n 1 git remote prune
     publish = git flow feature publish
     pullff = pull --ff-only
+    pull-prune = pull --prune
     pu = push -u origin HEAD
     pupush = !git push && git push --tags
     push = push --tags
+    pusht = push --tags
     put = push origin HEAD
     pwip = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" && git reset HEAD^ --'
     pwipf = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" --force-with-lease && reset HEAD^ --'
@@ -210,6 +217,7 @@
     recent = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     recursive-update = "!sh -c 'find \"${@:-.}\" -type d -name .git -exec dirname {} \\; -exec git --git-dir={} remote update \\;' _"
     regret = reset
+    release = "!f() { git co main; git pull; git switch -c release/$1; git poh; }; f"
     rem = "!git config -l | grep remote.*url | tail -n +2"  # List remotes.
     remi = rebase origin/master --interactive
     remotes = remote -v
@@ -268,6 +276,7 @@
     sw = switch
     swap = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
     t = status
+    tag-release = "!f() { git switch main; git pull; git tag release-$(date +%Y%m%d); git push --tags; }; f"
     tags = tag -l
     theirs = "!f() { git co --theirs $@ && git add $@; }; f"
     today = log --stat --since='12am' --graph --pretty=oneline-details --abbrev-commit --date=relative
