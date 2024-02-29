@@ -133,6 +133,7 @@
     lap = "!f() { git --git-dir=$1 format-patch -k -1 --stdout $2 | git am -3 -k; }; f"  # Apply patch from other local repo.
     last = !git --no-pager log -1 HEAD --format=sha
     lasttag = describe --tags --abbrev=0
+    lbr = branch --sort=-committerdate --verbose
     lc = log ORIG_HEAD.. --stat --no-merges
     ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
     le = log --oneline --decorate
@@ -282,6 +283,8 @@
     theirs = "!f() { git co --theirs $@ && git add $@; }; f"
     today = log --stat --since='12am' --graph --pretty=oneline-details --abbrev-commit --date=relative
     today-all = log --all --since='12am' --graph --pretty=oneline-details --abbrev-commit --date=relative
+    top = log -1 --stat
+    topp = log -1 --stat --patch
     tr = log --graph --oneline --decorate --color
     track = !branch=$(git rev-parse --abbrev-ref HEAD); git branch $branch --set-upstream-to origin/$branch
     tree = log --graph --simplify-by-decoration --oneline --decorate --color --all
