@@ -154,6 +154,7 @@
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     lp = log --pretty=oneline-details --abbrev-commit --date=relative
     ls = log --oneline
+    lsc = diff-tree --no-commit-id --name-only -r
     lt = describe --tags --abbrev=0
     me = !git my-name
     m = merge -s recursive -X patience
