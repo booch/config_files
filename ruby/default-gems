@@ -1,0 +1,21 @@
+# Basics
+bundler
+better_errors
+rake
+
+# Rails command
+railties
+
+# LSP support
+ruby-lsp
+
+# Static code analysis tools
+rubocop
+rubocop-performance
+rubocop-rspec
+rubocop-rails
+rubocop-rubycw
+
+# Add some color and formatting to IRB
+amazing_print
+hirb

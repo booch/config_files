@@ -51,6 +51,7 @@ ln_sf "$CWD/ruby/aprc" "$HOME/.aprc"
 ln_sf "$CWD/ruby/railsrc" "$HOME/.railsrc"
 ln_sf "$CWD/ruby/ruby-version" "$HOME/.ruby-version"
 ln_sf "$CWD/ruby/rubocop.yml" "$HOME/.rubocop.yml"
+ln_sf "$CWD/ruby/default-gems" "$HOME/.default-gems"
 
 # NOTE: Global elintrc files are deprecated and give a warning.
 # ln_sf "$CWD/js/eslintrc.yml"             "$HOME/.eslintrc.yml"
