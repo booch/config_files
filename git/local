@@ -2,4 +2,7 @@
 
 [user]
 	name = Craig Buchek
-	email = craig.buchek@debtbook.com
+	email = craig@boochtek.com
+	signingKey = ~/.ssh/id_ed25519.pub
+[gpg]
+	format = ssh
