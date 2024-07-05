@@ -29,6 +29,11 @@ ln_sfT() {
     ln_sf "$1" "$2"
 }
 
+# Create default $XDG_DATA_HOME, $XDG_STATE_HOME, and $XDG_CACHE_HOME.
+# See https://specifications.freedesktop.org/basedir-spec/.
+mkdir -p "$HOME/.local/share" "$HOME/.local/state" "$HOME/.cache"
+chmod 700 "$HOME/.local/share" "$HOME/.local/state" "$HOME/.cache"
+
 # Link files to where they "belong". Hopefully some day, all commands will support `~/.config` or `$XDG_CONFIG_HOME`.
 ln_sf "$CWD/ack/ackrc" "$HOME/.ackrc"
 
