@@ -1,5 +1,4 @@
 ---
-
 # Start with the default set of rules turned on.
 default: true
 
@@ -17,10 +16,21 @@ line-length: false
 # Allow multiple blank lines. (MD012)
 no-multiple-blanks: false
 
-# Allow bare links. If we're not publishing the file, we don't really care. (MD034)
+# Allow bare URLs without angle brackets. If we're not publishing the file, we don't really care. (MD034)
 no-bare-urls: false
 
 # Allow varying styles for list items, as long as each level uses the same symbol (`-`, `*`, `+`). (MD004)
 # NOTE: VS Code seems to require consistency **between files**. I'm not happy about that!
+# Or maybe it just wants me to use what I used in the first list item in the document.
+# This is only disabled because I sometimes use `-` and `+` as TODO and DONE indicators in ULs.
 ul-style:
-    style: "sublist"
+    false
+    # style: "sublist"
+
+# This is only disabled because I sometimes use `-` and `+` as TODO and DONE indicators in ULs. (MD032)
+blanks-around-lists: false
+
+# Allow ordered lists to start at any number. (MD029)
+# Most Markdown editors don't handle indented code blocks correctly, requiring manually numbering lists.
+ol-prefix:
+    style: "one_or_ordered"
