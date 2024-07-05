@@ -31,3 +31,30 @@ Gemfile.lock merge=Gemfile.lock
 *.pl diff=perl
 *.pm diff=perl
 *.tex diff=tex
+
+# Git LFS. Note that GitHub blocks files larger than 100 MiB, unless you use (and pay for) LFS.
+# Instll w/ `brew install git-lfs ; git lfs install`. Add extensions as needed w/ `git lfs track '*.ext'`.
+*.tar.gz filter=lfs diff=lfs merge=lfs -text
+*.tar.bz filter=lfs diff=lfs merge=lfs -text
+*.tar.bz2 filter=lfs diff=lfs merge=lfs -text
+*.tgz filter=lfs diff=lfs merge=lfs -text
+*.tbz filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+
+*.iso filter=lfs diff=lfs merge=lfs -text
+*.cdda filter=lfs diff=lfs merge=lfs -text
+*.img filter=lfs diff=lfs merge=lfs -text
+*.dmg filter=lfs diff=lfs merge=lfs -text
+*.vmdk filter=lfs diff=lfs merge=lfs -text
+*.vdi filter=lfs diff=lfs merge=lfs -text
+*.vbox filter=lfs diff=lfs merge=lfs -text
+*.hdd filter=lfs diff=lfs merge=lfs -text
+
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mov filter=lfs diff=lfs merge=lfs -text
+*.avi filter=lfs diff=lfs merge=lfs -text
+*.mkv filter=lfs diff=lfs merge=lfs -text
+*.m4v filter=lfs diff=lfs merge=lfs -text
+*.mpg filter=lfs diff=lfs merge=lfs -text
+*.mpeg filter=lfs diff=lfs merge=lfs -text
+*.tiff filter=lfs diff=lfs merge=lfs -text
