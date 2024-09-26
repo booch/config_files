@@ -1,0 +1,81 @@
+// NOTE: This is for the VS Code markdownlint extension, which uses markdownlint-cli2.
+//       The markdownlint-cli version I'm using uses the markdownlint.yaml file.
+//       Don't forget to edit BOTH files when making changes!
+
+{
+    "config": {
+        // I edit a lot of Markdown, some with Setext (underlines), some with ATX (hashes), so I'm allowing either. (MD003)
+        // I personally prefer to use Setext for H1 (and sometimes H2), and ATX for everything else.
+        // But I'm mostly using ATX for everything now; it's easier to type, and has become the de facto standard.
+        "heading-style": false,
+
+        // Set list indentation to 4 spaces. (MD007)
+        "ul-indent": {
+            "indent": 4
+        },
+
+        // Don't worry about lines longer than 80 characters. (MD013)
+        "line-length": false,
+
+        // Allow multiple blank lines. (MD012)
+        "no-multiple-blanks": false,
+
+        // Allow bare URLs without angle brackets. If we're not publishing the file, we don't really care. (MD034)
+        "no-bare-urls": false,
+
+        // Allow varying styles for list items, as long as each level uses the same symbol (`-`, `*`, `+`). (MD004)
+        // NOTE: VS Code seems to require consistency **between files**. I'm not happy about that!
+        // Or maybe it just wants me to use what I used in the first list item in the document.
+        // This is only disabled because I sometimes use `-` and `+` as TODO and DONE indicators in ULs.
+        // "ul-style": { style: "sublist" },
+        "ul-style": false,
+
+        // This is only disabled because I sometimes use `-` and `+` as TODO and DONE indicators in ULs. (MD032)
+        "blanks-around-lists": false,
+
+        // Allow ordered lists to start at any number. (MD029)
+        // Most Markdown editors don't handle indented code blocks correctly, requiring manually numbering lists.
+        "ol-prefix": {
+            "style": "one_or_ordered"
+        }
+    },
+
+    // Custom rules
+    "customRules": [],
+
+    // Fix any fixable errors
+    "fix": true,
+
+    // Define a custom front matter pattern
+    "frontMatter": "<head>[^]*</head>",
+
+    // Ignore files referenced by .gitignore (only valid at root)
+    "gitignore": true,
+
+    // Define glob expressions to use (only valid at root)
+    "globs": ["!*bout.md"],
+
+    // Define glob expressions to ignore
+    "ignores": ["ignore*.md"],
+
+    // Use a plugin to recognize math
+    "markdownItPlugins": [["@iktakahiro/markdown-it-katex"]],
+
+    // Additional paths to resolve module locations from
+    "modulePaths": ["./modules"],
+
+    // Disable banner message on stdout (only valid at root)
+    "noBanner": true,
+
+    // Disable inline config comments
+    "noInlineConfig": true,
+
+    // Disable progress on stdout (only valid at root)
+    "noProgress": true,
+
+    // Use a specific formatter (only valid at root)
+    "outputFormatters": [["markdownlint-cli2-formatter-default"]],
+
+    // Show found files on stdout (only valid at root)
+    "showFound": true
+}

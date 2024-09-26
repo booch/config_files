@@ -66,6 +66,7 @@ ln_sf "$CWD/js/jshintrc" "$HOME/.jshintrc"
 ln_sf "$CWD/racket/racketrc" "$HOME/.racketrc"
 
 ln_sf "$CWD/markdown/markdownlint.yaml" "$HOME/.markdownlint.yaml"
+ln_sf "$CWD/markdown/markdownlint-cli2.jsonc" "$HOME/.markdownlint-cli2.jsonc"
 
 ln_sf "$CWD/spelling/dictionary.txt" "$HOME/Library/Spelling/LocalDictionary"
 

@@ -1,9 +1,9 @@
----
 # Start with the default set of rules turned on.
 default: true
 
 # I edit a lot of Markdown, some with Setext (underlines), some with ATX (hashes), so I'm allowing either. (MD003)
 # I personally prefer to use Setext for H1 (and sometimes H2), and ATX for everything else.
+# But I'm mostly using ATX for everything now; it's easier to type, and has become the de facto standard.
 heading-style: false
 
 # Set list indentation to 4 spaces. (MD007)
