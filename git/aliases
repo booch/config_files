@@ -247,7 +247,7 @@
     sha1 = "!sh -c 'git rev-parse --short ${1:-HEAD}' --"
     sho = show
     shove = push origin HEAD
-    sl = stash list
+    sl = stash list --pretty=stash
     slog = log --pretty=format:'%h - %an, %ar : %s'
     ski = stash --keep-index
     skip = rebase --skip

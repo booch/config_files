@@ -49,6 +49,7 @@
 	sha = format:%Cred%H\n
 	subject = format:%s
 	timeline = format:%h %an %ar - %s
+	stash = %C(red)%h%C(reset) - %C(yellow)(%C(bold magenta)%gd%C(yellow))%C(reset) %<(70,trunc)%s %C(green)(%cr) %C(bold blue)%C(reset)
 [commit]
 	verbose = true  # Show branch name and diff as comments in default commit message.
 	cleanup = scissors  # Allow commit message to contain comment lines. A line w/ `# === >8 ===` separates the commit message from the diff.
@@ -112,6 +113,19 @@
 [user]
 	email = craig@boochtek.com
 	name = Craig Buchek
+[diff "exif"]
+	textconv = exiftool
+	binary = true
+[diff "word"]
+	textconv = pandoc --to=markdown
+	binary = true
+	prompt = false
+[diff "libreoffice"]
+	textconv = odt2txt
+	binary = true
+[diff "pdf"]
+	textconv = tika --text
+	binary = true
 [interactive]
 	diffFilter = diff-so-fancy --patch
 [color "diff-highlight"]

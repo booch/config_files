@@ -58,3 +58,22 @@ Gemfile.lock merge=Gemfile.lock
 *.mpg filter=lfs diff=lfs merge=lfs -text
 *.mpeg filter=lfs diff=lfs merge=lfs -text
 *.tiff filter=lfs diff=lfs merge=lfs -text
+
+# Diff images by their EXIF data.
+*.png diff=exif
+*.jpg diff=exif
+*.ico diff=exif
+*.tiff diff=exif
+*.eps diff=exif
+*.bmp diff=exif
+*.raw diff=exif
+*.gif diff=exif
+*.mp4 diff=exif
+
+# Diff office docs by converting them to text.
+*.pdf diff=pdf
+*.docx diff=word
+*.doc diff=word
+*.odp diff=libreoffice
+*.odt diff=libreoffice
+*.ods diff=libreoffice
