@@ -6,3 +6,5 @@
 	signingKey = ~/.ssh/id_ed25519.pub
 [gpg]
 	format = ssh
+[github]
+	user = booch

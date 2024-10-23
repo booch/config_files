@@ -110,9 +110,6 @@
 	textconv = unzip -c -a
 [diff "localizablestrings"]
 	textconv = "iconv -f utf-16 -t utf-8"
-[user]
-	email = craig@boochtek.com
-	name = Craig Buchek
 [diff "exif"]
 	textconv = exiftool
 	binary = true
