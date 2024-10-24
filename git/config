@@ -7,7 +7,7 @@
 	fsmonitor = true  # Run FSMonitor daemon to track file updates in the background.
 	untrackedcache = true  # Have FSMonitor also monitor untracked files.
 	whitespace = trailing-space,space-before-tab
-	pager = diff-so-fancy | less --tabs=4 -RFX
+#	pager = diff-so-fancy | less --tabs=4 -RFX
 [color]
 	ui = true
 	diff = auto
@@ -23,13 +23,13 @@
     changed = red
     untracked = blue
 [color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = 146 bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+#	meta = 11
+#	frag = magenta bold
+#	func = 146 bold
+#	commit = yellow bold
+#	old = red bold
+#	new = green bold
+#	whitespace = red reverse
 [apply]
 	whitespace = strip
 	whitespace = nowarn
@@ -93,6 +93,8 @@
 	recurse = true  # Recurse into submodules when running `git status`.
 [transfer]
 	fsckobjects = true  # Check for corrupt objects.
+[difftool]
+    prompt = false  # Don't ask `are you sure` when using any difftool.
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true  # Shift hunk boundaries to hopefully make patches easier to read. (Removed in Git 2.12.)
@@ -104,6 +106,7 @@
 	colorMoved = zebra  # Use different colors to show lines that have moved.
 	colorMovedWS = ignore-all-space  # If a line has moved and had whitespace changes, show it as moved.
 	wsErrorHighlight = all  # Show whitespace errors in deleted lines.
+	external = difft  # Use Difftastic.
 [diff "plist"]
 	textconv = "plutil -convert xml1 -o -"
 [diff "zip"]
@@ -123,13 +126,13 @@
 [diff "pdf"]
 	textconv = tika --text
 	binary = true
-[interactive]
-	diffFilter = diff-so-fancy --patch
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+# [interactive]
+# 	diffFilter = diff-so-fancy --patch
+# [color "diff-highlight"]
+# 	oldNormal = red bold
+# 	oldHighlight = red bold 52
+# 	newNormal = green bold
+# 	newHighlight = green bold 22
 [init]
 	defaultBranch = main
 [log]
