@@ -147,6 +147,8 @@
     * echo "$(color green)Hello, $(color green on black)World!$(color none)"
     * Also allow for `prompt`, which will surround it with `'\['` and `'\]'`
 * Move setting of prompt to its own file (in `profile.d` or `bashrc.d`)
+* Add to `key_bindings.sh`
+    * Attempt to reach parity with [ZSH For Humans](https://github.com/romkatv/zsh4humans)
 
 
 ## RuboCop

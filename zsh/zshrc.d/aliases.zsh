@@ -4,6 +4,8 @@ command-exists() {
     type -p "$1" >/dev/null
 }
 
+# NOTE: We can add flags to existing aliases like this:
+# alias ls="${aliases[ls]:-ls} -A"
 
 # Enable color support of ls and also add handy aliases.
 if [ "$TERM" != "dumb" ]; then

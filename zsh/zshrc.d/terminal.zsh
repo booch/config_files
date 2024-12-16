@@ -44,3 +44,15 @@ if [[ "$TERMINAL_ANSWERBACK" == 'PuTTY' ]]; then
     # The \e%G sets UTF-8 mode; \e[?47h and \e[?47l switch to the alternative screen and back.
     echo -ne '\e%G\e[?47h\e%G\e[?47l'
 fi
+
+# Use `xterm-256color` if we haven't identified the terminal type yet.
+[ -n "${TERM-}" ] || export TERM='xterm-256color'
+
+# Use local terminfo, if it exists.
+if [ "$TERMINFO" != "$HOME/.terminfo" ] && [ -e "$HOME/.terminfo/$TERM[1]/$TERM" ]; then
+    export TERMINFO="$HOME/.terminfo"
+fi
+
+# If terminfo says we have true-color, set COLORTERM.
+zmodload -s zsh/terminfo
+[[ $terminfo[Tc] == yes && -z $COLORTERM ]] && export COLORTERM='truecolor'

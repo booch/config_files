@@ -29,3 +29,8 @@ export GIT_COMPLETION_IGNORE_CASE=1
 if [[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
     source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
+
+# Automatically match pairs of parentheses, brackets, etc.
+if [[ -f "$(brew --prefix)/share/zsh-autopair/autopair.zsh
+    source $(brew --prefix)/share/zsh-autopair/autopair.zsh
+fi
