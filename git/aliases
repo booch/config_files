@@ -105,7 +105,7 @@
     flip = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
     flip-last = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
     fm = "!f() { git log --pretty=oneline-details --decorate --date=short --grep=$1; }; f"
-    fp = push --force-with-lease
+    fp = push --force-with-lease --force-if-includes
     ft = "!f() { git describe --always --contains $1; }; f"
     gclone = "!gclone() { mkdir -p $1; git clone git@github.com:$1.git; }; gclone";
     gh = !gh
@@ -180,14 +180,14 @@
     ours = "!f() { git co --ours $@ && git add $@; }; f"
     p = pair
     patch = log -p --no-walk # Generate patch file from a commit.
-    pf = push --force-with-lease
+    pf = push --force-with-lease --force-if-includes
     phh = push heroku HEAD
     phm = push heroku main
     pick = cherry-pick
     pickaxe = log -p -S
-    please = push --force-with-lease
+    please = push --force-with-lease --force-if-includes
     poh = push origin HEAD
-    pohf = push origin HEAD --force-with-lease
+    pohf = push origin HEAD --force-with-lease --force-if-includes
     pom = push origin main
     poof = pohf  # For voice control.
     pr = !hub pull-request
@@ -207,7 +207,7 @@
     pusht = push --tags
     put = push origin HEAD
     pwip = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" && git reset HEAD^ --'
-    pwipf = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" --force-with-lease && reset HEAD^ --'
+    pwipf = '!git add -A . && git ci -m "Work in progress!!!" && git push origin "HEAD:WIP-$USER-$(date +%C%y%m%d)" --force-with-lease --force-if-includes && reset HEAD^ --'
     r = remote
     r1 = reset HEAD^
     r2 = reset HEAD^^

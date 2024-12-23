@@ -72,6 +72,7 @@
 	default = upstream  # Push only the current branch by default, not all branches.
 	recurseSubmodules = on-demand  # Push any submodule changes first; if that fails, main project will not be pushed.
 	followtags = true  # Push new tags along with commits being pushed.
+	useForceIfIncludes = true  # See https://stackoverflow.com/a/74902633/26311
 [pull]
 	ff = true  # Only do fast-forward merges, so we don't overwrite any local changes.
 [rebase]
