@@ -138,3 +138,10 @@ alias rg=_rg
 
 # The kubernetes Oh My ZSH plugin adds `k` and a ton of other aliases, but the rest aren't used much.
 alias k='kubectl'
+
+# Aliases (shell functions) for zoxide.
+if command -v zoxide >& /dev/null; then
+    # Adds `z` and `zi` (interactive).
+    eval "$(zoxide init zsh)"
+    alias cd='z'
+fi
