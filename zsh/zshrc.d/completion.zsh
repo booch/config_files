@@ -31,6 +31,6 @@ if [[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]
 fi
 
 # Automatically match pairs of parentheses, brackets, etc.
-if [[ -f "$(brew --prefix)/share/zsh-autopair/autopair.zsh
-    source $(brew --prefix)/share/zsh-autopair/autopair.zsh
+if [[ -f "$(brew --prefix)/share/zsh-autopair/autopair.zsh" ]]; then
+    source "$(brew --prefix)/share/zsh-autopair/autopair.zsh"
 fi
