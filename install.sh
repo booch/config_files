@@ -68,8 +68,6 @@ ln_sf "$CWD/racket/racketrc" "$HOME/.racketrc"
 ln_sf "$CWD/markdown/markdownlint.yaml" "$HOME/.markdownlint.yaml"
 ln_sf "$CWD/markdown/markdownlint-cli2.jsonc" "$HOME/.markdownlint-cli2.jsonc"
 
-ln_sf "$CWD/spelling/dictionary.txt" "$HOME/Library/Spelling/LocalDictionary"
-
 ln_sf "$CWD/ctags" "$HOME/.ctags"
 
 ln_sf "$CWD/finicky/finicky.js" "$HOME/.finicky.js"
@@ -86,14 +84,14 @@ ln_sfT "$CWD/vim" "$HOME/.vim"
 
 ln_sfT "$CWD/atom" "$HOME/.atom"
 
-mkdir -p "$HOME/Library/Application Support/Code"
-ln_sfT "$CWD/vscode" "$HOME/Library/Application Support/Code/User"
-
 ln_sf "$CWD/postgresql/psqlrc" "$HOME/.psqlrc"
 
 if [ "$(uname)"x = "Darwin"x ]; then
     mkdir -p "$HOME/Library/KeyBindings"
     ln_sf "$CWD/keyboard/DefaultKeyBinding.Dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.Dict"
+    ln_sf "$CWD/spelling/dictionary.txt" "$HOME/Library/Spelling/LocalDictionary"
+    mkdir -p "$HOME/Library/Application Support/Code"
+    ln_sfT "$CWD/vscode" "$HOME/Library/Application Support/Code/User"
 fi
 
 if [ ! -d vim/bundle/vundle ]; then
