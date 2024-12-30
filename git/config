@@ -107,7 +107,7 @@
 	colorMoved = zebra  # Use different colors to show lines that have moved.
 	colorMovedWS = ignore-all-space  # If a line has moved and had whitespace changes, show it as moved.
 	wsErrorHighlight = all  # Show whitespace errors in deleted lines.
-	external = difft  # Use Difftastic.
+#	external = difft  # Use Difftastic.
 [diff "plist"]
 	textconv = "plutil -convert xml1 -o -"
 [diff "zip"]
