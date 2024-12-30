@@ -1,0 +1,1 @@
+../../zsh/zshrc.d/mise.sh
