@@ -7,9 +7,8 @@ command-exists() {
 # Use less (instead of more) anywhere paging is required.
 export PAGER=less
 
-# When running less, always ignore case on searches; prompt verbosely; display colors;
-#  chop long lines; highlight first new line; tabs are 4 chars wide.
-export LESS='-I -M -R -S -W -x4'
+# When running less, always ignore case on searches, prompt verbosely, display colors, etc.
+export LESS='--IGNORE-CASE --LONG-PROMPT --RAW-CONTROL-CHARS --chop-long-lines --tabs=4'
 
 # We should be able to use UTF-8 everywhere these days.
 export LESSCHARSET='utf-8'
