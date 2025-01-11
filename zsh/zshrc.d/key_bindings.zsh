@@ -63,13 +63,6 @@ keys=(
     Alt+Shift+PageUp        "${CSI}5;4~"
     Alt+Shift+PageDown      "${CSI}6;4~"
 
-    Ctrl+Up                 '^[[1;5A'
-    Ctrl+Down               '^[[1;5B'
-    Ctrl+Right              '^[[1;5C'
-    Ctrl+Left               '^[[1;5D'
-    Ctrl+Home               '^[[1;5H'
-    Ctrl+End                '^[[1;5F'
-
     Ctrl+Up                 "${CSI}1;5A"
     Ctrl+Down               "${CSI}1;5B"
     Ctrl+Right              "${CSI}1;5C  ${CSI}1;5C  ${CSI}5C  \e${CSI}C  \eOc  \eOC"

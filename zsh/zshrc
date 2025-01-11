@@ -8,9 +8,6 @@ if [[ -d $HOME/.zsh/zshrc.d ]]; then
     done
 fi
 
-# Enable command auto-correction.
-export ENABLE_CORRECTION="true"
-
 # TODO: Not sure how /sbin and /usr/sbin already got added.
 export PATH="$PATH:/usr/local/sbin"
 
