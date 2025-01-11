@@ -1,0 +1,60 @@
+[env]
+# Read and process `.env` files. FIXME: Does this work? Does it work for the top level?
+MISE_ENV_FILE = '.env'
+
+[hooks]
+# Run any time the directory is changed.
+#cd = "echo 'I changed directories'"
+# Run when the top-level directory is first entered.
+#enter = "echo 'I entered the project'"
+#leave = "echo 'I left the project'"
+#preinstall = "echo 'I am about to install tools'"
+#postinstall = "echo 'I just installed tools'"
+
+[tools]
+ruby = ['latest', 'system']
+python = ['system', 'latest']
+node = ['system', 'latest']
+#bun = 'latest'
+#deno = 'latest'
+#elixir = 'latest'
+#zig = 'latest'
+#rust = 'latest'
+#gleam = 'latest'
+#nim = 'latest'
+#crystal = 'latest'
+#purescript = 'latest'
+#swift = 'latest'
+#racket = 'latest'
+#scala = 'latest' # You'll want to install Metals and Bloop as well.
+#lua = 'latest'
+#go = 'latest'
+#java = ['graalvm-community', 'temurin', 'temurin-21', 'latest', '21'] # See https://whichjdk.com/.
+#haskell = 'latest'
+#idris2 = 'latest'
+#kotlin = 'latest'
+#perl = 'latest'
+#koka = 'latest' # [Koka](https://koka-lang.github.io/) does amazing things with Effect types.
+#raku = 'latest'
+
+[settings]
+# Don't pollute home directory with `~/.default-gems`.
+ruby.default_packages_file = '~/.config/ruby/default-gems'
+
+# Don't pollute home directory with `~/.cargo` and `~/.rustup`.
+# NOTE: Be sure to link ~/.config/rust/rustup.toml to ~/.cache/rustup/settings.toml.
+rust.cargo_home = '~/.cache/cargo'
+rust.rustup_home = '~/.cache/rustup'
+
+# Use `bun` instead of `npm` for Node packages.
+npm.bun = true
+
+# Use `uv` for Python packages.
+pipx.uvx = true
+python.uv_venv_auto = true
+
+# Be noisy when entering a directory with a `mise.toml` file.
+status.missing_tools = 'always'
+status.show_env = true
+status.show_tools = true
+
