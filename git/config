@@ -91,6 +91,7 @@
 	prunetags = true  # If a remote tag is deleted, allow `git fetch` to remove it locally.
 	fsckobjects = true  # Check for corrupt objects.
 [push]
+	autoSetupRemote = true  # Automatically set remote tracking branch when pushing a new branch.
 	default = upstream  # Push only the current branch by default, not all branches.
 	recurseSubmodules = on-demand  # Push any submodule changes first; if that fails, main project will not be pushed.
 	followtags = true  # Push new tags along with commits being pushed.
