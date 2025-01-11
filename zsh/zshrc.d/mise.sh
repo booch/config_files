@@ -7,3 +7,6 @@ export MISE_RUBY_DEFAULT_PACKAGES_FILE="$HOME/.config/ruby/default-gems"
 if command -v mise &>/dev/null; then
     eval "$(mise activate)"
 fi
+
+# Load Mise completions.
+eval "$(mise completion $(basename $SHELL))"
