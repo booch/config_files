@@ -1,9 +1,5 @@
 {
-    "global": {
-        "check_for_updates_on_startup": true,
-        "show_in_menu_bar": false,
-        "show_profile_name_in_menu_bar": false
-    },
+    "global": { "show_in_menu_bar": false },
     "profiles": [
         {
             "complex_modifications": {
