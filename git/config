@@ -7,7 +7,37 @@
 	fsmonitor = true  # Run FSMonitor daemon to track file updates in the background.
 	untrackedcache = true  # Have FSMonitor also monitor untracked files.
 	whitespace = trailing-space,space-before-tab
-#	pager = diff-so-fancy | less --tabs=4 -RFX
+	# Paginate with `delta` if it's installed, else fall back to `less`.
+	pager = "type delta >/dev/null 2>&1 && exec delta || exec less --tabs=4 -RFX"
+[pager]
+	status = true
+[delta]
+	features = plain
+	tabs = 4
+	navigate = true  # Allow `n` and `N` to move between sections.
+	hyperlinks = true
+	hyperlinks-file-link-format = "vscode://file/{path}:{line}"  # Zed uses the same format.
+	file-style = bold darkblue
+	file-decoration-style = bold darkblue box
+	keep-plus-minus-markers = false
+	# Use a light color palette.
+	blame-palette = "lightcyan lightsteelblue powderblue skyblue plum thistle lavender lavenderblush pink wheat papayawhip lemonchiffon whitesmoke gainsboro silver"
+	blame-format = "{commit:>8} {author:<18} {timestamp:^16}"
+[delta "plain"]
+	line-numbers = false  # BUG: As of 0.18.2, blank lines are not counted.
+	side-by-side = false
+	hunk-header-style = file line-number syntax
+	hunk-header-decoration-style = blue ul ol
+[delta "numbered"]
+	# I'll probably switch to this format once the line numbering bug is fixed.
+	line-numbers = true
+	hunk-header-style = omit
+[delta "side-by-side"]
+	side-by-side = true
+	line-numbers = false
+	hunk-header-style = omit
+[interactive]
+	diffFilter = delta --color-only  # Used by `git add -p`.
 [color]
 	ui = true
 	diff = auto
@@ -22,14 +52,6 @@
     added = green
     changed = red
     untracked = blue
-[color "diff"]
-#	meta = 11
-#	frag = magenta bold
-#	func = 146 bold
-#	commit = yellow bold
-#	old = red bold
-#	new = green bold
-#	whitespace = red reverse
 [apply]
 	whitespace = strip
 	whitespace = nowarn
@@ -107,7 +129,6 @@
 	colorMoved = zebra  # Use different colors to show lines that have moved.
 	colorMovedWS = ignore-all-space  # If a line has moved and had whitespace changes, show it as moved.
 	wsErrorHighlight = all  # Show whitespace errors in deleted lines.
-#	external = difft  # Use Difftastic.
 [diff "plist"]
 	textconv = "plutil -convert xml1 -o -"
 [diff "zip"]
@@ -127,16 +148,9 @@
 [diff "pdf"]
 	textconv = tika --text
 	binary = true
-# [interactive]
-# 	diffFilter = diff-so-fancy --patch
-# [color "diff-highlight"]
-# 	oldNormal = red bold
-# 	oldHighlight = red bold 52
-# 	newNormal = green bold
-# 	newHighlight = green bold 22
 [init]
 	defaultBranch = main
 [log]
 	date = format-local:%Y-%m-%d %a %H:%M  # Display dates like `2024-02-25 Sun 15:55`, in local time zone.
 [blame]
-	date = format-local:%Y-%m-%d %a  # Display dates like `2024-02-25 Sun`, in local time zone.
+# 	date = format-local:%Y-%m-%d %a  # Display dates like `2024-02-25 Sun`, in local time zone. (Not compatible with `delta`.)
