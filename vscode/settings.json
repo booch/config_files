@@ -1,28 +1,46 @@
-/* This file allows comments. Yay! */
+/* This file allows comments and trailing commas. Yay! */
 {
+    "$schema": "vscode://schemas/settings/user",
+
+    /// General
     "files.defaultLanguage": "markdown",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.pinnedTabsOnSeparateRow": true,
+    "editor.accessibilitySupport": "off",
+    "editor.scrollbar.scrollByPage": true,
+    "redhat.telemetry.enabled": false,
+    "vsicons.dontShowNewVersionMessage": true,
+    "editor.wrappingStrategy": "advanced",
+
+    /// Display
+    "window.zoomLevel": 2, // TODO: Change this to "always" when that becomes available.
     "workbench.colorTheme": "Default Light+",
-    "editor.fontSize": 18,
+    "workbench.iconTheme": "vscode-icons",
+    "editor.fontSize": 16,
     "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
     "breadcrumbs.enabled": true,
-    "editor.renderControlCharacters": true,
+    "workbench.tree.indent": 20, // More indentation in Explorer tree view.
+    "editor.renderControlCharacters": true, // Show control characters (ESC: , BEL: , BS: , etc).
     "editor.rulers": [
         { "column": 80, "color": "#dddddd" },
         { "column": 100, "color": "#888888" },
         { "column": 120, "color": "#ff0000" }
     ],
+    "editor.bracketPairColorization.enabled": true,
+    "editor.minimap.enabled": false,
+    "editor.minimap.renderCharacters": false,
+
+
     "files.trimTrailingWhitespace": true,
     "editor.linkedEditing": true,
-    "workbench.activityBar.visible": true,
-    "workbench.editor.enablePreview": false,
-    "workbench.editor.enablePreviewFromQuickOpen": false,
     "ruby.format": "rubocop",
     "[ruby]": {
         "editor.tabSize": 2,
         "editor.defaultFormatter": "Shopify.ruby-lsp", // Use the Ruby LSP as the default formatter
         "editor.formatOnSave": true,
         "editor.formatOnType": true,
-        "editor.insertSpaces": true, // Use spaces and not tabs for indentantion
+        "editor.insertSpaces": true, // Use spaces and not tabs for indentation
         "editor.semanticHighlighting.enabled": true // Enable semantic highlighting
     },
     "rubyLsp.rubyVersionManager": "asdf",
@@ -50,7 +68,6 @@
     "C_Cpp.default.cppStandard": "c++20",
     "C_Cpp.experimentalFeatures": "enabled",
     "c-cpp-flylint.clang.pedantic": true,
-    "editor.wrappingStrategy": "advanced",
     "prettier.tabWidth": 4,
     "editor.snippetSuggestions": "top", // Show snippets first, per https://www.roboleary.net/2021/08/23/vscode-snippets-are-not-aliases.html
     "editor.suggestSelection": "first",
@@ -62,7 +79,6 @@
     "editor.autoClosingBrackets": "always",
     "editor.autoSurround": "languageDefined",
     "editor.acceptSuggestionOnEnter": "off",
-    "editor.scrollbar.scrollByPage": true,
     "files.exclude": {
         "**/.classpath": true,
         "**/.project": true,
@@ -70,10 +86,8 @@
         "**/.factorypath": true
     },
     "npm.keybindingsChangedWarningShown": true,
-    "window.zoomLevel": 1,  // TODO: Change this to "always" when that becomes available.
     "terminal.integrated.env.osx": {
     },
-    "editor.minimap.enabled": false,
     "spellright.addToSystemDictionary": true,
     "spellright.documentTypes": [
         "markdown",
