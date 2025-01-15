@@ -31,6 +31,85 @@
     "editor.minimap.enabled": false,
     "editor.minimap.renderCharacters": false,
 
+    // Keyword highlighting
+    // NOTE: TODO, FIXME, and BUG are included by default, but will revert to white on black if not specified here.
+    "todohighlight.isEnable": true,
+    "todohighlight.keywords": [
+        {
+            "text": "TODO",
+            "color": "white",
+            "backgroundColor": "orange",
+            "after": true,
+            "before": true,
+            "lineDecoration": "none"
+        },
+        {
+            "text": "FIXME",
+            "color": "white",
+            "backgroundColor": "crimson"
+        },
+        {
+            "text": "NOTE",
+            "color": "white",
+            "backgroundColor": "darkMagenta"
+        },
+        {
+            "text": "QUESTION",
+            "color": "white",
+            "backgroundColor": "blue"
+        },
+        {
+            "text": "ANSWER",
+            "color": "white",
+            "backgroundColor": "green"
+        },
+        {
+            "text": "PROBLEM",
+            "color": "white",
+            "backgroundColor": "orangeRed"
+        },
+        {
+            "text": "SOLUTION",
+            "color": "white",
+            "backgroundColor": "green"
+        },
+        {
+            "text": "ACTION ITEM",
+            "color": "white",
+            "backgroundColor": "darkCyan"
+        },
+        {
+            "text": "HELP",
+            "color": "white",
+            "backgroundColor": "crimson"
+        },
+        {
+            "text": "STATUS",
+            "color": "white",
+            "backgroundColor": "darkGray"
+        },
+        {
+            "text": "WARNING",
+            "color": "orange",
+            "backgroundColor": "black"
+        },
+        {
+            "text": "BUG",
+            "color": "grey",
+            "backgroundColor": "orange"
+        },
+        {
+            "text": "FIX",
+            "color": "green",
+            "backgroundColor": "lightGray"
+        },
+        {
+            "text": "WIP",
+            "color": "green",
+            "backgroundColor": "lightGray"
+        }
+        // TODO: Figure out how to add BUGFIX in addition to BUG and FIX.
+    ],
 
     "files.trimTrailingWhitespace": true,
     "editor.linkedEditing": true,
