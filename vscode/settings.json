@@ -120,8 +120,34 @@
         // TODO: Figure out how to add BUGFIX in addition to BUG and FIX.
     ],
 
-    "files.trimTrailingWhitespace": true,
-    "editor.linkedEditing": true,
+    /// Code Completion - see https://code.visualstudio.com/docs/editor/intellisense#_customizing-intellisense
+    // "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "editor.inlineSuggest.enabled": true,
+    "editor.quickSuggestions": {
+        "comments": true,
+        "strings": true,
+        "other": true
+    },
+    "editor.tabCompletion": "on",
+    "editor.snippetSuggestions": "top", // Show snippets before other suggestions, per https://www.roboleary.net/2021/08/23/vscode-snippets-are-not-aliases.html (and Copilot)
+    "editor.suggestSelection": "first",
+    "editor.acceptSuggestionOnEnter": "off", // Only complete with Tab, not Enter.
+    "editor.suggest.localityBonus": true,
+    "editor.acceptSuggestionOnCommitCharacter": true,
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.wordBasedSuggestions": "matchingDocuments",
+    "editor.parameterHints.enabled": true,
+    "editor.codeActionsOnSave": {},
+    "editor.autoClosingBrackets": "always",
+    "editor.autoSurround": "languageDefined",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+
+
     "ruby.format": "rubocop",
     "[ruby]": {
         "editor.tabSize": 2,
@@ -151,27 +177,13 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "prettier.printWidth": 120,
     "C_Cpp.default.cStandard": "c11",
     "C_Cpp.default.cppStandard": "c++20",
     "C_Cpp.experimentalFeatures": "enabled",
     "c-cpp-flylint.clang.pedantic": true,
-    "prettier.tabWidth": 4,
-    "editor.snippetSuggestions": "top", // Show snippets first, per https://www.roboleary.net/2021/08/23/vscode-snippets-are-not-aliases.html
-    "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "editor.codeActionsOnSave": {},
-    "editor.autoClosingBrackets": "always",
-    "editor.autoSurround": "languageDefined",
-    "editor.acceptSuggestionOnEnter": "off",
-    "files.exclude": {
-        "**/.classpath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/.factorypath": true
     },
     "npm.keybindingsChangedWarningShown": true,
     "terminal.integrated.env.osx": {
