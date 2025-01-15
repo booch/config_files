@@ -43,7 +43,7 @@
         "editor.insertSpaces": true, // Use spaces and not tabs for indentation
         "editor.semanticHighlighting.enabled": true // Enable semantic highlighting
     },
-    "rubyLsp.rubyVersionManager": "asdf",
+    "rubyLsp.rubyVersionManager": { "identifier": "mise" },
     "[markdown]": {
         "editor.wordWrapColumn": 80,
         "editor.wordWrap": "bounded",
