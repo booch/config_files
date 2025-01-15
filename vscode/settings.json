@@ -31,6 +31,15 @@
     "editor.minimap.enabled": false,
     "editor.minimap.renderCharacters": false,
 
+    /// Formatting
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
+    "prettier.printWidth": 120,
+    "prettier.tabWidth": 4,
+
     // Keyword highlighting
     // NOTE: TODO, FIXME, and BUG are included by default, but will revert to white on black if not specified here.
     "todohighlight.isEnable": true,
