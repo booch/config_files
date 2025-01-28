@@ -5,6 +5,43 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Safari: PageUp/PageDown should work as expected!",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": ["com.apple.Safari"],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": { "key_code": "page_up" },
+                                "to": [
+                                    {
+                                        "key_code": "up_arrow",
+                                        "modifiers": ["option"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": ["com.apple.Safari"],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": { "key_code": "page_down" },
+                                "to": [
+                                    {
+                                        "key_code": "down_arrow",
+                                        "modifiers": ["option"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "": "https://ke-complex-modifications.pqrs.org/#finder_improved_navigation",
                         "description": "Finder: Return to open, F2 to rename, Backspace to go to previous folder",
                         "manipulators": [
