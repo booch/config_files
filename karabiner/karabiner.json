@@ -5,6 +5,31 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Shift+CapsLock toggles CapsLock",
+                        "source": "https://ke-complex-modifications.pqrs.org/json/caps_lock.json",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": {
+                                    "mandatory": [
+                                        "shift"
+                                    ],
+                                    "optional": [
+                                        "caps_lock"
+                                    ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                    "key_code": "caps_lock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "description": "Safari: PageUp/PageDown should work as expected!",
                         "manipulators": [
                             {
@@ -42,7 +67,7 @@
                         ]
                     },
                     {
-                        "": "https://ke-complex-modifications.pqrs.org/#finder_improved_navigation",
+                        "source": "https://ke-complex-modifications.pqrs.org/#finder_improved_navigation",
                         "description": "Finder: Return to open, F2 to rename, Backspace to go to previous folder",
                         "manipulators": [
                             {
