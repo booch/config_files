@@ -1,4 +1,6 @@
+#!/bin/bash
 #!/bin/zsh
+# This should be able to run in both Bash and Zsh.
 
 command-exists() {
     type -p "$1" >/dev/null
@@ -40,13 +42,13 @@ else
 fi
 
 # Completion colors should match $LS_COLORS.
-zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
-
+if [[ -n "$ZSH_VERSION" ]] ; then
+    zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
+fi
 
 alias cd='pushd'
 alias pop='popd'
 alias home='pushd ~'
-# alias ..='cd ..'
 
 alias du='du -kh'   # See du replacement below.
 if df -T >/dev/null 2>/dev/null; then
@@ -57,10 +59,11 @@ fi
 
 alias lstrings='strings $1 | less'
 
-alias tree='tree -Csu'		# nice alternative to 'ls'
+# Tree is a nice alternative to `ls -R`.
+alias tree='tree -C --gitignore'
 
 # If we've got vim (which we hopefully do!), alias vi as vim.
-which vim > /dev/null && alias vi=vim
+command-exists vim && alias vi=vim
 
 # If we call Emacs from the command line, don't open it in a GUI window.
 alias emacs='emacs -nw'
@@ -105,19 +108,19 @@ cdgem() {
 
 
 # If htop is installed, use it instead of top.
-if which htop >/dev/null; then
+if command-exists htop ; then
     alias top=htop
 fi
 
 # Make du print in human readable form, and sorted by size (largest last). From http://www.earthinfo.org/linux-disk-usage-sorted-by-size-and-human-readable/.
 _du() {
-    \du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ "$size" -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size="$(echo "scale=1; $size / 1024" | bc)"; done; done
+    command du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ "$size" -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size="$(echo "scale=1; $size / 1024" | bc)"; done; done
 }
 alias du=_du
 
-# Unless we already have a json formatter, add a simple one.
-if ! which json >/dev/null; then
-    alias json='python -mjson.tool'
+# Unless we already have a JSON formatter, add a simple one.
+if ! command-exists json ; then
+    alias json='python -m json.tool'
 fi
 
 # Emulate Mac OS X paste buffer on Linux.
@@ -140,8 +143,18 @@ alias rg=_rg
 alias k='kubectl'
 
 # Aliases (shell functions) for zoxide.
-if command -v zoxide >& /dev/null; then
+if command-exists zoxide ; then
     # Adds `z` and `zi` (interactive).
-    eval "$(zoxide init zsh)"
+    eval "$(zoxide init "$(basename "$SHELL")")"
     alias cd='z'
 fi
+
+# Alias `dog` as `dig`, if it's available, or `doggo` if it's available.
+if command-exists dog ; then
+    alias dig=dog
+elif command-exists doggo ; then
+    alias dig=doggo
+fi
+
+# Aliases for voice control.
+alias Get='git'
