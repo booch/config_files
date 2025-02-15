@@ -1,5 +1,7 @@
+#!/bin/bash
+#!/bin/zsh
+# This should be able to run in both Bash and Zsh.
 
-SSH_ID_FILE="${HOME}/.ssh/id_ed25519"
 PID_FILE="${XDG_STATE_HOME:-$HOME/.ssh}/ssh-agent.pid"
 
 # Remove the PID file if it's no longer valid.
@@ -16,10 +18,15 @@ else
     export SSH_AGENT_PID="$(cat "${PID_FILE}" 2> /dev/null)"
 fi
 
-# Add SSH key to agent. This is idempotent.
-if [[ "$(uname)" == 'Darwin' ]]; then
-    # Use Keychain to retrieve passphrase.
-    ssh-add --apple-load-keychain "${SSH_ID_FILE}" > /dev/null 2>&1
-else
-    ssh-add "${SSH_ID_FILE}" > /dev/null 2>&1
-fi
+# Add SSH keys to agent. This is idempotent.
+for PUBLIC_KEY in $(echo ~/.ssh/*.pub); do
+    PRIVATE_KEY="${PUBLIC_KEY%.pub}"
+    if [[ -f "${PRIVATE_KEY}" ]]; then
+        if [[ "$(uname)" == 'Darwin' ]]; then
+            # Use Keychain to retrieve passphrase.
+            ssh-add --apple-load-keychain "${PRIVATE_KEY}" > /dev/null 2>&1
+        else
+            ssh-add "${PRIVATE_KEY}" > /dev/null 2>&1
+        fi
+    fi
+done
