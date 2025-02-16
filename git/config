@@ -130,25 +130,6 @@
 	colorMoved = zebra  # Use different colors to show lines that have moved.
 	colorMovedWS = ignore-all-space  # If a line has moved and had whitespace changes, show it as moved.
 	wsErrorHighlight = all  # Show whitespace errors in deleted lines.
-[diff "plist"]
-	textconv = "plutil -convert xml1 -o -"
-[diff "zip"]
-	textconv = unzip -c -a
-[diff "localizablestrings"]
-	textconv = "iconv -f utf-16 -t utf-8"
-[diff "exif"]
-	textconv = exiftool
-	binary = true
-[diff "word"]
-	textconv = pandoc --to=markdown
-	binary = true
-	prompt = false
-[diff "libreoffice"]
-	textconv = odt2txt
-	binary = true
-[diff "pdf"]
-	textconv = tika --text
-	binary = true
 [init]
 	defaultBranch = main
 [log]

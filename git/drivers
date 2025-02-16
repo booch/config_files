@@ -26,7 +26,9 @@
 	textconv = "plutil -convert xml1 -o -"
 
 [diff "zip"]
+	binary = true
 	textconv = unzip -c -a
+	cachetextconv = true
 
 [diff "localizablestrings"]
 	textconv = "iconv -f utf-16 -t utf-8"
