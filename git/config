@@ -75,6 +75,11 @@
 [commit]
 	verbose = true  # Show branch name and diff as comments in default commit message.
 	cleanup = scissors  # Allow commit message to contain comment lines. A line w/ `# === >8 ===` separates the commit message from the diff.
+	gpgsign = true  # Sign commits with GPG (or SSH) by default.
+[gpg]
+	format = ssh  # Use SSH to sign commits.
+[user]
+	signingkey = ~/.ssh/id_ed25519.pub  # Use this key to sign commits.
 [credential]
 	# This is used implicitly when connecting to an HTTPS-based upstream repository.
 	# Git will use the first helper that returns an answer to a query, and attempt to save credentials in ALL helpers that support saving.
