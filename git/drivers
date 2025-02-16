@@ -1,5 +1,27 @@
 # These drivers are referenced via git attributes.
 
+[diff "pdf"]
+	binary = true
+	# NOTE: `markitdown` comes from Microsoft, and requires Python.
+	# NOTE: `pdftotext` comes from `poppler` or `xpdf`.
+	# NOTE: `tika` requires Java.
+	# NOTE: Defaults to `cat` if none of those are found.
+	# Hat tip to https://stackoverflow.com/a/78141773/26311 for multi-line command.
+	textconv = "f() {\
+        if command -v tika &> /dev/null; then \
+            tika --text $1; \
+		elif command -v pandoc &> /dev/null; then \
+			pandoc --from pdf --to markdown $1; \
+		elif command -v markitdown &> /dev/null; then \
+			markitdown $1; \
+		elif command -v pdftotext &> /dev/null; then \
+			pdftotext -layout -q $1 -; \
+		else \
+			cat $1; \
+        fi; \
+    }; f"
+	cachetextconv = true
+
 [diff "plist"]
 	textconv = "plutil -convert xml1 -o -"
 
