@@ -84,3 +84,15 @@ else
         export SYSTEM_SERIAL_NUMBER="$(cat /sys/class/dmi/id/product_serial)"
     fi
 fi
+
+# Output some basic system info.
+echo "HOSTNAME            = $HOSTNAME"
+echo "SYSTEM_NAME         = $SYSTEM_NAME"
+echo "SYSTEM_DESCRIPTION  = $SYSTEM_DESCRIPTION"
+echo "CPU                 = $SYSTEM_CPU_CHIP $SYSTEM_CPU_FREQ × $SYSTEM_CPU_CORES"
+echo "OS                  = $SYSTEM_OS $SYSTEM_OS_VERSION"
+echo "TERMINAL            = ${TERM_PROGRAM} $TERM_PROGRAM_VERSION"
+echo "SHELL               = ${SHELL_NAME} $SHELL_VERSION"
+echo "UPTIME              = $(uptime | awk '{print $3 " " $4}' | tr -d ,)"
+echo "FREE MEMORY         = $(free_ram) of $SYSTEM_RAM"
+echo "FREE STORAGE        = $(df -h / | awk 'NR==2 {gsub("Gi", " GiB", $2); gsub("Gi", " GiB", $4); print $4 " free of " $2}')"
