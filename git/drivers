@@ -53,6 +53,22 @@
 	cachetextconv = true
 	prompt = false  # Don't prompt to open the diff tool.
 
+[diff "libreoffice"]
+	binary = true
+	textconv = "f() {\
+        if command -v odt2txt &> /dev/null; then \
+            odt2txt $1; \
+		elif command -v tika &> /dev/null; then \
+            tika --text $1; \
+		elif command -v pandoc &> /dev/null; then \
+			pandoc --to markdown $1; \
+        else \
+            exit 2; \
+        fi; \
+    }; f"
+	cachetextconv = true
+
+
 [merge "ours"]
 	name = 'Resolves merge conflicts by taking _our_ latest version'
 	driver = true
