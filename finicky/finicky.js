@@ -16,54 +16,29 @@ const GoogleMeet = "com.google.Chrome.app.Google Meet";
 const Obsidian = "md.obsidian";
 const Zoom = "us.zoom.xos";
 
-// WARNING: You must get this from `defaults read "$HOME/Applications/Chrome Apps.localized/Google Meet.app/Contents/Info.plist" CrAppModeShortcutID`
-const GoogleMeetShortcutID = "kjgfgldnnfoeklkmfkjfagphfepbbdan";
-const GoogleMeet = ({ urlString }) => {
-    finicky.log(urlString);
-    return {
-        name: Chrome,
-        args: [
-            `--app-id=${ GoogleMeetShortcutID }`,
-            `--app-launch-url-for-shortcuts-menu-item="${ urlString }"`,
-        ],
-    };
-};
-
-const Zoom = "us.zoom.xos"; // From `defaults read "/Applications/zoom.us.app/Contents/Info" CFBundleIdentifier`
-
-const DEFAULT = Vivaldi;
-
-const WORK = Chrome;
+const DEFAULT = Chrome;
+const WORK = Safari;
 
 
 module.exports = {
     defaultBrowser: DEFAULT,
+    options: {
+        hideIcon: false,
+        checkForUpdate: true,
+        logRequests: true,
+    },
     handlers: [
         {
+            browser: WORK,
             match: [
-                "localhost:*/*",
-                "*.debtbook.com/*",
-                "gitlab.com/*",
-                "*.datadoghq.com/*",
-                "*.rollbar.com/*",
-                "mailtrap.io/*",
-                "docs.google.com/*",
-                "debtbook.slack.com/*",
-                "*.figma.com/*",
-                "*.release.com/*",
-                "*.debtbook.systems/*",
-                "debtbook.atlassian.net/*",
+                "*.render.com/*", // Render - Fire Text Rescue
+                "linkedin.com/*",
+                "*.careers/*",
+                "*.workday.com/*",
                 "*.greenhouse.io/*",
-                "debtbook.1password.com/*",
-                "my.tugboatlogic.com/*",
-                "*.immersivelabs.com/*",
-                "debtbook.awsapps.com/*",
-                "debtbook.okta.com/*",
-                "auth.nordlayer.com/*",
-                "*.loom.com/*",
-                "debtbook.awsapps.com/*"
+                "localhost:*/*",
+                "docs.google.com/*",
             ],
-            browser: WORK
         },
         {
             browser: VSCode,
@@ -118,9 +93,4 @@ module.exports = {
             },
         },
     ],
-    options: {
-        hideIcon: true,
-        checkForUpdate: true,
-        logRequests: true
-    },
 };
