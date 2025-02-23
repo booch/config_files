@@ -1,11 +1,20 @@
 // See full docs at https://github.com/johnste/finicky/wiki/Configuration.
 
-const Chrome = "Google Chrome";
-const Firefox = "Firefox";
-const Safari = "Safari";
-const Vivaldi = "Vivaldi";
-const Brave = "Brave Browser";
-const BraveBeta = { name: "com.brave.browser.beta" };
+// Get bundle ID with `defaults read "/Applications/${APP_NAME}.app/Contents/Info" CFBundleIdentifier`
+const Chrome = "com.google.Chrome";
+const Firefox = "com.mozilla.Firefox";
+const Safari = "com.apple.Safari";
+const Vivaldi = "com.vivaldi.Vivaldi";
+const Brave = "com.brave.Browser";
+const VSCode = "com.microsoft.VSCode";
+const AppleMusic = "com.apple.Music";
+const Figma = "com.figma.Desktop";
+const iTerm = "com.googlecode.iterm2";
+const Slack = "com.tinyspeck.slackmacgap";
+const Discord = "com.hnc.Discord";
+const GoogleMeet = "com.google.Chrome.app.Google Meet";
+const Obsidian = "md.obsidian";
+const Zoom = "us.zoom.xos";
 
 // WARNING: You must get this from `defaults read "$HOME/Applications/Chrome Apps.localized/Google Meet.app/Contents/Info.plist" CrAppModeShortcutID`
 const GoogleMeetShortcutID = "kjgfgldnnfoeklkmfkjfagphfepbbdan";
@@ -57,29 +66,56 @@ module.exports = {
             browser: WORK
         },
         {
-            match: [
-                "*.zoom.us/*",
-            ],
-            browser: Zoom
+            browser: VSCode,
+            match: ({ url }) => url.protocol === "file" || url.protocol === "vscode",
         },
         {
-            match: [
-                "meet.google.com/*",
-            ],
-            browser: GoogleMeet
+            browser: Obsidian,
+            match: ({ url }) => url.protocol === "obsidian",
         },
         {
-            match: [
-                "apple.com/*",
-            ],
-            browser: Safari
+            browser: Slack,
+            match: ({ url }) => url.protocol === "slack",
         },
         {
-            match: [
-                "google.com/*",
-                "*.google.com/*",
-            ],
-            browser: Chrome
+            browser: Zoom,
+            match: ["*.zoom.us/*"],
+        },
+        {
+            browser: GoogleMeet,
+            match: ["meet.google.com/*"],
+        },
+        {
+            browser: Safari,
+            match: ["apple.com/*"],
+        },
+        {
+            browser: Chrome,
+            match: ["google.com/*", "*.google.com/*"],
+        },
+        {
+            browser: AppleMusic,
+            match: ["music.apple.com*", "geo.music.apple.com*"],
+            url: {
+                protocol: "itmss",
+            },
+        },
+        {
+            browser: Figma,
+            match: "https://www.figma.com/file/*",
+        },
+        {
+            browser: Discord,
+            match: "https://discord.com/*",
+            url: { protocol: "discord" },
+        },
+    ],
+    rewrite: [
+        {
+            match: "amazon.com/*",
+            url: {
+                host: "smile.amazon.com",
+            },
         },
     ],
     options: {
