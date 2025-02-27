@@ -11,7 +11,7 @@ fi
 
 # Start ssh-agent if it's not already running; otherwise get the PID from the PID file.
 if ! [[ -f "${PID_FILE}" ]]; then
-    eval "$(ssh-agent -s)"
+    eval "$(ssh-agent -s -t 20h)"
     echo "${SSH_AGENT_PID}" > "${PID_FILE}"
     chmod 600 "${PID_FILE}"
 else
