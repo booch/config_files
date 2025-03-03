@@ -1,7 +1,8 @@
 ---
 
-require:
+plugin:
   - rubocop-rspec
+require:
   - rubocop-performance
 
 # Provide more details in output.
