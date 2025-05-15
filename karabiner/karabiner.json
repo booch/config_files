@@ -232,9 +232,13 @@
                             {
                                 "conditions": [
                                     {
-                                        "name": "right_shift_pressed_last",
                                         "type": "variable_if",
+                                        "name": "right_shift_pressed_last",
                                         "value": 1
+                                    },
+                                    {
+                                        "type": "frontmost_application_unless",
+                                        "bundle_identifiers": ["md.obsidian"]
                                     }
                                 ],
                                 "from": {
@@ -247,6 +251,45 @@
                                     {
                                         "key_code": "p",
                                         "modifiers": ["command", "shift"]
+                                    },
+                                    {
+                                        "set_variable": {
+                                            "name": "right_shift_pressed_last",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Double Right Shift to Command+P (show command palette) for Obsidian",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "frontmost_application_if",
+                                        "bundle_identifiers": [
+                                            "md.obsidian"
+                                        ]
+                                    },
+                                    {
+                                        "type": "variable_if",
+                                        "name": "right_shift_pressed_last",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "right_shift",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 500 },
+                                "to": [{ "key_code": "right_shift" }],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "p",
+                                        "modifiers": ["command"]
                                     },
                                     {
                                         "set_variable": {
