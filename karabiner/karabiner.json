@@ -227,18 +227,92 @@
                         ]
                     },
                     {
+                        "description": "Double Left Shift to Control+Option+Command+Space to trigger Raycast (with custom hotkey)",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "left_shift_pressed_last",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_shift",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 500 },
+                                "to": [{ "key_code": "left_shift" }],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": ["left_control", "left_option", "left_command"]
+                                    },
+                                    {
+                                        "set_variable": {
+                                            "name": "left_shift_pressed_last",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "left_shift",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "parameters": {
+                                    "basic.to_delayed_action_delay_milliseconds": 500,
+                                    "basic.to_if_alone_timeout_milliseconds": 500
+                                },
+                                "to": [{ "key_code": "left_shift" }],
+                                "to_delayed_action": {
+                                    "to_if_canceled": [
+                                        {
+                                            "set_variable": {
+                                                "name": "left_shift_pressed_last",
+                                                "value": 0
+                                            }
+                                        }
+                                    ],
+                                    "to_if_invoked": [
+                                        {
+                                            "set_variable": {
+                                                "name": "left_shift_pressed_last",
+                                                "value": 0
+                                            }
+                                        }
+                                    ]
+                                },
+                                "to_if_alone": [
+                                    {
+                                        "set_variable": {
+                                            "name": "left_shift_pressed_last",
+                                            "value": 1
+                                        }
+                                    },
+                                    { "key_code": "left_shift" }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Double Right Shift to Command+Shift+P (show command palette, possibly via Paletro)",
                         "manipulators": [
                             {
                                 "conditions": [
                                     {
-                                        "type": "variable_if",
                                         "name": "right_shift_pressed_last",
+                                        "type": "variable_if",
                                         "value": 1
                                     },
                                     {
-                                        "type": "frontmost_application_unless",
-                                        "bundle_identifiers": ["md.obsidian"]
+                                        "bundle_identifiers": [
+                                            "md.obsidian"
+                                        ],
+                                        "type": "frontmost_application_unless"
                                     }
                                 ],
                                 "from": {
@@ -264,20 +338,20 @@
                         ]
                     },
                     {
-                        "description": "Double Right Shift to Command+P (show command palette) for Obsidian",
+                        "description": "Double Right Shift to Command+P (show command palette) in Obsidian",
                         "manipulators": [
                             {
                                 "conditions": [
                                     {
-                                        "type": "frontmost_application_if",
-                                        "bundle_identifiers": [
-                                            "md.obsidian"
-                                        ]
+                                        "name": "right_shift_pressed_last",
+                                        "type": "variable_if",
+                                        "value": 1
                                     },
                                     {
-                                        "type": "variable_if",
-                                        "name": "right_shift_pressed_last",
-                                        "value": 1
+                                        "bundle_identifiers": [
+                                            "md.obsidian"
+                                        ],
+                                        "type": "frontmost_application_if"
                                     }
                                 ],
                                 "from": {
@@ -297,45 +371,6 @@
                                             "value": 0
                                         }
                                     }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "right_shift",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "parameters": {
-                                    "basic.to_delayed_action_delay_milliseconds": 500,
-                                    "basic.to_if_alone_timeout_milliseconds": 500
-                                },
-                                "to": [{ "key_code": "right_shift" }],
-                                "to_delayed_action": {
-                                    "to_if_canceled": [
-                                        {
-                                            "set_variable": {
-                                                "name": "right_shift_pressed_last",
-                                                "value": 0
-                                            }
-                                        }
-                                    ],
-                                    "to_if_invoked": [
-                                        {
-                                            "set_variable": {
-                                                "name": "right_shift_pressed_last",
-                                                "value": 0
-                                            }
-                                        }
-                                    ]
-                                },
-                                "to_if_alone": [
-                                    {
-                                        "set_variable": {
-                                            "name": "right_shift_pressed_last",
-                                            "value": 1
-                                        }
-                                    },
-                                    { "key_code": "right_shift" }
                                 ],
                                 "type": "basic"
                             }
