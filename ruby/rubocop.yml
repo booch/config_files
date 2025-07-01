@@ -74,9 +74,9 @@ Style/EmptyMethod:
 # Use `{}` for `%r`, because regular expressions might have unbalanced `()` or `<>`.
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    '%w': []
-    '%W': []
-    '%x': []
+    '%w': '[]'
+    '%W': '[]'
+    '%x': '[]'
     '%': '{}'
     '%q': '{}'
     '%Q': '{}'
@@ -144,8 +144,9 @@ Style/Send:
   Enabled: true
 
 # Don't complain that `has_many` doesn't end with a question mark.
-Naming/PredicateName:
+Naming/PredicatePrefix:
   AllowedMethods:
+    - is_a?
     - has_many
 
 # Allow `has_key?` and `has_value?` on Hash, as I think they read better than `key?` and `value?`.
@@ -311,3 +312,22 @@ Performance/MapCompact: # (new in 1.11)
 
 Style/StringChars: # (new in 1.12)
   Enabled: true
+
+# Prefer `class X < Data.define(...)` over `X = Data.define(...)`.
+# It makes nested constants work as expected.
+# See https://allaboutcoding.ghinda.com/more-about-how-to-create-a-data-class-in-ruby for details.
+Style/DataInheritance:
+  Enabled: false
+
+# This rule requires arrays in arguments to be formatted like this 😢:
+#   my_method(1, [
+#             1,
+#             2
+#   ])
+Layout/FirstArrayElementIndentation:
+  Enabled: false
+
+# Allow long specs.
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*'
