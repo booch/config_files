@@ -2,11 +2,312 @@
 //
 // For information on how to configure Zed, see the Zed
 // documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run the `open default settings` command
-// from the command palette or from `Zed` application menu.
 {
-  "theme": "Ayu Light",
-  "buffer_font_size": 15
+    "theme": {
+        "mode": "system",
+        "light": "One Light",
+        "dark": "One Dark"
+    },
+    "icon_theme": "Zed (Default)",
+    "base_keymap": "VSCode",
+    "features": {
+        // Which edit prediction provider to use.
+        "edit_prediction_provider": "zed"
+    },
+
+    "buffer_font_size": 18,
+    "buffer_font_family": "Zed Plex Mono",
+    "buffer_font_fallbacks": null,
+    "buffer_font_features": {
+        // Disable ligatures:
+        // "calt": false
+    },
+    "buffer_font_weight": 400,
+
+    "ui_font_family": "Zed Plex Sans",
+    "ui_font_fallbacks": null,
+    "ui_font_features": {
+        // Disable ligatures:
+        "calt": false
+    },
+    "ui_font_weight": 400,
+    "ui_font_size": 18,
+
+    "agent_font_size": 18,
+
+    "active_pane_modifiers": {
+        // Inset border size of the active pane, in pixels.
+        "border_size": 2,
+        // Opacity of the inactive panes. 0 means transparent, 1 means opaque.
+        "inactive_opacity": 0.8
+    },
+
+    // Time to wait in milliseconds before showing the informational hover box.
+    "hover_popover_delay": 100,
+
+    "confirm_quit": true,
+    "restore_on_startup": "last_session",
+
+    // When set to false, Zed will use the built-in keyboard-first pickers.
+    // Otherwise use system-provided dialogs for Open, Save As, etc.
+    "use_system_path_prompts": false,
+    "use_system_prompts": false,
+
+    // Show method signatures in the editor, when inside parentheses.
+    "auto_signature_help": false,
+
+    // Show a guide at the 'preferred_line_length' value if if 'soft_wrap' is set to that,
+    // plus columns in 'wrap_guides' setting.
+    "show_wrap_guides": true,
+    "wrap_guides": [80, 100, 120],
+    "soft_wrap": "bounded",
+    "preferred_line_length": 100,
+
+    // Globs to match against file paths to determine if a file is private.
+    "private_files": [
+        "**/.env*",
+        "**/*.pem",
+        "**/*.key",
+        "**/*.cert",
+        "**/*.crt",
+        "**/secrets.yml"
+    ],
+    // Hide the values of in variables from visual display in private files
+    "redact_private_values": true,
+
+    "calls": {
+        // Mute when joining an audio/video call.
+        "mute_on_join": true
+    },
+
+    "toolbar": {
+        "breadcrumbs": true,
+        "quick_actions": true,
+        "selections_menu": true,
+        "agent_review": true,
+        "code_actions": true
+    },
+
+    "title_bar": {
+        "show_branch_icon": true,
+        "show_branch_name": true,
+        "show_project_items": true,
+        "show_onboarding_banner": true,
+        "show_user_picture": true,
+        "show_sign_in": true
+    },
+
+    "scrollbar": {
+        "show": "always"
+    },
+
+    "indent_guides": {
+        "enabled": true,
+        "line_width": 1,
+        "active_line_width": 2,
+        "coloring": "indent_aware",
+        "background_coloring": "indent_aware"
+    },
+
+    "inlay_hints": {
+        "enabled": true,
+        "show_type_hints": true,
+        "show_parameter_hints": true,
+        "show_other_hints": true, // Corresponds to null/None LSP hint type value.
+        "show_background": true,
+        "edit_debounce_ms": 300,
+        "scroll_debounce_ms": 50,
+        // Set of modifiers which, when pressed together, will toggle the visibility of inlay hints.
+        // If the set if empty or not all the modifiers specified are pressed, inlay hints will not be toggled.
+        "toggle_on_modifiers_press": {
+            "control": false,
+            "shift": false,
+            "alt": false,
+            "platform": false,
+            "function": false
+        }
+    },
+
+    // AI
+    "agent": {
+        // Version of this setting. Required!
+        "version": "2",
+        "enabled": true,
+        "default_model": {
+            "provider": "zed.dev",
+            "model": "claude-sonnet-4"
+        },
+        // Additional parameters for language model requests. When making a request to a model, parameters will be taken
+        // from the last entry in this list that matches the model's provider and name. In each entry, both provider
+        // and model are optional, so that you can specify parameters for either one.
+        "model_parameters": [
+            {
+                "provider": "zed.dev",
+                "temperature": 0.9
+            },
+            {
+                "model": "claude-sonnet-4",
+                "temperature": 0.9
+            }
+        ],
+        // Ask for confirmation before running potentially destructive actions.
+        "always_allow_tool_actions": false,
+        "default_profile": "write",
+        "profiles": {
+            "write": {
+                "name": "Write",
+                "enable_all_context_servers": true,
+                "tools": {
+                    "copy_path": true,
+                    "create_directory": true,
+                    "delete_path": true,
+                    "diagnostics": true,
+                    "edit_file": true,
+                    "fetch": true,
+                    "list_directory": true,
+                    "move_path": true,
+                    "now": true,
+                    "find_path": true,
+                    "read_file": true,
+                    "grep": true,
+                    "terminal": true,
+                    "thinking": true,
+                    "web_search": true
+                }
+            },
+            "ask": {
+                "name": "Ask",
+                // We don't know which of the context server tools are safe for the "Ask" profile, so we don't enable them by default.
+                // "enable_all_context_servers": true,
+                "tools": {
+                    "contents": true,
+                    "diagnostics": true,
+                    "fetch": true,
+                    "list_directory": true,
+                    "now": true,
+                    "find_path": true,
+                    "read_file": true,
+                    "open": true,
+                    "grep": true,
+                    "thinking": true,
+                    "web_search": true
+                }
+            },
+            "minimal": {
+                "name": "Minimal",
+                "enable_all_context_servers": false,
+                "tools": {}
+            }
+        },
+        // Where to show notifications when the agent has either completed
+        // its response, or else needs confirmation before running a tool.
+        // "primary_screen" - Show the notification only on your primary screen (default)
+        // "all_screens" - Show these notifications on all screens
+        // "never" - Never show these notifications
+        "notify_when_agent_waiting": "all_screens",
+        "play_sound_when_agent_done": true
+    },
+
+    "tabs": {
+        "file_icons": true,
+        "git_status": true,
+        "close_position": "right",
+        "show_close_button": "hover"
+    },
+
+    "file_finder": {
+        "file_icons": true,
+        "modal_max_width": "large"
+    },
+
+    "telemetry": {
+        "diagnostics": false // prevent any sensitive data leaking
+    },
+
+    "diagnostics": {
+        "inline": {
+            "enabled": true
+        }
+    },
+
+    "git": {
+        "hunk_style": "unstaged_hollow"
+    },
+
+    "journal": {
+        "path": "~/journal",
+        "hour_format": "hour24"
+    },
+
+    "terminal": {
+        "blinking": "on",
+        "option_as_meta": true,
+        "env": {
+            // "KEY": "value1:value2"
+        },
+        "line_height": "comfortable", // Might want to try 'standard'.
+        "font_size": 15,
+        "font_family": "Zed Plex Mono",
+        "font_fallbacks": ["FiraCode Nerd Fonts"],
+        "max_scroll_history_lines": 100000
+    },
+
+    "code_actions_on_format": {},
+
+    "file_types": {
+        "Ruby": ["**/*.rb", "**/*.erb", "**/Gemfile", "**/Rakefile"],
+        "Shell Script": [".env.*"],
+        "JSONC": [
+            "**/.zed/**/*.json",
+            "**/zed/**/*.json",
+            "**/Zed/**/*.json",
+            "**/.vscode/**/*.json"
+        ]
+    },
+
+    "auto_install_extensions": {
+        "html": true
+    },
+
+    "completions": {
+        "lsp": true,
+        "lsp_fetch_timeout_ms": 500
+    },
+
+    "vim": {
+        "default_mode": "normal",
+        "toggle_relative_line_numbers": true,
+        "use_system_clipboard": "always",
+        "use_multiline_find": false,
+        "use_smartcase_find": false,
+        // Cursor shape for the each mode.
+        // Specify the mode as the key and the shape as the value.
+        // The mode can be one of the following: "normal", "replace", "insert", "visual".
+        // The shape can be one of the following: "block", "bar", "underline", "hollow".
+        "cursor_shape": {
+            "normal": "hollow",
+            "insert": "bar",
+            "visual": "block",
+            "replace": "underline"
+        }
+    },
+
+    // Set to configure aliases for the command palette.
+    // When typing a query which is a key of this object, the value will be used instead.
+    //
+    // Examples:
+    // {
+    //   "W": "workspace::Save"
+    // }
+    "command_aliases": {},
+
+    // Language-specific settings.
+    "languages": {
+        "JSON": {
+            "tab_size": 4
+        },
+        "JSONC": {
+            "tab_size": 4
+        }
+    }
 }
