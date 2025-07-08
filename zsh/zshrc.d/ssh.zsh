@@ -19,14 +19,16 @@ else
 fi
 
 # Add SSH keys to agent. This is idempotent.
-for PUBLIC_KEY in $(echo ~/.ssh/*.pub); do
-    PRIVATE_KEY="${PUBLIC_KEY%.pub}"
-    if [[ -f "${PRIVATE_KEY}" ]]; then
-        if [[ "$(uname)" == 'Darwin' ]]; then
-            # Use Keychain to retrieve passphrase.
-            ssh-add --apple-load-keychain "${PRIVATE_KEY}" > /dev/null 2>&1
-        else
-            ssh-add "${PRIVATE_KEY}" > /dev/null 2>&1
+if find . -maxdepth 1 -name " ~/.ssh/*.pub" -print -quit | grep -q .; then
+    for PUBLIC_KEY in $(echo ~/.ssh/*.pub); do
+        PRIVATE_KEY="${PUBLIC_KEY%.pub}"
+        if [[ -f "${PRIVATE_KEY}" ]]; then
+            if [[ "$(uname)" == 'Darwin' ]]; then
+                # Use Keychain to retrieve passphrase.
+                ssh-add --apple-load-keychain "${PRIVATE_KEY}" > /dev/null 2>&1
+            else
+                ssh-add "${PRIVATE_KEY}" > /dev/null 2>&1
+            fi
         fi
-    fi
-done
+    done
+fi
