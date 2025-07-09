@@ -11,6 +11,10 @@ fi
 # TODO: Not sure how /sbin and /usr/sbin already got added.
 export PATH="$PATH:/usr/local/sbin"
 
+# Add `~/bin` and `~/.local/bin` to `$PATH` if they exist.
+[[ -d $HOME/bin ]] && export PATH="$HOME/bin:$PATH"
+[[ -d $HOME/.local/bin ]] && export PATH="$HOME/.local/bin:$PATH"
+
 # function current_branch() {
 #   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
 #   echo ${ref#refs/heads/}
