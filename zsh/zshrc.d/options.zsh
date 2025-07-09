@@ -16,6 +16,8 @@
 # setopt typeset_silent pipe_fail extended_glob prompt_percent no_prompt_subst &&
 # setopt no_prompt_bang no_bg_nice no_aliases'
 
+# Don't log out on Ctrl+D (EOF).
+setopt -o ignoreeof
 
 ## Changing Directories
 
