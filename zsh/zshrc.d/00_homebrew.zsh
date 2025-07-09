@@ -23,6 +23,9 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 # Don't automatically update; we'll do that manually.
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# Don't upgrade dependencies when we're trying to install packages.
+export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
+
 export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
 if [[ -e $HOMEBREW_PREFIX/Homebrew/Library ]]; then
     export HOMEBREW_REPOSITORY=$HOMEBREW_PREFIX/Homebrew
