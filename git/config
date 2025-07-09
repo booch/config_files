@@ -85,7 +85,7 @@
 	# Git will use the first helper that returns an answer to a query, and attempt to save credentials in ALL helpers that support saving.
 	helper = cache --timeout 3600  # Cache credentials for 1 hour.
 	helper = 1password  # Use 1Password to find/store credentials.
-	helper = oskeychain  # Use macOS Keychain to find/store credentials.
+	helper = osxkeychain  # Use macOS Keychain to find/store credentials.
 	helper = gnome-keyring  # Use Gnome Keyring to find/store credentials.
 	helper = wincred  # Use Windows Credential Manager to find/store credentials.
 	helper = oauth  # Use OAuth to authenticate to GitHub, GitLab, or BitBucket.
