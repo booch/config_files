@@ -1,0 +1,3 @@
+# Don't show preview on hover in VS Code and Zed.
+# (It was really annoying, and there's no setting to find within VS Code settings!)
+hover = false
