@@ -114,7 +114,8 @@ fi
 
 # Make du print in human readable form, and sorted by size (largest last). From http://www.earthinfo.org/linux-disk-usage-sorted-by-size-and-human-readable/.
 _du() {
-    command du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ "$size" -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size="$(echo "scale=1; $size / 1024" | bc)"; done; done
+    : # command du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ "$size" -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size="$(echo "scale=1; $size / 1024" | bc)"; done; done
+    command du -sk "$@" | sort -n
 }
 alias du=_du
 
@@ -129,12 +130,15 @@ if [ ! "$(uname -s)" = 'Darwin' ]; then
     alias pbpaste='xsel --clipboard --output'
 fi
 
-# Make Ripgrep (rg) output pretty, and pipe it to `less`, unless output is being piped elsewhere.
+# Pipe ripgrep (rg) output to `delta`, unless output is being piped elsewhere.
+# BUG: delta (as of 0.18.2) is not printing the stats, and has no way to change separators.
+# NOTE: delta (as of 0.18.2) grep output is way behind git output as far as nice formatting.
+#       For example, line numbers don't look nice, file names aren't nicely formatted, etc.
 _rg() {
     if [[ -t 1 ]]; then
-        command rg --pretty "$@" | less -RX
+        command rg "$@" | less
     else
-        command rg --pretty "$@"
+        command rg "$@"
     fi
 }
 alias rg=_rg
