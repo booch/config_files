@@ -1,6 +1,7 @@
 [env]
-# Read and process `.env` files. FIXME: Does this work? Does it work for the top level?
-MISE_ENV_FILE = '.env'
+# Read and process `.env` files (using dotenvy).
+_.file = '.env'
+
 
 [hooks]
 # Run any time the directory is changed.
