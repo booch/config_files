@@ -1,0 +1,85 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[user]
+name = "Craig Buchek"
+email = "craig@boochtek.com"
+
+[ui]
+default-command = ["log", "--reversed"]
+#pager = "type delta >/dev/null 2>&1 && exec delta || exec less --tabs=4 -RFX"
+diff.format = "summary" # also try "git"
+diff.tool = "delta"
+conflict-marker-style = "git"
+graph.style = "ascii-large"
+movement.edit = true
+
+# Disable pagination for `jj status`.
+[[--scope]]
+--when.commands = ["status"]
+[--scope.ui]
+paginate = "never"
+
+[merge-tools.delta]
+program = "delta"
+diff-expected-exit-codes = [0, 1]
+diff-args = [
+    "--navigate",
+    "--hyperlinks",
+    "--hyperlinks-file-link-format", "vscode://file/{path}:{line}",
+    "--file-style", "bold darkblue",
+    "--file-decoration-style", "bold darkblue box",
+    "--no-keep-plus-minus-markers",
+	# Use a light color palette.
+	"--blame-palette", "lightcyan lightsteelblue powderblue skyblue plum thistle lavender lavenderblush pink wheat papayawhip lemonchiffon whitesmoke gainsboro silver",
+    "--blame-format", "{commit:>8} {author:<18} {timestamp:^16}",
+    "--hunk-header-style", "omit"
+]
+
+[signing]
+behavior = "drop" # Lazily sign, only on push (along with `git.sign-on-push`).
+backend = "ssh"
+key = "~/.ssh/id_ed25519.pub"
+
+[git]
+sign-on-push = true
+auto-local-bookmark = true # Automatically create local bookmarks for remote branches.
+private-commits = "description(glob:'wip:*') | description(glob:'private:*')" # Prevent pushing WIPs or anything explicitly labeled "private".
+
+[revset-aliases]
+# Prevent rewriting commits authored by other users.
+"immutable_heads()" = "builtin_immutable_heads() | (trunk().. & ~mine())"
+# Show commits that are not in `main@origin`. Default is `present(@) | ancestors(immutable_heads().., 2) | present(trunk())`.
+log = "main@origin.."
+
+[template-aliases]
+'format_short_signature(signature)' = 'signature.name()'
+
+[aliases]
+aliases = [ "config", "list", "aliases", "|", "colrm", "1", "8" ]
+di = [ "diff" ]
+ll = [ "log", "-T", "builtin_log_detailed" ]
+sh = [ "show" ]
+
+# From git push origin HEAD. This is pretty much the equivalent.
+poh = [ "git", "push", "-c", "@-" ]
+
+# Get all open stacks of work.
+open = [ "log", "-r", "open()" ]
+
+# Better names IMO.
+credit = [ "file", "annotate" ]
+blame = [ "file", "annotate" ]
+praise = [ "file", "annotate" ]
+
+# Retrunk a series. Typically used as `jj retrunk -s ...`, and notably can be
+# used with open:
+# - jj retrunk -s 'all:roots(open())'
+retrunk = [ "rebase", "-d", "trunk()" ]
+
+# Take content from any change, and move it into @.
+# - jj consume xyz path/to/file`
+consume = [ "squash", "--into", "@", "--from" ]
+
+# Eject content from @ into any other change.
+# - jj eject xyz --interactive
+eject = [ "squash", "--from", "@", "--into" ]
