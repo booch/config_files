@@ -194,5 +194,6 @@
         "latex",
         "plaintext"
     ],
-    "editor.accessibilitySupport": "off"
+    "editor.accessibilitySupport": "off",
+    "github.copilot.nextEditSuggestions.enabled": true
 }
