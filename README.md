@@ -14,3 +14,9 @@ git clone "git@github.com:${REPO_OWNER}/config_files.git" "$HOME/.config" \
 cd "$HOME/.config"
 ./install.sh
 ~~~
+
+If you don't have SSH set up yet when you pull the repo, you probably won't be able to push to the repository. Once you've gotten SSH set up (and the public key added to GitHub), you'll need to change the `origin` remote to use SSH instead of HTTPS.
+
+~~~ shell
+git remote set-url origin "git@github.com:${REPO_OWNER}/config_files.git"
+~~~
