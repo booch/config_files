@@ -11,6 +11,9 @@ _.file = '.env'
 #leave = "echo 'I left the project'"
 #preinstall = "echo 'I am about to install tools'"
 #postinstall = "echo 'I just installed tools'"
+postinstall = [
+    'bundle install'
+]
 
 [tools]
 ruby = ['latest', 'system']
@@ -58,4 +61,4 @@ python.uv_venv_auto = true
 status.missing_tools = 'always'
 status.show_env = true
 status.show_tools = true
-
+idiomatic_version_file_enable_tools = ["ruby"]
