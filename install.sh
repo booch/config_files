@@ -110,7 +110,7 @@ fi
 # nvim --headless '+Lazy! sync' +qa
 
 touch "$HOME/.bash_history"
-chmod -f go-rwx "$HOME/.*_history"
+chmod -f go-rwx "$HOME"/.*_history
 
 # TODO/FIXME:
 # rm: $HOME/Library/Application Support/Code/User: Permission denied
