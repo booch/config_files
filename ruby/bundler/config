@@ -1,9 +1,36 @@
 ---
-BUNDLE_JOBS: "4"
+# Store bundled gems in repo's `vendor` directory. (Make sure git ignores it.)
 BUNDLE_PATH: "vendor/bundle"
+
+# Use a single global cache.
+BUNDLE_GLOBAL_GEM_CACHE: "true"
+
+# When offline, allow installation using cached gems.
+BUNDLE_ALLOW_OFFLINE_INSTALL: "true"
+
+# Also cache gems installed from local paths and git sources. (Will be default in Bundler 3.)
+BUNDLE_CACHE_ALL: "true"
+BUNDLE_CACHE_ALL_PLATFORMS: "true"
+
+# Don't automatically remove unused gems from cache; we might be flipping between versions.
+BUNDLE_CLEAN: "false"
+
+# Don't generate binstubs. Use `bundle exec` (possibly via aliases) instead.
+BUNDLE_WITHOUT: "binstubs"
+
+# Silence some gratuitous messages.
+BUNDLE_IGNORE_FUNDING_REQUESTS: "true"
+BUNDLE_IGNORE_MESSAGES__HTTPARTY: "true"
+BUNDLE_IGNORE_MESSAGES__KT___PAPERCLIP: "true"
+
+# Settings for generating a gem with `bundle gem`.
 BUNDLE_GEM__COC: "false"
 BUNDLE_GEM__MIT: "false"
 BUNDLE_GEM__TEST: "rspec"
+
+# Extra arguments for building specific gems. (NOTE - These are out of date.)
 BUNDLE_BUILD__RGEO: "--with-geos-dir=/usr/local/Cellar/geos/3.7.1_1"
 BUNDLE_BUILD__MYSQL2: "--with-ldflags=-L/usr/local/opt/openssl@1.1/lib"
-BUNDLE_WITHOUT: "binstubs"
+
+# WARNING - We should set this per project.
+#BUNDLE_LOCKFILE_CHECKSUMS = "true"
