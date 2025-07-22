@@ -86,6 +86,7 @@ else
 fi
 
 # Output some basic system info.
+echo "USER                = $USER: $USER_FULL_NAME ($USER_EMAIL_ADDRESS)"
 echo "HOSTNAME            = $HOSTNAME"
 echo "SYSTEM_NAME         = $SYSTEM_NAME"
 echo "SYSTEM_DESCRIPTION  = $SYSTEM_DESCRIPTION"
