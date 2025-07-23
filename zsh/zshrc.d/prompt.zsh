@@ -78,6 +78,7 @@ prompt_precmd() {
     typeset -g prompt_datetime=" $(print -P '%D{%F %T}') "
     typeset -g prompt_user_host=" $(print -P '%n@$(hostname)') "
     typeset -g prompt_pwd=" $(print -P '%2~') "
+    typeset -g prompt_ruby=" $(mise current ruby 2> /dev/null) "
 }
 
 autoload -Uz add-zsh-hook
@@ -91,10 +92,10 @@ ZSH_PROMPT_1_RIGHT='%F{green}%K{black}${prompt_datetime}%f%k'
 ZSH_PROMPT_1_SPACES='$(( ${COLUMNS} - ${#prompt_load} - ${#prompt_rc} - ${#prompt_runtime} - ${#prompt_datetime} ))'
 ZSH_PROMPT_1="${ZSH_PROMPT_1_LEFT}%K{black}\${(l:$ZSH_PROMPT_1_SPACES:)}${ZSH_PROMPT_1_RIGHT}"
 
-# User, host, current directory ... Git branch
+# User, host, current directory ... Ruby version, Git branch
 ZSH_PROMPT_2_LEFT='%K{black}%F{3}${prompt_user_host}%F{yellow}%K{blue}${prompt_pwd}%f%k'
-ZSH_PROMPT_2_RIGHT='%F{black}%K{yellow}${prompt_git_branch}%f%k'
-ZSH_PROMPT_2_SPACES='$(( ${COLUMNS} - ${#prompt_user_host} - ${#prompt_pwd} - ${#prompt_git_branch} ))'
+ZSH_PROMPT_2_RIGHT='%F{black}%K{red}${prompt_ruby}%K{yellow}${prompt_git_branch}%f%k'
+ZSH_PROMPT_2_SPACES='$(( ${COLUMNS} - ${#prompt_user_host} - ${#prompt_pwd} - ${#prompt_git_branch} - ${#prompt_ruby} ))'
 ZSH_PROMPT_2="${ZSH_PROMPT_2_LEFT}%K{black}\${(l:$ZSH_PROMPT_2_SPACES:)}${ZSH_PROMPT_2_RIGHT}"
 
 # Red `#` if root, green `$` if not
