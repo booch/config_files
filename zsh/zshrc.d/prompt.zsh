@@ -76,7 +76,7 @@ prompt_precmd() {
     typeset -g prompt_rc=" $(print -P '%?') "
     typeset -g prompt_runtime=" ${prompt_execution_time:--} "
     typeset -g prompt_datetime=" $(print -P '%D{%F %T}') "
-    typeset -g prompt_user_host=" $(print -P '%n@$(hostname)') "
+    typeset -g prompt_user_host=" $(print -P '%n@$(uname -n)') "
     typeset -g prompt_pwd=" $(print -P '%2~') "
     typeset -g prompt_ruby=" $(mise current ruby 2> /dev/null) "
 }

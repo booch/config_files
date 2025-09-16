@@ -3,7 +3,7 @@
 # but I have only tested it in Zsh on Mac.
 
 # NOTE: Bash (but not POSIX) sets $HOSTNAME automatically, but does not export it.
-export HOSTNAME="${HOSTNAME:-$(hostname)}"
+export HOSTNAME="${HOSTNAME:-$(uname -n)}"
 
 export SHELL_NAME="$(basename "$SHELL" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')"
 export SHELL_VERSION="$($SHELL --version | head -n 1 | awk '{print $2}')"
