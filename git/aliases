@@ -39,14 +39,15 @@
     changes = diff --name-status -r
     changed = diff --name-only
     check = diff --check
+    checkin = commit
     checkout = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
     cheddar = commit --amend -CHEAD
     cherry-lick = !sh -c 'hub checkout HEAD^{} -- && hub cherry-pick \"$@\"' _
-    chicken = ci  # For voice control.
+    chicken = checkin  # For voice control.
     cho = "!f(){ echo 'Please use `git switch` or `git restore`, as appropriate.'; }; f"
     choose-branch = "!f() { git branch --sort=-committerdate | fzf | sed 's/^\\* //g' | xargs echo -n ; }; f"
     change-branch = "!f() { git checkout $(git choose-branch) ; }; f"
-    ci = commit
+    ci = checkin
     cl = clone
     clear = !git add . && git stash && git stash drop
     cm = commit --message
@@ -65,6 +66,7 @@
     cp = cherry-pick
     cpc = cherry-pick --signoff
     create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
+    # This could/should also be an alias for `git blame`:
     credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
     ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
     current-branch = branch --show-current
@@ -157,7 +159,7 @@
     ls = log --oneline
     lsc = diff-tree --no-commit-id --name-only -r
     lt = describe --tags --abbrev=0
-    me = !git my-name
+    me = config user.name
     m = merge -s recursive -X patience
     merge-branch = !git checkout main && git merge @{-1}
     merge-trail = log --ancestry-path --merges
@@ -179,7 +181,7 @@
     oneline = log --oneline
     ours = "!f() { git co --ours $@ && git add $@; }; f"
     p = pair
-    patch = log -p --no-walk # Generate patch file from a commit.
+    patch = log -p --no-walk --no-pager # Generate patch file from a commit.
     pf = push --force-with-lease --force-if-includes
     phh = push heroku HEAD
     phm = push heroku main
@@ -274,7 +276,7 @@
     svnd = svn dcommit
     svnl = svn log --oneline --show-commit
     svn-pull = !git svn fetch && git svn rebase
-    svn-push = !git svn dcommit
+    svn-push = svn dcommit
     sw = switch
     swap = !branch=$(git name-rev --name-only HEAD); git rebase --quiet --onto HEAD~2 HEAD~1 HEAD; git cherry-pick ORIG_HEAD~1; git update-ref refs/heads/$branch $(git rev-parse HEAD); git checkout --quiet $branch
     t = status
