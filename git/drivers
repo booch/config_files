@@ -79,6 +79,15 @@
 	name = 'Resolves Gemfile.lock merge conflicts by running `bundle install`'
 	driver = 'echo "Gemfile.lock merge conflict, running bundle install" && bundle install --quiet'
 
+[merge "package-lock.json"]
+	name = 'Resolves package-lock.json merge conflicts by running `npm install`'
+	driver = 'echo "package-lock.json merge conflict, running npm install" && npm install --quiet'
+
+[merge "yarn.lock"]
+	name = 'Resolves yarn.lock merge conflicts by running `yarn install`'
+	driver = 'echo "yarn.lock merge conflict, running yarn install" && yarn install --quiet'
+
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
