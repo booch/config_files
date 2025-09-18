@@ -219,6 +219,7 @@
     rbs = rebase --skip
     reb = "!r() { git rebase -i HEAD~$1; }; r"
     recent = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+    recon =  rebase --continue
     recursive-update = "!sh -c 'find \"${@:-.}\" -type d -name .git -exec dirname {} \\; -exec git --git-dir={} remote update \\;' _"
     regret = reset
     release = "!f() { git co main; git pull; git switch -c release/$1; git poh; }; f"
@@ -247,6 +248,7 @@
     search = log --pretty=oneline-details -S
     sh = show
     sha1 = "!sh -c 'git rev-parse --short ${1:-HEAD}' --"
+    shelve = stash save --include-untracked  ## AKA stash-all
     sho = show
     shove = push origin HEAD
     sl = stash list --pretty=stash
@@ -302,6 +304,7 @@
     unmerged = branch --no-merged
     unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
     unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
+    unshelve = stash pop
     unstage = reset HEAD --
     unstash = stash pop
     untrack = rm -r --cached
