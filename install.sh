@@ -50,7 +50,6 @@ ln_sf "$CWD/bash/inputrc" "$HOME/.inputrc"
 
 ln_sfT "$CWD/ruby/bundler" "$HOME/.bundle"
 ln_sf "$CWD/ruby/gemrc" "$HOME/.gemrc"
-ln_sf "$CWD/ruby/irbrc" "$HOME/.irbrc"
 ln_sf "$CWD/ruby/pryrc" "$HOME/.pryrc"
 ln_sf "$CWD/ruby/aprc" "$HOME/.aprc"
 ln_sf "$CWD/ruby/railsrc" "$HOME/.railsrc"
@@ -111,6 +110,7 @@ fi
 
 touch "$HOME/.bash_history"
 chmod -f go-rwx "$HOME"/.*_history
+chmod -f go-rwx "$HOME"/.bash_history"
 
 # TODO/FIXME:
 # rm: $HOME/Library/Application Support/Code/User: Permission denied
