@@ -16,7 +16,7 @@ set backup
 #set backupdir ~/.nano_backups
 
 # Always display the cursor position in the status bar.
-set const
+set constantshow
 
 # CTRL+K cuts to end of line, not entire line.
 set cutfromcursor
@@ -27,26 +27,17 @@ set fill 72
 # Enable ~/.nano_history for saving and reading search/replace strings.
 set historylog
 
-# Use the blank line below the titlebar as extra editing space.
-set morespace
-
 # Enable mouse support, if available.
 set mouse
 
 # Allow inserting files into their own buffers.
 set multibuffer
 
-# Don't enable word wrap by default.
-set nowrap
-
 # Enable smart home-key -- toggle between column 1 and first non-whitespace column.
 set smarthome
 
 # Remember cursor position of 200 most recent files between editing sessions.
 set positionlog
-
-# Use smooth scrolling .
-set smooth
 
 # Include syntax color highlighting for various file types.
 #include "/usr/share/nano/html.nanorc"
