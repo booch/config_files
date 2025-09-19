@@ -26,8 +26,8 @@ else
 fi
 
 # Add SSH keys to agent. This is idempotent.
-if find . -maxdepth 1 -name " ~/.ssh/*.pub" -print -quit | grep -q .; then
-    for PUBLIC_KEY in $(echo ~/.ssh/*.pub); do
+if find "$HOME/.ssh" -maxdepth 1 -name '*.pub' -print -quit | grep -q .; then
+    for PUBLIC_KEY in $(echo $HOME/.ssh/*.pub); do
         PRIVATE_KEY="${PUBLIC_KEY%.pub}"
         if [[ -f "${PRIVATE_KEY}" ]]; then
             if [[ "$(uname)" == 'Darwin' ]]; then
