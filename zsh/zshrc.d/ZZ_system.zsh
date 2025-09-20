@@ -24,6 +24,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
         # NOTE: This is a little high, but it's the best I could figure out, and it closely matches
         echo "$((page_size * ( pages_free + pages_file_backed ) / 1024 / 1024 / 1024)) GiB"
     }
+    disk_space() {
+        df -h / | awk 'NR==2 {print $4 " free of " $2}'
+    }
 
     export SYSTEM_OS='macOS'
     export SYSTEM_OS_VERSION="$(sw_vers -productVersion)"
@@ -53,6 +56,10 @@ else
     free_ram() {
         free | grep 'Mem:' | awk '{ print $7 / 1024 / 1024 }'
     }
+    disk_space() {
+        df -h / | awk 'NR==2 {print $5 " free of " $3}'
+    }
+
 
     if [[ -f /etc/os-release ]]; then
         source /etc/os-release
@@ -103,5 +110,5 @@ if [[ -o interactive ]] ; then
     echo "SHELL               = ${SHELL_NAME} $SHELL_VERSION"
     echo "UPTIME              = $(uptime | awk '{print $3 " " $4}' | tr -d ,)"
     echo "FREE MEMORY         = $(free_ram) of $SYSTEM_RAM"
-    echo "FREE STORAGE        = $(df -t -h / | awk 'NR==2 {gsub("Gi", " GiB", $2); gsub("Gi", " GiB", $4); print $4 " free of " $2}')"
+    echo "FREE STORAGE        = $(disk_space | sed -E 's/Mi?/ MiB/g' | sed -E 's/Gi?/ GiB/g')"
 fi
