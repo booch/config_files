@@ -12,18 +12,31 @@ LOWER_TRIANGLE_RIGHT=$'\uE0B8'  # 
 LOWER_TRIANGLE_LEFT=$'\uE0BA'   # 
 
 # Possibly useful ANSI escape sequences. (We're using Zsh % prompt expansion instead.)
-UP="$(tput cuu1)"
-DOWN="$(tput cud1)"
-SAVE_CURSOR="$(tput sc)"
-RESTORE_CURSOR="$(tput rc)"
-GREEN="$(tput setaf 2)"
-YELLOW="$(tput setaf 3)"
-GREEN_BG="$(tput setab 2)"
-YELLOW_BG="$(tput setab 3)"
-PURPLE_BG="$(tput setab 5)"
-REVERSE="$(tput rev)"
-RESET="$(tput sgr0)"
-
+if command -v tput &> /dev/null; then
+    UP="$(tput cuu1)"
+    DOWN="$(tput cud1)"
+    SAVE_CURSOR="$(tput sc)"
+    RESTORE_CURSOR="$(tput rc)"
+    GREEN="$(tput setaf 2)"
+    YELLOW="$(tput setaf 3)"
+    GREEN_BG="$(tput setab 2)"
+    YELLOW_BG="$(tput setab 3)"
+    PURPLE_BG="$(tput setab 5)"
+    REVERSE="$(tput rev)"
+    RESET="$(tput sgr0)"
+else
+    UP="$(printf '\033[A')"
+    DOWN="$(printf '\033[B')"
+    SAVE_CURSOR="$(printf '\0337')"
+    RESTORE_CURSOR="$(printf '\0338')"
+    GREEN="$(printf '\033[32m')"
+    YELLOW="$(printf '\033[33m')"
+    GREEN_BG="$(printf '\033[42m')"
+    YELLOW_BG="$(printf '\033[43m')"
+    PURPLE_BG="$(printf '\033[45m')"
+    REVERSE="$(printf '\033[7m')"
+    RESET="$(printf '\033c')"
+fi
 
 # See docs at https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html.
 # Note that `print -P` will also do prompt expansion.
