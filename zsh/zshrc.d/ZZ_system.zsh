@@ -8,6 +8,9 @@ export HOSTNAME="${HOSTNAME:-$(uname -n)}"
 export SHELL_NAME="$(basename "$SHELL" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')"
 export SHELL_VERSION="$($SHELL --version | head -n 1 | awk '{print $2}')"
 
+export SYSTEM_KERNEL=$(uname -s)
+export SYSTEM_KERNEL_VERSION=$(uname -r)
+
 # If running on MacOS:
 if [[ "$(uname)" == "Darwin" ]]; then
     free_ram() {
@@ -47,14 +50,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
         export SYSTEM_PART_NUMBER='UNKNOWN - PLEASE UPDATE SCRIPT'
     fi
 else
-    # WARNING: This whole section is untested!
     free_ram() {
-        local mem_free="$(awk '/MemFree/ {print $2}' /proc/meminfo)"
-        local mem_available="$(awk '/MemAvailable/ {print $2}' /proc/meminfo)"
-        local mem_buffers="$(awk '/Buffers/ {print $2}' /proc/meminfo)"
-        local mem_cached="$(awk '/Cached/ {print $2}' /proc/meminfo)"
-
-        echo "$(( ( mem_free + mem_available + mem_buffers + mem_cached ) / 1024 / 1024 )) GB"
+        free | grep 'Mem:' | awk '{ print $7 / 1024 / 1024 }'
     }
 
     if [[ -f /etc/os-release ]]; then
@@ -65,21 +62,30 @@ else
         export SYSTEM_OS="$(lsb_release -si)"
         export SYSTEM_OS_VERSION="$(lsb_release -sr)"
     else
-        export SYSTEM_OS="$(uname -s)"
-        export SYSTEM_OS_VERSION="$(uname -r)"
+        export SYSTEM_OS="Unknown"
+        export SYSTEM_OS_VERSION=""
     fi
 
     export SYSTEM_NAME="$HOSTNAME"
-    export SYSTEM_DESCRIPTION="$(uname -s -r -m)"
-    export SYSTEM_CPU_CHIP="$(lscpu | awk -F ': ' '/Model name/ {print $2}')"
-    export SYSTEM_CPU_FREQ="$(sysctl -n hw.cpufrequency_max | awk '{print $0/1000000000}') GHz"
-    export SYSTEM_CPU_CORES="$(lscpu | awk -F ': ' '/Core\(s\) per socket/ {print $2}')"
-    export SYSTEM_RAM="$(free -h | awk '/Mem/ {print $2}')"
+    if [[ -f /tmp/sysinfo/model ]]; then
+        # Probably only in OpenWRT.
+        export SYSTEM_DESCRIPTION="$(cat /tmp/sysinfo/model)"
+    else
+        export SYSTEM_DESCRIPTION="$(uname -m)"
+    fi
+    export SYSTEM_CPU_CHIP="$(lscpu | awk -F ': *' '/Model name/ {print $2}')"
+    if command -v mhz &> /dev/null; then
+        export SYSTEM_CPU_FREQ="$(mhz -c -i 1 1 10 | awk '{print $0/1000}') GHz"
+    else
+        export SYSTEM_CPU_FREQ="$(sysctl -n hw.cpufrequency_max | awk '{print $0/1000000000}') GHz"
+    fi
+    export SYSTEM_CPU_CORES="$(lscpu | awk -F ': *' '/Core\(s\) per/ {print $2}')"
+    export SYSTEM_RAM="$(free -h | awk '/Mem/ {print $2 / 1024 / 1024}') GiB"
 
     if command -v dmidecode &> /dev/null; then
         export SYSTEM_MODEL_ID="$(sudo dmidecode -s system-product-name)"
         export SYSTEM_SERIAL_NUMBER="$(sudo dmidecode -s system-serial-number)"
-    else
+    elif [[ -f /sys/class/dmi ]]; then
         export SYSTEM_MODEL_ID="$(cat /sys/class/dmi/id/product_name)"
         export SYSTEM_SERIAL_NUMBER="$(cat /sys/class/dmi/id/product_serial)"
     fi
@@ -92,10 +98,10 @@ if [[ -o interactive ]] ; then
     echo "SYSTEM_NAME         = $SYSTEM_NAME"
     echo "SYSTEM_DESCRIPTION  = $SYSTEM_DESCRIPTION"
     echo "CPU                 = $SYSTEM_CPU_CHIP $SYSTEM_CPU_FREQ × $SYSTEM_CPU_CORES"
-    echo "OS                  = $SYSTEM_OS $SYSTEM_OS_VERSION"
-    echo "TERMINAL            = ${TERM_PROGRAM} $TERM_PROGRAM_VERSION"
+    echo "OS                  = $SYSTEM_OS $SYSTEM_OS_VERSION ($SYSTEM_KERNEL $SYSTEM_KERNEL_VERSION)"
+    echo "TERMINAL            = ${TERM_PROGRAM} $TERM_PROGRAM_VERSION"  # Maybe use $LC_TERMINAL and $LC_TERMINAL_VERSION instead.
     echo "SHELL               = ${SHELL_NAME} $SHELL_VERSION"
     echo "UPTIME              = $(uptime | awk '{print $3 " " $4}' | tr -d ,)"
     echo "FREE MEMORY         = $(free_ram) of $SYSTEM_RAM"
-    echo "FREE STORAGE        = $(df -h / | awk 'NR==2 {gsub("Gi", " GiB", $2); gsub("Gi", " GiB", $4); print $4 " free of " $2}')"
+    echo "FREE STORAGE        = $(df -t -h / | awk 'NR==2 {gsub("Gi", " GiB", $2); gsub("Gi", " GiB", $4); print $4 " free of " $2}')"
 fi
