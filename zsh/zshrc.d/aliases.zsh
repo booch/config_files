@@ -50,13 +50,6 @@ alias cd='pushd'
 alias pop='popd'
 alias home='pushd ~'
 
-alias du='du -kh'   # See du replacement below.
-if df -T >/dev/null 2>/dev/null; then
-    alias df='df -kTh'
-else
-    alias df='df -kh'
-fi
-
 alias lstrings='strings $1 | less'
 
 # Tree is a nice alternative to `ls -R`.

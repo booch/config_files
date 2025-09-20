@@ -11,6 +11,10 @@ export SHELL_VERSION="$($SHELL --version | head -n 1 | awk '{print $2}')"
 export SYSTEM_KERNEL=$(uname -s)
 export SYSTEM_KERNEL_VERSION=$(uname -r)
 
+disk_space() {
+    df -h / | awk 'NR==2 {print $4 " free of " $2}'
+}
+
 # If running on MacOS:
 if [[ "$(uname)" == "Darwin" ]]; then
     free_ram() {
@@ -23,9 +27,6 @@ if [[ "$(uname)" == "Darwin" ]]; then
 
         # NOTE: This is a little high, but it's the best I could figure out, and it closely matches
         echo "$((page_size * ( pages_free + pages_file_backed ) / 1024 / 1024 / 1024)) GiB"
-    }
-    disk_space() {
-        df -h / | awk 'NR==2 {print $4 " free of " $2}'
     }
 
     export SYSTEM_OS='macOS'
@@ -56,10 +57,6 @@ else
     free_ram() {
         free | grep 'Mem:' | awk '{ print $7 / 1024 / 1024 }'
     }
-    disk_space() {
-        df -h / | awk 'NR==2 {print $5 " free of " $3}'
-    }
-
 
     if [[ -f /etc/os-release ]]; then
         source /etc/os-release
