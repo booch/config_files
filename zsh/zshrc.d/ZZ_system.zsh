@@ -55,7 +55,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     fi
 else
     free_ram() {
-        free | grep 'Mem:' | awk '{ print $7 / 1024 / 1024 }'
+        free -h | awk '/Mem/ { print $7 }' | sed -E 's/Gi/ GiB/g'
     }
 
     if [[ -f /etc/os-release ]]; then
@@ -84,7 +84,7 @@ else
         export SYSTEM_CPU_FREQ="$(sysctl -n hw.cpufrequency_max | awk '{print $0/1000000000}') GHz"
     fi
     export SYSTEM_CPU_CORES="$(lscpu | awk -F ': *' '/Core\(s\) per/ {print $2}')"
-    export SYSTEM_RAM="$(free -h | awk '/Mem/ {print $2 / 1024 / 1024}') GiB"
+    export SYSTEM_RAM="$(free -h | awk '/Mem/ {print $2}' | sed -E 's/Gi/ GiB/g')"
 
     if command -v dmidecode &> /dev/null; then
         export SYSTEM_MODEL_ID="$(sudo dmidecode -s system-product-name)"
