@@ -8,7 +8,7 @@
 	untrackedcache = true  # Have FSMonitor also monitor untracked files.
 	whitespace = trailing-space,space-before-tab
 	# Paginate with `delta` if it's installed, else fall back to `less`.
-	pager = "type delta >/dev/null 2>&1 && exec delta || exec less --tabs=4 -RFX"
+	pager = "(type delta >/dev/null 2>&1 && exec delta || exec less --tabs=4 -RFX)"
 [pager]
 	status = true
 [delta]
@@ -37,7 +37,7 @@
 	line-numbers = false
 	hunk-header-style = omit
 [interactive]
-	diffFilter = delta --color-only  # Used by `git add -p`.
+	diffFilter = "(type delta >/dev/null 2>&1 && delta --color-only || less --tabs=4 -RFX)"  # Used by `git add -p`.
 [color]
 	ui = true
 	diff = auto
