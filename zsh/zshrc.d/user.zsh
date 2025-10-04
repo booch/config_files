@@ -15,6 +15,8 @@ if [[ "$HOST" == 'Buchek-FNWWVWCRWN' ]]; then
     export USER_EMAIL_ADDRESS="$USER@paynearme.com"
 elif [[ "$USER" == 'booch' || "$USER" == 'craigbuchek' ]]; then
     export USER_EMAIL_ADDRESS='craig@boochtek.com'
+elif [[ "$HOST" == 'moti' ]]; then
+    export USER_EMAIL_ADDRESS='N/A'
 else
     echo "WARNING: Unknown user. Please set USER_EMAIL_ADDRESS in '$THIS_FILE'."
 fi
