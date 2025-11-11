@@ -144,7 +144,7 @@ Style/Send:
   Enabled: true
 
 # Don't complain that `has_many` doesn't end with a question mark.
-Naming/PredicateName:
+Naming/PredicatePrefix:
   AllowedMethods:
     - is_a?
     - has_many
