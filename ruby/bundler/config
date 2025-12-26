@@ -2,6 +2,9 @@
 # Store bundled gems in repo's `vendor` directory. (Make sure git ignores it.)
 BUNDLE_PATH: "vendor/bundle"
 
+# Treat `bundle` as `bundle install`, not `bundle help`.
+BUNDLE_DEFAULT_CLI_COMMAND: "install"
+
 # Use a single global cache.
 BUNDLE_GLOBAL_GEM_CACHE: "true"
 
