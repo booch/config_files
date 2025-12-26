@@ -80,6 +80,7 @@
     diff = diff --word-diff
     diffr  = "!f() { git diff "$1"^.."$1"; }; f"
     diff-stat = diff -b --stat
+    dii = diff --ignore-all-space
     discard = checkout --
     div = divergence
     dl = "!git ll -1"  # Show modified files in last commit.
