@@ -102,6 +102,7 @@
 	followtags = true  # Push new tags along with commits being pushed.
 	useForceIfIncludes = true  # See https://stackoverflow.com/a/74902633/26311
 [pull]
+	rebase = true  # Rebase local commits on top of newly pulled-down commits instead of merging them. (http://www.viget.com/extend/only-you-can-prevent-git-merge-commits/)
 	ff = true  # Only do fast-forward merges, so we don't overwrite any local changes.
 [rebase]
 	autostash = true  # Automatically stash and unstash during a rebase.
