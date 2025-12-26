@@ -16,7 +16,7 @@
 	tabs = 4
 	navigate = true  # Allow `n` and `N` to move between sections.
 	hyperlinks = true
-	hyperlinks-file-link-format = "vscode://file/{path}:{line}"  # Zed uses the same format.
+	hyperlinks-file-link-format = "zed://file/{path}:{line}"  # Zed and VS Code use the same format.
 	file-style = bold darkblue
 	file-decoration-style = bold darkblue box
 	keep-plus-minus-markers = false
