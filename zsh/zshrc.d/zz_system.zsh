@@ -31,6 +31,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
 
     export SYSTEM_OS='macOS'
     export SYSTEM_OS_VERSION="$(sw_vers -productVersion)"
+    # From https://unix.stackexchange.com/a/234173/268742. WARNING: I think it was $8 prior to macOS 26.
+    export SYSTEM_OS_CODENAME="$(awk '/SOFTWARE LICENSE AGREEMENT FOR/ { print $7 }' '/System/Library/CoreServices/Setup Assistant.app/Contents/Resources/en.lproj/OSXSoftwareLicense.rtf' | tr -d '\')"
     export SYSTEM_NAME="$(/usr/sbin/networksetup -getcomputername)"
     export SYSTEM_DESCRIPTION="$(ioreg -r -k product-description | awk -F '[=<>"]' '/product-description/ {print $(NF-2)}')"
     export SYSTEM_CPU_CHIP="$(system_profiler SPHardwareDataType | awk -F ': ' '/Chip/ {print $2}')"
@@ -50,6 +52,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
     fi
     if [[ "$SYSTEM_SERIAL_NUMBER" == 'HD92KMVMMV' ]]; then
         export SYSTEM_PART_NUMBER='MX2Y3LL/A' # 48 GB RAM, Space Black
+    elif [[ "$SYSTEM_SERIAL_NUMBER" == 'FNWWVWCRWN' ]]; then
+        export SYSTEM_PART_NUMBER='MX2U3LL/A' # 48 GB RAM, Silver
     else
         export SYSTEM_PART_NUMBER='UNKNOWN - PLEASE UPDATE SCRIPT'
     fi
@@ -64,7 +68,8 @@ else
         export SYSTEM_OS_VERSION="$VERSION_ID"
     elif type lsb_release >/dev/null 2>&1; then
         export SYSTEM_OS="$(lsb_release -si)"
-        export SYSTEM_OS_VERSION="$(lsb_release -sr)"
+        export SYSTEM_OS_VERSION="$(lsb_release --release --short)"
+        export SYSTEM_OS_CODENAME="$(lsb_release --codename --short)"
     else
         export SYSTEM_OS="Unknown"
         export SYSTEM_OS_VERSION=""
@@ -97,15 +102,17 @@ fi
 
 if [[ -o interactive ]] ; then
     # Output some basic system info.
-    echo "USER                = $USER: $USER_FULL_NAME ($USER_EMAIL_ADDRESS)"
-    echo "HOSTNAME            = $HOSTNAME"
-    echo "SYSTEM_NAME         = $SYSTEM_NAME"
-    echo "SYSTEM_DESCRIPTION  = $SYSTEM_DESCRIPTION"
-    echo "CPU                 = $SYSTEM_CPU_CHIP $SYSTEM_CPU_FREQ × $SYSTEM_CPU_CORES"
-    echo "OS                  = $SYSTEM_OS $SYSTEM_OS_VERSION ($SYSTEM_KERNEL $SYSTEM_KERNEL_VERSION)"
-    echo "TERMINAL            = ${TERM_PROGRAM} $TERM_PROGRAM_VERSION"  # Maybe use $LC_TERMINAL and $LC_TERMINAL_VERSION instead.
-    echo "SHELL               = ${SHELL_NAME} $SHELL_VERSION"
-    echo "UPTIME              = $(uptime | awk '{print $3 " " $4}' | tr -d ,)"
-    echo "FREE MEMORY         = $(free_ram) of $SYSTEM_RAM"
-    echo "FREE STORAGE        = $(disk_space | sed -E 's/Mi?/ MiB/g' | sed -E 's/Gi?/ GiB/g')"
+    echo "USER                  = $USER: $USER_FULL_NAME ($USER_EMAIL_ADDRESS)"
+    echo "HOSTNAME              = $HOSTNAME"
+    echo "SYSTEM_NAME           = $SYSTEM_NAME"
+    echo "SYSTEM_DESCRIPTION    = $SYSTEM_DESCRIPTION"
+    echo "SYSTEM_MODEL          = $SYSTEM_MODEL_ID: $SYSTEM_MODEL_NUMBER ($SYSTEM_PART_NUMBER)"
+    echo "SYSTEM_SERIAL_NUMBER  = $SYSTEM_SERIAL_NUMBER"
+    echo "CPU                   = $SYSTEM_CPU_CHIP $SYSTEM_CPU_FREQ × $SYSTEM_CPU_CORES"
+    echo "OS                    = $SYSTEM_OS $SYSTEM_OS_VERSION $SYSTEM_OS_CODENAME ($SYSTEM_KERNEL $SYSTEM_KERNEL_VERSION)"
+    echo "TERMINAL              = ${TERM_PROGRAM} $TERM_PROGRAM_VERSION"  # Maybe use $LC_TERMINAL and $LC_TERMINAL_VERSION instead.
+    echo "SHELL                 = ${SHELL_NAME} $SHELL_VERSION"
+    echo "UPTIME                = $(uptime | awk '{print $3 " " $4}' | tr -d ,)"
+    echo "FREE MEMORY           = $(free_ram) of $SYSTEM_RAM"
+    echo "FREE STORAGE          = $(disk_space | sed -E 's/Mi?/ MiB/g' | sed -E 's/Gi?/ GiB/g')"
 fi
