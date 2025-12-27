@@ -1,5 +1,8 @@
 # TODO: Add some color. See https://www.nano-editor.org/dist/v3/nanorc.5.html for details.
 
+# Allow specifying line numbers, like `nano filename:123`.
+set colonparsing
+
 # Use 4-character wide tabs.
 set tabsize 4
 
