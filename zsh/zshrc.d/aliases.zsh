@@ -153,5 +153,18 @@ elif command-exists doggo ; then
     alias dig=doggo
 fi
 
+# Devstral is a local LLM from Mistral AI for coding tasks.
+alias devstral='llama-mtmd-cli \
+    --model unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF/Devstral-Small-2-24B-Instruct-2512-UD-Q4_K_XL.gguf \
+    --mmproj unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF/mmproj-F16.gguf \
+    --threads -1 \
+    --ctx-size 65536 \
+    --n-gpu-layers 99 \
+    --seed 3407 \
+    --prio 2 \
+    --temp 0.15 \
+    --min-p 0.01 \
+    --jinja'
+
 # Aliases for voice control.
 alias Get='git'
