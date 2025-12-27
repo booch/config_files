@@ -1,0 +1,64 @@
+{
+	"darkMode": "light",
+	"scale": 2,
+	"locale": "en-US",
+	"quickWindowPosition": {
+		"absolutePointInWorkspace": {
+			"x": 561,
+			"y": 343
+		},
+		"monitor": {
+			"accelerometerSupport": "unknown",
+			"bounds": {
+				"x": 0,
+				"y": 0,
+				"width": 1728,
+				"height": 1117
+			},
+			"colorDepth": 30,
+			"colorSpace": "{primaries:BT709, transfer:SRGB_HDR, matrix:RGB, range:FULL}",
+			"depthPerComponent": 10,
+			"detected": true,
+			"displayFrequency": 120.00000762939453,
+			"id": 1,
+			"internal": true,
+			"label": "Built-in Retina Display",
+			"maximumCursorSize": {
+				"width": 0,
+				"height": 0
+			},
+			"monochrome": false,
+			"nativeOrigin": {
+				"x": 0,
+				"y": 0
+			},
+			"rotation": 0,
+			"scaleFactor": 2,
+			"size": {
+				"width": 1728,
+				"height": 1117
+			},
+			"workArea": {
+				"x": 0,
+				"y": 38,
+				"width": 1728,
+				"height": 1079
+			},
+			"workAreaSize": {
+				"width": 1728,
+				"height": 1079
+			},
+			"touchSupport": "unknown"
+		},
+		"relativePointFromMonitor": {
+			"x": 561,
+			"y": 305
+		}
+	},
+	"userThemeMode": "system",
+	"dxt:allowlistEnabled": false,
+	"dxt:allowlistLastUpdated": "2025-12-09T00:58:16.600Z",
+	"dxt:allowlistCache": "djEwX6cb5Q8nZ/hWsfnWg+jXDbzJqsu/GEDnaqdHp0pRGCegUa5lvQbQ3wnfKJ4N/rVmxYoxyJUpJPAeBRdTkaxNoGk9CSv4rbySdbmK9Fak4KG1mlvdap1z4LO9OkaZNAfkI0MRxnu7MFzV5XZ0VCM3dMOPsTDqk6OAvGxyHVDytmHZCfiHmb5ZTa6uE+GA3JnQUciGMi8j6UqyIPEU8bAUeOQH3A8tk/bWK3HjAXqTa6nqWoM8Zpk+qOtXmXwc06oBODR98lHjOJMwlZlqNDCIpi+i9BUDi/yJoC/AGgWayLvgSun8d2QzS2EGY01JRyxkMuGDImiBOuwxE6L0vHpOpL42Ra1CGaaGtphVWDArOc745EpkMh76AqyNltPyR9kEpUaWZK0hZNgR4Hms2HZuU3oSK0Sd/dAxfhLnFOUTNaPlflp7Jm8Ze4AvbcS/kF3uGIggdNk2BWC6/RYwcG8vdAQdUl3cO+PJQBhbRs7EkUw=",
+	"hasTrackedInitialActivation": true,
+	"oauth:tokenCache": "djEwhH3b3/D8mq8xJNxHOoehnEaucr0VTOXCLNbGsemgzZzfdTda7cUwKdc8/jLxmK0Wh7Johl/iUGTA3DtOw7MwcZfxXsDBC/7PlK3OJ/quGUXMSpzuYH3mqxRI/WSToZCBMiHdtI518b/5tYU4/nkJxYNe0hJyOqnmlRdI3UQeSg8fDhNmSQWMiRUNsh7BwrHhaxL6pOe6dmhMRf4NDqBfPfITnl2eK1jf3tdMS85orL2OJD0fZGbt1CNMXQwjP39WDQjtlGXHy6/BkvaVXadYZo0YpXdWYCghbRT2ulKfuWoXAXVDU7eVAzK3ZMnf5wg5k41b7dP/q5COvEaPAtvAEUeEAGzKGhaposg3njriLPaQPSNB9xKR/D/+wXFOahj5XDlgiK99b+qK+hY4ip213GbO/j7bMwPv+dzvCrCJRi0="
+}

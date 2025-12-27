@@ -1,0 +1,123 @@
+{
+  "globalShortcut": "Alt+Space",
+  "mcpServers": {
+    "airbnb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@openbnb/mcp-server-airbnb",
+        "--ignore-robots-txt"
+      ]
+    },
+    "applescript": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@peakmojo/applescript-mcp"
+      ]
+    },
+    "calculator": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-calculator"
+      ]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ]
+    },
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git"
+      ]
+    },
+    "iterm": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "iterm-mcp"
+      ]
+    },
+    "json": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@gongrzhe/server-json-mcp"
+      ]
+    },
+    "mermaid": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "https://github.com/abekdwight/mermaid-mcp-server"
+      ]
+    },
+    "obsidian": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "obsidian-mcp",
+        "/Users/craigbuchek/Documents/Personal"
+      ]
+    },
+    "pandoc": {
+      "command": "uvx",
+      "args": [
+        "mcp-pandoc"
+      ]
+    },
+    "perplexity": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "server-perplexity-ask"
+      ],
+      "env": {
+        "PERPLEXITY_API_KEY": "${input:perplexity-key}"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@executeautomation/playwright-mcp-server"
+      ]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "siri-shortcuts": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-server-siri-shortcuts"
+      ]
+    },
+    "whois": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@bharathvaj/whois-mcp@latest"
+      ]
+    },
+    "wikipedia": {
+      "command": "uvx",
+      "args": [
+        "git+https://github.com/rudra-ravi/wikipedia-mcp.git"
+      ]
+    }
+  },
+  "preferences": {
+    "quickEntryDictationShortcut": "capslock",
+    "chillingSlothLocation": {
+      "customPath": "/Users/craigbuchek/.local/share/claude/worktrees"
+    }
+  }
+}

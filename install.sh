@@ -85,6 +85,8 @@ ln_sfT "$CWD/atom" "$HOME/.atom"
 
 ln_sf "$CWD/postgresql/psqlrc" "$HOME/.psqlrc"
 
+ln_sfT "$CWD/claude" "$HOME/.claude"
+
 if [ "$(uname)"x = "Darwin"x ]; then
     mkdir -p "$HOME/Library/KeyBindings"
     ln_sf "$CWD/keyboard/DefaultKeyBinding.Dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.Dict"

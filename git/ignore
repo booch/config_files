@@ -18,3 +18,5 @@ vendor/bundle
 
 # GPG
 secring.*
+
+**/.claude/settings.local.json
