@@ -319,6 +319,7 @@
     what = show -w
     whatis = show -s --pretty=oneline-details --date=short
     whatsnew = log origin/main@{1}..origin/main@{0}
+    whatchanged = log --raw  # Git 3.0 will remove `whatchanged`, suggests this replacement.
     which-branches-contain = branch -a --contains
     which-tags-contain = name-rev --name-only
     who = shortlog -s --no-merges --numbered --
