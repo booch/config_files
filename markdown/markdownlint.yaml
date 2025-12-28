@@ -34,3 +34,10 @@ blanks-around-lists: false
 # Most Markdown editors don't handle indented code blocks correctly, requiring manually numbering lists.
 ol-prefix:
     style: "one_or_ordered"
+
+# Allow headings to include trailing punctuation. (MD026)
+no-trailing-punctuation: false
+
+# Allow multiple headings with the same name. (MD024)
+# For example, CHANGELOG will have "Changed", "Added", and "Fixed" sections for each version.
+no-duplicate-heading: false

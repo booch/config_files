@@ -37,7 +37,13 @@
         // Most Markdown editors don't handle indented code blocks correctly, requiring manually numbering lists.
         "ol-prefix": {
             "style": "one_or_ordered"
-        }
+        },
+
+        // Allow headings to include trailing punctuation. (MD026)
+        "no-trailing-punctuation": false,
+
+        // Allow duplicate headers. Especially useful in Changelogs. (MD024)
+        "no-duplicate-header": false
     },
 
     // Custom rules
