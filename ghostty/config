@@ -1,0 +1,48 @@
+# Use a light theme with a nice full color palette.
+theme = iTerm2 Tango Light
+# Set background to light tan.
+background = #ebebd8
+# But keep native MacOS title bar style/color.
+macos-titlebar-style = native
+
+# Use a larger font for better readability.
+font-size = 20
+
+# Start with a 120x30 window size.
+window-width = 120
+window-height = 30
+
+# Make cursor a bit more visible.
+adjust-cursor-thickness = 2
+
+# FIXME: This doesn't seem to work (except in non-focused windows). Maybe there's something in my Zsh startup files.
+cursor-style = block
+
+# Hide the mouse immediately when typing.
+mouse-hide-while-typing = true
+
+# Allow a **lot** of scrollback buffer.
+scrollback-limit = 100000
+
+# Allow clicking on URLs (with Command) to open them.
+link-url = true
+
+# Require confirmation before pasting text that appears unsafe.
+clipboard-paste-protection = true
+clipboard-paste-bracketed-safe = false
+
+# Don't automatically copy selected text to the clipboard.
+copy-on-select = false
+
+# Quit Ghostty 10 seconds after the last window is closed.
+quit-after-last-window-closed = true
+quit-after-last-window-closed-delay = 10s
+
+# Give a lot more time for operations to stay in the Undo stack.
+undo-timeout = 48h
+
+# Enable all shell integration features.
+shell-integration-features = cursor, sudo, title, ssh-env, ssh-terminfo
+
+# Dim unfocused splits a bit more than the default.
+unfocused-split-opacity = 0.45
