@@ -13,14 +13,34 @@
 	// 	"description": "Log output to console"
 	// }
 
-	"debugger": {
-		"description": "Debugger (Ruby 3)",
+	"breakpoint": {
+		"description": "Debugger (Ruby 3 Debug) breakpoint",
 		"prefix": [
-			"pry",
-			"debug"
+            "break",
+            "breakpoint",
+            "debug",
+            "debugger" // NOTE: Debug provides `debugger` as an alias of `binding.break`.
+        ],
+		"body": [
+            "binding.break"
+        ]
+	},
+	"pry": {
+		"description": "Debugger (Pry) breakpoint",
+		"prefix": [
+			"pry"
 		],
 		"body": [
-			"debugger"
+			"binding.pry"
+		]
+	},
+	"byebug": {
+		"description": "Debugger (Byebug) breakpoint",
+		"prefix": [
+			"byebug"
+		],
+		"body": [
+			"byebug"
 		]
 	}
 }
