@@ -1,50 +1,153 @@
 {
-  "model": "opus",
-  "permissions": {
-    "allow": [
-        "Edit:*.md",
-        "Edit:*.rb",
-        "Edit:Gemfile",
-        "Edit:.rubocop.yml",
-        "Write:*.md",
-        "Write:*.rb",
-        "Write:Gemfile",
-        "Write:.rubocop.yml",
-        "Bash(bundle exec rspec:*)",
-        "Bash(bundle exec rubocop:*)",
-        "Bash(cat:*)",
-        "Bash(echo:*)",
-        "Bash(fi)",
-        "Bash(git --no-pager add:*)",
-        "Bash(git --no-pager branch:*)",
-        "Bash(git --no-pager commit:*)",
-        "Bash(git --no-pager diff:*)",
-        "Bash(git --no-pager log:*)",
-        "Bash(git --no-pager ls-files:*)",
-        "Bash(git --no-pager reset:*)",
-        "Bash(git --no-pager show:*)",
-        "Bash(git --no-pager status:*)",
-        "Bash(head:*)",
-        "Bash(ls:*)",
-        "Bash(make:*)",
-        "Bash(tail:*)",
-        "Bash(test:*)",
-        "WebSearch"
-    ],
-    "ask": [
+    "model": "opus",
+    "permissions": {
+        "allow": [
+            "Edit:*.md",
+            "Edit:*.rb",
+            "Edit:Gemfile",
+            "Edit:Gemfile.lock",
+            "Edit:.rubocop.yml",
 
-    ],
-    "deny": [
-      "Bash(rm -rf:*)",
-      "Read(./.env)",
-      "Read(./.env.*)",
-      "Read(./secrets/**)",
-      "Read(~/.ssh)"
-    ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/cc-statusline-rs"
-  }
+            "Edit:*.js",
+            "Edit:*.jsx",
+            "Edit:*.ts",
+            "Edit:*.tsx",
+            "Edit:*.json",
+            "Edit:*.mjs",
+            "Edit:*.cjs",
+            "Edit:.eslintrc*",
+            "Edit:.prettierrc*",
 
+            "Edit:*.py",
+            "Edit:*.pyi",
+            "Edit:pyproject.toml",
+            "Edit:requirements*.txt",
+            "Edit:.flake8",
+
+            "Edit:*.sh",
+            "Edit:*.bash",
+            "Edit:*.zsh",
+
+            "Edit:Makefile",
+            "Edit:*.yaml",
+            "Edit:*.yml",
+            "Edit:*.toml",
+
+            "Write:*.md",
+            "Write:*.rb",
+            "Write:Gemfile",
+            "Write:Gemfile.lock",
+            "Write:.rubocop.yml",
+
+            "Write:*.js",
+            "Write:*.jsx",
+            "Write:*.ts",
+            "Write:*.tsx",
+            "Write:*.json",
+            "Write:*.mjs",
+            "Write:*.cjs",
+            "Write:.eslintrc*",
+            "Write:.prettierrc*",
+
+            "Write:*.py",
+            "Write:*.pyi",
+            "Write:pyproject.toml",
+            "Write:requirements*.txt",
+            "Write:.flake8",
+
+            "Write:*.sh",
+            "Write:*.bash",
+            "Write:*.zsh",
+
+            "Write:Makefile",
+            "Write:*.yaml",
+            "Write:*.yml",
+            "Write:*.toml",
+
+            "Bash(bundle exec rspec:*)",
+            "Bash(bundle exec rubocop:*)",
+            "Bash(bundle install:*)",
+            "Bash(bundle update:*)",
+            "Bash(cat:*)",
+            "Bash(echo:*)",
+            "Bash(fi)",
+            "Bash(git --no-pager add:*)",
+            "Bash(git --no-pager branch:*)",
+            "Bash(git --no-pager commit:*)",
+            "Bash(git --no-pager diff:*)",
+            "Bash(git --no-pager log:*)",
+            "Bash(git --no-pager ls-files:*)",
+            "Bash(git --no-pager reset:*)",
+            "Bash(git --no-pager show:*)",
+            "Bash(git --no-pager stash:*)",
+            "Bash(git --no-pager status:*)",
+            "Bash(head:*)",
+            "Bash(ls:*)",
+            "Bash(make:*)",
+            "Bash(mkdir:*)",
+            "Bash(tail:*)",
+            "Bash(test:*)",
+            "Bash(npm run:*)",
+            "Bash(npm test:*)",
+            "Bash(npx jest:*)",
+            "Bash(npx vitest:*)",
+            "Bash(npx eslint:*)",
+            "Bash(npx prettier:*)",
+            "Bash(npx tsc:*)",
+            "Bash(node:*)",
+            "Bash(pytest:*)",
+            "Bash(python -m pytest:*)",
+            "Bash(python -m:*)",
+            "Bash(ruff check:*)",
+            "Bash(ruff format:*)",
+            "Bash(black:*)",
+            "Bash(flake8:*)",
+            "Bash(mypy:*)",
+            "Bash(shellcheck:*)",
+            "Bash(shfmt:*)",
+            "WebSearch"
+        ],
+        "ask": [
+            "Bash(npm install:*)",
+            "Bash(npm i:*)",
+            "Bash(pip install:*)",
+            "Bash(pip3 install:*)",
+            "Bash(gem install:*)",
+            "Bash(docker:*)",
+            "Bash(curl:*)",
+            "Bash(wget:*)",
+            "WebFetch"
+        ],
+        "deny": [
+            "Read(./.env)",
+            "Read(./.env.*)",
+            "Read(./secrets/**)",
+            "Read(~/.ssh)",
+
+            "Bash(rm -f:*)",
+            "Bash(rm -rf:*)",
+            "Bash(npm publish:*)",
+            "Bash(gem push:*)",
+            "Bash(pip upload:*)",
+            "Bash(git push --force:*)",
+            "Bash(git push -f:*)"
+        ]
+    },
+    "hooks": {
+        "PostToolUse": [
+            {
+                "matcher": "Edit|Write",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "~/.config/claude/hooks/auto-format.sh"
+                    }
+                ]
+            }
+        ]
+    },
+    "statusLine": {
+        "type": "command",
+        "command": "~/.claude/cc-statusline-rs"
+    }
 }

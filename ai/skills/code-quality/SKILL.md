@@ -1,6 +1,6 @@
 ---
 name: code-quality
-description: Code quality guidelines including naming, structure, and maintainability. This skill should be used when writing or reviewing code to ensure it meets quality standards.
+description: Code quality guidelines including naming, structure, and maintainability. This skill should be used when writing or reviewing code to ensure it meets quality standards. Use proactively when discussing naming conventions, code smells, readability, Sandi Metz rules, method length, class size, comments, refactoring for clarity, or maintainability concerns. (user)
 ---
 
 # Code Quality

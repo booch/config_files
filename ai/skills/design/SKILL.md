@@ -1,6 +1,6 @@
 ---
 name: design
-description: Software design principles and patterns. This skill should be used when making architectural decisions, designing classes or modules, or evaluating code structure.
+description: Software design principles and patterns. This skill should be used when making architectural decisions, designing classes or modules, or evaluating code structure. Use proactively when discussing SOLID principles, coupling, cohesion, connascence, refactoring structure, class design, module boundaries, dependency injection, or the Four Rules of Simple Design. (user)
 ---
 
 # Software Design

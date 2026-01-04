@@ -1,6 +1,6 @@
 ---
 name: security
-description: Security guidelines for secure coding and code review. This skill should be used when architecting/designing systems, writing code, or reviewing code.
+description: Security guidelines for secure coding and code review. This skill should be used when architecting/designing systems, writing code, or reviewing code. Use proactively when discussing vulnerabilities, OWASP, injection attacks, XSS, CSRF, SQL injection, authentication, authorization, access control, encryption, secrets management, input validation, or secure coding practices. (user)
 ---
 
 # Security

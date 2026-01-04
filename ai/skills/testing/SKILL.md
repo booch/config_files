@@ -1,6 +1,6 @@
 ---
 name: testing
-description: Testing philosophy and practices. This skill should be used when writing tests, designing test strategies, or reviewing test code.
+description: Testing philosophy and practices. This skill should be used when writing tests, designing test strategies, or reviewing test code. Use proactively when discussing TDD, red-green-refactor, test doubles, mocks, stubs, fakes, RSpec, Jest, pytest, unit tests, integration tests, test coverage, or test-first development. (user)
 ---
 
 # Testing

@@ -1,6 +1,6 @@
 ---
 name: sdlc
-description: Software development lifecycle guidance. This skill should be used when planning development work, conducting code reviews, or establishing development workflows.
+description: Software development lifecycle guidance. This skill should be used when planning development work, conducting code reviews, or establishing development workflows. Use proactively when reviewing code, preparing commits, creating pull requests, refactoring, or discussing development process and best practices. (user)
 ---
 
 # Software Development Lifecycle
