@@ -148,6 +148,6 @@
     },
     "statusLine": {
         "type": "command",
-        "command": "~/.claude/cc-statusline-rs"
+        "command": "bash ~/.claude/statusline.sh"
     }
 }
