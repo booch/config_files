@@ -1,6 +1,50 @@
 {
+  "model": "opus",
+  "permissions": {
+    "allow": [
+        "Edit:*.md",
+        "Edit:*.rb",
+        "Edit:Gemfile",
+        "Edit:.rubocop.yml",
+        "Write:*.md",
+        "Write:*.rb",
+        "Write:Gemfile",
+        "Write:.rubocop.yml",
+        "Bash(bundle exec rspec:*)",
+        "Bash(bundle exec rubocop:*)",
+        "Bash(cat:*)",
+        "Bash(echo:*)",
+        "Bash(fi)",
+        "Bash(git --no-pager add:*)",
+        "Bash(git --no-pager branch:*)",
+        "Bash(git --no-pager commit:*)",
+        "Bash(git --no-pager diff:*)",
+        "Bash(git --no-pager log:*)",
+        "Bash(git --no-pager ls-files:*)",
+        "Bash(git --no-pager reset:*)",
+        "Bash(git --no-pager show:*)",
+        "Bash(git --no-pager status:*)",
+        "Bash(head:*)",
+        "Bash(ls:*)",
+        "Bash(make:*)",
+        "Bash(tail:*)",
+        "Bash(test:*)",
+        "WebSearch"
+    ],
+    "ask": [
+
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(~/.ssh)"
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/cc-statusline-rs"
   }
+
 }
