@@ -6,7 +6,7 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       options = {
-        theme = 'auto',
+        theme = 'boochtek',
         icons_enabled = vim.g.have_nerd_font,
         component_separators = '│',
         section_separators = '',
