@@ -56,3 +56,10 @@ fi
 # If terminfo says we have true-color, set COLORTERM.
 zmodload -s zsh/terminfo
 [[ $terminfo[Tc] == yes && -z $COLORTERM ]] && export COLORTERM='truecolor'
+
+# Set up shell integration with the terminal.
+ITERM_SHELL_INTEGRATION="${ITERM_SHELL_INTEGRATION-$XDG_DATA_HOME/iterm2}"
+ITERM_SHELL_INTEGRATION_SCRIPT="${ITERM_SHELL_INTEGRATION_SCRIPT-$ITERM_SHELL_INTEGRATION/iterm2_shell_integration.${SHELL##*/}}"
+[[ "$TERM_PROGRAM" == 'iTerm.app' ]] && [[ -f "$ITERM_SHELL_INTEGRATION_SCRIPT" ]] && source "$ITERM_SHELL_INTEGRATION_SCRIPT"
+
+[[ "$TERM_PROGRAM" == 'vscode' ]] && source "$(code --locate-shell-integration-path "${SHELL##*/}")"
