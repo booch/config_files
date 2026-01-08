@@ -111,6 +111,36 @@ vim.opt.packpath = vim.o.runtimepath
 vim.g.skip_colors_vim = nil
 vim.cmd 'source ~/.vimrc'
 
+-- Override vimrc settings that interfere with Neovim shift+cursor behavior
+-- The vimrc sets selectmode=mouse,key which we need to override
+vim.o.selectmode = ""  -- Disable select mode for keys
+vim.o.keymodel = ""    -- Disable special shift behaviors
+
+-- Re-apply shift+cursor mappings after vimrc loads (since vimrc may have overridden them)
+-- Normal mode: enter visual mode and move
+vim.keymap.set('n', '<S-Up>', 'v<Up>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Down>', 'v<Down>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Left>', 'v<Left>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Right>', 'v<Right>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Home>', 'v^', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-End>', 'v$', { noremap = true, silent = true })
+
+-- Visual mode: extend selection
+vim.keymap.set('v', '<S-Up>', '<Up>', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Down>', '<Down>', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Left>', '<Left>', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Right>', '<Right>', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Home>', '^', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-End>', '$', { noremap = true, silent = true })
+
+-- Insert mode: exit insert, enter visual, move
+vim.keymap.set('i', '<S-Up>', '<Esc>v<Up>', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-Down>', '<Esc>v<Down>', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-Left>', '<Esc>v<Left>', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-Right>', '<Esc>v<Right>', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-Home>', '<Esc>v^', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-End>', '<Esc>v$', { noremap = true, silent = true })
+
 -- Enable markdown syntax highlighting (fallback if treesitter doesn't work)
 vim.g.markdown_fenced_languages = { 'bash', 'sh', 'shell=sh', 'ruby', 'python', 'javascript', 'js=javascript', 'lua', 'vim' }
 

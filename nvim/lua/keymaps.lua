@@ -51,4 +51,46 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Shift+cursor keys to select text (enter visual mode if not already in it)
+-- Neovim receives Shift+cursor keys correctly, we just need to map them properly
+-- The trick is that Neovim defaults may interfere, so we need to be explicit
+
+-- First, ensure we're not in select mode behaviors that might interfere
+vim.o.selectmode = ""  -- Don't use select mode
+vim.o.keymodel = ""    -- Don't use special shift behaviors
+
+-- Normal mode: enter visual mode and move
+vim.keymap.set('n', '<S-Up>', 'v<Up>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Down>', 'v<Down>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Left>', 'v<Left>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Right>', 'v<Right>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Home>', 'v^', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-End>', 'v$', { noremap = true, silent = true })
+
+-- Visual mode: extend selection with Shift+cursor
+vim.keymap.set('v', '<S-Up>', '<Up>', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Down>', '<Down>', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Left>', '<Left>', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Right>', '<Right>', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Home>', '^', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-End>', '$', { noremap = true, silent = true })
+
+-- Visual mode: cancel selection with unshifted cursor keys (like most editors)
+vim.keymap.set('v', '<Up>', '<Esc><Up>', { noremap = true, silent = true })
+vim.keymap.set('v', '<Down>', '<Esc><Down>', { noremap = true, silent = true })
+vim.keymap.set('v', '<Left>', '<Esc><Left>', { noremap = true, silent = true })
+vim.keymap.set('v', '<Right>', '<Esc><Right>', { noremap = true, silent = true })
+vim.keymap.set('v', '<Home>', '<Esc><Home>', { noremap = true, silent = true })
+vim.keymap.set('v', '<End>', '<Esc><End>', { noremap = true, silent = true })
+vim.keymap.set('v', '<PageUp>', '<Esc><PageUp>', { noremap = true, silent = true })
+vim.keymap.set('v', '<PageDown>', '<Esc><PageDown>', { noremap = true, silent = true })
+
+-- Insert mode: exit insert, enter visual, move
+vim.keymap.set('i', '<S-Up>', '<Esc>v<Up>', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-Down>', '<Esc>v<Down>', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-Left>', '<Esc>v<Left>', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-Right>', '<Esc>v<Right>', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-Home>', '<Esc>v^', { noremap = true, silent = true })
+vim.keymap.set('i', '<S-End>', '<Esc>v$', { noremap = true, silent = true })
+
 -- vim: ts=2 sts=2 sw=2 et
