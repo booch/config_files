@@ -1,0 +1,15 @@
+# Style name or path to JSON file (default "auto")
+style: "auto"
+# Don't support mouse wheel in TUI mode
+mouse: false
+# No pager by default; use `-p` option for that
+pager: false
+# Word wrap at column 100.
+width: 100
+# Show all files, including hidden and ignored
+all: true
+# Show line numbers (TUI only)
+showLineNumbers: true
+# Don't preserve newlines in the output
+preserveNewLines: false
+

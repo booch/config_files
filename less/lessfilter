@@ -1,0 +1,18 @@
+#!/bin/bash
+# ~/.lessfilter - preprocessor for lesspipe.sh
+
+case "$1" in
+    *.md|*.MD|*.mkd|*.markdown)
+        if command -v glow >/dev/null 2>&1; then
+            # NOTE: Glow needs the CLICOLOR_FORCE to enable color output to a non-TTY.
+            # NOTE: Glow won't output color to a non-TTY if style is set to `auto`.
+            CLICOLOR_FORCE=1 glow --style=light "$1"
+            exit 0
+        elif command -v bat >/dev/null 2>&1; then
+            bat --color=always --style=plain "$1"
+            exit 0
+        fi
+        ;;
+esac
+
+exit 1

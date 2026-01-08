@@ -78,6 +78,7 @@ ln_sfT "$CWD/mc" "$HOME/.mc"
 ln_sf "$CWD/nano/nanorc" "$HOME/.nanorc"
 ln_sfT "$CWD/nano" "$HOME/.nano"
 
+ln_sf "$CWD/less/lessfilter" "$HOME/.local/bin/lessfilter"
 ln_sf "$CWD/vim/vimrc" "$HOME/.vimrc"
 ln_sfT "$CWD/vim" "$HOME/.vim"
 
