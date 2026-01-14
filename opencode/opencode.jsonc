@@ -1,0 +1,61 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "model": "openai/chatgpt-5.2",
+  "small_model": "openai/chatgpt-5.2",
+
+  "tui": {
+    // Scroll speed is ignored if scroll acceleration is enabled.
+    "scroll_speed": 2,
+    "scroll_acceleration": {
+      "enabled": false
+    },
+    "diff_style": "auto"
+  },
+
+  "tools": {
+    "bash": true,
+    "write": true
+  },
+
+  "permission": {
+    "bash": "ask",
+    "edit": "ask",
+    // TODO: LSP is experimental. Set OPENCODE_EXPERIMENTAL_LSP_TOOL='true'.
+    "lsp": "allow",
+    "skill": "allow",
+    "task": {
+      "*": "ask",
+      "code-reviewer": "allow"
+    },
+    "webfetch": "allow",
+    "question": "allow"
+  },
+
+  "agent": {
+    "plan": {
+      "tools": {
+        "bash": false,
+        "write": false
+      },
+      "permissions": {
+        "bash": {
+          "*": "ask",
+          "ls": "allow",
+          "git status": "allow",
+          "git log": "allow",
+          "git diff": "allow"
+        },
+        "write": "ask",
+        "webfetch": "allow"
+      }
+    }
+  },
+
+  "watcher": {
+    "ignore": ["node_modules/**", "dist/**", ".git/**", ".jj/**"]
+  },
+
+  "mcp": {}
+}
+
