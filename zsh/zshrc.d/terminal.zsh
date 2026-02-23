@@ -49,7 +49,9 @@ fi
 [ -n "${TERM-}" ] || export TERM='xterm-256color'
 
 # Use local terminfo, if it exists.
-if [ "$TERMINFO" != "$HOME/.terminfo" ] && [ -e "$HOME/.terminfo/$TERM[1]/$TERM" ]; then
+if [ "$TERMINFO" != "$XDG_DATA_HOME/terminfo" ] && [ -e "$XDG_DATA_HOME/terminfo/$TERM[1]/$TERM" ]; then
+    export TERMINFO="$XDG_DATA_HOME/terminfo"
+elif [ "$TERMINFO" != "$HOME/.terminfo" ] && [ -e "$HOME/.terminfo/$TERM[1]/$TERM" ]; then
     export TERMINFO="$HOME/.terminfo"
 fi
 
