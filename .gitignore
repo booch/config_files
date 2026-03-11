@@ -1,6 +1,10 @@
 *~
 \#*#
 
+/OLD
+/karabiner/automatic_backups/
+
+
 /docker/bin
 /docker/buildx
 /docker/cli-plugins
@@ -27,6 +31,13 @@
 /vim/bundle
 
 /zed/embeddings
+
+/claude/cache
+/claude/config.json
+/claude/plugins/blocklist.json
+/claude/plugins/install-counts-cache.json
+/claude/plugins/installed_plugins.json
+/claude/plugins/known_marketplaces.json
 
 # Used by VS Code markdown-preview-enhanced plugin:
 /crossnote
