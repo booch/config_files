@@ -1,1 +1,1 @@
-../ai/AGENTS.md
+/Users/craigbuchek/.config/ai/AGENTS.md
