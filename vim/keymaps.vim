@@ -197,10 +197,10 @@ vmap <C-k> [egv==
 vmap <C-j> ]egv==
 
 " Movement up and down when lines are wrapped
-imap <silent> <Down> <C-o>gj
-imap <silent> <Up> <C-o>gk
-nmap <silent> <Down> gj
-nmap <silent> <Up> gk
+inoremap <silent> <Down> <C-o>gj
+inoremap <silent> <Up> <C-o>gk
+nnoremap <silent> <Down> gj
+nnoremap <silent> <Up> gk
 
 " Gundo configuration
 nmap <F5> :GundoToggle<CR>

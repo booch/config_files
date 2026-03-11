@@ -1,8 +1,9 @@
-"" Load Vundle
-filetype off
-set rtp+=~/.config/vim/bundle/vundle/
-call vundle#rc()
-Plugin 'gmarik/vundle'
+"" Load Vundle (only in regular Vim, not Neovim)
+if !has('nvim')
+  filetype off
+  set rtp+=~/.config/vim/bundle/vundle/
+  call vundle#rc()
+  Plugin 'gmarik/vundle'
 
 
 " CtrlP. See docs at http://kien.github.io/ctrlp.vim/.
@@ -51,12 +52,12 @@ Plugin 'scrooloose/nerdtree'
 
 
 "" Rainbow parentheses - color each matching set of parens differently.
-Plugin 'kien/rainbow_parentheses.vim'
-" Enable by default.
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+  Plugin 'kien/rainbow_parentheses.vim'
+  " Enable by default (only in regular Vim, not Neovim).
+  au VimEnter * RainbowParenthesesToggle
+  au Syntax * RainbowParenthesesLoadRound
+  au Syntax * RainbowParenthesesLoadSquare
+  au Syntax * RainbowParenthesesLoadBraces
 
 
 " Snippet manager and a big pile of "standard" snippets.
@@ -98,4 +99,5 @@ Plugin 'mileszs/ack.vim'
 Plugin 'mg979/vim-visual-multi'
 
 
-filetype on
+  filetype on
+endif
