@@ -43,7 +43,11 @@
         "no-trailing-punctuation": false,
 
         // Allow duplicate headers. Especially useful in Changelogs. (MD024)
-        "no-duplicate-header": false
+        "no-duplicate-header": false,
+
+        // Allow *emphasis* to be different than _italic_, even if they end up rendering the same. (MD049)
+        // I treat them as *semantically* different.
+        "emphasis-style": false
     },
 
     // Custom rules
@@ -65,7 +69,7 @@
     "ignores": ["ignore*.md"],
 
     // Use a plugin to recognize math
-    "markdownItPlugins": [["@iktakahiro/markdown-it-katex"]],
+    // "markdownItPlugins": [["@iktakahiro/markdown-it-katex"]],
 
     // Additional paths to resolve module locations from
     "modulePaths": ["./modules"],

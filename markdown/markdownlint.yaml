@@ -32,8 +32,10 @@ blanks-around-lists: false
 
 # Allow ordered lists to start at any number. (MD029)
 # Most Markdown editors don't handle indented code blocks correctly, requiring manually numbering lists.
+# This is not working, so I've disabled it.
 ol-prefix:
-    style: "one_or_ordered"
+    # style: "one_or_ordered"
+    false
 
 # Allow headings to include trailing punctuation. (MD026)
 no-trailing-punctuation: false
@@ -41,3 +43,7 @@ no-trailing-punctuation: false
 # Allow multiple headings with the same name. (MD024)
 # For example, CHANGELOG will have "Changed", "Added", and "Fixed" sections for each version.
 no-duplicate-heading: false
+
+# Allow *emphasis* to be different than _italic_, even if they end up rendering the same. (MD049)
+# I treat them as *semantically* different.
+emphasis-style: false
