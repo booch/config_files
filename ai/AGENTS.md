@@ -218,7 +218,9 @@ When creating commits for work done with AI assistance, include git trailers to 
 
 Format: `<Trailer>: <Model Name> (<model-id>) via <tool> (<version>)`
 
-Example: `AI-Assisted-By: Claude Sonnet 4.5 (claude-sonnet-4-5-20250514) via Claude Code (1.0.33)`
+Determine the tool version dynamically (e.g., `claude --version` for Claude Code). Do not hardcode versions from examples.
+
+Example: `AI-Assisted-By: Claude Sonnet 4.5 (claude-sonnet-4-5-20250514) via Claude Code (2.1.72)`
 
 **Note:** AI attribution trailers may exceed the 72-character line limit. This is acceptable.
 
