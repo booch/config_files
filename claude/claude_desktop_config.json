@@ -115,9 +115,20 @@
     }
   },
   "preferences": {
-    "quickEntryDictationShortcut": "capslock",
+    "menuBarEnabled": false,
+    "quickEntryShortcut": {
+      "accelerator": "Alt+Space"
+    },
+    "quickEntryDictationShortcut": "off",
     "chillingSlothLocation": {
       "customPath": "/Users/craigbuchek/.local/share/claude/worktrees"
-    }
+    },
+    "localAgentModeTrustedFolders": [
+      "/Users/craigbuchek/openwrt-setup"
+    ],
+    "coworkScheduledTasksEnabled": true,
+    "sidebarMode": "chat",
+    "coworkWebSearchEnabled": true,
+    "ccdScheduledTasksEnabled": true
   }
 }
