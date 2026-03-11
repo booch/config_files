@@ -1,6 +1,6 @@
 ALIASES = {
   qq: "exit",
-#  qqq: "exit-all",
+  #  qqq: "exit-all",
   rr: -> { reload! }, # Reload Rails app.
   ss: "show-source",
   xx: "exit-program",
@@ -12,25 +12,25 @@ ALIASES = {
 }.compact
 
 AMAZING_PRINT_COLORS = {
-  args:       :pale,
-  array:      :white,
+  args: :pale,
+  array: :white,
   bigdecimal: :blue,
-  class:      :yellow,
-  date:       :greenish,
+  class: :yellow,
+  date: :greenish,
   falseclass: :red,
-  integer:    :blue,
-  float:      :blue,
-  hash:       :pale,
-  keyword:    :cyan,
-  method:     :purpleish,
-  nilclass:   :red,
-  rational:   :blue,
-  string:     :yellowish,
-  struct:     :pale,
-  symbol:     :cyanish,
-  time:       :greenish,
-  trueclass:  :green,
-  variable:   :cyanish
+  integer: :blue,
+  float: :blue,
+  hash: :pale,
+  keyword: :cyan,
+  method: :purpleish,
+  nilclass: :red,
+  rational: :blue,
+  string: :yellowish,
+  struct: :pale,
+  symbol: :cyanish,
+  time: :greenish,
+  trueclass: :green,
+  variable: :cyanish
 }
 
 
@@ -41,14 +41,14 @@ if STDIN.tty?
   end
   Pry.config.prompt = Pry::Prompt[:boochtek]
   puts "YAY!"
-#  Pry.config.prompt = [
-#    proc { |target_self, nesting_level, pry|
-#      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}> "
-#    },
-#    proc { |target_self, nesting_level, pry|
-#      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}* "
-#    }
-#  ]
+  #  Pry.config.prompt = [
+  #    proc { |target_self, nesting_level, pry|
+  #      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}> "
+  #    },
+  #    proc { |target_self, nesting_level, pry|
+  #      "[#{pry.input_ring.size}] (#{Pry.view_clip(target_self)})#{":#{nesting_level}" unless nesting_level.zero?}* "
+  #    }
+  #  ]
 end
 
 
@@ -89,21 +89,21 @@ begin
   # Force use of `less` as our pager, and allow color.
   ENV["PAGER"] = "less -RX"
 
-  # Hook into Pry, so Pry output will automatically use `AmazingPrint.ap`.
-  # NOTE: This does what `AmazingPrint.pry!` does, but doesn't override auto-pagination.
-  # TODO: See https://github.com/awesome-print/awesome_print/issues/347 if has been fixed.
-  Pry.config.print = proc do |_output, value, pry|
-    # Don't show Array indexes, and indent 2, so it looks like normal Ruby.
-    # TODO: Once https://github.com/awesome-print/awesome_print/issues/209 is fixed:
-    #         * We should move this out of the `Pry.config.print` block.
-    #         * We can remove the AMAZING_PRINT_COLORS, unless we want to customize them.
-    AmazingPrint.defaults = {
-      index: false,
-      indent: 2,
-      color: AMAZING_PRINT_COLORS
-    }
-    pry.pager.page(value.amazing_inspect)
-  end
+  # # Hook into Pry, so Pry output will automatically use `AmazingPrint.ap`.
+  # # NOTE: This does what `AmazingPrint.pry!` does, but doesn't override auto-pagination.
+  # # TODO: See https://github.com/awesome-print/awesome_print/issues/347 if has been fixed.
+  # Pry.config.print = proc { |_output, value, pry|
+  #   # Don't show Array indexes, and indent 2, so it looks like normal Ruby.
+  #   # TODO: Once https://github.com/awesome-print/awesome_print/issues/209 is fixed:
+  #   #         * We should move this out of the `Pry.config.print` block.
+  #   #         * We can remove the AMAZING_PRINT_COLORS, unless we want to customize them.
+  #   AmazingPrint.defaults = {
+  #     index: false,
+  #     indent: 2,
+  #     color: AMAZING_PRINT_COLORS
+  #   }
+  #   pry.pager.page(amazing_print(value))
+  # }
 rescue LoadError
   puts "Can't find amazing_print. :("
 end
@@ -112,4 +112,3 @@ end
 ## Rails
 # Load Rails config if we're running Rails console.
 load "~/.railsrc" if defined?(Rails) && Rails.env
-
