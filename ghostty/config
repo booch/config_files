@@ -21,8 +21,9 @@ cursor-style = block
 # Hide the mouse immediately when typing.
 mouse-hide-while-typing = true
 
-# Allow a **lot** of scrollback buffer.
-scrollback-limit = 100000
+# Allow a **lot** of scrollback buffer. Note that this is in bytes, per tab
+# 20 MB per tab seems reasonable, and gets us probably ~100,000 lines.
+scrollback-limit = 20000000
 
 # Allow clicking on URLs (with Command) to open them.
 link-url = true
@@ -41,8 +42,8 @@ quit-after-last-window-closed-delay = 10s
 # Give a lot more time for operations to stay in the Undo stack.
 undo-timeout = 48h
 
-# Enable all shell integration features.
-shell-integration-features = cursor, sudo, title, ssh-env, ssh-terminfo
+# Enable all shell integration features. Note: ssh-env won't run if ssh-terminfo works.
+shell-integration-features = cursor,sudo,title,ssh-terminfo,ssh-env
 
 # Dim unfocused splits a bit more than the default.
 unfocused-split-opacity = 0.45
