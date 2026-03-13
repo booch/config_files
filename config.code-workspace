@@ -1,0 +1,10 @@
+{
+  "folders": [
+    { "name": "Config Files", "path": "." },
+    { "name": "Mac Setup", "path": "../mac_setup" }
+    { "name": "PayNearMe Setup", "path": "../pnm_setup" }
+  ],
+
+  "settings": {
+  }
+}
