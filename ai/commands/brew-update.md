@@ -10,11 +10,9 @@ Update Homebrew and all installed packages. Provide a summary of what was update
 
 2. Run `brew outdated` to capture the list of outdated packages BEFORE upgrading. Save this list — you'll need it for the summary.
 
-3. **Before running `brew upgrade`**, warn the user with this exact message (use yellow/amber ANSI color and bold):
+3. **Before running `brew upgrade`**, warn the user:
 
-   **\033[1;33m⚠️  HEADS UP: The upgrade may trigger a Touch ID or sudo password prompt. Some cask upgrades (e.g. git-credential-manager) require elevated privileges. Keep an eye out for a system dialog.\033[0m**
-
-   Wait for the user to acknowledge before proceeding.
+   **HEADS UP: The upgrade may trigger a Touch ID or sudo password prompt. Some cask upgrades require elevated privileges.**
 
 4. Run `brew upgrade` to upgrade all outdated formulae and casks. Use a 10-minute timeout.
 
