@@ -1,0 +1,23 @@
+---
+# Usql configuration
+# Based on my psqlrc settings.
+# I'd prefer `\pset format wrapped`, but it breaks for psql DBs.
+init: |
+  \set QUIET 1
+  \pset border 2
+  \pset format aligned
+  \pset expanded auto
+  \pset linestyle unicode
+  \pset footer on
+  \pset null '[NULL]'
+  \pset pager on
+  \timing on
+  \set PROMPT1 '\033[31m%S%M %n@%~%R%#\033[0m '
+  \set PROMPT2 '\033[31m[more] %R\033[0m '
+  \set FETCH_COUNT 100
+  \set HISTCONTROL ignoreboth
+  \set HISTSIZE 1000
+  \set COMP_KEYWORD_CASE upper
+  \set VERBOSITY verbose
+  \set SYNTAX_HL_STYLE colorful
+  \unset QUIET

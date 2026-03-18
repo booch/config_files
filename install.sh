@@ -62,7 +62,7 @@ ln_sf "$CWD/ruby/default-gems" "$HOME/.default-gems"
 ln_sf "$CWD/js/jscsrc" "$HOME/.jscsrc"
 ln_sf "$CWD/js/jshintrc" "$HOME/.jshintrc"
 
-ln_sf "$CWD/racket/racketrc" "$HOME/.racketrc"
+link_dir "$CWD/usql" "$HOME/Library/Application Support/usql"
 
 ln_sf "$CWD/markdown/markdownlint.yaml" "$HOME/.markdownlint.yaml"
 ln_sf "$CWD/markdown/markdownlint-cli2.jsonc" "$HOME/.markdownlint-cli2.jsonc"
