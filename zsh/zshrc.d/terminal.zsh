@@ -65,3 +65,7 @@ ITERM_SHELL_INTEGRATION_SCRIPT="${ITERM_SHELL_INTEGRATION_SCRIPT-$ITERM_SHELL_IN
 [[ "$TERM_PROGRAM" == 'iTerm.app' ]] && [[ -f "$ITERM_SHELL_INTEGRATION_SCRIPT" ]] && source "$ITERM_SHELL_INTEGRATION_SCRIPT"
 
 [[ "$TERM_PROGRAM" == 'vscode' ]] && source "$(code --locate-shell-integration-path "${SHELL##*/}")"
+
+if [[ "$TERM_PROGRAM" == 'ghostty' && -n $GHOSTTY_RESOURCES_DIR ]]; then
+  source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
+fi

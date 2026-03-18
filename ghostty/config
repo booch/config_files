@@ -15,7 +15,7 @@ window-height = 30
 # Make cursor a bit more visible.
 adjust-cursor-thickness = 2
 
-# FIXME: This doesn't seem to work (except in non-focused windows). Maybe there's something in my Zsh startup files.
+# WARNING: This won't work with Shell Integration unless you have "no-cursor" in the `shell-integration-features` setting.
 cursor-style = block
 
 # Hide the mouse immediately when typing.
@@ -42,8 +42,9 @@ quit-after-last-window-closed-delay = 10s
 # Give a lot more time for operations to stay in the Undo stack.
 undo-timeout = 48h
 
-# Enable all shell integration features. Note: ssh-env won't run if ssh-terminfo works.
-shell-integration-features = cursor,sudo,title,ssh-terminfo,ssh-env
+# Enable most shell integration features. Note: ssh-env won't run if ssh-terminfo works.
+# WARNING: "no-cursor" is required for the `cursor-style` setting to work properly.
+shell-integration-features = no-cursor,sudo,title,ssh-terminfo,ssh-env
 
 # Dim unfocused splits a bit more than the default.
 unfocused-split-opacity = 0.45
