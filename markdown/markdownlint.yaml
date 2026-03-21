@@ -1,3 +1,7 @@
+# WARNING: SINGLE SOURCE OF TRUTH FOR MARKDOWNLINT SETTINGS.
+# WARNING: DO NOT EDIT DERIVED FILES BY HAND.
+# WARNING: AFTER ANY CHANGE HERE, RUN `codex /markdownlint-sync`.
+#
 # Start with the default set of rules turned on.
 default: true
 

@@ -1,9 +1,11 @@
-// NOTE: This is for the VS Code markdownlint extension, which uses markdownlint-cli2.
-//       The markdownlint-cli version I'm using uses the markdownlint.yaml file.
-//       Don't forget to edit BOTH files when making changes!
-
+// WARNING: DO NOT EDIT HERE.
+// WARNING: THIS FILE IS SYNCED FROM `~/.config/markdown/markdownlint.yaml`.
+// WARNING: THIS FILE IS NOT THE SOURCE OF TRUTH.
+// WARNING: MAKE CHANGES IN THE SOURCE FILE, THEN RUN `codex /markdownlint-sync`.
 {
     "config": {
+        "default": true,
+
         // I edit a lot of Markdown, some with Setext (underlines), some with ATX (hashes), so I'm allowing either. (MD003)
         // I personally prefer to use Setext for H1 (and sometimes H2), and ATX for everything else.
         // But I'm mostly using ATX for everything now; it's easier to type, and has become the de facto standard.
@@ -11,7 +13,7 @@
 
         // Set list indentation to 4 spaces. (MD007)
         "ul-indent": {
-            "indent": 4
+            "indent": 4,
         },
 
         // Don't worry about lines longer than 80 characters. (MD013)
@@ -36,18 +38,19 @@
         // Allow ordered lists to start at any number. (MD029)
         // Most Markdown editors don't handle indented code blocks correctly, requiring manually numbering lists.
         "ol-prefix": {
-            "style": "one_or_ordered"
+            "style": "one_or_ordered",
         },
 
         // Allow headings to include trailing punctuation. (MD026)
         "no-trailing-punctuation": false,
 
-        // Allow duplicate headers. Especially useful in Changelogs. (MD024)
-        "no-duplicate-header": false,
+        // Allow multiple headings with the same name. (MD024)
+        // For example, CHANGELOG will have "Changed", "Added", and "Fixed" sections for each version.
+        "no-duplicate-heading": false,
 
         // Allow *emphasis* to be different than _italic_, even if they end up rendering the same. (MD049)
         // I treat them as *semantically* different.
-        "emphasis-style": false
+        "emphasis-style": false,
     },
 
     // Custom rules
@@ -87,5 +90,5 @@
     "outputFormatters": [["markdownlint-cli2-formatter-default"]],
 
     // Show found files on stdout (only valid at root)
-    "showFound": true
+    "showFound": true,
 }
