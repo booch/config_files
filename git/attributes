@@ -1,7 +1,18 @@
 # Make sure we don't accidentally encrypt or otherwise filter our .gitattributes files.
 .gitattributes !filter !diff
 
-Gemfile.lock merge=Gemfile.lock
+# Use semantic merge driver (weave/mergiraf) for all files.
+# This must be near the top — later lines override earlier ones in gitattributes.
+* merge=semantic
+
+# Special handling for merge conflicts in specific files.
+Gemfile.lock text merge=Gemfile.lock
+package-lock.json text merge=package-lock.json
+node_modules/.package-lock.json text merge=package-lock.json
+yarn.lock text merge=yarn.lock
+
+# TODO: Use either `text` or `binary` for each entry.
+
 *.plist diff=plist
 *.strings diff=localizablestrings
 *.zip diff=zip
