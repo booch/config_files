@@ -123,18 +123,48 @@ if [ ! "$(uname -s)" = 'Darwin' ]; then
     alias pbpaste='xsel --clipboard --output'
 fi
 
-# Pipe ripgrep (rg) output to `delta`, unless output is being piped elsewhere.
-# BUG: delta (as of 0.18.2) is not printing the stats, and has no way to change separators.
-# NOTE: delta (as of 0.18.2) grep output is way behind git output as far as nice formatting.
-#       For example, line numbers don't look nice, file names aren't nicely formatted, etc.
+# Pipe ripgrep (rg) output through `delta`, unless output is being piped elsewhere (no tty, so `[[ -t 1 ]]` is false).
+# Uses delta's subcommand support (0.19.0+) with grep styles matching our git diff config.
+# The perl filter cleans up the gutter:
+#   - Right-aligns line numbers to 3 characters wide
+#   - Replaces : separator (match lines) with :│
+#   - Replaces - separator (context lines) with  │
+# These work around delta's broken --grep-separator-symbol in ripgrep JSON mode.
+_rg_gutter_filter='
+    my $E = "\x1b";                    # ESC byte
+    my $CSI = "$E\\[";                 # CSI: ESC [
+    my $OSC8 = "$E\\]8;;$E\\\\";      # OSC 8 hyperlink close: ESC ]8;; ESC \
+    s/ ($CSI [\d;]+m) (\d{1,2}) ($CSI 0m $E\]8) / $1 . sprintf("%3d", $2) . $3 /xeo;
+    s/ $OSC8 \K : /:│ /xo;
+    s/ $OSC8 \K - / │ /xo;
+'
 _rg() {
     if [[ -t 1 ]]; then
-        command rg "$@" | less
+        local dark_or_light='--light'
+        defaults read -g AppleInterfaceStyle &>/dev/null && dark_or_light='--dark'
+        {
+            delta \
+                "$dark_or_light" \
+                rg "$@" \
+                | perl -pe "$_rg_gutter_filter"
+            echo '\n------'
+            command rg --stats -q "$@" 2>/dev/null | grep -v 'bytes printed'
+        } | less -RFX -p '•'
     else
         command rg "$@"
     fi
 }
 alias rg=_rg
+
+# Pipe `diff` output through `delta` for syntax-highlighted unified diffs.
+_diff() {
+    if [[ -t 1 ]]; then
+        command diff -u "$@" | delta
+    else
+        command diff -u "$@"
+    fi
+}
+alias diff=_diff
 
 # The kubernetes Oh My ZSH plugin adds `k` and a ton of other aliases, but the rest aren't used much.
 alias k='kubectl'
@@ -168,3 +198,10 @@ alias devstral='llama-mtmd-cli \
 
 # Aliases for voice control.
 alias Get='git'
+
+# Zsh-you-should-use reminds you to use aliases you have defined.
+source "$(brew --prefix)/share/zsh-you-should-use/you-should-use.plugin.zsh"
+alias stats='check_alias_usage'
+
+# Aliases to open projects
+alias job-hunting="osascript -e 'tell application \"Hammerspoon\" to execute lua code \"setupJobHuntingEnvironment()\"'"

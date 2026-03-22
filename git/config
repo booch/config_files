@@ -23,6 +23,9 @@
 	# Use a light color palette.
 	blame-palette = "lightcyan lightsteelblue powderblue skyblue plum thistle lavender lavenderblush pink wheat papayawhip lemonchiffon whitesmoke gainsboro silver"
 	blame-format = "{commit:>8} {author:<18} {timestamp:^16}"
+	grep-header-file-style = bold darkblue
+	grep-header-decoration-style = bold darkblue box
+	grep-line-number-style = darkblue
 [delta "plain"]
 	line-numbers = false  # BUG: As of 0.18.2, blank lines are not counted.
 	side-by-side = false
