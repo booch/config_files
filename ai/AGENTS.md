@@ -1,7 +1,7 @@
 # AI Agent Instructions
 
 This document provides high-level guidance for AI agents.
-It's stored in ~/.config/ai/AGENTS.md, with ~/.claude/CLAUDE.md as a soft link.
+It's stored in ~/.config/ai/AGENTS.md, with ~/.claude/CLAUDE.md as a soft link, via ~/.config/claude/.
 
 ## Laws of AI
 
@@ -225,3 +225,27 @@ Example: `AI-Assisted-By: Claude Sonnet 4.5 (claude-sonnet-4-5-20250514) via Cla
 **Note:** AI attribution trailers may exceed the 72-character line limit. This is acceptable.
 
 **Note:** When using these trailers, a `Co-Authored-By:` trailer should **not** be included (unless there was a 2nd human collaborator).
+
+## HTML Generation
+
+When generating HTML output (briefings, reports, documentation, etc.), prefer writing **Markdown first**, then converting to HTML. This saves tokens and keeps content editable.
+
+Use `md2html` (`~/.local/bin/md2html`) for conversion. It's a Bun wrapper around markdown-it with extensions for `==highlights==`, footnotes, task lists, and heading anchors:
+
+```bash
+# Convert to HTML file
+md2html input.md -o output.html
+
+# Pipe directly to browser without saving HTML
+md2html input.md --open
+
+# Use custom CSS
+md2html input.md --css style.css --open
+
+# Read from stdin
+cat input.md | md2html --open
+```
+
+Use embedded HTML within Markdown only when needed (images with sizing, styled callout boxes, tables with specific formatting, etc.).
+
+This approach applies to any HTML generation task.
