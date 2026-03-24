@@ -4,7 +4,7 @@ description: Generate a morning briefing with calendar, projects, email, news, a
 
 # Morning Briefing
 
-Generate a comprehensive morning briefing. Write it as Markdown, convert to HTML via `pandoc`, and open it.
+Generate a comprehensive morning briefing. Write it as Markdown (stored for history), convert to HTML via `md2html`, and open it in the browser.
 
 ## Configuration
 
@@ -22,7 +22,7 @@ Source `config.sh` from the config directory to load all settings.
 
 ## Steps
 
-Delegate to subagents for independent data gathering (steps 1-5 can run in parallel). Then synthesize everything into the final briefing (step 6).
+Delegate to subagents for independent data gathering (steps 1-6 can run in parallel). Then synthesize everything into the final briefing (step 7).
 
 ### 1. Calendar
 
@@ -38,7 +38,7 @@ Read `~/Personal/Projects/Current.md` (also check `~/Documents/Personal/Projects
 Parse the **In Progress** section. For each item:
 
 - Extract the project name and any sub-items
-- Items with `==highlights==` (Obsidian syntax) indicate priority items — flag them prominently
+- Items with `==highlights==` (Obsidian syntax) deserve attention — flag them prominently in the briefing
 - Items with `✔️` checkmarks indicate completed sub-tasks
 - If the item links to another file (e.g., `Grammy.md`, `Stone.md`), read that file and extract:
   - Recent changes or updates
@@ -51,7 +51,7 @@ Parse the **In Progress** section. For each item:
 - Create calendar reminders for deadline items that don't already have calendar events
 
 Synthesize into a "Where You Left Off" summary:
-- Priority items (highlighted)
+- Items that deserve attention (highlighted)
 - Items near completion (most sub-items checked off)
 - Upcoming deadlines
 - Items with uncommitted git changes
@@ -78,9 +78,7 @@ Personal accounts (when `MORNING_SCRIPT_CONTEXT` matches the personal Mac):
 Work accounts (when `MORNING_SCRIPT_CONTEXT` matches the work Mac):
 - (configured in config file)
 
-### 4. News Summaries
-
-#### General News (target: ~1 printed page)
+### 4. General News (target: ~1 printed page)
 
 Use the RSS MCP (`rss-mcp`) to fetch from configured general news feeds. Also use web search to fill gaps.
 
@@ -94,7 +92,7 @@ For each story: headline, 1-2 sentence summary, source, link, and an image URL i
 
 Curate to ~8-10 stories. Prioritize diversity of topics and sources.
 
-#### Tech News (target: ~2 printed pages)
+### 5. Tech News (target: ~2 printed pages)
 
 Use the RSS MCP to fetch from configured tech feeds:
 - Ars Technica
@@ -114,16 +112,18 @@ For each story: headline, 1-2 sentence summary, source, link, and relevance tag 
 
 Curate to ~15-20 stories. Group by topic.
 
-### 5. Homebrew Updates
+### 6. Homebrew Updates
 
 Delegate to the `/brew-update` command. Capture its output for inclusion in the briefing.
 
-### 6. Generate the Briefing
+### 7. Generate and Open the Briefing
 
-Write the briefing as **Markdown** and convert to HTML using `pandoc`.
+Write the briefing as **Markdown** and save it for history. Then convert to HTML and open it in the browser.
 
-**Markdown file**: `${XDG_DATA_HOME:-$HOME/.local/share}/morning-briefing/YYYY-MM-DD.md`
-**HTML file**: `${XDG_DATA_HOME:-$HOME/.local/share}/morning-briefing/YYYY-MM-DD.html`
+**Markdown file** (stored permanently):
+```
+${XDG_DATA_HOME:-$HOME/.local/share}/morning-briefing/YYYY-MM-DD.md
+```
 
 Create the directory if it doesn't exist.
 
@@ -136,7 +136,7 @@ Create the directory if it doesn't exist.
 [Today's events, then noteworthy upcoming]
 
 ## Where You Left Off
-[Priority items, near-completion, deadlines, uncommitted work]
+[Attention items, near-completion, deadlines, uncommitted work]
 
 ## Email
 ### [account 1] (N unread)
@@ -160,59 +160,32 @@ Create the directory if it doesn't exist.
 
 Use embedded HTML within Markdown where needed (images with sizing, styled callout boxes for urgent items, etc.).
 
-**Convert to HTML**:
+**Convert and open** (no need to save the HTML):
 ```bash
-pandoc --standalone --metadata title="Morning Briefing" \
-    -f markdown -t html \
-    -o "$OUTPUT_DIR/YYYY-MM-DD.html" \
-    "$OUTPUT_DIR/YYYY-MM-DD.md"
+OUTPUT_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/morning-briefing"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/morning-briefing"
+TODAY=$(date +%Y-%m-%d)
+
+md2html "$OUTPUT_DIR/$TODAY.md" --open
+# Or with custom CSS:
+# md2html "$OUTPUT_DIR/$TODAY.md" --css "$CONFIG_DIR/style.css" --open
 ```
 
-If a custom CSS file exists at `${XDG_CONFIG_HOME:-$HOME/.config}/morning-briefing/style.css`, use it:
-```bash
-pandoc --standalone --css="$CONFIG_DIR/style.css" ...
-```
-
-Otherwise, use pandoc's default styling. The HTML should be:
-- Clean, minimal, easy to read
-- Links open in new tabs
-- Print-friendly
-- Responsive
-
-### 7. Open the Briefing
-
-```bash
-open "${XDG_DATA_HOME:-$HOME/.local/share}/morning-briefing/YYYY-MM-DD.html"
-```
-
-This opens the file in the default browser and brings it to the foreground.
+The `md2html` tool handles `==highlights==`, footnotes, task lists, embedded HTML, and wraps output in a full HTML document with clean default CSS.
 
 ## Bootstrap (First Run)
 
-If the config directory doesn't exist, create it with starter files:
+If the config directory doesn't exist, create it with starter config files and tell the user to customize them. The config system works as follows:
 
-### `config.sh`
-```bash
-#!/bin/bash
-CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/morning-briefing"
-MORNING_SCRIPT_CONTEXT=$(hostname | cut -d'.' -f1)
+`config.sh` is the entry point — it sources all other config files in order. Each file has a single responsibility:
 
-[[ -f "$CONFIG_DIR/context.env" ]] && source "$CONFIG_DIR/context.env"
-[[ -f "$CONFIG_DIR/email.env" ]] && source "$CONFIG_DIR/email.env"
-[[ -f "$CONFIG_DIR/news.sh" ]] && source "$CONFIG_DIR/news.sh"
-[[ -f "$CONFIG_DIR/local.env" ]] && source "$CONFIG_DIR/local.env"
-```
+- **`config.sh`** — Entry point. Detects machine context, sources other config files, sets defaults for anything not yet configured. The `/morning` command sources this first.
+- **`context.env`** — Machine-specific settings. Maps hostname to `MORNING_AI_PROVIDER` (`claude` or `openai`). Also sets the output directory and any machine-specific overrides.
+- **`email.env`** — IMAP account list per context (personal vs work). Defines server hostnames and usernames. Passwords are never stored here — they're fetched from 1Password at runtime via `op read`.
+- **`news.sh`** — RSS feed URLs for general and tech news. Defines how many items per feed, calendar lookahead days, and keywords for "noteworthy" events.
+- **`local.env`** — Optional. Git-ignored. For anything you don't want in version control (local overrides, temporary settings).
 
-### `context.env`
-Machine detection and AI provider selection. Set `MORNING_AI_PROVIDER` to `claude` or `openai` based on hostname.
-
-### `email.env`
-IMAP account list, servers, usernames. Passwords fetched from 1Password at runtime.
-
-### `news.sh`
-RSS feed URLs for general and tech news. Calendar lookahead days and important keywords.
-
-On first run, generate these files with sensible defaults and tell the user to customize them.
+On first run, generate these files with sensible defaults populated from this command's configuration (email accounts, news sources, etc.) and tell the user which values they should verify or customize.
 
 ## Automation
 
@@ -234,9 +207,11 @@ A launchd plist at `~/Library/LaunchAgents/com.craigbuchek.morning-briefing.plis
 ## Subagent Delegation
 
 Use subagents for parallel data gathering:
-- **Subagent 1**: Homebrew updates (delegate to `/brew-update`)
-- **Subagent 2**: Email summaries (IMAP MCP)
-- **Subagent 3**: News aggregation (RSS MCP + web search)
-- **Subagent 4**: Calendar + project status (CalDAV MCP + file reading + git)
+- **Subagent 1**: Calendar (CalDAV MCP or icalBuddy)
+- **Subagent 2**: Project status (file reading + git)
+- **Subagent 3**: Email summaries (IMAP MCP)
+- **Subagent 4**: General news (RSS MCP + web search)
+- **Subagent 5**: Tech news (RSS MCP + web search)
+- **Subagent 6**: Homebrew updates (delegate to `/brew-update`)
 
 The main agent synthesizes all subagent results into the final Markdown document.
