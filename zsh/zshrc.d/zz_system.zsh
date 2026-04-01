@@ -35,13 +35,13 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export SYSTEM_OS_CODENAME="$(awk '/SOFTWARE LICENSE AGREEMENT FOR/ { print $7 }' '/System/Library/CoreServices/Setup Assistant.app/Contents/Resources/en.lproj/OSXSoftwareLicense.rtf' | tr -d '\')"
     export SYSTEM_NAME="$(/usr/sbin/networksetup -getcomputername)"
     export SYSTEM_DESCRIPTION="$(ioreg -r -k product-description | awk -F '[=<>"]' '/product-description/ {print $(NF-2)}')"
-    export SYSTEM_CPU_CHIP="$(system_profiler SPHardwareDataType | awk -F ': ' '/Chip/ {print $2}')"
+    export SYSTEM_CPU_CHIP="$(system_profiler SPHardwareDataType 2> /dev/null | awk -F ': ' '/Chip/ {print $2}')"
     export SYSTEM_CPU_FREQ="$(sysctl -n hw.tbfrequency | awk '{print $0/10000000}') GHz"
     export SYSTEM_CPU_CORES="$(sysctl -n hw.physicalcpu)"
     export SYSTEM_RAM="$(sysctl -n hw.memsize | awk '{print $0/1073741824}') GiB"
 
     export SYSTEM_MODEL_ID="$(sysctl -n hw.model)"
-    export SYSTEM_SERIAL_NUMBER="$(system_profiler SPHardwareDataType | awk -F ': ' '/Serial Number/ {print $2}')"
+    export SYSTEM_SERIAL_NUMBER="$(system_profiler SPHardwareDataType 2> /dev/null | awk -F ': ' '/Serial Number/ {print $2}')"
 
     # Model number and part number are surprisingly difficult to get, despite being etched on bottom of computer.
     # The best source I found was https://en.wikipedia.org/wiki/MacBook_Pro_(Apple_silicon)#Technical_specifications_2.
