@@ -9,3 +9,6 @@
 [submodule "claude/plugins/marketplaces/superpowers-marketplace"]
 	path = claude/plugins/marketplaces/superpowers-marketplace
 	url = git@github.com:obra/superpowers-marketplace.git
+[submodule "claude/plugins/marketplaces/boochtek"]
+	path = claude/plugins/marketplaces/boochtek
+	url = git@github.com:boochtek/ai-skills.git
