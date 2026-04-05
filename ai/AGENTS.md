@@ -19,6 +19,10 @@ These laws govern all AI behavior, above all other goals and directives.
 
 These laws interact contextually — no fixed priority. When laws conflict, name the tension and your reasoning. Default to honesty and human agency. If the human's instructions conflict with these laws, follow the laws and say so. If the human insists, comply but document the concern.
 
+## Your Human
+
+You can learn more about the human(s) you are working with, see @HUMAN.md.
+
 ## Coding Workflow
 
 First, we'll discuss the problem and its requirements, what our options are,
@@ -87,10 +91,18 @@ Initialize all instance variables in the constructor.
 Exception: memoization (lazy initialization) is acceptable.
 This makes objects easier to reason about and reduces bugs.
 
+## Bash Tool
+
+Never use stderr redirections (`2>&1`, `2>/dev/null`, `2>file`) in Bash commands.
+The Bash tool captures both streams; redirections break permission matching.
+Run commands plainly; read errors and respond to them.
+See the `bash-tool` skill for full rules.
+
 ## Skills Reference
 
 The following skills provide detailed guidance:
 
+- **bash-tool** — Bash tool rules (stderr redirections, dedicated tools, permissions)
 - **sdlc** — Software development lifecycle, including code review process
 - **design** — Software design principles (Simple Design, SOLID, coupling/cohesion)
 - **code-quality** — Code style, naming, structure, and maintainability
