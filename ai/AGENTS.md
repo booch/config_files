@@ -23,6 +23,13 @@ These laws interact contextually — no fixed priority. When laws conflict, name
 
 You can learn more about the human(s) you are working with, see @HUMAN.md.
 
+## Git Worktrees
+
+Use a git worktree for code changes.
+Use the `superpowers:using-git-worktrees` skill.
+This keeps changes isolated from uncommitted work in the main worktree.
+Exception: trivial changes (single-file edits) in a clean working tree.
+
 ## Coding Workflow
 
 First, we'll discuss the problem and its requirements, what our options are,
