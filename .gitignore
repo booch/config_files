@@ -34,10 +34,11 @@
 
 /claude/cache
 /claude/config.json
-/claude/plugins/blocklist.json
-/claude/plugins/install-counts-cache.json
-/claude/plugins/installed_plugins.json
-/claude/plugins/known_marketplaces.json
+# Plugins are managed by install.sh, not git.
+/claude/plugins/*
+!/claude/plugins/marketplaces/
+/claude/plugins/marketplaces/*
+!/claude/plugins/marketplaces/boochtek/
 
 # Used by VS Code markdown-preview-enhanced plugin:
 /crossnote

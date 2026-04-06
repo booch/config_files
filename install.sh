@@ -88,6 +88,57 @@ ln_sf "$CWD/postgresql/psqlrc" "$HOME/.psqlrc"
 
 ln_sfT "$CWD/claude" "$HOME/.claude"
 
+# Claude Code: install plugin marketplaces and plugins.
+# Boochtek marketplace is a git submodule, not managed here.
+if command -v claude >/dev/null; then
+    claude plugins marketplace add anthropics/claude-plugins-official
+    claude plugins install agent-sdk-dev@claude-plugins-official
+    claude plugins install claude-code-setup@claude-plugins-official
+    claude plugins install claude-md-management@claude-plugins-official
+    claude plugins install code-review@claude-plugins-official
+    claude plugins install code-simplifier@claude-plugins-official
+    claude plugins install commit-commands@claude-plugins-official
+    claude plugins install feature-dev@claude-plugins-official
+    claude plugins install frontend-design@claude-plugins-official
+    claude plugins install github@claude-plugins-official
+    claude plugins install gitlab@claude-plugins-official
+    claude plugins install hookify@claude-plugins-official
+    claude plugins install huggingface-skills@claude-plugins-official
+    claude plugins install kotlin-lsp@claude-plugins-official
+    claude plugins install linear@claude-plugins-official
+    claude plugins install lua-lsp@claude-plugins-official
+    claude plugins install playground@claude-plugins-official
+    claude plugins install playwright@claude-plugins-official
+    claude plugins install plugin-dev@claude-plugins-official
+    claude plugins install pr-review-toolkit@claude-plugins-official
+    claude plugins install pyright-lsp@claude-plugins-official
+    claude plugins install ruby-lsp@claude-plugins-official
+    claude plugins install security-guidance@claude-plugins-official
+    claude plugins install skill-creator@claude-plugins-official
+    claude plugins install slack@claude-plugins-official
+    claude plugins install superpowers@claude-plugins-official
+    claude plugins install swift-lsp@claude-plugins-official
+    claude plugins install typescript-lsp@claude-plugins-official
+    claude plugins install vercel@claude-plugins-official
+
+    claude plugins marketplace add anthropics/skills
+    claude plugins install claude-api@anthropic-agent-skills
+    claude plugins install document-skills@anthropic-agent-skills
+    claude plugins install example-skills@anthropic-agent-skills
+
+    claude plugins marketplace add obra/superpowers-marketplace
+    claude plugins install claude-session-driver@superpowers-marketplace
+    claude plugins install double-shot-latte@superpowers-marketplace
+    claude plugins install elements-of-style@superpowers-marketplace
+    claude plugins install episodic-memory@superpowers-marketplace
+    claude plugins install superpowers-developing-for-claude-code@superpowers-marketplace
+    claude plugins install superpowers-lab@superpowers-marketplace
+    claude plugins install superpowers@superpowers-marketplace
+
+    claude plugins marketplace add internetarchive/internet-archive-skills
+    claude plugins install ia@internet-archive-skills
+fi
+
 if [ "$(uname)"x = "Darwin"x ]; then
     mkdir -p "$HOME/Library/KeyBindings"
     ln_sf "$CWD/keyboard/DefaultKeyBinding.Dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.Dict"
