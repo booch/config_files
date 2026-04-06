@@ -137,6 +137,18 @@ if command -v claude >/dev/null; then
 
     claude plugins marketplace add internetarchive/internet-archive-skills
     claude plugins install ia@internet-archive-skills
+
+    claude plugins marketplace add thedotmack/claude-mem
+    claude plugins install claude-mem@thedotmack
+
+    claude plugins marketplace add mksglu/context-mode
+    claude plugins install context-mode@context-mode
+
+    claude plugins marketplace add Lum1104/Understand-Anything
+    claude plugins install understand-anything@understand-anything
+
+    claude plugins marketplace add jarrodwatts/claude-hud
+    claude plugins install claude-hud@claude-hud
 fi
 
 if [ "$(uname)"x = "Darwin"x ]; then
