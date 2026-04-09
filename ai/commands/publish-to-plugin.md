@@ -1,0 +1,1 @@
+../../claude/plugins/marketplaces/boochtek/plugins/boochtek/commands/publish-to-plugin.md
