@@ -1,0 +1,1 @@
+../../../claude/plugins/marketplaces/boochtek/plugins/boochtek/skills/restore-website/SKILL.md
