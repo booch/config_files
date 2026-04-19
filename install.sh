@@ -1,19 +1,21 @@
 #!/bin/bash
 
 # Make certain we're in the directory containing this file.
-cd "$(dirname "$0")" || (echo "$(tput setaf 1)Could not change to script directory$(tput sgr0)" && exit)
+cd "$(dirname "${BASH_SOURCE[0]:-$0}")" || (echo "$(tput setaf 1)Could not change to script directory$(tput sgr0)" && exit)
 
 # Get full path to the directory.
 CWD="$(pwd)"
 
 TODAY="$(date +%Y%m%d)"
 
-# We've added backups of any existing files/directories.
-# This should work for regular files and directories.
-ln_sf() {
+# Symlink a file, backing up any existing regular file.
+# Existing symlinks are replaced silently (idempotent).
+link_file() {
     src="$1"
     dst="$2"
-    if [ -e "$dst" ]; then
+    if [ -L "$dst" ]; then
+        rm "$dst"
+    elif [ -e "$dst" ]; then
         if [ ! -e "${dst}-${TODAY}" ]; then
             mv "$dst" "${dst}-${TODAY}"
         else
@@ -23,10 +25,27 @@ ln_sf() {
     ln -s "$src" "$dst"
 }
 
+# Symlink a directory, backing up any existing directory.
 # We'd use `ln -sfT` on Linux, if we didn't want the backups.
 # According to the macOS man page, `ln -sfF` should work the same, but it does not.
-ln_sfT() {
-    ln_sf "$1" "$2"
+link_dir() {
+    link_file "$1" "$2"
+}
+
+# Migrate a home dotdir (e.g. ~/.gemini) into ~/.config, then symlink back.
+# Preserves existing contents (auth state, etc.) during migration.
+migrate_to_config() {
+    local name="$1"
+    local config_dir="$CWD/$name"
+    local home_dir="$HOME/.$name"
+    mkdir -p "$config_dir"
+    # If the home dotdir is a real directory (not already a symlink), move its contents.
+    if [ -d "$home_dir" ] && [ ! -L "$home_dir" ]; then
+        if [ -n "$(ls -A "$home_dir" 2>/dev/null)" ]; then
+            cp -a "$home_dir"/. "$config_dir"/
+        fi
+    fi
+    link_dir "$config_dir" "$home_dir"
 }
 
 # Create default $XDG_DATA_HOME, $XDG_STATE_HOME, and $XDG_CACHE_HOME.
@@ -35,58 +54,102 @@ mkdir -p "$HOME/.local/share" "$HOME/.local/state" "$HOME/.cache"
 chmod 700 "$HOME/.local/share" "$HOME/.local/state" "$HOME/.cache"
 
 # Link files to where they "belong". Hopefully some day, all commands will support `~/.config` or `$XDG_CONFIG_HOME`.
-ln_sf "$CWD/ack/ackrc" "$HOME/.ackrc"
+link_file "$CWD/ack/ackrc" "$HOME/.ackrc"
 
-ln_sf "$CWD/zsh/zshrc" "$HOME/.zshrc"
-ln_sfT "$CWD/zsh" "$HOME/.zsh"
+link_file "$CWD/zsh/zshrc" "$HOME/.zshrc"
+link_dir "$CWD/zsh" "$HOME/.zsh"
 
-ln_sf "$CWD/bash/aliases" "$HOME/.bash_aliases"
-ln_sf "$CWD/bash/bash_logout" "$HOME/.bash_logout"
-ln_sf "$CWD/bash/bash_profile" "$HOME/.bash_profile"
-ln_sf "$CWD/bash/bashrc" "$HOME/.bashrc"
-ln_sf "$CWD/bash/profile" "$HOME/.profile"
-ln_sfT "$CWD/bash/profile.d" "$HOME/.profile.d"
-ln_sf "$CWD/bash/inputrc" "$HOME/.inputrc"
+link_file "$CWD/bash/aliases" "$HOME/.bash_aliases"
+link_file "$CWD/bash/bash_logout" "$HOME/.bash_logout"
+link_file "$CWD/bash/bash_profile" "$HOME/.bash_profile"
+link_file "$CWD/bash/bashrc" "$HOME/.bashrc"
+link_file "$CWD/bash/profile" "$HOME/.profile"
+link_dir "$CWD/bash/profile.d" "$HOME/.profile.d"
+link_file "$CWD/bash/inputrc" "$HOME/.inputrc"
 
-ln_sfT "$CWD/ruby/bundler" "$HOME/.bundle"
-ln_sf "$CWD/ruby/gemrc" "$HOME/.gemrc"
-ln_sf "$CWD/ruby/pryrc" "$HOME/.pryrc"
-ln_sf "$CWD/ruby/aprc" "$HOME/.aprc"
-ln_sf "$CWD/ruby/railsrc" "$HOME/.railsrc"
-ln_sf "$CWD/ruby/ruby-version" "$HOME/.ruby-version"
-ln_sf "$CWD/ruby/rubocop.yml" "$HOME/.rubocop.yml"
-ln_sf "$CWD/ruby/default-gems" "$HOME/.default-gems"
+link_dir "$CWD/ruby/bundler" "$HOME/.bundle"
+link_file "$CWD/ruby/gemrc" "$HOME/.gemrc"
+link_file "$CWD/ruby/pryrc" "$HOME/.pryrc"
+link_file "$CWD/ruby/aprc" "$HOME/.aprc"
+link_file "$CWD/ruby/railsrc" "$HOME/.railsrc"
+link_file "$CWD/ruby/ruby-version" "$HOME/.ruby-version"
+link_file "$CWD/ruby/rubocop.yml" "$HOME/.rubocop.yml"
+link_file "$CWD/ruby/default-gems" "$HOME/.default-gems"
 
 # NOTE: Global elintrc files are deprecated and give a warning.
-# ln_sf "$CWD/js/eslintrc.yml"             "$HOME/.eslintrc.yml"
-ln_sf "$CWD/js/jscsrc" "$HOME/.jscsrc"
-ln_sf "$CWD/js/jshintrc" "$HOME/.jshintrc"
+# link_file "$CWD/js/eslintrc.yml"             "$HOME/.eslintrc.yml"
+link_file "$CWD/js/jscsrc" "$HOME/.jscsrc"
+link_file "$CWD/js/jshintrc" "$HOME/.jshintrc"
+
+link_file "$CWD/racket/racketrc" "$HOME/.racketrc"
+
+link_file "$CWD/markdown/markdownlint.yaml" "$HOME/.markdownlint.yaml"
+link_file "$CWD/markdown/markdownlint-cli2.jsonc" "$HOME/.markdownlint-cli2.jsonc"
+
+link_file "$CWD/ctags" "$HOME/.ctags"
+
+link_file "$CWD/finicky/finicky.js" "$HOME/.finicky.js"
+
+link_dir "$CWD/docker" "$HOME/.docker"
+
+link_dir "$CWD/mc" "$HOME/.mc"
+
+link_file "$CWD/nano/nanorc" "$HOME/.nanorc"
+link_dir "$CWD/nano" "$HOME/.nano"
+
+link_file "$CWD/less/lessfilter" "$HOME/.local/bin/lessfilter"
+link_file "$CWD/vim/vimrc" "$HOME/.vimrc"
+link_dir "$CWD/vim" "$HOME/.vim"
+
+link_dir "$CWD/atom" "$HOME/.atom"
+
+link_file "$CWD/postgresql/psqlrc" "$HOME/.psqlrc"
 
 link_dir "$CWD/usql" "$HOME/Library/Application Support/usql"
 
-ln_sf "$CWD/markdown/markdownlint.yaml" "$HOME/.markdownlint.yaml"
-ln_sf "$CWD/markdown/markdownlint-cli2.jsonc" "$HOME/.markdownlint-cli2.jsonc"
+## AI tools.
+# Symlink home dotdirs into ~/.config for tools that don't respect XDG.
+migrate_to_config "claude"
+migrate_to_config "gemini"
+migrate_to_config "copilot"
+migrate_to_config "codex"
 
-ln_sf "$CWD/ctags" "$HOME/.ctags"
+# Sync AI agent instructions from ~/.config/ai to tool-specific locations.
+# Source of truth: ~/.config/ai/AGENTS.md
+AI_DIR="$CWD/ai"
 
-ln_sf "$CWD/finicky/finicky.js" "$HOME/.finicky.js"
+# Claude Code: expects CLAUDE.md, plus agents/, skills/, commands/ directories.
+link_file "$AI_DIR/AGENTS.md" "$CWD/claude/CLAUDE.md"
+link_dir "$AI_DIR/agents" "$CWD/claude/agents"
+link_dir "$AI_DIR/skills" "$CWD/claude/skills"
+link_dir "$AI_DIR/commands" "$CWD/claude/commands"
 
-ln_sfT "$CWD/docker" "$HOME/.docker"
+# OpenCode: uses AGENTS.md natively, plus skills/ via Superpowers plugin.
+link_file "$AI_DIR/AGENTS.md" "$CWD/opencode/AGENTS.md"
+link_dir "$AI_DIR/skills" "$CWD/opencode/skills"
 
-ln_sfT "$CWD/mc" "$HOME/.mc"
+# GitHub Copilot CLI: reads copilot-instructions.md from ~/.copilot/.
+link_file "$AI_DIR/AGENTS.md" "$CWD/copilot/copilot-instructions.md"
 
-ln_sf "$CWD/nano/nanorc" "$HOME/.nanorc"
-ln_sfT "$CWD/nano" "$HOME/.nano"
+# GitHub Copilot (VS Code): reads from instructions directory.
+# NOTE: VS Code requires absolute paths in settings.json (no ~ or ${env:HOME}).
+#       The codeGeneration.instructions setting should reference:
+#       /Users/<you>/.config/github-copilot/instructions/agents.md
+mkdir -p "$CWD/github-copilot/instructions"
+link_file "$AI_DIR/AGENTS.md" "$CWD/github-copilot/instructions/agents.md"
 
-ln_sf "$CWD/less/lessfilter" "$HOME/.local/bin/lessfilter"
-ln_sf "$CWD/vim/vimrc" "$HOME/.vimrc"
-ln_sfT "$CWD/vim" "$HOME/.vim"
+# Windsurf: global rules live inside ~/.codeium (mixed state, can't relocate).
+mkdir -p "$HOME/.codeium/windsurf/memories"
+link_file "$AI_DIR/AGENTS.md" "$HOME/.codeium/windsurf/memories/global_rules.md"
 
-ln_sfT "$CWD/atom" "$HOME/.atom"
+# Gemini CLI: expects GEMINI.md in ~/.gemini/ (symlinked to ~/.config/gemini/).
+link_file "$AI_DIR/AGENTS.md" "$CWD/gemini/GEMINI.md"
 
-ln_sf "$CWD/postgresql/psqlrc" "$HOME/.psqlrc"
+# Codex: uses AGENTS.md in ~/.codex/ (symlinked to ~/.config/codex/).
+link_file "$AI_DIR/AGENTS.md" "$CWD/codex/AGENTS.md"
 
-ln_sfT "$CWD/claude" "$HOME/.claude"
+# Zed: uses a different prompt structure. Manual setup may be needed.
+# Consider copying relevant prompts to ~/.config/zed/prompts/.
 
 # Claude Code: install plugin marketplaces and plugins.
 # Boochtek marketplace is a git submodule, not managed here.
@@ -153,10 +216,10 @@ fi
 
 if [ "$(uname)"x = "Darwin"x ]; then
     mkdir -p "$HOME/Library/KeyBindings"
-    ln_sf "$CWD/keyboard/DefaultKeyBinding.Dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.Dict"
-    ln_sf "$CWD/spelling/dictionary.txt" "$HOME/Library/Spelling/LocalDictionary"
+    link_file "$CWD/keyboard/DefaultKeyBinding.Dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.Dict"
+    link_file "$CWD/spelling/dictionary.txt" "$HOME/Library/Spelling/LocalDictionary"
     mkdir -p "$HOME/Library/Application Support/Code"
-    ln_sfT "$CWD/vscode" "$HOME/Library/Application Support/Code/User"
+    link_dir "$CWD/vscode" "$HOME/Library/Application Support/Code/User"
 fi
 
 if [ ! -d vim/bundle/vundle ]; then
