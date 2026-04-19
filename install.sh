@@ -212,6 +212,18 @@ if command -v claude >/dev/null; then
 
     claude plugins marketplace add jarrodwatts/claude-hud
     claude plugins install claude-hud@claude-hud
+
+    claude plugins marketplace add kepano/obsidian-skills
+    claude plugins install obsidian@obsidian-skills
+
+    claude plugins marketplace add WadeWarren/gws-claude-plugin
+    claude plugins install gws@gws-marketplace
+
+    claude plugins marketplace add uditgoenka/autoresearch
+    claude plugins install autoresearch@autoresearch
+
+    claude plugins marketplace add openai/codex-plugin-cc
+    claude plugins install codex@openai-codex
 fi
 
 if [ "$(uname)"x = "Darwin"x ]; then
