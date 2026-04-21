@@ -1,6 +1,16 @@
 #!/bin/bash
 # ~/.lessfilter - preprocessor for lesspipe.sh
 
+# If argument is a directory, list it with eza (or ls as fallback).
+if [[ -d "$1" ]]; then
+    if command -v eza >/dev/null 2>&1; then
+        eza -lahF --no-user --no-permissions --git --group-directories-first --time-style=relative --color=always "$1"
+    else
+        CLICOLOR_FORCE=1 ls -lAFGh "$1"
+    fi
+    exit 0
+fi
+
 case "$1" in
     *.md|*.MD|*.mkd|*.markdown)
         if command -v glow >/dev/null 2>&1; then

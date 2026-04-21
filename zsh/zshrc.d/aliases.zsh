@@ -23,19 +23,18 @@ if [ "$TERM" != "dumb" ]; then
 fi
 
 # Some more `ls` aliases. Use `eza` if it's available.
-# TODO: Pipe these to `less -FX` (don't clear screen, exit if one screen).
-#       Use this style: https://stackoverflow.com/a/39395740/26311
+# `l` uses less for everything; ~/.lessfilter handles directories via eza.
+l() { less "${@:-.}"; }
+
 if command-exists eza ; then
     # TODO: Set EZA_COLORS. See https://man.archlinux.org/man/extra/eza/eza_colors-explanation.5.en
     # Eza has no way to suppress showing the source of soft links, so fall back to `ls`.
     alias l1='ls -1A'
-    alias l='eza -lahF --no-user --no-permissions --git --group-directories-first --time-style=relative'
     alias ll='eza -lahoF --git --group-directories-first --time-style=long-iso'
     alias ltr='eza -lahF --no-user --no-permissions --group-directories-first --git --sort=time --time-style=relative'
     alias dir='eza -1'
 else
     alias l1='ls -1A'
-    alias l='ls -lAFGh'
     alias ll='ls -lAFGh'
     alias ltr='ls -ltrAFGh'
     alias dir='ls -1'

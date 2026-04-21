@@ -8,7 +8,7 @@ command-exists() {
 export PAGER=less
 
 # When running less, always ignore case on searches, prompt verbosely, display colors, etc.
-export LESS='--IGNORE-CASE --LONG-PROMPT --RAW-CONTROL-CHARS --chop-long-lines --tabs=4'
+export LESS='--quit-if-one-screen --IGNORE-CASE --LONG-PROMPT --RAW-CONTROL-CHARS --chop-long-lines --tabs=4'
 
 # We should be able to use UTF-8 everywhere these days.
 export LESSCHARSET='utf-8'
