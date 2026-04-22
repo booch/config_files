@@ -133,6 +133,12 @@ The Bash tool captures both streams; redirections break permission matching.
 Run commands plainly; read errors and respond to them.
 See the `bash-tool` skill for full rules.
 
+### Patterns to Avoid
+
+- **Input redirection (`< file`)** triggers permission prompts. Use `wc -c file` not `wc -c < file`. Use `cat file | cmd` or pass filename as argument instead.
+- **`cd dir && cmd`** — use absolute paths or tool-specific flags (e.g., `git -C`, `hugo -s`) to avoid zoxide warnings and directory state issues.
+- **macOS grep lacks `-P` (Perl regex)** — always use the Grep tool (ripgrep) instead of bash grep for regex extraction.
+
 ## Skills Reference
 
 The following skills provide detailed guidance:
