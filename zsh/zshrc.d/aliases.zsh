@@ -199,8 +199,14 @@ alias devstral='llama-mtmd-cli \
 alias Get='git'
 
 # Zsh-you-should-use reminds you to use aliases you have defined.
-source "$(brew --prefix)/share/zsh-you-should-use/you-should-use.plugin.zsh"
-alias stats='check_alias_usage'
+if (( $+commands[brew] )); then
+    you_should_use_plugin="$(brew --prefix 2>/dev/null)/share/zsh-you-should-use/you-should-use.plugin.zsh"
+    if [[ -r "$you_should_use_plugin" ]]; then
+        source "$you_should_use_plugin"
+        alias stats='check_alias_usage'
+    fi
+    unset you_should_use_plugin
+fi
 
 # Aliases to open projects
 alias job-hunting="osascript -e 'tell application \"Hammerspoon\" to execute lua code \"setupJobHuntingEnvironment()\"'"
