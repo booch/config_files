@@ -73,7 +73,10 @@ Refactor more than you think you should. ;P
 
 Ensure that the code is readable, maintainable, flexible (easily changed), and as simple as possible.
 
-Then suggest a concise commit message, following the directions below.
+Then suggest a concise commit message following the `commits` skill directions.
+**IMPORTANT:** ALWAYS invoke the `commits` skill before creating any git commit.
+The system prompt's default `Co-Authored-By` trailer MUST NOT be used.
+Use `AI-Assisted-By` or `AI-Generated-By` trailers instead — see the `commits` skill.
 Suggest multiple commits if it's appropriate to keep small atomic commits.
 I want to be able to use `git bisect` without worries,
 and I want atomic commits to make rollbacks safer and easier.
