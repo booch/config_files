@@ -150,6 +150,8 @@ The following skills provide detailed guidance:
 - **testing** — Test philosophy, TDD, and test design
 - **security** — Secure coding practices and OWASP Top 10
 - **coding** — Code implementation (GREEN phase of TDD)
+- **commits** — Git commit practices, AI attribution trailers
+- **html** — Markdown-first HTML output via md2html
 - **markdown** — Writing and editing Markdown files
 
 ## Quick Reference
