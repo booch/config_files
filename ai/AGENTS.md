@@ -165,8 +165,9 @@ The following skills provide detailed guidance:
 
 ### Code Review Process
 
-All significant code changes require 3 sequential code reviews,
+All substantial code changes require 3 sequential code reviews,
 each by a separate subagent, each followed by refactoring.
+Trivial changes may use a lighter-weight review process.
 See the `sdlc` skill for details.
 
 ### Testing Philosophy
@@ -177,7 +178,8 @@ See the `sdlc` skill for details.
 
 ## Subagents
 
-Subagents are specialized AI agents with focused roles. **Delegate to subagents proactively** — they keep the main context clean and apply specialized expertise.
+Subagents are specialized AI agents with focused roles.
+**Delegate to subagents proactively** — they keep the main context clean and apply specialized expertise.
 
 ### Available Subagents
 
@@ -234,7 +236,6 @@ For the 3-review process, use the `/review` command which orchestrates all three
 ## Command Reference
 
 - `/orient` — Get oriented on current project state (reads `.claude/context.md`)
-- `/handoff` — Create handoff summary for next session (writes `.claude/context.md`)
 - `/pre-commit` — Run CI, review staged changes, suggest commit message
 - `/commit-msg` — Suggest a commit message for staged changes
 - `/review` — Run the 3-review code review process
@@ -258,7 +259,9 @@ When in doubt, ask: "Should I proceed with [next step]?"
 Projects may define additional mandatory approval checkpoints.
 Unless explicitly overridden, these checkpoints must be satisfied before proceeding.
 
-**Exception: "Continue without prompting"** — When the user says "continue without prompting" or similar, proceed through ALL checkpoints including the commit. This overrides approval requirements. CI (tests and linting) must still pass.
+**Exception: "Continue without prompting"** — When the user says "continue without prompting" or similar, proceed through ALL checkpoints including the commit.
+This overrides approval requirements.
+CI (tests and linting) must still pass.
 
 Before implementation, ask clarifying questions to ensure you understand the requirements and constraints.
 Try to ask as many questions up-front as possible, to minimize back-and-forth with the human.
