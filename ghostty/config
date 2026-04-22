@@ -48,3 +48,10 @@ shell-integration-features = no-cursor,sudo,title,ssh-terminfo,ssh-env
 
 # Dim unfocused splits a bit more than the default.
 unfocused-split-opacity = 0.45
+
+# Let applications receive real Home/End keys instead of translating them to
+# Ctrl-A/Ctrl-E. The translations conflict with Neovim mappings.
+keybind = home=esc:OH
+keybind = end=esc:OF
+keybind = shift+home=esc:[1;2H
+keybind = shift+end=esc:[1;2F
