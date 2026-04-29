@@ -1,6 +1,16 @@
 #!/bin/bash
 # ~/.lessfilter - preprocessor for lesspipe.sh
 
+# If argument is a symlink, list it with eza (or ls as fallback).
+if [[ -L "$1" ]]; then
+    if command -v eza >/dev/null 2>&1; then
+        eza -lahdF --no-user --no-permissions --git --time-style=relative --color=always "$1"
+    else
+        CLICOLOR_FORCE=1 ls -lAFGhd "$1"
+    fi
+    exit 0
+fi
+
 # If argument is a directory, list it with eza (or ls as fallback).
 if [[ -d "$1" ]]; then
     if command -v eza >/dev/null 2>&1; then
@@ -12,7 +22,7 @@ if [[ -d "$1" ]]; then
 fi
 
 case "$1" in
-    *.md|*.MD|*.mkd|*.markdown)
+    *.md|*.MD|*.mkd|*.markdown|*.mdc)
         if command -v glow >/dev/null 2>&1; then
             # NOTE: Glow needs the CLICOLOR_FORCE to enable color output to a non-TTY.
             # NOTE: Glow won't output color to a non-TTY if style is set to `auto`.
