@@ -160,6 +160,17 @@
   },
   "model": "opus[1m]",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '\"[skill] loading: \" + .tool_input.skill'"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
