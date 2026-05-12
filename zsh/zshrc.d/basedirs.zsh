@@ -22,15 +22,17 @@ export XDG_RUNTIME_DIR='/var/run'
 # NOTE: This isn't in the XDG spec, but Systemd uses it.
 export XDG_BIN_HOME="$HOME/.local/bin"
 
+# Make sure the directories exist, and are private.
+for dir in "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_STATE_HOME" "$XDG_CACHE_HOME" "$XDG_BIN_HOME"; do
+    mkdir -p "$dir"
+    chmod 700 "$dir"
+done
+
 # Bun: route global packages, bin, and cache to XDG dirs.
 # Env vars (not bunfig) because bunfig doesn't expand ${VAR} in install paths.
 export BUN_INSTALL="$XDG_DATA_HOME/bun"
 export BUN_INSTALL_BIN="$XDG_BIN_HOME"
 export BUN_INSTALL_CACHE_DIR="$XDG_CACHE_HOME/bun"
-
-# Make sure the directories exist, and are private.
-mkdir -p "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_STATE_HOME" "$XDG_CACHE_HOME" "$XDG_BIN_HOME"
-chmod 700 "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_STATE_HOME" "$XDG_CACHE_HOME" "$XDG_BIN_HOME"
 
 # Additional directories to look for CONFIG and DATA files, in addition to the XDG_*_HOME directories.
 for dir in "/usr/local/etc" "$HOMEBREW_PREFIX/etc" "/etc/xdg" "/etc"; do
