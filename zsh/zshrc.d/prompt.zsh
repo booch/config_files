@@ -75,6 +75,7 @@ prompt_preexec() {
 
 # Get all the info we need for the prompt.
 prompt_precmd() {
+    local rc=$?
     if (( ${+prompt_command_start} )); then
         local now="$(print -P '%D{%s%3.}')"
         typeset -g prompt_execution_time="$(pretty_ms "$(( now - prompt_command_start ))")"
@@ -86,7 +87,7 @@ prompt_precmd() {
     typeset -g prompt_git_branch="$(git symbolic-ref -q --short HEAD 2> /dev/null || git describe --tags --exact-match 2> /dev/null || git rev-parse --short HEAD 2> /dev/null)"
     [[ -n $prompt_git_branch ]] && prompt_git_branch=" ${prompt_git_branch} "
     typeset -g prompt_load=" $(uptime | sed 's/.*load averages://' | awk '{print $1}') "
-    typeset -g prompt_rc=" $(print -P '%?') "
+    typeset -g prompt_rc=" ${rc} "
     typeset -g prompt_runtime=" ${prompt_execution_time:--} "
     typeset -g prompt_datetime=" $(print -P '%D{%F %T}') "
     typeset -g prompt_user_host=" $(print -P '%n@$(uname -n)') "
