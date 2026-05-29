@@ -1,9 +1,13 @@
 {
   "permissions": {
     "allow": [
+      "WebSearch",
+      "WebFetch",
+      "Skill(retro)",
+      "Read(~/Library/Caches/Homebrew)",
       "Read:~/Work/Code/**",
-      "Edit:~/Work/Code/**",
       "Write:~/Work/Code/**",
+      "Edit:~/Work/Code/**",
       "Edit:*.md",
       "Edit:*.rb",
       "Edit:Gemfile",
@@ -63,7 +67,6 @@
       "Bash(cat:*)",
       "Bash(echo:*)",
       "Bash(fi)",
-      "Bash(git add *)",
       "Bash(git --no-pager add *)",
       "Bash(git --no-pager branch:*)",
       "Bash(git --no-pager commit:*)",
@@ -73,9 +76,10 @@
       "Bash(git --no-pager reset:*)",
       "Bash(git --no-pager show:*)",
       "Bash(git --no-pager stash:*)",
-      "Bash(git stash:*)",
       "Bash(git --no-pager status:*)",
+      "Bash(git stash:*)",
       "Bash(git status:*)",
+      "Bash(git add *)",
       "Bash(head:*)",
       "Bash(ls:*)",
       "Bash(make:*)",
@@ -83,17 +87,9 @@
       "Bash(tail:*)",
       "Bash(test:*)",
       "Bash(xargs:*)",
-      "Bash(npm run:*)",
       "Bash(npm test:*)",
-      "Bash(npx jest:*)",
-      "Bash(npx vitest:*)",
-      "Bash(npx eslint:*)",
-      "Bash(npx prettier:*)",
-      "Bash(npx tsc:*)",
-      "Bash(node:*)",
       "Bash(pytest:*)",
       "Bash(python -m pytest:*)",
-      "Bash(python -m:*)",
       "Bash(ruff check:*)",
       "Bash(ruff format:*)",
       "Bash(black:*)",
@@ -101,34 +97,50 @@
       "Bash(mypy:*)",
       "Bash(shellcheck:*)",
       "Bash(shfmt:*)",
-      "WebSearch",
-      "Bash(if [ -f /Users/craigbuchek/Work/Code/stone/.rspec ])",
-      "Bash(then cat /Users/craigbuchek/Work/Code/stone/.rspec)",
       "Bash(mise exec:*)",
       "Bash(make test:*)",
       "Bash(make lint:*)",
       "Bash(make rubocop:*)",
       "Bash(make ci:*)",
-      "Bash(DYLD_LIBRARY_PATH=\"$(brew --prefix llvm)/lib:$DYLD_LIBRARY_PATH\" bundle exec rspec *)",
       "Bash(bundle exec rspec *)",
-      "Bash(DYLD_LIBRARY_PATH=\"$(brew --prefix llvm)/lib:$DYLD_LIBRARY_PATH\" bundle exec rubocop *)",
       "Bash(bundle exec rubocop *)",
-      "Bash(git --no-pager add lib/stone/ast/record_definition.rb lib/stone/ast/constant_definition.rb lib/stone/ast/function_call.rb lib/stone/ast/program_unit/top_function.rb spec/language/functions/sum_function_spec.rb)",
-      "Bash(git --no-pager add lib/stone/ast/record_instantiation.rb)",
-      "Bash(git commit:*)",
-      "Bash(git --no-pager add lib/stone/ast.rb lib/stone/ast/block.rb lib/stone/ast/boolean_literal.rb lib/stone/ast/integer_literal.rb lib/stone/ast/string_literal.rb lib/stone/ast/lambda.rb lib/stone/ast/reference.rb lib/stone/type/base.rb lib/stone/type/type.rb lib/stone/type/Bool.rb lib/stone/type/Int.rb lib/stone/type/String.rb lib/stone/types.rb lib/stone/type_context.rb lib/stone/error/type_error.rb lib/stone/ast/type_of_expression.rb lib/stone/ast/type_reference.rb lib/stone/ast/program_unit.rb)",
-      "Bash(git --no-pager add lib/stone/grammar.rb lib/stone/transform.rb)",
-      "Bash(git --no-pager -C /Users/craigbuchek/Work/Code/grammy branch:*)",
-      "Skill(q)",
-      "Bash(make markdownlint:*)",
       "Bash(grep:*)",
-      "Bash(git --no-pager -C ~/Work/Code/grammy status)",
       "Bash(brew update)",
       "Bash(brew outdated)",
       "Bash(brew info:*)",
+      "Bash(brew search:*)",
       "Bash(brew upgrade)",
       "Bash(brew services restart:*)",
-      "Bash(brew cleanup)"
+      "Bash(brew services list:*)",
+      "Bash(brew cleanup)",
+      "Bash(brew outdated *)",
+      "Bash(brew upgrade *)",
+      "Bash(brew cleanup *)",
+      "Bash(mkdir -p *)",
+      "Bash(ln *)",
+      "Bash(chmod *)",
+      "Bash(git stash *)",
+      "Bash(gh search *)",
+      "Bash(gh issue view *)",
+      "Bash(brew services list)",
+      "Bash(op list *)",
+      "Bash(pgrep *)",
+      "Bash(~/.config/ai/sync.sh)",
+      "Bash(gh api *)",
+      "Bash(rg *)",
+      "Bash(command rg *)",
+      "Bash(gh repo *)",
+      "Bash(git submodule status *)",
+      "Bash(git pull *)",
+      "Bash(gh issue *)",
+      "Bash(claude --version)",
+      "Bash(claude plugins install:*)",
+      "mcp__fastmail-mail__search_email",
+      "mcp__fastmail-mail__list_folders",
+      "mcp__fastmail-mail__delete_email",
+      "Bash(gws auth status:*)",
+      "Bash(gws gmail users threads list *)",
+      "Bash(gws gmail users threads trash --params *)"
     ],
     "deny": [
       "Read(./.env)",
@@ -153,12 +165,10 @@
       "Bash(gem install:*)",
       "Bash(docker:*)",
       "Bash(curl:*)",
-      "Bash(wget:*)",
-      "WebFetch"
+      "Bash(wget:*)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "acceptEdits"
   },
-  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -181,17 +191,46 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/craigbuchek/.local/share/mise/installs/node/23.11.0/bin/node\" \"/Users/craigbuchek/.claude/hooks/context-mode-cache-heal.mjs\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/craigbuchek/.local/share/mise/installs/bun/1.3.1/bin/bun /Users/craigbuchek/.config/claude/hooks/task-complete-enforcer.ts"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/craigbuchek/.local/share/mise/installs/bun/1.3.1/bin/bun /Users/craigbuchek/.config/claude/hooks/task-complete-reminder.ts"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
     "type": "command",
-    "command": "bash -c 'plugin_dir=$(ls -d \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/plugins/cache/claude-hud/claude-hud/*/ 2>/dev/null | awk -F/ '\"'\"'{ print $(NF-1) \"\\t\" $(0) }'\"'\"' | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n | tail -1 | cut -f2-); exec \"/Users/craigbuchek/.local/share/mise/installs/bun/1.3.1/bin/bun\" --env-file /dev/null \"${plugin_dir}src/index.ts\"'"
+    "command": "/Users/craigbuchek/.local/share/mise/installs/bun/1.3.1/bin/bun --env-file /dev/null /Users/craigbuchek/.config/claude/statusline.ts"
   },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "github@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
@@ -205,7 +244,6 @@
     "agent-sdk-dev@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
-    "vercel@claude-plugins-official": true,
     "linear@claude-plugins-official": true,
     "slack@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
@@ -216,15 +254,108 @@
     "kotlin-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "document-skills@anthropic-agent-skills": true,
-    "example-skills@anthropic-agent-skills": true,
-    "claude-api@anthropic-agent-skills": true,
+    "example-skills@anthropic-agent-skills": false,
     "claude-session-driver@superpowers-marketplace": true,
-    "double-shot-latte@superpowers-marketplace": true,
     "elements-of-style@superpowers-marketplace": true,
     "episodic-memory@superpowers-marketplace": true,
     "superpowers@superpowers-marketplace": true,
     "superpowers-developing-for-claude-code@superpowers-marketplace": true,
     "superpowers-lab@superpowers-marketplace": true,
-    "ruby-lsp@claude-plugins-official": true
-  }
+    "ruby-lsp@claude-plugins-official": true,
+    "ia@internet-archive-skills": true,
+    "context-mode@context-mode": true,
+    "claude-hud@claude-hud": true,
+    "obsidian@obsidian-skills": true,
+    "gws@gws-marketplace": true,
+    "codex@openai-codex": true,
+    "serena@claude-plugins-official": false,
+    "remember@claude-plugins-official": false,
+    "atomic-agents@claude-plugins-official": true,
+    "boochtek@boochtek": true,
+    "vercel@claude-plugins-official": true,
+    "postiz@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "internet-archive-skills": {
+      "source": {
+        "source": "github",
+        "repo": "internetarchive/internet-archive-skills"
+      },
+      "autoUpdate": true
+    },
+    "thedotmack": {
+      "source": {
+        "source": "github",
+        "repo": "thedotmack/claude-mem"
+      },
+      "autoUpdate": true
+    },
+    "context-mode": {
+      "source": {
+        "source": "github",
+        "repo": "mksglu/context-mode"
+      },
+      "autoUpdate": true
+    },
+    "claude-hud": {
+      "source": {
+        "source": "github",
+        "repo": "jarrodwatts/claude-hud"
+      },
+      "autoUpdate": true
+    },
+    "obsidian-skills": {
+      "source": {
+        "source": "github",
+        "repo": "kepano/obsidian-skills"
+      },
+      "autoUpdate": true
+    },
+    "gws-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "WadeWarren/gws-claude-plugin"
+      },
+      "autoUpdate": true
+    },
+    "autoresearch": {
+      "source": {
+        "source": "github",
+        "repo": "uditgoenka/autoresearch"
+      },
+      "autoUpdate": true
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      },
+      "autoUpdate": true
+    },
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    },
+    "superpowers-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers-marketplace"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "autoUpdatesChannel": "stable",
+  "theme": "light",
+  "showTurnDuration": false,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
 }

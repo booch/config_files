@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+# AI-assisted pre-commit documentation check.
+#
+# Enable globally: git config --global core.hooksPath ~/.config/git/hooks
+# Per-repo mode:
+#   git config hooks.aiDocCheck advisory   # warn but don't block (default)
+#   git config hooks.aiDocCheck strict     # block on missing docs
+#   git config hooks.aiDocCheck off        # disable for this repo
+# Env escape hatch:
+#   GIT_SKIP_AI_DOC_CHECK=1 git commit ...
+
+set -u
+
+# Agent commits are gated upstream by the per-harness PreToolUse hook.
+[[ -n "${GIT_SKIP_AI_DOC_CHECK:-}" ]] && exit 0
+[[ -n "${CLAUDECODE:-}${CLAUDE_CODE_SIMPLE:-}${CODEX_AGENT:-}${OPENCODE:-}" ]] && exit 0
+
+mode=$(git config --get hooks.aiDocCheck 2>/dev/null || true)
+[[ -z "$mode" ]] && mode=advisory
+case "$mode" in
+  off|disabled|false|no) exit 0 ;;
+  strict|advisory) ;;
+  *) mode=advisory ;;
+esac
+
+staged=$(git diff --cached --name-only)
+[[ -z "$staged" ]] && exit 0
+
+non_docs=0
+while IFS= read -r f; do
+  case "$f" in
+    docs/*|README*|*.md|*.mdx|*.rst|CHANGELOG*|LICENSE*|.gitignore) ;;
+    *) non_docs=1; break ;;
+  esac
+done <<< "$staged"
+[[ "$non_docs" -eq 0 ]] && exit 0
+
+msg_file=$(git rev-parse --git-dir 2>/dev/null)/COMMIT_EDITMSG
+if [[ -f "$msg_file" ]]; then
+  first_line=$(head -n 1 "$msg_file" | tr -d '\r')
+  case "$first_line" in
+    docs:*|chore:*|fmt:*|style:*|refactor:*|test:*|tests:*|wip:*|WIP:*|build:*|ci:*|perf:*) exit 0 ;;
+  esac
+fi
+
+claude_bin=""
+for candidate in "${HOME}/.local/bin/claude" "$(command -v claude 2>/dev/null || true)"; do
+  if [[ -n "$candidate" && -x "$candidate" ]]; then
+    claude_bin="$candidate"
+    break
+  fi
+done
+[[ -z "$claude_bin" ]] && exit 0
+
+if ! command -v jq >/dev/null 2>&1; then exit 0; fi
+
+diff_content=$(git diff --cached --no-color)
+instruction=$(cat <<'EOF'
+You are reviewing a staged git diff. Decide whether documentation has been adequately updated for the code changes in this commit.
+
+Flag (verdict "missing-docs") when:
+- Public API or CLI changes lack doc updates
+- New features have no README / docs / CHANGELOG mention
+- Config keys, flags, or env vars added without doc reflection
+- Behavior or default changes not noted in docs
+
+Ignore (verdict "ok") when:
+- Refactors of private/internal code
+- Test-only or fixture changes
+- Pure formatting, lockfile, or dependency bumps
+- Bug fixes that don't change documented behavior
+
+Respond with exactly one line of JSON and nothing else:
+{"verdict":"ok"|"missing-docs","reason":"one short sentence"}
+EOF
+)
+
+response=$(
+  printf 'Here is the staged diff:\n\n```diff\n%s\n```\n' "$diff_content" |
+  "$claude_bin" -p \
+    --model haiku \
+    --output-format text \
+    --system-prompt "$instruction" \
+    --no-session-persistence \
+    --max-budget-usd 0.05 \
+    --disallowedTools "Bash Edit Write" 2>/dev/null
+) || response=""
+
+[[ -z "$response" ]] && exit 0
+
+verdict_json=$(printf '%s' "$response" | grep -oE '\{"verdict":[^}]+\}' | head -n 1)
+[[ -z "$verdict_json" ]] && exit 0
+
+verdict=$(printf '%s' "$verdict_json" | jq -r '.verdict // empty' 2>/dev/null)
+reason=$(printf '%s' "$verdict_json" | jq -r '.reason // empty' 2>/dev/null)
+
+if [[ "$verdict" == "ok" ]]; then
+  exit 0
+fi
+
+if [[ "$verdict" == "missing-docs" ]]; then
+  if [[ "$mode" == "strict" ]]; then
+    echo >&2 "pre-commit AI doc check FAILED: ${reason:-missing documentation}"
+    echo >&2 "  Bypass: GIT_SKIP_AI_DOC_CHECK=1 git commit, or git config hooks.aiDocCheck advisory"
+    exit 1
+  fi
+  echo >&2 "pre-commit AI doc check: ${reason:-missing documentation} (advisory; commit will proceed)"
+  echo >&2 "  To enforce: git config hooks.aiDocCheck strict"
+fi
+
+exit 0

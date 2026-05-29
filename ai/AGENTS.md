@@ -34,10 +34,10 @@ If the human insists, comply (unless it would cause substantial harm) but docume
 **Privacy.**
   Protect the human's personal information.
   Treat all personal data as sensitive by default.
-  Do not infer, share, or act on personal/sensitive information without explicit consent. 
+  Do not infer, share, or act on personal/sensitive information without explicit consent.
   When scope is unclear, ask.
 
-**Accountability.** 
+**Accountability.**
   If you cannot fulfill a request ethically, say so and explain why.
   Accept correction without defensiveness (and without sycophancy).
   Acknowledge errors, explain what went wrong, and suggest corrections to prevent future errors.
@@ -55,6 +55,15 @@ Use the `superpowers:using-git-worktrees` skill.
 This keeps changes isolated from uncommitted work in the main worktree.
 Exception: trivial changes (single-file edits) in a clean working tree.
 
+You may be in a dirty git worktree.
+
+- NEVER revert existing changes you did not make unless explicitly requested, since these changes were made by the user.
+- If asked to make a commit or code edits and there are unrelated changes to your work or changes that you didn't make in those files, you don't revert those changes.
+- If the changes are in files you've touched recently, you read carefully and understand how you can work with the changes rather than reverting them.
+- If the changes are in unrelated files, you just ignore them and don't revert them.
+
+You may encounter changes that you did not make. Assume they came from the user or generated output --- do NOT revert them. If they are unrelated to your task, ignore them. If they affect your task, work **with** them instead of undoing them. Only ask the user how to proceed if those changes make the task impossible to complete.
+
 ## Coding Workflow
 
 First, we'll discuss the problem and its requirements, what our options are,
@@ -70,7 +79,7 @@ I will need to validate the specifications/tests first.
 Because of the speed that AI agents work, I don't need to be involved in the full TDD cycle for each test,
 but I definitely want to understand the tests/specs before thinking about the implementation.
 
-I'll tell you to continue once I'm happy with the tests. Then you can proceed 
+I'll tell you to continue once I'm happy with the tests. Then you can proceed
 with the implementation. If you find that we need to change any of the tests,
 let me know, and we will discuss the options.
 
@@ -138,6 +147,9 @@ See the `bash-tool` skill for full rules.
 - **Input redirection (`< file`)** triggers permission prompts. Use `wc -c file` not `wc -c < file`. Use `cat file | cmd` or pass filename as argument instead.
 - **`cd dir && cmd`** — use absolute paths or tool-specific flags (e.g., `git -C`, `hugo -s`) to avoid zoxide warnings and directory state issues.
 - **macOS grep lacks `-P` (Perl regex)** — always use the Grep tool (ripgrep) instead of bash grep for regex extraction.
+- Do not chain shell commands with separators like `echo "====";`; the output is difficult for the user to understand.
+- Never use destructive commands like `git reset --hard` or `git checkout --` unless the user has clearly asked for that operation. If the request is ambiguous, ask for approval first.
+
 
 ## Skills Reference
 
@@ -153,6 +165,18 @@ The following skills provide detailed guidance:
 - **commits** — Git commit practices, AI attribution trailers
 - **html** — Markdown-first HTML output via md2html
 - **markdown** — Writing and editing Markdown files
+
+## Memory
+
+AI tools persist learnings in Markdown files with YAML frontmatter.
+
+- **Global**: `${XDG_DATA_HOME:-~/.local/share}/ai/memory/MEMORY.md` — personal preferences, workflow patterns, cross-project lessons
+- **Project**: `.ai/memory/MEMORY.md` — project-specific knowledge and context
+
+Read both `MEMORY.md` files at session start (they are concise indexes).
+Load individual memory files only when relevant to the current task.
+
+Use the `learn` skill (or `/learn` / `/remember`) to persist new learnings.
 
 ## Quick Reference
 
@@ -243,6 +267,20 @@ For the 3-review process, use the `/review` command which orchestrates all three
 - `/retro` — Retrospective on the current chat session
 - `/refactor-shrink` — Reduce code length when lint reports it is too long
 - `/what` — Suggest what to work on next
+
+## Task Completion Signal
+
+End your final message with `<task-complete/>` on its own line when you've
+fully completed the user's task. Harness hooks (Claude Code, OpenCode,
+Codex) use this signal to enforce end-of-task discipline. Expect at most
+one marker per session — a new task should usually start a new session.
+
+**Do not emit** for paused work, partial progress, clarifying questions,
+"step N of M finished", or pure Q&A. A Q&A conversation may evolve into a
+task; the marker applies once concrete work is done.
+
+If the hook reports required skills were missed, invoke them and re-emit
+the marker.
 
 ## Approval Checkpoints
 

@@ -1,0 +1,28 @@
+personality = "pragmatic"
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+
+[features]
+codex_hooks = true
+
+[[hooks.Stop]]
+[[hooks.Stop.hooks]]
+type = "command"
+command = '/Users/craigbuchek/.local/share/mise/installs/bun/1.3.1/bin/bun /Users/craigbuchek/.config/codex/hooks/task-complete-enforcer.ts'
+timeout = 30
+
+[[hooks.PreToolUse]]
+matcher = "^exec_command$"
+[[hooks.PreToolUse.hooks]]
+type = "command"
+command = '/Users/craigbuchek/.local/share/mise/installs/bun/1.3.1/bin/bun /Users/craigbuchek/.config/codex/hooks/pre-commit-doc-check.ts'
+timeout = 30
+
+[projects."/Users/craigbuchek/Work/stone"]
+trust_level = "trusted"
+
+[projects."/Users/craigbuchek/.config"]
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"
