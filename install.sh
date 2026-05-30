@@ -53,6 +53,25 @@ migrate_to_config() {
 mkdir -p "$HOME/.local/share" "$HOME/.local/state" "$HOME/.cache"
 chmod 700 "$HOME/.local/share" "$HOME/.local/state" "$HOME/.cache"
 
+# Git identity is personal and not committed (see .gitignore).
+# Generate it per-machine on first run, prompting for name/email.
+GIT_LOCAL="$CWD/git/local"
+if [ ! -f "$GIT_LOCAL" ]; then
+    if [ -t 0 ]; then
+        echo "Setting up your personal git identity (git/local)..."
+        read -r -p "  Full name: " git_name
+        read -r -p "  Email address: " git_email
+        read -r -p "  GitHub username (optional): " git_github
+        {
+            printf '[user]\n\tname = %s\n\temail = %s\n' "$git_name" "$git_email"
+            [ -n "$git_github" ] && printf '[github]\n\tuser = %s\n' "$git_github"
+        } > "$GIT_LOCAL"
+        echo "Wrote $GIT_LOCAL"
+    else
+        echo "No git/local found (non-interactive); create it with your [user] name/email."
+    fi
+fi
+
 # Link files to where they "belong". Hopefully some day, all commands will support `~/.config` or `$XDG_CONFIG_HOME`.
 link_file "$CWD/ack/ackrc" "$HOME/.ackrc"
 

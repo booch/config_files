@@ -24,6 +24,9 @@
 /vscode/globalStorage
 /vscode/workspaceStorage
 
+# Personal git identity — generated per-machine by install.sh, not committed.
+/git/local
+
 /zsh/history
 
 /vim/janus

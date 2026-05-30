@@ -20,3 +20,18 @@ If you don't have SSH set up yet when you pull the repo, you probably won't be a
 ~~~ shell
 git remote set-url origin "git@github.com:${REPO_OWNER}/config_files.git"
 ~~~
+
+## install.sh
+
+The install script creates symlinks so tools can find their config files.
+It is idempotent — run it after every `git pull` or config change.
+It can be run from any directory:
+
+~~~ shell
+~/.config/install.sh
+~~~
+
+On first run, if `git/local` doesn't exist, the script prompts for your
+name, email, and (optionally) GitHub username and writes them there.
+That file is gitignored, so your git identity stays on your machine and
+is never committed.
