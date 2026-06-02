@@ -1,1 +1,1 @@
-/Users/craigbuchek/.config/claude/plugins/marketplaces/boochtek/plugins/boochtek/skills/bash-tool/SKILL.md
+../../../claude/plugins/marketplaces/boochtek/plugins/boochtek/skills/bash-tool/SKILL.md
