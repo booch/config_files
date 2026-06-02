@@ -44,8 +44,8 @@ if (&t_Co > 2)
   au InsertEnter * highlight cursorline term=none cterm=none ctermbg=45 gui=none guibg=#00DFFF
   au InsertLeave * highlight cursorline term=none cterm=none ctermbg=lightgrey gui=none guibg=lightgrey
 
-  " Show indicators for columns 80 and 120.
-  set colorcolumn=80,120
+  " Show indicators for columns 80, 100, and 120.
+  set colorcolumn=80,100,120
   highlight ColorColumn ctermbg=white guibg=white
 
 endif

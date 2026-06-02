@@ -63,6 +63,17 @@ vim.o.inccommand = 'split'
 -- Show which line your cursor is on
 vim.o.cursorline = true
 
+-- Highlight column markers at 80 (primary), 100, and 120 (secondary)
+-- WARNING: This is also in ~/.config/vim/colors.vim, which will override this.
+vim.o.colorcolumn = '80,100,120'
+
+-- Force a visible ColorColumn even when the active colorscheme sets a faint one
+vim.api.nvim_create_autocmd({ 'ColorScheme', 'VimEnter' }, {
+  callback = function()
+    vim.api.nvim_set_hl(0, 'ColorColumn', { bg = '#F0F0F0' })
+  end,
+})
+
 -- Enable 24-bit RGB color in the TUI (true color support)
 vim.o.termguicolors = true
 
