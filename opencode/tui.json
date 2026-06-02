@@ -1,0 +1,68 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "plugin": ["./tui-plugins/session-hud.tsx"],
+  "theme": "opencode",
+  "leader_timeout": 1500,
+  "keybinds": {
+    "leader": "ctrl+space",
+
+    "sidebar_toggle": "<leader>b",
+    "scrollbar_toggle": "<leader>B",
+    "status_view": "<leader>s",
+    "tool_details": "<leader>d",
+    "display_thinking": "<leader>T",
+    "app_toggle_file_context": "<leader>f",
+    "app_toggle_diffwrap": "<leader>w",
+    "session_toggle_timestamps": "<leader>;",
+    "session_toggle_generic_tool_output": "<leader>o",
+
+    "session_new": "<leader>n",
+    "session_list": "<leader>l",
+    "session_timeline": "<leader>g",
+    "session_compact": "<leader>c",
+    "messages_undo": "<leader>u",
+    "messages_redo": "<leader>r",
+    "messages_copy": "<leader>y",
+
+    "messages_first": "ctrl+alt+home",
+    "messages_last": "ctrl+alt+end",
+    "messages_previous": "<leader>[",
+    "messages_next": "<leader>]",
+    "messages_last_user": "<leader>.",
+
+    "input_line_home": "ctrl+a,home",
+    "input_line_end": "ctrl+e,end",
+    "input_select_line_home": "ctrl+shift+a,shift+home",
+    "input_select_line_end": "ctrl+shift+e,shift+end",
+    "input_buffer_home": "ctrl+home",
+    "input_buffer_end": "ctrl+end",
+    "input_select_buffer_home": "ctrl+shift+home",
+    "input_select_buffer_end": "ctrl+shift+end",
+
+    "agent_list": "<leader>a",
+    "model_list": "<leader>m",
+    "variant_list": "<leader>v",
+    "mcp_list": "<leader>M",
+    "provider_connect": "<leader>p",
+    "workspace_set": "<leader>W",
+
+    "theme_list": "<leader>t",
+    "help_show": "<leader>?",
+    "docs_open": "<leader>/",
+    "plugin_manager": "<leader>P",
+    "plugin_install": "<leader>I",
+    "which_key_toggle": "<leader>k"
+  },
+  "scroll_speed": 2,
+  "scroll_acceleration": {
+    "enabled": false
+  },
+  "diff_style": "auto",
+  "mouse": true,
+  "attention": {
+    "enabled": true,
+    "notifications": true,
+    "sound": false,
+    "volume": 0.4
+  }
+}
