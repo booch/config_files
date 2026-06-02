@@ -26,9 +26,19 @@ export GIT_COMPLETION_IGNORE_CASE=1
 
 # Enable automatic suggestions (a la Fish), selected with right arrow.
 # TODO: Configure zsh-autosuggestions. See https://github.com/zsh-users/zsh-autosuggestions.
-if command -v brew &> /dev/null && [[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+if command -v brew &>/dev/null && [[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
     source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
 
 # Enable command auto-correction.
 export ENABLE_CORRECTION="true"
+
+# Enable fzf keybindings for completions:
+#   Ctrl+R = shell command history
+#   Ctrl+T = complete from current directory
+#   Alt+C = complete only directories from current directory
+# Or type `**` in command prompt and hit Tab.
+export FZF_DEFAULT_OPTS_FILE=~/.config/fzfrc
+export FZF_COMPLETION_PATH_OPTS="--preview='less {}'"
+export FZF_COMPLETION_DIR_OPTS="--preview='ls -1 {}'"
+source <(fzf --zsh)

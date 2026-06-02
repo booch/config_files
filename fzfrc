@@ -1,0 +1,13 @@
+# Config file for `fzf`.
+
+# Make it look nice, with the prompt at the top.
+--style=full
+--layout=reverse
+--list-border=double
+--tabstop=4
+
+# Skip these paths.
+--walker-skip=.git,node_modules
+
+# Don't use the whole window. NOTE: Does not work for shell completion.
+--height=~50%
