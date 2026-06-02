@@ -1,14 +1,30 @@
 personality = "pragmatic"
-model = "gpt-5.4"
-model_reasoning_effort = "high"
+model = "gpt-5.5"
+model_reasoning_effort = "xhigh"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+service_tier = "fast"
+
+[profiles.quiet]
+approval_policy = "never"
+sandbox_mode = "workspace-write"
+[profiles.quiet.sandbox_workspace_write]
+network_access = true
+
+[profiles.readonly]
+approval_policy = "never"
+sandbox_mode = "read-only"
 
 [features]
+skills = true
 codex_hooks = true
+goals = true
+memories = true
 
 [[hooks.Stop]]
 [[hooks.Stop.hooks]]
 type = "command"
-command = '/Users/craigbuchek/.local/share/mise/installs/bun/1.3.1/bin/bun /Users/craigbuchek/.config/codex/hooks/task-complete-enforcer.ts'
+command = '/Users/craigbuchek/.local/share/mise/installs/bun/1.3.1/bin/bun/Users/craigbuchek/.config/codex/hooks/task-complete-enforcer.ts'
 timeout = 30
 
 [[hooks.PreToolUse]]
@@ -24,5 +40,62 @@ trust_level = "trusted"
 [projects."/Users/craigbuchek/.config"]
 trust_level = "trusted"
 
+[projects."/Users/craig.buchek/.config"]
+trust_level = "trusted"
+
+[projects."/Users/craig.buchek/repos"]
+trust_level = "trusted"
+
+[projects."/Users/craig.buchek/dev_setup"]
+trust_level = "trusted"
+
+[projects."/Users/craig.buchek/mac_config"]
+trust_level = "trusted"
+
+[projects."/Users/craig.buchek/repos/juno"]
+trust_level = "trusted"
+
+[projects."/Users/craig.buchek/mac-setup"]
+trust_level = "trusted"
+
+[projects."/Users/craig.buchek/repos/juno/.codex-upgrade/juno-rails-upgrade"]
+trust_level = "trusted"
+
 [notice.model_migrations]
+"gpt-5.2-codex" = "gpt-5.3-codex"
 "gpt-5.3-codex" = "gpt-5.4"
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+
+[marketplaces.openai-bundled]
+last_updated = "2026-04-24T20:35:41Z"
+source_type = "local"
+source = "/Users/craig.buchek/.config/codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-04-29T10:14:24Z"
+source_type = "local"
+source = "/Users/craig.buchek/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[plugins."browser-use@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[tui]
+status_line = ["model-with-reasoning", "context-remaining", "git-branch", "current-dir"]
+terminal_title = ["spinner", "project", "git-branch", "model"]
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+
+[sandbox_workspace_write]
+network_access = true
