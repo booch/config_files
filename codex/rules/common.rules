@@ -1,0 +1,35 @@
+# Common approvals promoted from recent Codex logs and shell history.
+# Keep broad read-only exploration commands implicit; this file focuses on
+# commands that regularly need host access or an out-of-sandbox execution path.
+
+prefix_rule(
+    pattern = ["bundle", "show"],
+    decision = "allow",
+)
+
+prefix_rule(
+    pattern = ["bundle", "exec", "rspec"],
+    decision = "allow",
+)
+
+prefix_rule(
+    pattern = [
+        "env",
+        "RAILS_ENV=test",
+        "/Users/craig.buchek/.local/share/mise/installs/ruby/3.1.5/bin/bundle",
+        "exec",
+        "rake",
+    ],
+    decision = "allow",
+)
+
+prefix_rule(
+    pattern = [
+        "env",
+        "RAILS_ENV=test",
+        "/Users/craig.buchek/.local/share/mise/installs/ruby/3.1.5/bin/bundle",
+        "exec",
+        "rspec",
+    ],
+    decision = "allow",
+)

@@ -1,0 +1,32 @@
+# Local Codex runtime data is symlinked to XDG cache/state/data.
+/.codex-global-state.json
+/.codex-global-state.json.bak
+/.personality_migration
+/.tmp
+/ambient-suggestions
+/auth.json
+/cache
+/cloud-requirements-cache.json
+/goals_*.sqlite*
+/history.jsonl
+/installation_id
+/log
+/logs_*.sqlite*
+/memories
+/models_cache.json
+/plugins
+/sessions
+/shell_snapshots
+/sqlite
+/state_*.sqlite*
+/tmp
+/vendor_imports
+/version.json
+
+# Local merge/backups should stay out of the dotfiles repo.
+/*-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*
+/*.bak-*
+/*.from-config-*
+/*.from-dot-codex-*
+/.from-config-*
+/.from-dot-codex-*

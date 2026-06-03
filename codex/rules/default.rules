@@ -1,0 +1,24 @@
+prefix_rule(pattern=["git", "cherry-pick"], decision="allow")
+prefix_rule(pattern=["git", "add"], decision="allow")
+prefix_rule(pattern=["git", "-C", "~/.config"], decision="allow")
+prefix_rule(pattern=["git", "commit"], decision="allow")
+
+prefix_rule(pattern=["bin/rails", "runner", "puts :ok"], decision="allow")
+prefix_rule(pattern=["bin/rails", "active_storage:update"], decision="allow")
+
+prefix_rule(pattern=["ps", "-axo", "pid=,command="], decision="allow")
+prefix_rule(pattern=["ps", "-axo", "pid=,ppid=,command="], decision="allow")
+prefix_rule(pattern=["ps", "-axo", "pid=,etime=,command="], decision="allow")
+
+prefix_rule(pattern=["bundle", "install"], decision="allow")
+prefix_rule(pattern=["bundle", "exec", "ruby", "-e"], decision="allow")
+prefix_rule(pattern=["bundle", "exec", "rspec"], decision="allow")
+prefix_rule(pattern=["bundle", "show"], decision="allow")
+
+prefix_rule(pattern=["rwx", "lint"], decision="allow")
+prefix_rule(pattern=["rwx", "docs"], decision="allow")
+prefix_rule(pattern=["rwx", "run"], decision="allow")
+prefix_rule(pattern=["rwx", "logs"], decision="allow")
+prefix_rule(pattern=["rwx", "artifacts", "download"], decision="allow")
+prefix_rule(pattern=["rwx", "results"], decision="allow")
+prefix_rule(pattern=["rwx", "whoami"], decision="allow")
