@@ -8,6 +8,20 @@ CWD="$(pwd)"
 
 TODAY="$(date +%Y%m%d)"
 
+# Move an existing path aside without overwriting an earlier backup.
+backup_path() {
+    local path="$1"
+    local backup="${path}-${TODAY}"
+    local count=1
+
+    while [ -e "$backup" ] || [ -L "$backup" ]; do
+        backup="${path}-${TODAY}-${count}"
+        count=$((count + 1))
+    done
+
+    mv "$path" "$backup"
+}
+
 # Symlink a file, backing up any existing regular file.
 # Existing symlinks are replaced silently (idempotent).
 link_file() {
@@ -16,11 +30,7 @@ link_file() {
     if [ -L "$dst" ]; then
         rm "$dst"
     elif [ -e "$dst" ]; then
-        if [ ! -e "${dst}-${TODAY}" ]; then
-            mv "$dst" "${dst}-${TODAY}"
-        else
-            rm -rf "$dst"
-        fi
+        backup_path "$dst"
     fi
     ln -s "$src" "$dst"
 }
@@ -42,16 +52,146 @@ migrate_to_config() {
     # If the home dotdir is a real directory (not already a symlink), move its contents.
     if [ -d "$home_dir" ] && [ ! -L "$home_dir" ]; then
         if [ -n "$(ls -A "$home_dir" 2>/dev/null)" ]; then
-            cp -a "$home_dir"/. "$config_dir"/
+            copy_missing_dir_contents "$home_dir" "$config_dir"
         fi
     fi
     link_dir "$config_dir" "$home_dir"
 }
 
+copy_missing_dir_contents() {
+    local src="$1"
+    local dst="$2"
+
+    if command -v rsync >/dev/null; then
+        rsync -a --ignore-existing "$src"/ "$dst"/
+    else
+        cp -an "$src"/. "$dst"/
+    fi
+}
+
+link_xdg_path() {
+    local config_path="$1"
+    local xdg_path="$2"
+    local kind="$3"
+    local old_target=""
+
+    mkdir -p "$(dirname "$config_path")" "$(dirname "$xdg_path")"
+
+    if [ "$kind" = "dir" ]; then
+        mkdir -p "$xdg_path"
+    fi
+
+    if [ -L "$config_path" ]; then
+        old_target="$(readlink "$config_path")"
+        if [ "$old_target" = "$xdg_path" ]; then
+            return
+        fi
+        if [ "$kind" = "dir" ] && [ -d "$config_path" ]; then
+            copy_missing_dir_contents "$config_path" "$xdg_path"
+        fi
+        rm "$config_path"
+    elif [ -e "$config_path" ]; then
+        if [ "$kind" = "dir" ] && [ -d "$config_path" ]; then
+            copy_missing_dir_contents "$config_path" "$xdg_path"
+            backup_path "$config_path"
+        elif [ "$kind" = "file" ] && [ -f "$config_path" ]; then
+            if [ ! -e "$xdg_path" ]; then
+                mv "$config_path" "$xdg_path"
+            elif cmp -s "$config_path" "$xdg_path"; then
+                rm "$config_path"
+            else
+                backup_path "$config_path"
+            fi
+        else
+            backup_path "$config_path"
+        fi
+    fi
+
+    ln -s "$xdg_path" "$config_path"
+}
+
+link_xdg_dir() {
+    link_xdg_path "$1" "$2" dir
+}
+
+link_xdg_file() {
+    link_xdg_path "$1" "$2" file
+}
+
+link_shared_dir() {
+    local link_path="$1"
+    local target_path="$2"
+    local link_target="$3"
+
+    mkdir -p "$(dirname "$link_path")" "$target_path"
+
+    if [ -L "$link_path" ]; then
+        if [ "$(readlink "$link_path")" = "$link_target" ]; then
+            return
+        fi
+        if [ -d "$link_path" ]; then
+            copy_missing_dir_contents "$link_path" "$target_path"
+        fi
+        rm "$link_path"
+    elif [ -e "$link_path" ]; then
+        if [ -d "$link_path" ]; then
+            copy_missing_dir_contents "$link_path" "$target_path"
+        fi
+        backup_path "$link_path"
+    fi
+
+    ln -s "$link_target" "$link_path"
+}
+
+setup_codex_xdg_links() {
+    local codex_config="$CWD/codex"
+    local codex_cache="$XDG_CACHE_HOME/codex"
+    local codex_state="$XDG_STATE_HOME/codex"
+    local codex_data="$XDG_DATA_HOME/codex"
+
+    mkdir -p "$codex_config" "$codex_cache" "$codex_state" "$codex_data"
+
+    link_xdg_dir "$codex_config/.tmp" "$codex_cache/.tmp"
+    link_xdg_dir "$codex_config/cache" "$codex_cache/cache"
+    link_xdg_dir "$codex_config/tmp" "$codex_cache/tmp"
+    link_xdg_dir "$codex_config/vendor_imports" "$codex_cache/vendor_imports"
+    link_xdg_file "$codex_config/cloud-requirements-cache.json" "$codex_cache/cloud-requirements-cache.json"
+    link_xdg_file "$codex_config/models_cache.json" "$codex_cache/models_cache.json"
+
+    link_xdg_dir "$codex_config/plugins" "$codex_data/plugins"
+    link_xdg_dir "$codex_data/plugins/cache" "$codex_cache/plugins/cache"
+    link_shared_dir "$codex_config/skills" "$CWD/ai/skills" "../ai/skills"
+
+    link_xdg_file "$codex_config/.codex-global-state.json" "$codex_state/.codex-global-state.json"
+    link_xdg_file "$codex_config/.codex-global-state.json.bak" "$codex_state/.codex-global-state.json.bak"
+    link_xdg_file "$codex_config/.personality_migration" "$codex_state/.personality_migration"
+    link_xdg_dir "$codex_config/ambient-suggestions" "$codex_state/ambient-suggestions"
+    link_xdg_file "$codex_config/auth.json" "$codex_state/auth.json"
+    link_xdg_file "$codex_config/goals_1.sqlite" "$codex_state/goals_1.sqlite"
+    link_xdg_file "$codex_config/history.jsonl" "$codex_state/history.jsonl"
+    link_xdg_file "$codex_config/installation_id" "$codex_state/installation_id"
+    link_xdg_dir "$codex_config/log" "$codex_state/log"
+    link_xdg_file "$codex_config/logs_2.sqlite" "$codex_state/logs_2.sqlite"
+    link_xdg_file "$codex_config/logs_2.sqlite-shm" "$codex_state/logs_2.sqlite-shm"
+    link_xdg_file "$codex_config/logs_2.sqlite-wal" "$codex_state/logs_2.sqlite-wal"
+    link_xdg_dir "$codex_config/memories" "$codex_state/memories"
+    link_xdg_dir "$codex_config/sessions" "$codex_state/sessions"
+    link_xdg_dir "$codex_config/shell_snapshots" "$codex_state/shell_snapshots"
+    link_xdg_dir "$codex_config/sqlite" "$codex_state/sqlite"
+    link_xdg_file "$codex_config/state_5.sqlite" "$codex_state/state_5.sqlite"
+    link_xdg_file "$codex_config/state_5.sqlite-shm" "$codex_state/state_5.sqlite-shm"
+    link_xdg_file "$codex_config/state_5.sqlite-wal" "$codex_state/state_5.sqlite-wal"
+    link_xdg_file "$codex_config/version.json" "$codex_state/version.json"
+}
+
 # Create default $XDG_DATA_HOME, $XDG_STATE_HOME, and $XDG_CACHE_HOME.
 # See https://specifications.freedesktop.org/basedir-spec/.
-mkdir -p "$HOME/.local/share" "$HOME/.local/state" "$HOME/.cache"
-chmod 700 "$HOME/.local/share" "$HOME/.local/state" "$HOME/.cache"
+XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+mkdir -p "$XDG_DATA_HOME" "$XDG_STATE_HOME" "$XDG_CACHE_HOME"
+chmod 700 "$XDG_DATA_HOME" "$XDG_STATE_HOME" "$XDG_CACHE_HOME"
+# TODO: FIXME: $XDG_CACHE_HOME is set to ~/Library/Caches on macOS. Make ~/.cache a symlink to that directory.
 
 # Git identity is personal and not committed (see .gitignore).
 # Generate it per-machine on first run, prompting for name/email.
@@ -132,6 +272,7 @@ migrate_to_config "claude"
 migrate_to_config "gemini"
 migrate_to_config "copilot"
 migrate_to_config "codex"
+setup_codex_xdg_links
 
 # Sync AI agent instructions from ~/.config/ai to tool-specific locations.
 # Source of truth: ~/.config/ai/AGENTS.md
