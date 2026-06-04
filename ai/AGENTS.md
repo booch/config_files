@@ -91,6 +91,14 @@ You may encounter changes that you did not make. Assume they came from the user 
 
 Keep symlinks relative when they point within this dotfiles tree. Avoid absolute paths under `$HOME`, because home directory names differ across machines.
 
+## Git History Rewrites
+
+- Before rewriting commits, inspect `git status`, recent `git log`, and the target commit contents.
+- If the worktree or index is dirty, avoid `git reset`; use a temporary index with `commit-tree`/`update-ref` when possible.
+- When splitting commits that include binary files, construct partial trees from exact `git ls-tree` object IDs instead of applying binary patches.
+- After `commit-tree`/`update-ref`, verify `git diff --cached` before any normal `git commit`; the regular index may be stale.
+- Verify rewritten history by checking each new commit changed paths and confirming the final tree matches the original target commit.
+
 ## Coding Workflow
 
 First, we'll discuss the problem and its requirements, what our options are,
