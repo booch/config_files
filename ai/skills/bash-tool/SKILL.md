@@ -73,6 +73,10 @@ cd claude/plugins/marketplaces/boochtek && git status
 git -C claude/plugins/marketplaces/boochtek status
 ```
 
+### Avoid login shells for git plumbing
+
+Use `bash -c` instead of `bash -lc` for temporary-index or git-plumbing scripts unless a login shell is explicitly required. Login shells may source profile files and emit unrelated warnings or alter the environment.
+
 ### Use `jq` and `yq` for data processing
 
 Use `jq` for JSON and `yq` for YAML instead of writing one-off Python scripts.
