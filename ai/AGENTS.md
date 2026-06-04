@@ -97,7 +97,7 @@ Keep symlinks relative when they point within this dotfiles tree. Avoid absolute
 - If the worktree or index is dirty, avoid `git reset`; use a temporary index with `commit-tree`/`update-ref` when possible.
 - When splitting commits that include binary files, construct partial trees from exact `git ls-tree` object IDs instead of applying binary patches.
 - After `commit-tree`/`update-ref`, verify `git diff --cached` before any normal `git commit`; the regular index may be stale.
-- Verify rewritten history by checking each new commit changed paths and confirming the final tree matches the original target commit.
+- Verify rewritten history by checking each new commit's changed files and confirming the final tree matches the original target commit.
 
 ## Coding Workflow
 
