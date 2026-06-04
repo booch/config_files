@@ -12,6 +12,7 @@ Use this skill for focused history edits such as splitting `HEAD`, separating mi
 - Inspect `git status --short`, recent `git log --oneline`, and the target commit contents before rewriting history.
 - Preserve unrelated staged and unstaged work. Do not use `git reset` when the worktree or index is dirty unless the user explicitly approves it.
 - Save original commit SHAs before moving refs.
+- If using `commit-tree`/`update-ref`, keep using temporary-index commits for follow-up focused commits unless the normal index has been checked or safely refreshed.
 - Prefer a temporary `GIT_INDEX_FILE` with `git read-tree`, `git update-index`, `git write-tree`, `git commit-tree`, and `git update-ref` for dirty-worktree rewrites.
 - Use exact tree entries for binary files and symlinks; avoid patch-apply workflows for split boundaries that include binary files.
 - Use `bash -c`, not `bash -lc`, for git-plumbing scripts unless a login shell is explicitly required.
@@ -49,6 +50,7 @@ Use this skill for focused history edits such as splitting `HEAD`, separating mi
 
 ## Verification
 
+- Run `git diff --cached --name-status` before any normal commit after plumbing-based ref updates.
 - Check each new commit with `git show --name-status --oneline <commit>`.
 - Compare the original and new final trees with `git diff --name-status <old-final> <new-final>`.
 - If intentional folded-in working-tree changes exist, confirm the diff shows only those paths.
