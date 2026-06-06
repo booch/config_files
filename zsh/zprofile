@@ -1,0 +1,11 @@
+# ~/.config/zsh/zprofile — sourced for zsh LOGIN shells, after /etc/zprofile.
+#
+# macOS /etc/zprofile runs path_helper, which reorders PATH to put system dirs
+# first — undoing the precedence set in .zshenv. Re-source the shared PATH setup
+# here (path_helper has already run) to restore it. The logic is idempotent and
+# moves our dirs back to the front.
+
+[ -r "$HOME/.config/sh/path.sh" ] && source "$HOME/.config/sh/path.sh"
+
+# Added by Obsidian
+export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"

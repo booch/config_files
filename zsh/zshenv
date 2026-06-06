@@ -1,0 +1,10 @@
+# ~/.config/zsh/zshenv — sourced by EVERY zsh invocation (login or not,
+# interactive or not). This is the only zsh startup file that runs for a bare
+# `zsh -c …`, so it is where tool PATH must be established for non-interactive
+# shells (editors, cron, tool harnesses) that never reach .zshrc.
+#
+# See ~/.config/sh/path.sh for the rationale and the actual PATH logic.
+
+typeset -U path PATH        # keep PATH entries unique (first/highest-precedence wins)
+
+[ -r "$HOME/.config/sh/path.sh" ] && source "$HOME/.config/sh/path.sh"
