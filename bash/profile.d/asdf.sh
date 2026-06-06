@@ -1,1 +1,0 @@
-../../zsh/zshrc.d/asdf.sh
