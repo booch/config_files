@@ -1,6 +1,6 @@
 # Set some system-specific environment variables for ease of use.
-# This **should** work in both Bash and Zsh, on MacOS and Linux,
-# but I have only tested it in Zsh on Mac.
+# This file gets sourced by both Bash and Zsh startup scripts.
+# Tested in Bash and Zsh on macOS; the Linux branches are less exercised.
 
 # NOTE: Bash (but not POSIX) sets $HOSTNAME automatically, but does not export it.
 export HOSTNAME="${HOSTNAME:-$(uname -n)}"
@@ -100,7 +100,8 @@ else
     fi
 fi
 
-if [[ -o interactive ]] ; then
+# Portable interactive-shell test (zsh's `[[ -o interactive ]]` is zsh-only).
+if [[ "$-" == *i* ]] ; then
     # Output some basic system info.
     echo "USER                  = $USER: $USER_FULL_NAME ($USER_EMAIL_ADDRESS)"
     echo "HOSTNAME              = $HOSTNAME"

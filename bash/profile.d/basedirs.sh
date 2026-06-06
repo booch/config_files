@@ -1,1 +1,0 @@
-../../zsh/zshrc.d/basedirs.zsh

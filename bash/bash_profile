@@ -19,6 +19,13 @@ fi
 echo -e "${COLOR_BLUE}Server time: $(date +'%Y-%m-%d') $(uptime)${COLOR_NONE}"
 echo -e "${COLOR_PURPLE}${OS}${COLOR_NONE} - ${COLOR_BROWN}bash ${BASH_VERSION}${COLOR_NONE}"
 
+# Shared POSIX shell code, sourced by both bash and zsh (see ~/.config/sh).
+if [[ -d $HOME/.config/sh ]]; then
+    for sh_file in "$HOME"/.config/sh/*.sh; do
+        source "$sh_file"
+    done
+fi
+
 # Pull in settings from other (possibly system-specific or private) files.
 if [[ -d $HOME/.profile.d ]]; then
     for profile_file in $(find -L "$HOME/.profile.d/" -type f); do

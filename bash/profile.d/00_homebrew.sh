@@ -1,1 +1,0 @@
-../../zsh/zshrc.d/00_homebrew.zsh

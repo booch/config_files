@@ -1,5 +1,13 @@
 #!/bin/zsh
 
+# Shared POSIX shell code, sourced by both bash and zsh (see ~/.config/sh).
+if [[ -d $HOME/.config/sh ]]; then
+    for file in "$HOME"/.config/sh/*.sh; do
+        # shellcheck source=/dev/null
+        . "$file"
+    done
+fi
+
 # I've made my entire ZSH configuration modular!
 if [[ -d $HOME/.zsh/zshrc.d ]]; then
     for file in $(\find -L "$HOME"/.zsh/zshrc.d/*.zsh -type f); do

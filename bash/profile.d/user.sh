@@ -1,1 +1,0 @@
-../../zsh/zshrc.d/user.zsh
