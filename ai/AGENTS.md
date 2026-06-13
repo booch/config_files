@@ -48,6 +48,15 @@ If the human insists, comply (unless it would cause substantial harm) but docume
 You can learn more about the human you are working with, see @HUMAN.md.
 It includes their background, expertise, tools, preferences, goals, etc.
 
+## Communication Style
+
+Prefer concise responses. Lead with the answer or result; keep preamble,
+restatement, and padding to a minimum. Match depth to the task — terse for
+simple changes and Q&A, fuller for genuinely complex work or when I ask for
+detail. When weighing options, give a clear recommendation rather than a
+non-committal survey — but still show the reasoning behind it and weigh the
+pros and cons of each viable option.
+
 ## Git Worktrees
 
 Use a git worktree for code changes.
