@@ -29,6 +29,7 @@ _prepend_path() {
 
 # Lowest precedence first; each prepend moves its entry to the front, so the
 # final order (front to back) is the reverse of this list.
+_prepend_path "$HOME/.antigravity/antigravity/bin"   # Antigravity editor CLI (agy, antigravity)
 _prepend_path "/opt/homebrew/sbin"
 _prepend_path "/opt/homebrew/bin"
 _prepend_path "$HOME/.local/share/mise/shims"   # all mise-managed tools, no activation hook
