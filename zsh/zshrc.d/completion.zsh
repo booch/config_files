@@ -36,6 +36,14 @@ else
     compinit -C
 fi
 
+# If we have carapace, use it for completions.
+if command -v carapace &> /dev/null; then
+    export CARAPACE_BRIDGES='zsh,bash'
+    zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+    source <(carapace _carapace)
+    zstyle ':completion:*:git:*' group-order 'alias commands' 'main commands' 'external commands'
+fi
+
 # Display red dots whilst waiting for completion.
 export COMPLETION_WAITING_DOTS='true'
 

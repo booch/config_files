@@ -1,0 +1,4 @@
+# Carapace regenerates its zsh bridge cache here on demand; keep it out of git.
+/bridge/
+
+# specs/ and overlays/ hold hand-authored carapace config and should be tracked.
