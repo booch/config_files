@@ -1,30 +1,31 @@
-// See full docs at https://github.com/johnste/finicky/wiki/Configuration.
+// See full docs at https://github.com/johnste/finicky/wiki/Configuration-(v4).
 
-// Get bundle ID with `defaults read "/Applications/${APP_NAME}.app/Contents/Info" CFBundleIdentifier`
-const Chrome = "com.google.Chrome";
-const Firefox = "com.mozilla.Firefox";
-const Safari = "com.apple.Safari";
-const Vivaldi = "com.vivaldi.Vivaldi";
-const Brave = "com.brave.Browser";
-const VSCode = "com.microsoft.VSCode";
-const AppleMusic = "com.apple.Music";
-const Figma = "com.figma.Desktop";
-const iTerm = "com.googlecode.iterm2";
-const Slack = "com.tinyspeck.slackmacgap";
-const Discord = "com.hnc.Discord";
-const GoogleMeet = "com.google.Chrome.app.Google Meet";
-const Obsidian = "md.obsidian";
-const Zoom = "us.zoom.xos";
+// Identify browsers by app name (preferred in Finicky 4) or bundle ID.
+// Bundle ID: `defaults read "/Applications/${APP_NAME}.app/Contents/Info" CFBundleIdentifier`
+const Chrome = "Google Chrome";
+const Firefox = "Firefox";
+const Safari = "Safari";
+const Vivaldi = "Vivaldi";
+const Brave = "Brave Browser";
+const VSCode = "Visual Studio Code";
+const AppleMusic = "Music";
+const Figma = "Figma";
+const iTerm = "iTerm";
+const Slack = "Slack";
+const Discord = "Discord";
+const GoogleMeet = "com.google.Chrome.app.Google Meet"; // Chrome PWA: no app-name form
+const Obsidian = "Obsidian";
+const Zoom = "zoom.us";
 
 const DEFAULT = Chrome;
 const WORK = Safari;
 
 
-module.exports = {
+export default {
     defaultBrowser: DEFAULT,
     options: {
         hideIcon: false,
-        checkForUpdate: true,
+        checkForUpdates: true,
         logRequests: true,
     },
     handlers: [
@@ -42,15 +43,15 @@ module.exports = {
         },
         {
             browser: VSCode,
-            match: ({ url }) => url.protocol === "file" || url.protocol === "vscode",
+            match: (url) => url.protocol === "file:" || url.protocol === "vscode:",
         },
         {
             browser: Obsidian,
-            match: ({ url }) => url.protocol === "obsidian",
+            match: (url) => url.protocol === "obsidian:",
         },
         {
             browser: Slack,
-            match: ({ url }) => url.protocol === "slack",
+            match: (url) => url.protocol === "slack:",
         },
         {
             browser: Zoom,
@@ -71,9 +72,7 @@ module.exports = {
         {
             browser: AppleMusic,
             match: ["music.apple.com*", "geo.music.apple.com*"],
-            url: {
-                protocol: "itmss",
-            },
+            url: (url) => new URL(`itmss://${url.host}${url.pathname}${url.search}`),
         },
         {
             browser: Figma,
@@ -82,15 +81,7 @@ module.exports = {
         {
             browser: Discord,
             match: "https://discord.com/*",
-            url: { protocol: "discord" },
-        },
-    ],
-    rewrite: [
-        {
-            match: "amazon.com/*",
-            url: {
-                host: "smile.amazon.com",
-            },
+            url: (url) => new URL(`discord://${url.host}${url.pathname}${url.search}`),
         },
     ],
 };
