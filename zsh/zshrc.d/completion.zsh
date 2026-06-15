@@ -10,7 +10,11 @@ fi
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 
 # Allow tab completion of multiple partial matches (/u/lo/b -> /usr/local/bin).
-zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
+zstyle ':completion:*' list-suffixes
+zstyle ':completion:*' expand prefix suffix
+
+# Use a TUI menu for selecting completions.
+zstyle ':completion:*' menu select
 
 # Enable tab completion.
 autoload -Uz compinit && compinit
