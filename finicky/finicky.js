@@ -16,9 +16,11 @@ const Discord = "Discord";
 const GoogleMeet = "com.google.Chrome.app.Google Meet"; // Chrome PWA: no app-name form
 const Obsidian = "Obsidian";
 const Zoom = "zoom.us";
+// const LinkedIn = "com.BZG.LinkedIn"; // Unite 6.0.2 is **unusable**!
 
 const DEFAULT = Chrome;
 const WORK = Safari;
+const JOB_HUNTING = Firefox;
 
 
 export default {
@@ -33,12 +35,23 @@ export default {
             browser: WORK,
             match: [
                 "*.render.com/*", // Render - Fire Text Rescue
-                "linkedin.com/*",
-                "*.careers/*",
-                "*.workday.com/*",
-                "*.greenhouse.io/*",
                 "localhost:*/*",
                 "docs.google.com/*",
+            ],
+        },
+        {
+            browser: JOB_HUNTING,
+            match: [
+                "linkedin.com/*",
+                "*.linkedin.com/*",
+                "*.myworkdayjobs.com/*",
+                "*.lever.co/*",
+                "*.ashbyhq.com/*",
+                "*.greenhouse.io/*",
+                "jobs.*/*",
+                "*.careers/*",
+                "*.workday.com/*",
+                "rubyonremote.com/*",
             ],
         },
         {
