@@ -64,7 +64,7 @@ export default {
         },
         {
             browser: Slack,
-            match: (url) => url.protocol === "slack:",
+            match: [(url) => url.protocol === "slack:", "slack.com/*"],
         },
         {
             browser: Zoom,
