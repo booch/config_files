@@ -70,6 +70,9 @@ yarn.lock text merge=yarn.lock
 *.mpeg filter=lfs diff=lfs merge=lfs -text
 *.tiff filter=lfs diff=lfs merge=lfs -text
 
+# Encrypt these files with git-crypt.
+#.env text filter=git-crypt diff=git-crypt
+
 # Diff images by their EXIF data.
 *.png diff=exif
 *.jpg diff=exif

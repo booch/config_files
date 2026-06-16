@@ -70,6 +70,9 @@
     }; f"
 	cachetextconv = true
 
+[diff "git-crypt"]
+    textconv = git-crypt diff
+	cachetextconv = false
 
 [merge "ours"]
 	name = 'Resolves merge conflicts by taking _our_ latest version'
@@ -92,4 +95,11 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+	required = true
+
+# TODO: Try these out with a `.env` file.
+# NOTE: `git-crypt init` adds these to your local `.git/config`.
+[filter "git-crypt"]
+	clean = git-crypt clean
+	smudge = git-crypt smudge
 	required = true
