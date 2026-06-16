@@ -275,7 +275,7 @@ For the 3-review process, use the `/review` command which orchestrates all three
 - `/simplify` — Review code for simplification opportunities
 - `/retro` — Retrospective on the current chat session
 - `/refactor-shrink` — Reduce code length when lint reports it is too long
-- `/what` — Suggest what to work on next
+- `/what-next` — Suggest what to work on next
 
 ## Task Completion Signal
 
