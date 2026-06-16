@@ -16,9 +16,9 @@ postinstall = [
 ]
 
 [tools]
-ruby = ['latest', 'system']
-python = ['system', 'latest']
-node = ['system', 'latest']
+ruby = ['latest']
+python = ['latest']
+node = ['latest']
 #bun = 'latest'
 #deno = 'latest'
 #elixir = 'latest'
