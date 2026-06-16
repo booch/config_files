@@ -1,4 +1,0 @@
-[submodule "claude/plugins/marketplaces/boochtek"]
-	path = claude/plugins/marketplaces/boochtek
-	url = git@github.com:boochtek/ai-skills.git
-	branch = main
