@@ -49,7 +49,7 @@ set tabstop=8
 
 " Use 4 spaces when to indent, but make it *feel* like there are hard tabs.
 set shiftwidth=4
-set softtabstop=4
+set softtabstop=-1
 
 " Never use hard tabs.
 set expandtab
