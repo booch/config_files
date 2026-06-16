@@ -3,17 +3,108 @@
 // For information on how to configure Zed, see the Zed
 // documentation: https://zed.dev/docs/configuring-zed
 {
+    "project_panel": {
+        "dock": "right",
+    },
+    "outline_panel": {
+        "dock": "right",
+    },
+    "collaboration_panel": {
+        "dock": "right",
+    },
+    "git_panel": {
+        "dock": "right",
+    },
+    "vim_mode": false,
+    "edit_predictions": {
+        "provider": "copilot",
+    },
+    "context_servers": {},
+    "agent_servers": {
+        "kimi": {
+            "type": "registry",
+        },
+        "mistral-vibe": {
+            "type": "registry",
+        },
+        "pi-acp": {
+            "type": "registry",
+        },
+        "opencode": {
+            "favorite_config_option_values": {
+                "model": [
+                    "github-copilot/claude-opus-4.7",
+                    "github-copilot/claude-sonnet-4.6/high",
+                    "ollama/qwen3.6:latest",
+                    "ollama/glm-4.7-flash:latest",
+                    "ollama/qwen3-coder:latest",
+                    "ollama/gemma4:31b",
+                    "ollama/gemma4:26b",
+                    "ollama/gemma4:e4b",
+                    "ollama/devstral:latest",
+                    "openai/gpt-5.5-pro/xhigh",
+                ],
+            },
+            "type": "registry",
+        },
+        "github-copilot-cli": {
+            "type": "registry",
+        },
+        "gemini": {
+            "type": "registry",
+        },
+        "cursor": {
+            "type": "registry",
+        },
+        "codex-acp": {
+            "type": "registry",
+        },
+        "cline": {
+            "type": "registry",
+        },
+        "claude-acp": {
+            "favorite_config_option_values": {
+                "model": ["default"],
+            },
+            "type": "registry",
+            "default_config_options": {
+                "model": "default",
+            },
+        },
+    },
     "theme": {
         "mode": "system",
         "light": "One Light",
-        "dark": "One Dark"
+        "dark": "One Dark",
+    },
+    "theme_overrides": {
+        "One Light": {
+            "vim.normal.background": "#4875D9",
+            "vim.normal.foreground": "#ffffff",
+            "vim.insert.background": "#DE4E4E",
+            "vim.insert.foreground": "#ffffff",
+            "vim.visual.background": "#EE995C",
+            "vim.visual.foreground": "#ffffff",
+            "vim.visual_line.background": "#EE995C",
+            "vim.visual_line.foreground": "#ffffff",
+            "vim.visual_block.background": "#EE995C",
+            "vim.visual_block.foreground": "#ffffff",
+        },
+        "One Dark": {
+            "vim.normal.background": "#4875D9",
+            "vim.normal.foreground": "#ffffff",
+            "vim.insert.background": "#DE4E4E",
+            "vim.insert.foreground": "#ffffff",
+            "vim.visual.background": "#EE995C",
+            "vim.visual.foreground": "#ffffff",
+            "vim.visual_line.background": "#EE995C",
+            "vim.visual_line.foreground": "#ffffff",
+            "vim.visual_block.background": "#EE995C",
+            "vim.visual_block.foreground": "#ffffff",
+        },
     },
     "icon_theme": "Zed (Default)",
     "base_keymap": "VSCode",
-    "features": {
-        // Which edit prediction provider to use.
-        "edit_prediction_provider": "zed"
-    },
 
     "buffer_font_size": 18,
     "buffer_font_family": "Zed Plex Mono",
@@ -28,18 +119,19 @@
     "ui_font_fallbacks": null,
     "ui_font_features": {
         // Disable ligatures:
-        "calt": false
+        "calt": false,
     },
     "ui_font_weight": 400,
     "ui_font_size": 18,
 
-    "agent_font_size": 18,
+    "agent_ui_font_size": 22,
+    "agent_buffer_font_size": 20,
 
     "active_pane_modifiers": {
         // Inset border size of the active pane, in pixels.
         "border_size": 2,
         // Opacity of the inactive panes. 0 means transparent, 1 means opaque.
-        "inactive_opacity": 0.8
+        "inactive_opacity": 0.8,
     },
 
     // Time to wait in milliseconds before showing the informational hover box.
@@ -70,14 +162,14 @@
         "**/*.key",
         "**/*.cert",
         "**/*.crt",
-        "**/secrets.yml"
+        "**/secrets.yml",
     ],
     // Hide the values of in variables from visual display in private files
     "redact_private_values": true,
 
     "calls": {
         // Mute when joining an audio/video call.
-        "mute_on_join": true
+        "mute_on_join": true,
     },
 
     "toolbar": {
@@ -85,20 +177,20 @@
         "quick_actions": true,
         "selections_menu": true,
         "agent_review": true,
-        "code_actions": true
+        "code_actions": true,
     },
 
     "title_bar": {
-        "show_branch_icon": true,
+        "show_branch_status_icon": true,
         "show_branch_name": true,
         "show_project_items": true,
         "show_onboarding_banner": true,
         "show_user_picture": true,
-        "show_sign_in": true
+        "show_sign_in": true,
     },
 
     "scrollbar": {
-        "show": "always"
+        "show": "always",
     },
 
     "indent_guides": {
@@ -106,7 +198,7 @@
         "line_width": 1,
         "active_line_width": 2,
         "coloring": "indent_aware",
-        "background_coloring": "indent_aware"
+        "background_coloring": "indent_aware",
     },
 
     "inlay_hints": {
@@ -124,18 +216,20 @@
             "shift": false,
             "alt": false,
             "platform": false,
-            "function": false
-        }
+            "function": false,
+        },
     },
 
     // AI
     "agent": {
-        // Version of this setting. Required!
-        "version": "2",
+        "dock": "left",
+        "tool_permissions": {
+            "default": "allow",
+        },
         "enabled": true,
         "default_model": {
-            "provider": "zed.dev",
-            "model": "claude-sonnet-4"
+            "provider": "anthropic",
+            "model": "claude-opus-4-6-thinking-latest",
         },
         // Additional parameters for language model requests. When making a request to a model, parameters will be taken
         // from the last entry in this list that matches the model's provider and name. In each entry, both provider
@@ -143,21 +237,21 @@
         "model_parameters": [
             {
                 "provider": "zed.dev",
-                "temperature": 0.9
+                "temperature": 0.9,
             },
             {
                 "model": "claude-sonnet-4",
-                "temperature": 0.9
-            }
+                "temperature": 0.9,
+            },
         ],
-        // Ask for confirmation before running potentially destructive actions.
-        "always_allow_tool_actions": false,
+        // FIXME: This seems to not be the case any more: Ask for confirmation before running potentially destructive actions.
         "default_profile": "write",
         "profiles": {
             "write": {
                 "name": "Write",
                 "enable_all_context_servers": true,
                 "tools": {
+                    "search_web": true,
                     "copy_path": true,
                     "create_directory": true,
                     "delete_path": true,
@@ -172,14 +266,14 @@
                     "grep": true,
                     "terminal": true,
                     "thinking": true,
-                    "web_search": true
-                }
+                },
             },
             "ask": {
                 "name": "Ask",
                 // We don't know which of the context server tools are safe for the "Ask" profile, so we don't enable them by default.
                 // "enable_all_context_servers": true,
                 "tools": {
+                    "search_web": true,
                     "contents": true,
                     "diagnostics": true,
                     "fetch": true,
@@ -190,53 +284,54 @@
                     "open": true,
                     "grep": true,
                     "thinking": true,
-                    "web_search": true
-                }
+                },
             },
             "minimal": {
                 "name": "Minimal",
                 "enable_all_context_servers": false,
-                "tools": {}
-            }
+                "tools": {},
+            },
         },
+        // Don't show all the terminal output by default.
+        "expand_terminal_card": false,
         // Where to show notifications when the agent has either completed
         // its response, or else needs confirmation before running a tool.
         // "primary_screen" - Show the notification only on your primary screen (default)
         // "all_screens" - Show these notifications on all screens
         // "never" - Never show these notifications
         "notify_when_agent_waiting": "all_screens",
-        "play_sound_when_agent_done": true
+        "play_sound_when_agent_done": "always",
     },
 
     "tabs": {
         "file_icons": true,
         "git_status": true,
         "close_position": "right",
-        "show_close_button": "hover"
+        "show_close_button": "hover",
     },
 
     "file_finder": {
         "file_icons": true,
-        "modal_max_width": "large"
+        "modal_max_width": "large",
     },
 
     "telemetry": {
-        "diagnostics": false // prevent any sensitive data leaking
+        "diagnostics": false, // prevent any sensitive data leaking
     },
 
     "diagnostics": {
         "inline": {
-            "enabled": true
-        }
+            "enabled": true,
+        },
     },
 
     "git": {
-        "hunk_style": "unstaged_hollow"
+        "hunk_style": "unstaged_hollow",
     },
 
     "journal": {
         "path": "~/journal",
-        "hour_format": "hour24"
+        "hour_format": "hour24",
     },
 
     "terminal": {
@@ -249,7 +344,7 @@
         "font_size": 15,
         "font_family": "Zed Plex Mono",
         "font_fallbacks": ["FiraCode Nerd Fonts"],
-        "max_scroll_history_lines": 100000
+        "max_scroll_history_lines": 100000,
     },
 
     "code_actions_on_format": {},
@@ -261,17 +356,17 @@
             "**/.zed/**/*.json",
             "**/zed/**/*.json",
             "**/Zed/**/*.json",
-            "**/.vscode/**/*.json"
-        ]
+            "**/.vscode/**/*.json",
+        ],
     },
 
     "auto_install_extensions": {
-        "html": true
+        "html": true,
     },
 
     "completions": {
         "lsp": true,
-        "lsp_fetch_timeout_ms": 500
+        "lsp_fetch_timeout_ms": 500,
     },
 
     "vim": {
@@ -288,8 +383,8 @@
             "normal": "hollow",
             "insert": "bar",
             "visual": "block",
-            "replace": "underline"
-        }
+            "replace": "underline",
+        },
     },
 
     // Set to configure aliases for the command palette.
@@ -303,11 +398,36 @@
 
     // Language-specific settings.
     "languages": {
+        "Markdown": {
+            "tab_size": 4,
+        },
         "JSON": {
-            "tab_size": 4
+            "tab_size": 4,
         },
         "JSONC": {
-            "tab_size": 4
-        }
-    }
+            "tab_size": 4,
+        },
+    },
+
+    "lsp": {
+        "markdownlint": {
+            "settings": {
+                "heading-style": false,
+                "ul-indent": {
+                    "indent": 4,
+                },
+                "line-length": false,
+                "no-multiple-blanks": false,
+                "no-bare-urls": false,
+                "ul-style": false,
+                "blanks-around-lists": false,
+                "ol-prefix": {
+                    "style": "one_or_ordered",
+                },
+                "no-trailing-punctuation": false,
+                "no-duplicate-heading": false,
+                "emphasis-style": false,
+            },
+        },
+    },
 }
