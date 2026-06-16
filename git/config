@@ -12,7 +12,7 @@
 [pager]
 	status = true
 [delta]
-	features = plain
+	features = numbered
 	tabs = 4
 	navigate = true  # Allow `n` and `N` to move between sections.
 	hyperlinks = true
