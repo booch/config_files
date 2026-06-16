@@ -166,6 +166,7 @@ clipboard_paste=
 base_color=
 xterm-256color=
 color_terminals=
+xterm-ghostty=
 
 [Panels]
 show_mini_info=true
