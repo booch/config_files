@@ -12,7 +12,7 @@ command-exists() {
 # Enable color support of ls and also add handy aliases.
 if [ "$TERM" != "dumb" ]; then
     command-exists dircolors && eval "$(dircolors -b)"
-    if ls --color=auto 2> /dev/null > /dev/null ; then
+    if ls --color=auto 2>/dev/null >/dev/null; then
         # See http://www.linux-sxs.org/housekeeping/lscolors.html
         export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'
         alias ls='ls --color=auto -h -1'
@@ -26,7 +26,7 @@ fi
 # `l` uses less for everything; ~/.lessfilter handles directories via eza.
 l() { less "${@:-.}"; }
 
-if command-exists eza ; then
+if command-exists eza; then
     # TODO: Set EZA_COLORS. See https://man.archlinux.org/man/extra/eza/eza_colors-explanation.5.en
     # Eza has no way to suppress showing the source of soft links, so fall back to `ls`.
     alias l1='ls -1A'
@@ -41,7 +41,7 @@ else
 fi
 
 # Completion colors should match $LS_COLORS.
-if [[ -n "$ZSH_VERSION" ]] ; then
+if [[ -n "$ZSH_VERSION" ]]; then
     zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
 fi
 
@@ -78,17 +78,15 @@ fi
 if [ -x '/Applications/VLC.app/Contents/MacOS/VLC' ]; then
     alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 fi
-if command-exists hdiutil ; then
+if command-exists hdiutil; then
     alias eject='hdiutil eject'
 fi
 if [ -x '/System/Library/CoreServices/Menu Extras/User.menu/Contents/Resources/CGSession' ]; then
     alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 fi
 
-
 # Show top 10 most frequent items in the list piped in. Can specify top 20 with 'top10 -20'.
 alias top10='sort | uniq -c | sort -nr | head'
-
 
 # From RailsTips.org:
 # Use: cdgem <gem name>, cd's into your gems directory and opens gem that best matches the gem name provided.
@@ -98,9 +96,8 @@ cdgem() {
     cd "$(ls | grep "$1" | sort | tail -1)"
 }
 
-
 # If htop is installed, use it instead of top.
-if command-exists htop ; then
+if command-exists htop; then
     alias top=htop
 fi
 
@@ -112,7 +109,7 @@ _du() {
 alias du=_du
 
 # Unless we already have a JSON formatter, add a simple one.
-if ! command-exists json ; then
+if ! command-exists json; then
     alias json='python -m json.tool'
 fi
 
@@ -144,8 +141,8 @@ _rg() {
         {
             delta \
                 "$dark_or_light" \
-                rg "$@" \
-                | perl -pe "$_rg_gutter_filter"
+                rg "$@" |
+                perl -pe "$_rg_gutter_filter"
             echo '\n------'
             command rg --stats -q "$@" 2>/dev/null | grep -v 'bytes printed'
         } | less -RFX -p '•'
@@ -169,7 +166,7 @@ alias diff=_diff
 alias k='kubectl'
 
 # Aliases (shell functions) for zoxide.
-if command-exists zoxide ; then
+if command-exists zoxide; then
     # Adds `z` and `zi` (interactive). Init for the shell we're running in,
     # not $SHELL (the login shell), so Bash doesn't evaluate Zsh hooks.
     if [ -n "$ZSH_VERSION" ]; then
@@ -181,9 +178,9 @@ if command-exists zoxide ; then
 fi
 
 # Alias `dog` as `dig`, if it's available, or `doggo` if it's available.
-if command-exists dog ; then
+if command-exists dog; then
     alias dig=dog
-elif command-exists doggo ; then
+elif command-exists doggo; then
     alias dig=doggo
 fi
 
@@ -205,7 +202,7 @@ alias Get='git'
 
 # Zsh-you-should-use reminds you to use aliases you have defined. It's a Zsh
 # plugin, so only load it under Zsh.
-if [ -n "$ZSH_VERSION" ] && command-exists brew ; then
+if [ -n "$ZSH_VERSION" ] && command-exists brew; then
     you_should_use_plugin="$(brew --prefix 2>/dev/null)/share/zsh-you-should-use/you-should-use.plugin.zsh"
     if [[ -r "$you_should_use_plugin" ]]; then
         source "$you_should_use_plugin"
