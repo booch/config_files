@@ -103,3 +103,24 @@
 	clean = git-crypt clean
 	smudge = git-crypt smudge
 	required = true
+
+# WARNING: The following are untested, and may be AI hallucinations.
+# Commented out until verified: git clean/smudge must read stdin and write
+# stdout, but `crypt` writes to %f.enc (no stdout) and `sops -e` needs a file.
+
+# SOPS has the advantage of being able to encrypt values (in JSON, YAML, etc) without encrypting keys.
+# SOPS probably has more flexibility than `git-crypt` and probably easier to use in multi-user environments.
+# [filter "sops"]
+# 	clean = sops -e
+# 	smudge = sops -d
+# 	required = true
+#
+# [filter "crypt"]
+# 	clean = openssl enc -aes-256-cbc -salt -in %f -out %f.enc -pass file:~/.git-encrypt-pass.txt
+# 	smudge = openssl enc -d -aes-256-cbc -in %f.enc -out %f -pass file:~/.git-encrypt-pass.txt
+# 	required = true
+#
+# [filter "gpg"]
+# 	clean = gpg --encrypt --armor --recipient $GIT_ENCRYPT_KEY
+# 	smudge = gpg --decrypt
+# 	required = true
