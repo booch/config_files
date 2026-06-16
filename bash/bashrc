@@ -326,3 +326,11 @@ export ANDROID_SDK_VERSION='21.0.1'
 if [[ -d /Applications/Android/SDK/$ANDROID_SDK_VERSION ]] ; then
     PATH=$PATH:/Applications/Android/SDK/$ANDROID_SDK_VERSION/tools:/Applications/Android/SDK/$ANDROID_SDK_VERSION/platform-tools
 fi
+
+# zoxide must initialize LAST so its PROMPT_COMMAND hook lands after everything
+# else that modifies PROMPT_COMMAND — otherwise `zoxide doctor` warns.
+# Keep in sync with the matching block at the end of zsh/zshrc.
+if command -v zoxide >/dev/null; then
+    eval "$(zoxide init bash)"
+    alias cd='z' # zoxide's `z`: jump to frecent directories.
+fi

@@ -32,3 +32,11 @@ export PATH="$PATH:/usr/local/sbin"
 #   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
 #   echo $(git remote -v | cut -d':' -f 2)
 # }
+
+# zoxide must initialize LAST so its hook lands after everything else that
+# touches precmd_functions/chpwd_functions — otherwise `zoxide doctor` warns.
+# Keep in sync with the matching block at the end of bash/bashrc.
+if command -v zoxide >/dev/null; then
+    eval "$(zoxide init zsh)"
+    alias cd='z' # zoxide's `z`: jump to frecent directories.
+fi

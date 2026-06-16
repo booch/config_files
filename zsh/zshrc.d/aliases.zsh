@@ -165,18 +165,6 @@ alias diff=_diff
 # The kubernetes Oh My ZSH plugin adds `k` and a ton of other aliases, but the rest aren't used much.
 alias k='kubectl'
 
-# Aliases (shell functions) for zoxide.
-if command-exists zoxide; then
-    # Adds `z` and `zi` (interactive). Init for the shell we're running in,
-    # not $SHELL (the login shell), so Bash doesn't evaluate Zsh hooks.
-    if [ -n "$ZSH_VERSION" ]; then
-        eval "$(zoxide init zsh)"
-    elif [ -n "$BASH_VERSION" ]; then
-        eval "$(zoxide init bash)"
-    fi
-    alias cd='z'
-fi
-
 # Alias `dog` as `dig`, if it's available, or `doggo` if it's available.
 if command-exists dog; then
     alias dig=dog
