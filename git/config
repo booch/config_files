@@ -91,8 +91,15 @@
 	helper = osxkeychain  # Use macOS Keychain to find/store credentials.
 	helper = gnome-keyring  # Use Gnome Keyring to find/store credentials.
 	helper = wincred  # Use Windows Credential Manager to find/store credentials.
-	helper = oauth  # Use OAuth to authenticate to GitHub, GitLab, or BitBucket.
-	helper = manager  # Use Git Credential Manager to find/store credentials for GitHub, GitLab, BitBucket, or Azure.
+	# helper = oauth  # Use OAuth to authenticate to GitHub, GitLab, or BitBucket.
+	# helper = manager  # Use Git Credential Manager to find/store credentials for GitHub, GitLab, BitBucket, or Azure.
+    # helper = /usr/local/share/gcm-core/git-credential-manager  # Mac command-line tools added this.
+[credential "https://dev.azure.com"]
+    useHttpPath = true  # Mac command-line tools added this.
+# [credential "https://github.com"]
+# 	helper = !gh auth git-credential
+# [credential "https://gist.github.com"]
+# 	helper = !gh auth git-credential
 [fetch]
 	recurseSubmodules = on-demand  # Only pull submodule changes if the main project updates the submodule reference.
 	prune = true  # If a remote branch is deleted, allow `git fetch` to remove the tracking branch.
@@ -146,4 +153,4 @@
 [blame]
 # 	date = format-local:%Y-%m-%d %a  # Display dates like `2024-02-25 Sun`, in local time zone. (Not compatible with `delta`.)
 [safe]
-	directory = /opt/homebrew
+    directory = /opt/homebrew  # Allow working with git repo in `/opt/homebrew`, even if I don't own the directory.
