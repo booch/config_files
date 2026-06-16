@@ -52,12 +52,12 @@ Plugin 'scrooloose/nerdtree'
 
 
 "" Rainbow parentheses - color each matching set of parens differently.
-  Plugin 'kien/rainbow_parentheses.vim'
-  " Enable by default (only in regular Vim, not Neovim).
-  au VimEnter * RainbowParenthesesToggle
-  au Syntax * RainbowParenthesesLoadRound
-  au Syntax * RainbowParenthesesLoadSquare
-  au Syntax * RainbowParenthesesLoadBraces
+Plugin 'kien/rainbow_parentheses.vim'
+" Opt-in; toggle with :RainbowParenthesesToggle.
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
 
 
 " Snippet manager and a big pile of "standard" snippets.
