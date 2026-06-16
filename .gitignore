@@ -39,9 +39,35 @@
 /claude/config.json
 # Plugins are managed by install.sh, not git.
 /claude/plugins/*
-!/claude/plugins/marketplaces/
-/claude/plugins/marketplaces/*
-!/claude/plugins/marketplaces/boochtek/
 
 # Used by VS Code markdown-preview-enhanced plugin:
 /crossnote
+
+# Credentials, tokens, and account secrets — NEVER commit (this repo is public).
+
+# Anthropic Claude OAuth credentials
+/claude/.credentials.json
+
+# GitHub CLI OAuth token (config.yml is safe to commit)
+/gh/hosts.yml
+
+# GitHub Copilot OAuth tokens (instructions/ is safe to commit)
+/github/copilot/apps.json
+/github/copilot/auth.db
+# Redundant compatibility symlinks pointing at github/copilot/
+/github-copilot
+/github-copilot-20250114
+/github-copilot-20251208
+
+# Google Cloud SDK — access tokens and credential databases
+/gcloud/
+
+# Google Gemini CLI — OAuth credentials and linked Google accounts
+/gemini/oauth_creds.json
+/gemini/google_accounts.json
+
+# WakaTime — API key lives in .wakatime.cfg
+/wakatime/
+
+# 1Password CLI — account config (emails, account URLs)
+/op/
