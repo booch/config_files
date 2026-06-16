@@ -16,6 +16,9 @@
 # Bundler
 vendor/bundle
 
+# Node
+node_modules/
+
 # GPG
 secring.*
 
