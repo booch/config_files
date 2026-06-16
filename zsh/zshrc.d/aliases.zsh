@@ -134,7 +134,14 @@ _rg_gutter_filter='
     s/ $OSC8 \K : /:│ /xo;
     s/ $OSC8 \K - / │ /xo;
 '
-_rg() {
+# Named `rg` (a function, not `alias rg=_rg`) for two reasons:
+#   - `_rg` is zsh's own ripgrep completer; a wrapper by that name shadows it.
+#   - Tools that snapshot the shell (scripts, AI agents) may capture the alias
+#     without the function, leaving `rg` pointing at a missing `_rg`. As a plain
+#     function, non-interactive shells either run the `else` branch below or, if
+#     the function isn't captured, fall through to the real `rg` binary.
+# The `[[ -t 1 ]]` guard sends plain, unstyled output anywhere but a real tty.
+rg() {
     if [[ -t 1 ]]; then
         local dark_or_light='--light'
         defaults read -g AppleInterfaceStyle &>/dev/null && dark_or_light='--dark'
@@ -150,7 +157,6 @@ _rg() {
         command rg "$@"
     fi
 }
-alias rg=_rg
 
 # Pipe `diff` output through `delta` for syntax-highlighted unified diffs.
 _diff() {
