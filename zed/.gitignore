@@ -1,0 +1,3 @@
+# Zed writes this when it auto-migrates settings on upgrade. It's a
+# transient backup of the previous settings, not config worth tracking.
+settings_backup.json
