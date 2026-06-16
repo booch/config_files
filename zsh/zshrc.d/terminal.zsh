@@ -3,6 +3,9 @@
 # If we stop console output with Ctrl+S, allow any key to restart the output.
 stty ixany
 
+# Sync the tty erase character to the backspace key terminfo advertises
+# (kbs), so Backspace deletes regardless of ^H vs ^? mismatches.
+stty erase "$(tput kbs)"
 
 # If the terminal supports xterm-style setting of the title, set it to user@host:dir after every command.
 # case "$TERM" in
