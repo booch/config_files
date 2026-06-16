@@ -81,10 +81,81 @@ yarn.lock text merge=yarn.lock
 *.gif diff=exif
 *.mp4 diff=exif
 
-# Diff office docs by converting them to text.
+#
+# *.plist diff=plist
+# *.strings diff=localizablestrings
+# #*.zip diff=zip
+# *.sh diff=bash
+# *.bash diff=bash
+# *.zsh diff=bash
+# *.rb diff=ruby
+# *.rake diff=ruby
+# *.md diff=markdown
+# *.html diff=html
+# *.htm diff=html
+# *.xhtml diff=html
+# *.css text diff=css
+# *.ex diff=elixir
+# *.exs diff=elixir
+# *.py diff=python
+# *.lua text
+# *.scm diff=scheme
+# *.rkt diff=scheme
+# *.swift text diff=swift
+# *.rs diff=rust
+# *.go diff=golang
+# *.kt diff=kotlin
+# *.kts diff=kotlin
+# *.java diff=java
+# *.php diff=php
+# *.pl diff=perl
+# *.pm diff=perl
+# *.tex diff=tex
+#
+# # Git LFS. Note that GitHub blocks files larger than 100 MiB, unless you use (and pay for) LFS.
+# # Instll w/ `brew install git-lfs ; git lfs install`. Add extensions as needed w/ `git lfs track '*.ext'`.
+# *.tar.gz filter=lfs diff=archive merge=lfs -text
+# *.tar.bz filter=lfs diff=archive merge=lfs -text
+# *.tar.bz2 filter=lfs diff=archive merge=lfs -text
+# *.tgz filter=lfs diff=archive merge=lfs -text
+# *.tbz filter=lfs diff=archive merge=lfs -text
+# *.zip filter=lfs diff=archive merge=lfs -text
+#
+# *.iso filter=lfs diff=lfs merge=lfs -text
+# *.cdda filter=lfs diff=lfs merge=lfs -text
+# *.img filter=lfs diff=lfs merge=lfs -text
+# *.dmg filter=lfs diff=lfs merge=lfs -text
+# *.vmdk filter=lfs diff=lfs merge=lfs -text
+# *.vdi filter=lfs diff=lfs merge=lfs -text
+# *.vbox filter=lfs diff=lfs merge=lfs -text
+# *.hdd filter=lfs diff=lfs merge=lfs -text
+#
+# *.mp4 filter=lfs diff=video merge=lfs -text
+# *.mov filter=lfs diff=video merge=lfs -text
+# *.avi filter=lfs diff=video merge=lfs -text
+# *.mkv filter=lfs diff=video merge=lfs -text
+# *.m4v filter=lfs diff=video merge=lfs -text
+# *.mpg filter=lfs diff=video merge=lfs -text
+# *.mpeg filter=lfs diff=video merge=lfs -text
+# *.tiff filter=lfs diff=video merge=lfs -text
+# *.mp4 diff=video -text
+#
+# # Diff images by their EXIF data.
+# *.png diff=image
+# *.jpg diff=image
+# *.ico diff=image
+# *.tiff diff=image
+# *.eps diff=image
+# *.bmp diff=image
+# *.raw diff=image
+# *.gif diff=image
+#
+# # Diff office docs by converting them to text.
 *.pdf diff=pdf
 *.docx diff=word
 *.doc diff=word
+*.xlsx diff=excel
+*.xls diff=excel
 *.odp diff=libreoffice
 *.odt diff=libreoffice
 *.ods diff=libreoffice
