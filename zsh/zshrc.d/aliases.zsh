@@ -78,7 +78,7 @@ fi
 if [ -x '/Applications/VLC.app/Contents/MacOS/VLC' ]; then
     alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 fi
-if where hdiutil >/dev/null; then
+if command-exists hdiutil ; then
     alias eject='hdiutil eject'
 fi
 if [ -x '/System/Library/CoreServices/Menu Extras/User.menu/Contents/Resources/CGSession' ]; then
@@ -170,8 +170,13 @@ alias k='kubectl'
 
 # Aliases (shell functions) for zoxide.
 if command-exists zoxide ; then
-    # Adds `z` and `zi` (interactive).
-    eval "$(zoxide init "$(basename "$SHELL")")"
+    # Adds `z` and `zi` (interactive). Init for the shell we're running in,
+    # not $SHELL (the login shell), so Bash doesn't evaluate Zsh hooks.
+    if [ -n "$ZSH_VERSION" ]; then
+        eval "$(zoxide init zsh)"
+    elif [ -n "$BASH_VERSION" ]; then
+        eval "$(zoxide init bash)"
+    fi
     alias cd='z'
 fi
 
@@ -198,8 +203,9 @@ alias devstral='llama-mtmd-cli \
 # Aliases for voice control.
 alias Get='git'
 
-# Zsh-you-should-use reminds you to use aliases you have defined.
-if (( $+commands[brew] )); then
+# Zsh-you-should-use reminds you to use aliases you have defined. It's a Zsh
+# plugin, so only load it under Zsh.
+if [ -n "$ZSH_VERSION" ] && command-exists brew ; then
     you_should_use_plugin="$(brew --prefix 2>/dev/null)/share/zsh-you-should-use/you-should-use.plugin.zsh"
     if [[ -r "$you_should_use_plugin" ]]; then
         source "$you_should_use_plugin"
