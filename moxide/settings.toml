@@ -1,3 +1,15 @@
 # Don't show preview on hover in VS Code and Zed.
 # (It was really annoying, and there's no setting to find within VS Code settings!)
 hover = false
+
+# New daily notes are created here. markdown-oxide can't date-format this
+# folder, so the year is literal — bump it each January. (Putting %Y in
+# `dailynote` would create the subfolder but break daily-note recognition,
+# which parses the bare filename.)
+daily_notes_folder = "Daily/2026"
+dailynote = "%Y-%m-%d"
+
+# Markdown links should include `.md` extension.
+# But Wiki-style links should NOT have an extension.
+include_md_extension_md_link = true
+include_md_extension_wikilink = false
