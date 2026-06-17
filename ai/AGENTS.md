@@ -73,6 +73,12 @@ You may be in a dirty git worktree.
 
 You may encounter changes that you did not make. Assume they came from the user or generated output --- do NOT revert them. If they are unrelated to your task, ignore them. If they affect your task, work **with** them instead of undoing them. Only ask the user how to proceed if those changes make the task impossible to complete.
 
+## Inspecting Git Stashes
+
+- `git stash show [-p] stash@{0}` shows the stash vs its OWN base — the true delta of what the stash changed.
+- `git diff stash@{0}` compares the stash to the current worktree, which is noisy when commits landed after the stash was made (an interrupted `pull`/`rebase --autostash` is the common cause). Don't judge "what's in the stash" from this.
+- Before dropping a stash, record its SHA (`git rev-parse stash@{0}`); the commit stays recoverable from the reflog until gc.
+
 ## Coding Workflow
 
 First, we'll discuss the problem and its requirements, what our options are,
