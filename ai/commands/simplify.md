@@ -1,5 +1,6 @@
 ---
 description: Review code for simplification opportunities
+publish: true
 ---
 
 # Simplify Command

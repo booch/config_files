@@ -1,6 +1,7 @@
 ---
 description: Suggest a concise commit message for staged changes
 allowed-tools: Bash
+publish: true
 ---
 
 # Commit Message Command

@@ -1,5 +1,6 @@
 ---
 description: Run the 3-review SDLC code review process on recent changes
+publish: true
 ---
 
 # Code Review Command

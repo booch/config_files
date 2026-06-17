@@ -1,6 +1,7 @@
 ---
 name: refactor
 description: Code refactoring methodology. Use this skill when improving code structure, when the user asks to simplify or clean up code, when reducing duplication, when improving readability, or after implementing features (the REFACTOR phase of TDD). Focuses on improving code without changing behavior.
+publish: true
 ---
 
 # Refactor Skill

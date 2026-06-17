@@ -1,6 +1,7 @@
 ---
 description: Reduce code length when linting reports files, classes, or methods are too long
 allowed-tools: Read, Grep, Glob, Write, Edit, Bash
+publish: true
 ---
 
 # Refactor-Shrink Command
