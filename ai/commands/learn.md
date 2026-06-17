@@ -1,6 +1,7 @@
 ---
 description: Learn from experience — persist insights to improve future sessions
 allowed-tools: Read, Grep, Glob, Write, Edit
+publish: true
 ---
 
 # Learn Command

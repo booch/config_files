@@ -1,6 +1,7 @@
 ---
 description: Retrospective on this session — analyze what worked, what didn't, and propose improvements
 allowed-tools: Read, Grep, Glob, Write
+publish: true
 ---
 
 # Session Retrospective

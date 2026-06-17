@@ -1,6 +1,7 @@
 ---
 description: Remember something for future sessions (alias for /learn)
 allowed-tools: Read, Grep, Glob, Write, Edit
+publish: true
 ---
 
 # Remember Command

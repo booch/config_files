@@ -1,5 +1,6 @@
 ---
 description: Suggest what to work on next based on project status and TODOs
+publish: true
 ---
 
 # What to Do Next Command

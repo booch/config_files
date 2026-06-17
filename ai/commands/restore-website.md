@@ -1,5 +1,6 @@
 ---
 description: Restore a lost website from the Wayback Machine and convert to a Hugo static site
+publish: true
 ---
 
 Restore a website from the Internet Archive's Wayback Machine.

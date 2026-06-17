@@ -1,5 +1,6 @@
 ---
 description: Update Homebrew and all installed packages, with a summary of changes
+publish: true
 ---
 
 Update Homebrew and all installed packages. Provide a summary of what was updated.
@@ -7,9 +8,11 @@ Update Homebrew and all installed packages. Provide a summary of what was update
 ## Steps
 
 1. **Check for concurrent brew processes.** Before anything else, check for stale lock files:
+
    ```
    find ~/Library/Caches/Homebrew/downloads/ -name "*.incomplete"
    ```
+
    - If `.incomplete` files exist, check whether a `brew upgrade` process is actually running (`pgrep -f 'brew upgrade'`).
    - If a process IS running: **abort** and tell the user another upgrade is in progress.
    - If NO process is running: the locks are stale. Clean them up with `find ~/Library/Caches/Homebrew/downloads/ -name "*.incomplete" -delete` and continue.

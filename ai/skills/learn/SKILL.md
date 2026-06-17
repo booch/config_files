@@ -1,6 +1,7 @@
 ---
 name: learn
 description: Persist learnings and insights across sessions. Use when the AI discovers something worth remembering, when a workflow pattern should be documented, when a mistake reveals a gap in instructions, or when the user asks to remember something.
+publish: true
 ---
 
 # Learn Skill

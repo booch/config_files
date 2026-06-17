@@ -1,5 +1,6 @@
 ---
 description: Collaboratively create a new project with scaffolding, AI config, docs, and GitHub repo
+publish: true
 ---
 
 # New Project

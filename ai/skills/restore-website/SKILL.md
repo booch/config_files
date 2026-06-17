@@ -1,6 +1,7 @@
 ---
 name: restore-website
 description: This skill should be used when the user asks to "restore a website", "recover a site from the Wayback Machine", "download from archive.org", "rebuild a lost website", "convert a WordPress site to Hugo", or mentions recovering lost web content from the Internet Archive. Guides the full workflow from Wayback Machine inventory through Hugo site generation.
+publish: true
 ---
 
 # Restore Website from Wayback Machine
