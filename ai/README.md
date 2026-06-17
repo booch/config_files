@@ -4,12 +4,12 @@ This directory is the **source of truth** for AI agent configuration across mult
 
 - Claude Code
 - OpenCode
-- GitHub Copilot CLI
-- GitHub Copilot (VS Code)
-- Windsurf
+- GitHub Copilot (VS Code and CLI)
 - Gemini CLI
 - Codex
 - Zed (partial)
+- GSD / Pi
+- Windsurf
 
 ## Directory Structure
 

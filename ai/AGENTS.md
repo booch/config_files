@@ -285,10 +285,13 @@ For the 3-review process, use the `/review` command which orchestrates all three
 
 ## Task Completion Signal
 
-End your final message with `<task-complete/>` on its own line when you've
+End your final message with `[[task-complete]]` on its own line when you've
 fully completed the user's task. Harness hooks (Claude Code, OpenCode,
 Codex) use this signal to enforce end-of-task discipline. Expect at most
 one marker per session — a new task should usually start a new session.
+
+The marker must appear verbatim as plain text — do not wrap it in code
+fences, backticks, or HTML/XML brackets, or it will not be recognised.
 
 **Do not emit** for paused work, partial progress, clarifying questions,
 "step N of M finished", or pure Q&A. A Q&A conversation may evolve into a
