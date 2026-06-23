@@ -12,7 +12,7 @@ export type TaskScope = {
 
 export type Requirement = { skill: string; reason: string };
 
-const MARKER_RE = /<task-complete\s*\/?\s*>/i;
+const MARKER_RE = /\[\[\s*task-complete\s*\]\]|<task-complete\s*\/?\s*>/i;
 
 const FALLBACK_PHRASES: RegExp[] = [
   /\btask\s+complete(?:d|ly)?\b/i,

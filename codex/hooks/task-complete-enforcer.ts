@@ -1,7 +1,7 @@
 #!/usr/bin/env -S bun run
 import { readFileSync, existsSync } from "node:fs";
 
-const MARKER_RE = /<task-complete\s*\/?\s*>/i;
+const MARKER_RE = /\[\[\s*task-complete\s*\]\]|<task-complete\s*\/?\s*>/i;
 const FALLBACK_PHRASES: RegExp[] = [
   /\btask\s+complete(?:d|ly)?\b/i,
   /\ball\s+done\b/i,
@@ -34,12 +34,14 @@ async function main(): Promise<void> {
   const missing = computeMissing(scope);
   if (missing.length === 0) return;
 
-  const reasonLines = [
+  const reasonLines: string[] = [];
+  reasonLines.push(
     `\`<task-complete/>\`${hasPhrase ? " (via fallback phrase — prefer the explicit marker)" : ""} emitted but required completion skills were not invoked this task:`,
-    ...missing.map((m) => `  - \`${m.skill}\` — ${m.reason}`),
-    "",
-    "Invoke each missing skill (e.g. `$pre-commit`), then re-emit `<task-complete/>` on its own line.",
-  ];
+  );
+  for (const m of missing) reasonLines.push(`  - \`${m.skill}\` — ${m.reason}`);
+  reasonLines.push("", "Invoke each before re-emitting — for example:");
+  for (const m of missing) reasonLines.push(`  $${m.skill}`);
+  reasonLines.push("", "Then re-emit `[[task-complete]]` on its own line.");
   process.stdout.write(JSON.stringify({ decision: "block", reason: reasonLines.join("\n") }));
 }
 

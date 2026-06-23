@@ -1,6 +1,6 @@
 import type { Plugin } from "@opencode-ai/plugin"
 
-const MARKER_RE = /<task-complete\s*\/?\s*>/i
+const MARKER_RE = /\[\[\s*task-complete\s*\]\]|<task-complete\s*\/?\s*>/i
 const FALLBACK_PHRASES: RegExp[] = [
   /\btask\s+complete(?:d|ly)?\b/i,
   /\ball\s+done\b/i,
@@ -134,9 +134,11 @@ function wasInvoked(required: string, invoked: Set<string>): boolean {
 
 function warn(scope: Scope, missing: { skill: string; reason: string }[]): void {
   const header = scope.markerKind === "phrase"
-    ? "[task-complete] completion-phrase detected (prefer the `<task-complete/>` marker); missing required skills:"
-    : "[task-complete] `<task-complete/>` emitted; missing required skills:"
+    ? "[task-complete] completion-phrase detected (prefer the `[[task-complete]]` marker); missing required skills:"
+    : "[task-complete] `[[task-complete]]` emitted; missing required skills:"
   console.warn(header)
   for (const m of missing) console.warn(`  - ${m.skill} — ${m.reason}`)
-  console.warn("Invoke the missing skills, then re-emit `<task-complete/>`.")
+  console.warn("Invoke each via the skill tool — for example:")
+  for (const m of missing) console.warn(`  skill name: ${m.skill}`)
+  console.warn("Then re-emit `[[task-complete]]`.")
 }
