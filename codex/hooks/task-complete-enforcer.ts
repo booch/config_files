@@ -1,5 +1,7 @@
 #!/usr/bin/env -S bun run
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, mkdirSync, appendFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { dirname, join } from "node:path";
 
 const MARKER_RE = /\[\[\s*task-complete\s*\]\]|<task-complete\s*\/?\s*>/i;
 const FALLBACK_PHRASES: RegExp[] = [
@@ -33,6 +35,9 @@ async function main(): Promise<void> {
   const scope = analyseTranscript(input.transcript_path as string | undefined);
   const missing = computeMissing(scope);
   if (missing.length === 0) return;
+
+  const sessionId = typeof input.session_id === "string" ? input.session_id : undefined;
+  if (reminderAlreadyDelivered(sessionId, missing)) return;
 
   const reasonLines: string[] = [];
   reasonLines.push(
@@ -134,6 +139,30 @@ function invokedInCorpus(skill: string, corpus: string): boolean {
 
 function escapeRegex(s: string): string {
   return s.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
+}
+
+// Block at most once per session per distinct missing-skill set. A blocking Stop re-invokes
+// the model, and the condition persists until it acts — so without this guard the same block
+// fires endlessly. Recording the fingerprint lets later identical Stops pass through.
+// `stop_hook_active` remains the backstop for runaway loops.
+function reminderAlreadyDelivered(sessionId: string | undefined, missing: Requirement[]): boolean {
+  const file = stateFile(sessionId);
+  const fingerprint = missing.map((m) => m.skill).sort().join(",");
+  try {
+    const delivered = existsSync(file) ? readFileSync(file, "utf8").split("\n") : [];
+    if (delivered.includes(fingerprint)) return true;
+    mkdirSync(dirname(file), { recursive: true });
+    appendFileSync(file, `${fingerprint}\n`);
+  } catch {
+    // Fail open: never silently drop a first reminder.
+  }
+  return false;
+}
+
+function stateFile(sessionId: string | undefined): string {
+  const cacheHome = process.env.XDG_CACHE_HOME || join(homedir(), ".cache");
+  const id = (sessionId || "unknown-session").replace(/[^A-Za-z0-9_-]/g, "_");
+  return join(cacheHome, "claude-hooks", "task-complete-enforcer", `${id}.txt`);
 }
 
 async function readJsonStdin(): Promise<Record<string, unknown>> {

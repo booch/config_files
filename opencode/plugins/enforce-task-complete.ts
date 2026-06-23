@@ -1,4 +1,7 @@
 import type { Plugin } from "@opencode-ai/plugin"
+import { existsSync, readFileSync, mkdirSync, appendFileSync } from "node:fs"
+import { homedir } from "node:os"
+import { dirname, join } from "node:path"
 
 const MARKER_RE = /\[\[\s*task-complete\s*\]\]|<task-complete\s*\/?\s*>/i
 const FALLBACK_PHRASES: RegExp[] = [
@@ -32,6 +35,7 @@ export const EnforceTaskComplete: Plugin = async ({ client }) => ({
       if (!scope.hasCompletionSignal) return
       const missing = missingRequired(scope)
       if (missing.length === 0) return
+      if (reminderAlreadyDelivered(sessionID, missing)) return
       warn(scope, missing)
     } catch (e: any) {
       console.error("[task-complete] error fetching session messages:", e?.message ?? e)
@@ -141,4 +145,28 @@ function warn(scope: Scope, missing: { skill: string; reason: string }[]): void 
   console.warn("Invoke each via the skill tool — for example:")
   for (const m of missing) console.warn(`  skill name: ${m.skill}`)
   console.warn("Then re-emit `[[task-complete]]`.")
+}
+
+// Warn at most once per session per distinct missing-skill set. session.idle fires repeatedly,
+// so without this guard the same warning prints on every idle tick. Recording the fingerprint
+// we just warned about lets later identical idles pass silently. The state path is shared with
+// the Claude/Codex enforcers for cross-surface parity.
+function reminderAlreadyDelivered(sessionId: string | undefined, missing: { skill: string }[]): boolean {
+  const file = stateFile(sessionId)
+  const fingerprint = missing.map((m) => m.skill).sort().join(",")
+  try {
+    const delivered = existsSync(file) ? readFileSync(file, "utf8").split("\n") : []
+    if (delivered.includes(fingerprint)) return true
+    mkdirSync(dirname(file), { recursive: true })
+    appendFileSync(file, `${fingerprint}\n`)
+  } catch {
+    // Fail open: never silently drop a first warning.
+  }
+  return false
+}
+
+function stateFile(sessionId: string | undefined): string {
+  const cacheHome = process.env.XDG_CACHE_HOME || join(homedir(), ".cache")
+  const id = (sessionId || "unknown-session").replace(/[^A-Za-z0-9_-]/g, "_")
+  return join(cacheHome, "claude-hooks", "task-complete-enforcer", `${id}.txt`)
 }
