@@ -388,7 +388,25 @@ fi
 
 if [ "$(uname)"x = "Darwin"x ]; then
     mkdir -p "$HOME/Library/KeyBindings"
-    link_file "$CWD/keyboard/DefaultKeyBinding.Dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.Dict"
+    # DefaultKeyBinding.dict must be a REAL file: macOS does not reliably follow a
+    # symlink here (and a symlink both ways once created a resolution loop). Copy
+    # it now, and install git hooks that re-copy it after any git operation that
+    # can change the repo source (pull/merge, checkout, rebase), so the live file
+    # stays in sync without a background agent.
+    kb_src="$CWD/keyboard/DefaultKeyBinding.Dict"
+    kb_dst="$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+    cp -f "$kb_src" "$kb_dst"
+    kb_hooks="$(git -C "$CWD" rev-parse --path-format=absolute --git-common-dir)/hooks"
+    mkdir -p "$kb_hooks"
+    for kb_hook in post-merge post-checkout post-rewrite; do
+        cat >"$kb_hooks/$kb_hook" <<HOOK
+#!/bin/sh
+# Re-copy DefaultKeyBinding.dict into ~/Library/KeyBindings after git updates the
+# repo source (macOS needs a real file here, not a symlink). Managed by install.sh.
+cp -f "$kb_src" "$kb_dst"
+HOOK
+        chmod +x "$kb_hooks/$kb_hook"
+    done
     link_file "$CWD/spelling/dictionary.txt" "$HOME/Library/Spelling/LocalDictionary"
     mkdir -p "$HOME/Library/Application Support/Code"
     link_dir "$CWD/vscode" "$HOME/Library/Application Support/Code/User"
