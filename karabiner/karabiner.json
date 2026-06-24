@@ -121,80 +121,6 @@
                         ]
                     },
                     {
-                        "description": "Double Right Shift to Command+P (show command palette) in Obsidian",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "right_shift_pressed_last",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    },
-                                    {
-                                        "bundle_identifiers": ["md.obsidian"],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "right_shift",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 500 },
-                                "to": [{ "key_code": "right_shift" }],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "p",
-                                        "modifiers": ["command"]
-                                    },
-                                    {
-                                        "set_variable": {
-                                            "name": "right_shift_pressed_last",
-                                            "value": 0
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Double Right Shift to Command+Shift+O (show command palette, AKA Open Quickly) in iTerm",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "right_shift_pressed_last",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    },
-                                    {
-                                        "bundle_identifiers": ["com.googlecode.iterm2"],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "right_shift",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 500 },
-                                "to": [{ "key_code": "right_shift" }],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "o",
-                                        "modifiers": ["command", "shift"]
-                                    },
-                                    {
-                                        "set_variable": {
-                                            "name": "right_shift_pressed_last",
-                                            "value": 0
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "Double Right Shift to Command+Shift+P (show command palette, possibly via Paletro)",
                         "manipulators": [
                             {
@@ -265,50 +191,6 @@
                                 "type": "basic"
                             }
                         ]
-                    },
-                    {
-                        "description": "QMK double-right-shift (Command+Shift+P): app-specific command-palette overrides",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": ["md.obsidian"],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "p",
-                                    "modifiers": { "mandatory": ["command", "shift"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "p",
-                                        "modifiers": ["command"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": ["com.googlecode.iterm2"],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "p",
-                                    "modifiers": { "mandatory": ["command", "shift"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "o",
-                                        "modifiers": ["command", "shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ],
-                        "note": "QMK on the K1 Pro emits Command+Shift+P on double-right-shift; this rewrites that universal chord per app (Obsidian command palette, iTerm Open Quickly). Pairs with the kept right_shift_pressed_last rules, which produce these chords directly on non-QMK keyboards (laptop internal, other externals)."
                     },
                     {
                         "description": "Shift+CapsLock and Command+CapsLock toggle CapsLock",
