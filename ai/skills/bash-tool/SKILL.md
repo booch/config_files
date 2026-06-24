@@ -1,6 +1,7 @@
 ---
 name: bash-tool
 description: Rules for using the Bash tool in Claude Code. This skill should be used when running shell commands via the Bash tool, especially for multi-command tasks, brew updates, build scripts, or any session involving significant shell usage. Use proactively before running Bash commands.
+publish: true
 ---
 
 # Bash Tool Usage
@@ -99,3 +100,34 @@ Bash permissions use exact-match patterns. When constructing commands:
 - Keep commands simple and matching established patterns
 - Do not add unnecessary flags, pipes, or redirections that would change the match
 - If a command is allowed as `Bash(brew upgrade)`, run exactly `brew upgrade`
+
+## Shell Compatibility: Zsh vs Bash
+
+The Bash tool runs commands through the user's configured shell, which may be
+**Zsh or Bash** (the tool is named "Bash" but does not guarantee Bash). Check with
+`echo "$ZSH_VERSION"` / `echo "$BASH_VERSION"` when in doubt. Don't assume Bash-only
+semantics — prefer constructs that work the same in both shells, and watch for
+the Zsh differences below.
+
+### Unquoted variables do NOT word-split in Zsh
+
+In Bash, an unquoted `$var` splits on `$IFS`. In Zsh, it does **not** — the whole
+value stays one word. A loop over a space-joined scalar then runs once with the
+entire string instead of once per item, usually surfacing as a "No such file or
+directory" error containing every item at once.
+
+```bash
+# FRAGILE — works in Bash, breaks in Zsh (one iteration, whole string as $f)
+files="a.sh b.sh c.sh"
+for f in $files; do shellcheck "$f"; done
+
+# PORTABLE — list items inline; identical behavior in both shells
+for f in a.sh b.sh c.sh; do shellcheck "$f"; done
+
+# PORTABLE — use a real array; `( )` and "${arr[@]}" work in both Bash and Zsh
+files=(a.sh b.sh c.sh)
+for f in "${files[@]}"; do shellcheck "$f"; done
+```
+
+Avoid the Zsh-only `${=files}` force-split — it errors in Bash. Use a literal
+list or array instead, so the command works regardless of which shell runs it.
