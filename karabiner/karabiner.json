@@ -5,6 +5,45 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Built-in + Magic Keyboard (Touch ID): rotate Fn→Control, Control→Option, Option→Fn",
+                        "note": "Must live in Karabiner, NOT macOS System Settings > Modifier Keys: Karabiner seizes the keyboard and re-emits via its virtual HID keyboard, so the per-device System Settings mapping is bypassed. device_if identifiers are OR'd: matches the built-in keyboard (reports vendor/product 0x0 on Apple Silicon SPI) OR the external Magic Keyboard with Touch ID (vendor 1452 / product 801, same layout). is_keyboard:true would be too broad and hit other external keyboards. NOTE: product 801 was observed over USB; Bluetooth may report a different product_id (add another object or use device_address).",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "conditions": [
+                                    { "type": "device_if", "identifiers": [{ "is_built_in_keyboard": true }, { "description": "Apple Magic Keyboard with Touch ID", "vendor_id": 1452, "product_id": 801 }] }
+                                ],
+                                "from": {
+                                    "apple_vendor_top_case_key_code": "keyboard_fn",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "left_control" }]
+                            },
+                            {
+                                "type": "basic",
+                                "conditions": [
+                                    { "type": "device_if", "identifiers": [{ "is_built_in_keyboard": true }, { "description": "Apple Magic Keyboard with Touch ID", "vendor_id": 1452, "product_id": 801 }] }
+                                ],
+                                "from": {
+                                    "key_code": "left_control",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "left_option" }]
+                            },
+                            {
+                                "type": "basic",
+                                "conditions": [
+                                    { "type": "device_if", "identifiers": [{ "is_built_in_keyboard": true }, { "description": "Apple Magic Keyboard with Touch ID", "vendor_id": 1452, "product_id": 801 }] }
+                                ],
+                                "from": {
+                                    "key_code": "left_option",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "apple_vendor_top_case_key_code": "keyboard_fn" }]
+                            }
+                        ]
+                    },
+                    {
                         "description": "Safari (and Notes): PageUp/PageDown should work as expected!",
                         "manipulators": [
                             {
