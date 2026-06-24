@@ -18,7 +18,9 @@ async function main(): Promise<void> {
 }
 
 function isGitCommit(cmd: string): boolean {
-  for (const segRaw of cmd.split(/;|&&|\|\||\|/)) {
+  // Split on newlines as well as `;`/`&&`/`||`/`|`, so a `git commit` inside a
+  // multi-line block (e.g. `git add …\ngit commit …`) is still detected.
+  for (const segRaw of cmd.split(/[\n\r;]|&&|\|\||\|/)) {
     const seg = segRaw.trim();
     if (!/^(?:[A-Z_][A-Z0-9_]*=\S+\s+)*git(?:\s+-[^\s]+(?:\s+\S+)?)*\s+commit(?:\s|$)/.test(seg)) continue;
     if (/\bcommit\b[^;|&]*\s(?:--help|-h)\b/.test(seg)) continue;

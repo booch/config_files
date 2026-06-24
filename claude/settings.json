@@ -179,6 +179,20 @@
             "command": "jq -r '\"[skill] loading: \" + .tool_input.skill'"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/claude/hooks/pre-commit-doc-check.ts"
+          },
+          {
+            "type": "command",
+            "command": "~/.config/claude/hooks/pre-commit-lint-check.ts",
+            "timeout": 60
+          }
+        ]
       }
     ],
     "PostToolUse": [

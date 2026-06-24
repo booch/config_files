@@ -1,5 +1,6 @@
 #!/usr/bin/env -S bun run
 import { loadTranscript, analyseTranscript } from "./lib/task-scope";
+import { isGitCommit } from "./lib/git";
 
 const DOC_EXTENSIONS = new Set([".md", ".txt", ".rst", ".adoc"]);
 
@@ -29,16 +30,6 @@ function onlyDocFilesModified(files: Set<string>): boolean {
     if (!DOC_EXTENSIONS.has(ext)) return false;
   }
   return true;
-}
-
-function isGitCommit(cmd: string): boolean {
-  for (const segRaw of cmd.split(/;|&&|\|\||\|/)) {
-    const seg = segRaw.trim();
-    if (!/^(?:[A-Z_][A-Z0-9_]*=\S+\s+)*git(?:\s+-[^\s]+(?:\s+\S+)?)*\s+commit(?:\s|$)/.test(seg)) continue;
-    if (/\bcommit\b[^;|&]*\s(?:--help|-h)\b/.test(seg)) continue;
-    return true;
-  }
-  return false;
 }
 
 function hasDocSkillInvocation(invoked: Set<string>): boolean {

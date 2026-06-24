@@ -45,3 +45,55 @@ and OpenCode equivalents:
   (Codex `Stop` hook)
 - [`../../opencode/plugins/enforce-task-complete.ts`](../../opencode/plugins/enforce-task-complete.ts)
   (OpenCode `session.idle` plugin; warns rather than blocks)
+
+## Pre-commit gates
+
+Two `PreToolUse` hooks matched on `Bash`. Each acts only when the command runs a
+`git commit`, detected by [`isGitCommit`](lib/git.ts), which splits the command
+on newlines as well as `;`/`&&`/`||`/`|` — so a commit in a multi-line block is
+still caught. (Missing that was a real bug: the gates never fired.) Both fail
+open: any error lets the commit proceed.
+
+### Documentation check
+
+[`pre-commit-doc-check.ts`](pre-commit-doc-check.ts) blocks a commit when the
+current task ran Edits/Writes to non-doc files but never invoked the
+`documentation` skill. Mirror:
+[`../../codex/hooks/pre-commit-doc-check.ts`](../../codex/hooks/pre-commit-doc-check.ts).
+
+### Lint-regression gate
+
+[`pre-commit-lint-check.ts`](pre-commit-lint-check.ts) blocks a commit when a
+staged file has **more** lint issues than the same file at `HEAD` — a
+*regression*. Pre-existing lint debt never blocks; only net-new issues do, so the
+gate is safe to run over a repo that already carries debt.
+
+- **Counts** come from a registry ([`lib/lint-registry.ts`](lib/lint-registry.ts)):
+  shellcheck + shfmt (shell), markdownlint (Markdown), ruff (Python), and rubocop
+  (Ruby, via `bundle exec` when a `Gemfile` is present).
+- **New files** (no `HEAD` baseline) are gated only by config-respecting linters.
+  Markdown new files are skipped on purpose — the house style legitimately
+  diverges from the configured rules, so a fresh `.md` is never blocked on style.
+- **Fail-open:** a missing tool, timeout, unparseable output, or non-repo yields
+  no count and never blocks. Ruby/Python are best-effort and inert until a usable
+  linter is on `PATH`.
+- **Performance:** a clean staged file (count 0) skips the `HEAD` baseline run.
+- **Extending:** add a `Linter` to the registry and map its extensions in
+  `lintersFor`. A linter MUST return `null` (never a guessed number) whenever it
+  cannot produce a reliable count.
+
+## Shared library (`lib/`)
+
+- [`lib/git.ts`](lib/git.ts) — `isGitCommit` (the single source of commit
+  detection, shared by both pre-commit hooks) plus git helpers: repo root, staged
+  files, and `HEAD` content.
+- [`lib/lint-registry.ts`](lib/lint-registry.ts) — per-language linters for the
+  lint-regression gate.
+- [`lib/task-scope.ts`](lib/task-scope.ts) — transcript analysis (completion
+  marker, files modified, skills invoked) used by the enforcer and doc-check.
+
+## Activation
+
+Hooks load at session start, so changes to `settings.json` registration require
+restarting Claude Code. Hook *script* contents are re-read on each invocation, so
+edits to the `.ts` files themselves take effect immediately.
