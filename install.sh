@@ -161,6 +161,7 @@ setup_codex_xdg_links() {
     link_xdg_dir "$codex_config/plugins" "$codex_data/plugins"
     link_xdg_dir "$codex_data/plugins/cache" "$codex_cache/plugins/cache"
     link_shared_dir "$codex_config/skills" "$CWD/ai/skills" "../ai/skills"
+    link_shared_dir "$codex_config/prompts" "$CWD/ai/commands" "../ai/commands"
 
     link_xdg_file "$codex_config/.codex-global-state.json" "$codex_state/.codex-global-state.json"
     link_xdg_file "$codex_config/.codex-global-state.json.bak" "$codex_state/.codex-global-state.json.bak"
