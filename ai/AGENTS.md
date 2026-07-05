@@ -215,6 +215,10 @@ Never put data in `~/.config`, or configuration in `~/.local/share`.
 
 These are the only canonical roots — do not guess others (`~/.ai` does not exist).
 
+Published artifacts (e.g. the boochtek plugin) are generated copies, never
+sources of truth. Content flows out of `~/.config/ai/` (via
+`/publish-to-plugin`), never back in.
+
 ## Quick Reference
 
 ### The Four Rules of Simple Design (in priority order)
