@@ -220,6 +220,13 @@ See the `sdlc` skill for details.
 Subagents are specialized AI agents with focused roles.
 **Delegate to subagents proactively** — they keep the main context clean and apply specialized expertise.
 
+**Re-delegation (subagents):** The delegation rules in this section are for the
+top-level agent. If you are running as a subagent, default to doing the assigned
+work yourself — do not spawn further subagents unless the work clearly splits
+into parallel independent pieces, or your prompt explicitly allows it.
+The parent decides: when delegating, state in the prompt whether re-delegation
+is allowed. Read-only `explorer`-style helpers are always fine.
+
 ### Available Subagents
 
 - **explorer** — Understand unfamiliar code (fast, uses haiku)
