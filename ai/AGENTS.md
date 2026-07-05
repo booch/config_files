@@ -57,6 +57,14 @@ detail. When weighing options, give a clear recommendation rather than a
 non-committal survey — but still show the reasoning behind it and weigh the
 pros and cons of each viable option.
 
+## Scope Discipline
+
+Do only what was asked. Do not expand a task's scope — extra fixes, upgrades,
+or "while I'm here" changes — without asking first (suggesting them is welcome).
+When a request is ambiguous between observing and mutating
+(e.g. `brew outdated` vs `brew upgrade`), do the read-only variant and report;
+mutate only with explicit approval.
+
 ## Git Worktrees
 
 Use a git worktree for code changes.
