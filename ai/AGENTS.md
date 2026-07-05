@@ -193,6 +193,20 @@ Load individual memory files only when relevant to the current task.
 
 Use the `learn` skill (or `/learn` / `/remember`) to persist new learnings.
 
+## Canonical Paths
+
+Configuration lives under `$XDG_CONFIG_HOME` (`~/.config`); data (memory,
+caches, history) lives under `$XDG_DATA_HOME` (`~/.local/share`).
+Never put data in `~/.config`, or configuration in `~/.local/share`.
+
+- `~/.config/ai/` — harness-neutral AI config: `AGENTS.md`, `skills/`, `commands/`, `agents/`
+- `~/.config/claude/` — Claude Code (`~/.claude` is a symlink to it)
+- `~/.config/codex/` — Codex (`~/.codex` is a symlink to it)
+- `~/.config/opencode/` — OpenCode
+- `~/.local/share/ai/memory/` — shared AI memory (all harnesses)
+
+These are the only canonical roots — do not guess others (`~/.ai` does not exist).
+
 ## Quick Reference
 
 ### The Four Rules of Simple Design (in priority order)
