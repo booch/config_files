@@ -71,6 +71,9 @@ gate is safe to run over a repo that already carries debt.
 - **Counts** come from a registry ([`lib/lint-registry.ts`](lib/lint-registry.ts)):
   shellcheck + shfmt (shell), markdownlint (Markdown), ruff (Python), and rubocop
   (Ruby, via `bundle exec` when a `Gemfile` is present).
+- **Staged content is what gets linted** — the index version (`git show :file`),
+  not the working tree. Under partial staging the two differ, and linting the
+  working tree would misattribute unstaged issues to the commit.
 - **New files** (no `HEAD` baseline) are gated only by config-respecting linters.
   Markdown new files are skipped on purpose — the house style legitimately
   diverges from the configured rules, so a fresh `.md` is never blocked on style.

@@ -6,7 +6,7 @@
 // Fails open: any error, missing tool, or non-git-repo lets the commit through.
 import { writeFileSync, unlinkSync, existsSync } from "node:fs";
 import { dirname, basename, join } from "node:path";
-import { isGitCommit, gitRoot, stagedFiles, existsAtHead, headContent } from "./lib/git";
+import { isGitCommit, gitRoot, stagedFiles, existsAtHead, headContent, stagedContent } from "./lib/git";
 import { lintersFor, type Linter } from "./lib/lint-registry";
 
 const MAX_FILES = 40; // cap work per commit; larger commits get a partial check (noted)
@@ -51,30 +51,33 @@ async function main(): Promise<void> {
   );
 }
 
-// Lints the working-tree file (the about-to-be-committed content in the normal
-// stage-then-commit flow) and compares it to the HEAD baseline. Returns a Regression
-// only on a genuine increase.
+// Lints the STAGED (index) content of the file — what the commit will actually
+// contain — and compares it to the HEAD baseline. Under partial staging the
+// working tree differs from the index, and linting the working tree would
+// misattribute unstaged issues to the commit. Returns a Regression only on a
+// genuine increase.
 function checkFile(root: string, file: string, linter: Linter): Regression | null {
   const abs = join(root, file);
-  if (!existsSync(abs)) return null;
 
-  const now = linter.count(abs);
+  const staged = stagedContent(root, file);
+  if (staged === null) return null; // couldn't read the index version → don't block
+  const now = materializedCount(abs, staged, linter);
   if (now === null || now === 0) return null; // unavailable, or clean → nothing to regress
 
   if (!existsAtHead(root, file)) {
     return linter.gateNewFiles ? { file, linter: linter.name, base: null, now } : null;
   }
 
-  const base = baselineCount(root, file, abs, linter);
+  const base = headContent(root, file);
   if (base === null) return null; // couldn't establish a baseline → don't block
-  return now > base ? { file, linter: linter.name, base, now } : null;
+  const baseCount = materializedCount(abs, base, linter);
+  if (baseCount === null) return null;
+  return now > baseCount ? { file, linter: linter.name, base: baseCount, now } : null;
 }
 
-// Materializes the HEAD version beside the real file so the linter resolves the same
-// project config, counts its issues, then removes it.
-function baselineCount(root: string, file: string, abs: string, linter: Linter): number | null {
-  const content = headContent(root, file);
-  if (content === null) return null;
+// Materializes the given content beside the real file so the linter resolves the
+// same project config, counts its issues, then removes the temp file.
+function materializedCount(abs: string, content: string, linter: Linter): number | null {
   const tmp = join(dirname(abs), `pclint-base-${process.pid}-${tmpCounter++}-${basename(abs)}`);
   try {
     writeFileSync(tmp, content);

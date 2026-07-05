@@ -57,3 +57,11 @@ export function headContent(root: string, path: string): string | null {
   if (!r || r.status !== 0) return null;
   return r.stdout;
 }
+
+// Content of the staged (index) version of a file — what the commit will
+// actually contain, which differs from the working tree under partial staging.
+export function stagedContent(root: string, path: string): string | null {
+  const r = git(root, ["show", `:${path}`]);
+  if (!r || r.status !== 0) return null;
+  return r.stdout;
+}
