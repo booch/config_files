@@ -1,9 +1,10 @@
 personality = "pragmatic"
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 service_tier = "fast"
+model_auto_compact_token_limit = 250000
 
 [profiles.quiet]
 approval_policy = "never"
@@ -17,7 +18,7 @@ sandbox_mode = "read-only"
 
 [features]
 skills = true
-codex_hooks = true
+hooks = true
 goals = true
 memories = true
 
@@ -122,3 +123,16 @@ terminal_title = ["spinner", "project", "git-branch", "model"]
 
 [sandbox_workspace_write]
 network_access = true
+
+[desktop]
+ambient-suggestions-enabled = true
+followUpQueueMode = "steer"
+composerEnterBehavior = "cmdIfMultiline"
+localeOverride = "en-US"
+preventSleepWhileRunning = true
+keepRemoteControlAwakeWhilePluggedIn = true
+default-service-tier = "fast"
+conversationDetailMode = "STEPS_COMMANDS"
+
+[desktop.open-in-target-preferences]
+global = "zed"
