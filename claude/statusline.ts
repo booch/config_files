@@ -329,12 +329,33 @@ function renderTokenSummary(data: StdinData, cumulative?: CumulativeTokens | nul
   return `${Clr.dim}Tokens${Clr.reset} ${fmtTokens(tokens.total)} (in: ${fmtTokens(tokens.input)}, out: ${fmtTokens(tokens.output)}, cache: ${fmtTokens(tokens.cache)})`;
 }
 
+// --- abtop hook ---
+
+/** Forward the raw status line payload to abtop, which records rate limit data. */
+async function notifyAbtop(raw: string): Promise<void> {
+  const script = `${import.meta.dir}/abtop-statusline.sh`;
+  try {
+    if (!(await Bun.file(script).exists())) return;
+    const proc = Bun.spawn([script], { stdin: new TextEncoder().encode(raw), stdout: 'ignore', stderr: 'ignore' });
+    await proc.exited;
+  } catch {
+    // abtop is optional; never let it break the status line
+  }
+}
+
 // --- Main ---
 
 async function main() {
+  let raw: string;
+  try {
+    raw = await Bun.stdin.text();
+  } catch {
+    return;
+  }
+  await Bun.write('/tmp/statusline-debug-stdin.json', raw);
   let data: StdinData;
   try {
-    data = JSON.parse(await Bun.stdin.text());
+    data = JSON.parse(raw);
   } catch {
     return;
   }
@@ -356,6 +377,8 @@ async function main() {
   }
 
   process.stdout.write(lines.join('\n'));
+
+  await notifyAbtop(raw);
 }
 
 main().catch(() => {});
