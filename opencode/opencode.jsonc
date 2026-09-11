@@ -32,26 +32,6 @@
     "question": "allow"
   },
 
-  "agent": {
-    "plan": {
-      "tools": {
-        "bash": false,
-        "write": false
-      },
-      "permissions": {
-        "bash": {
-          "*": "ask",
-          "ls": "allow",
-          "git status": "allow",
-          "git log": "allow",
-          "git diff": "allow"
-        },
-        "write": "ask",
-        "webfetch": "allow"
-      }
-    }
-  },
-
   "watcher": {
     "ignore": ["node_modules/**", "dist/**", ".git/**", ".jj/**"]
   },
