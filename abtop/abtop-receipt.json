@@ -1,0 +1,1 @@
+{"binaries":["abtop"],"binary_aliases":{},"cdylibs":[],"cstaticlibs":[],"install_layout":"cargo-home","install_prefix":"/Users/craigbuchek/.cargo","modify_path":true,"provider":{"source":"cargo-dist","version":"0.31.0"},"source":{"app_name":"abtop","name":"abtop","owner":"graykode","release_type":"github"},"version":"0.4.8"}

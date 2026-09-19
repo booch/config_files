@@ -23,3 +23,5 @@ node_modules/
 secring.*
 
 **/.claude/settings.local.json
+# A worktree holds a full checkout of the repo it sits inside.
+**/.claude/worktrees/
