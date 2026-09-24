@@ -285,6 +285,13 @@ link_dir "$AI_DIR/agents" "$CWD/claude/agents"
 link_dir "$AI_DIR/skills" "$CWD/claude/skills"
 link_dir "$AI_DIR/commands" "$CWD/claude/commands"
 
+# Claude Code status line (settings.json statusLine runs ~/.claude/statusline.py).
+# Usually a no-op: migrate_to_config already links ~/.claude to claude/, making these
+# the same files, where link_file would back up the real file and leave a symlink to itself.
+for f in statusline.py statusline_test.py; do
+    [ "$HOME/.claude/$f" -ef "$CWD/claude/$f" ] || link_file "$CWD/claude/$f" "$HOME/.claude/$f"
+done
+
 # OpenCode: uses AGENTS.md natively, plus skills/ via Superpowers plugin.
 link_file "$AI_DIR/AGENTS.md" "$CWD/opencode/AGENTS.md"
 link_dir "$AI_DIR/skills" "$CWD/opencode/skills"
