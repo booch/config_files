@@ -33,6 +33,8 @@ require "pp"
 # The 'ap' extension is even nicer for pretty-printing output.
 # See http://github.com/amazing-print/amazing_print for details.
 extend_console "ap" do
+  break unless defined?(AmazingPrint)
+
   AmazingPrint.defaults = {
     sorted_hash_keys: true
   }
