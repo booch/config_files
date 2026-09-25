@@ -1,7 +1,6 @@
 ---
 name: refactor-shrinker
 description: Reduce code length to satisfy lint limits. Use when linting reports files, classes, or methods are too long. Specializes in identifying the best strategies to reduce line count while preserving or improving code quality.
-tools: Read, Write, Edit, Glob, Grep, Bash
 model: inherit
 skills: refactor, code-quality, design
 ---

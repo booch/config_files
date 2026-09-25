@@ -26,7 +26,7 @@
     "skill": "allow",
     "task": {
       "*": "ask",
-      "code-reviewer": "allow"
+      "code-reviewer-*": "allow"
     },
     "webfetch": "allow",
     "question": "allow"
@@ -35,6 +35,10 @@
   "watcher": {
     "ignore": ["node_modules/**", "dist/**", ".git/**", ".jj/**"]
   },
+
+  // Custom agents live in ~/.config/ai/agents/*/AGENT.md, discovered via OPENCODE_CONFIG_DIR
+  // (set in ~/.config/sh/ai.sh). OpenCode-specific settings go in each file's `permission:`
+  // frontmatter, which takes precedence over anything set under "agent" here.
 
   "mcp": {}
 }

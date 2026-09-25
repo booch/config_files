@@ -1,7 +1,6 @@
 ---
 name: test-writer
 description: Write tests following TDD philosophy. Use proactively when asked to add tests, write specs, increase test coverage, or do TDD.
-tools: Read, Write, Edit, Bash, Glob, Grep
 model: inherit
 skills: testing
 ---

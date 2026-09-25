@@ -1,7 +1,11 @@
 ---
 name: code-reviewer-2
 description: Second code reviewer focusing on readability and simplicity. Use after code-reviewer-1 completes as part of the 3-review SDLC process.
-tools: Read, Grep, Glob, Edit, Write
+# Claude Code tool denylist (OpenCode ignores this key)
+disallowedTools: Bash
+# OpenCode permissions (Claude Code ignores this key)
+permission:
+  bash: deny
 model: inherit
 skills: code-quality, design
 ---

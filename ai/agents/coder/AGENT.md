@@ -1,7 +1,6 @@
 ---
 name: coder
 description: Implement features, fix bugs, and make tests pass. Use proactively when asked to implement code, make tests pass, or build features. This is the GREEN phase of TDD.
-tools: Read, Write, Edit, Bash, Glob, Grep
 model: inherit
 skills: coding, tdd, refactor, design, code-quality, security
 ---

@@ -1,7 +1,11 @@
 ---
 name: code-reviewer-3
 description: Third and final code reviewer focusing on security and testing. Use after code-reviewer-2 completes as the final step in the 3-review SDLC process.
-tools: Read, Grep, Glob, Edit, Write
+# Claude Code tool denylist (OpenCode ignores this key)
+disallowedTools: Bash
+# OpenCode permissions (Claude Code ignores this key)
+permission:
+  bash: deny
 model: inherit
 skills: security, testing
 ---

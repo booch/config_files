@@ -1,7 +1,11 @@
 ---
 name: code-reviewer-1
 description: First code reviewer focusing on correctness and design. Use proactively after completing significant code implementation to start the 3-review SDLC process, or when asked to review code.
-tools: Read, Grep, Glob, Edit, Write
+# Claude Code tool denylist (OpenCode ignores this key)
+disallowedTools: Bash
+# OpenCode permissions (Claude Code ignores this key)
+permission:
+  bash: deny
 model: inherit
 skills: design, code-quality
 ---

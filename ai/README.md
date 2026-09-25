@@ -193,7 +193,11 @@ cat > ~/.config/ai/agents/my-agent/AGENT.md << 'EOF'
 ---
 name: my-agent
 description: When to use this agent...
-tools: Read, Grep, Glob
+# Claude Code tool denylist (OpenCode ignores this key)
+disallowedTools: Bash
+# OpenCode permissions (Claude Code ignores this key)
+permission:
+  bash: deny
 model: haiku
 ---
 

@@ -1,7 +1,11 @@
 ---
 name: refactorer
 description: Refactor code for simplicity and clarity. Use proactively when asked to simplify, clean up, refactor, or improve code structure.
-tools: Read, Write, Edit, Glob, Grep
+# Claude Code tool denylist (OpenCode ignores this key)
+disallowedTools: Bash
+# OpenCode permissions (Claude Code ignores this key)
+permission:
+  bash: deny
 model: inherit
 skills: design, code-quality
 ---

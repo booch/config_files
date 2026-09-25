@@ -1,7 +1,11 @@
 ---
 name: explorer
 description: Explore and understand unfamiliar codebases or features. Use proactively when asked to understand how something works, find where functionality lives, map out architecture, or answer questions about unfamiliar code. Maintains a cache in .ai/explorer-cache/ for efficiency.
-tools: Read, Grep, Glob, Write
+# Claude Code tool denylist (OpenCode ignores this key)
+disallowedTools: Bash
+# OpenCode permissions (Claude Code ignores this key)
+permission:
+  bash: deny
 model: haiku
 ---
 
