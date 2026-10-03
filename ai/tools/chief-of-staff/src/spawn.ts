@@ -5,6 +5,7 @@ import { writeJson } from "./files";
 import {
     AGENTS_ARGV,
     attachCommands,
+    type LaunchSpec,
     launchArgv,
     parseBgRef,
     sessionIdFor,
@@ -50,15 +51,7 @@ export async function spawnSession(ctx: Context, options: SpawnOptions): Promise
         kickoffPrompt({ id, slug, goal, autonomy, chief: chiefCommand(ctx) }),
     );
     const settingsPath = await writeStopHook(ctx, id);
-    const launch = await ctx.run(launchArgv({ slug, model, effort, settingsPath }), {
-        cwd: worktree.path,
-    });
-    const launched = launch.exitCode === 0;
-    const harnessRef = launched ? parseBgRef(launch.stdout) : null;
-    const harnessSessionId = harnessRef
-        ? sessionIdFor((await ctx.run(AGENTS_ARGV)).stdout, harnessRef)
-        : null;
-    const failure = launched ? null : await cleanUpFailedLaunch(ctx, worktree, launch.stderr);
+    const launch = await launchWorker(ctx, worktree, { slug, model, effort, settingsPath });
 
     const now = ctx.now().toISOString();
     const record: SessionRecord = {
@@ -66,29 +59,56 @@ export async function spawnSession(ctx: Context, options: SpawnOptions): Promise
         slug,
         goal,
         harness,
-        harness_ref: harnessRef,
-        harness_session_id: harnessSessionId,
         model,
         effort,
         repo: worktree.repo,
         worktree: worktree.path,
         branch: worktree.branch,
         autonomy,
-        state: launched ? "running" : "blocked",
+        ...launch,
         waiting_on: null,
-        summary: failure,
         cross_check: null,
         spawned_at: now,
         last_activity_at: now,
         closed_at: null,
-        attach: attachCommands(harnessSessionId, harnessRef, worktree.path),
+        attach: attachCommands(launch.harness_session_id, launch.harness_ref, worktree.path),
     };
     await addSession(ctx, record);
     await appendJournal(
         ctx,
-        `spawned \`${slug}\` (${harness}/${model}/${effort}, ${autonomy}) — goal: ${goal}${launched ? "" : " — LAUNCH FAILED"}`,
+        `spawned \`${slug}\` (${harness}/${model}/${effort}, ${autonomy}) — goal: ${goal}${launch.state === "blocked" ? " — LAUNCH FAILED" : ""}`,
     );
     return record;
+}
+
+type LaunchOutcome = Pick<
+    SessionRecord,
+    "state" | "harness_ref" | "harness_session_id" | "summary"
+>;
+
+async function launchWorker(
+    ctx: Context,
+    worktree: Worktree,
+    spec: LaunchSpec,
+): Promise<LaunchOutcome> {
+    const launch = await ctx.run(launchArgv(spec), { cwd: worktree.path });
+    if (launch.exitCode !== 0) {
+        return {
+            state: "blocked",
+            harness_ref: null,
+            harness_session_id: null,
+            summary: await cleanUpFailedLaunch(ctx, worktree, launch.stderr),
+        };
+    }
+    const harnessRef = parseBgRef(launch.stdout);
+    return {
+        state: "running",
+        harness_ref: harnessRef,
+        harness_session_id: harnessRef
+            ? sessionIdFor((await ctx.run(AGENTS_ARGV)).stdout, harnessRef)
+            : null,
+        summary: null,
+    };
 }
 
 // The record stays (blocked) so the human sees why; the worktree and branch go, so closing the
