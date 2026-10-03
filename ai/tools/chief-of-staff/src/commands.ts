@@ -2,6 +2,7 @@ import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { type ParseArgsConfig, parseArgs } from "node:util";
 import { approveSession } from "./approve";
+import { buildBriefing } from "./briefing";
 import { ChiefError, type Context } from "./context";
 import { digestSession } from "./digest";
 import { appendJournal } from "./journal";
@@ -36,7 +37,8 @@ const USAGE = `usage: chief <command> [options]
   report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
   report <session> --stopped             (Stop hook; reads hook JSON on stdin)
   approve <session> [message…]           release a waiting worker
-  digest <session> [--recent N]          summarize the worker's transcript`;
+  digest <session> [--recent N]          summarize the worker's transcript
+  briefing                               everything a session start needs, as JSON`;
 
 const json = (value: unknown): CommandResult => ({ output: JSON.stringify(value, null, 2) });
 
@@ -120,6 +122,7 @@ export const COMMANDS: Record<string, Command> = {
         if (!ref) throw usage("missing <session>");
         return json(await approveSession(ctx, ref, words.length ? words.join(" ") : undefined));
     },
+    briefing: async (ctx) => json(await buildBriefing(ctx)),
     digest: async (ctx, args) => {
         const { values, positionals } = parse(args, { recent: { type: "string", default: "3" } });
         return json(
