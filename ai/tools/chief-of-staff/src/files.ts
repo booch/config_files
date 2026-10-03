@@ -1,5 +1,10 @@
-import { readFile, rename, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { ChiefError } from "./context";
+
+// Chief's state holds goals, summaries, and hook commands: keep it to its owner.
+export async function makePrivateDir(path: string): Promise<void> {
+    await mkdir(path, { recursive: true, mode: 0o700 });
+}
 
 export function isNotFound(error: unknown): boolean {
     return (error as NodeJS.ErrnoException)?.code === "ENOENT";

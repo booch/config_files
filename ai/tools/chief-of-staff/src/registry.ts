@@ -1,7 +1,7 @@
 import { mkdir, rm, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { ChiefError, type Context } from "./context";
-import { isNotFound, readJsonIfExists, writeJson } from "./files";
+import { isNotFound, makePrivateDir, readJsonIfExists, writeJson } from "./files";
 
 export const HARNESSES = ["claude", "codex", "opencode"] as const;
 export const STATES = ["running", "waiting", "blocked", "done", "abandoned"] as const;
@@ -96,7 +96,7 @@ async function mutateRegistry(
     ctx: Context,
     mutate: (sessions: SessionRecord[]) => SessionRecord[],
 ): Promise<SessionRecord[]> {
-    await mkdir(ctx.home, { recursive: true });
+    await makePrivateDir(ctx.home);
     return withLock(join(ctx.home, "registry.lock"), async () => {
         const sessions = mutate(await loadRegistry(ctx));
         await writeJson(registryPath(ctx), { version: 1, sessions });

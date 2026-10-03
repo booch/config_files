@@ -1,7 +1,7 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ChiefError, type Context } from "./context";
-import { writeJson } from "./files";
+import { makePrivateDir, writeJson } from "./files";
 import {
     AGENTS_ARGV,
     attachCommands,
@@ -133,7 +133,7 @@ async function ensureSlugAvailable(ctx: Context, slug: string): Promise<void> {
 
 async function writeStopHook(ctx: Context, id: string): Promise<string> {
     const dir = join(ctx.home, "hooks");
-    await mkdir(dir, { recursive: true });
+    await makePrivateDir(dir);
     const path = join(dir, `${id}.json`);
     const settings = stopHookSettings(`${chiefCommand(ctx)} report ${id} --stopped`);
     await writeJson(path, settings);

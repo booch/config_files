@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { type ParseArgsConfig, parseArgs } from "node:util";
 import { approveSession } from "./approve";
@@ -7,7 +7,7 @@ import { closeSession } from "./close";
 import { CONFIG_TEMPLATE, configPath } from "./config";
 import { ChiefError, type Context } from "./context";
 import { DEFAULT_RECENT, digestSession } from "./digest";
-import { readTextIfExists } from "./files";
+import { makePrivateDir, readTextIfExists } from "./files";
 import { appendJournal } from "./journal";
 import {
     AUTONOMIES,
@@ -175,9 +175,8 @@ export async function runCommand(ctx: Context, argv: string[]): Promise<CommandR
 }
 
 async function initHome(ctx: Context): Promise<void> {
-    await Promise.all(
-        ["journal", "hooks"].map((dir) => mkdir(join(ctx.home, dir), { recursive: true })),
-    );
+    await makePrivateDir(ctx.home);
+    await Promise.all(["journal", "hooks"].map((dir) => makePrivateDir(join(ctx.home, dir))));
     if ((await readTextIfExists(configPath(ctx))) === null) {
         await writeFile(configPath(ctx), CONFIG_TEMPLATE);
     }

@@ -1,14 +1,14 @@
-import { appendFile, mkdir } from "node:fs/promises";
+import { appendFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { Context } from "./context";
-import { readTextIfExists } from "./files";
+import { makePrivateDir, readTextIfExists } from "./files";
 import { oneLine } from "./text";
 import { localDate, localMonth, localTime } from "./time";
 
 export async function appendJournal(ctx: Context, text: string): Promise<void> {
     const now = ctx.now();
     const dir = journalDir(ctx);
-    await mkdir(dir, { recursive: true });
+    await makePrivateDir(dir);
     const file = join(dir, `${localMonth(now)}.md`);
     const existing = (await readTextIfExists(file)) ?? "";
     const heading = `## ${localDate(now)}`;

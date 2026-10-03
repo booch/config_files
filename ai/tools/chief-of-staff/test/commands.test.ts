@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { runCommand, USAGE } from "../src/commands";
 import { addSession, loadRegistry } from "../src/registry";
@@ -19,6 +19,15 @@ describe("init", () => {
         expect(existsSync(join(env.ctx.home, "journal"))).toBe(true);
         expect(existsSync(join(env.ctx.home, "hooks"))).toBe(true);
         expect(await loadRegistry(env.ctx)).toHaveLength(1);
+    });
+
+    test("creates the state directories readable by their owner only", async () => {
+        env = testContext();
+        const home = join(env.root, "fresh-home");
+        await runCommand({ ...env.ctx, home }, ["init"]);
+        for (const dir of [home, join(home, "journal"), join(home, "hooks")]) {
+            expect(statSync(dir).mode & 0o777).toBe(0o700);
+        }
     });
 
     test("writes the config template once, never overwriting edits", async () => {
