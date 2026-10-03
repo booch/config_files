@@ -19,6 +19,13 @@ Workers Chief spawns:
 - must be worktrees of a repository you have already trusted in Claude Code
   (run `claude` once in it), or the launch fails with "Workspace not trusted"
 
+## Trust
+
+Workers run as the same user as Chief, so any worker can report on any session
+or edit Chief's state files directly. Chief guards against accidents and against
+instructions injected into worker-written text; it does not defend against a
+hostile worker.
+
 ## Development
 
 ```sh
