@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { runCommand } from "../src/commands";
+import { runCommand, USAGE } from "../src/commands";
 import { addSession, loadRegistry } from "../src/registry";
 import { CLOSED_AT, sampleRecord, testContext } from "./helpers";
 
@@ -126,4 +126,9 @@ test("updates lists, and --mark-reviewed clears", async () => {
     expect(JSON.parse((await run("updates")).output)).toHaveLength(1);
     await run("updates", "--mark-reviewed");
     expect(JSON.parse((await run("updates")).output)).toEqual([]);
+});
+
+test("the README's command list is the usage text, so the two cannot drift", () => {
+    const readme = readFileSync(join(import.meta.dir, "..", "README.md"), "utf8");
+    expect(readme).toContain(USAGE);
 });

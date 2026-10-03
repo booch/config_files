@@ -35,7 +35,7 @@ Under `$CHIEF_HOME` (default `~/.local/share/ai/chief-of-staff`):
 - `registry.json` — one record per session. A session stays listed, even after
   its worker reports `done`, until `chief close` sets its `closed_at`
 - `journal/YYYY-MM.md` — append-only journal
-- `hooks/` — hook scripts written for spawned sessions
+- `hooks/` — per-session Claude settings JSON that installs the worker's Stop hook
 - `config.toml` — the only hand-edited file; `chief init` writes a template once
   and never overwrites it. `[watch] dirs` lists directories where scheduled tasks
   write dated `YYYY-MM-DD.md` reports
@@ -44,18 +44,20 @@ Under `$CHIEF_HOME` (default `~/.local/share/ai/chief-of-staff`):
 ## Commands
 
 ```text
-init                                   create the state directory
-list [--all] [--json]                  sessions in flight
-status <session>                       one session's record
-note <text…>                           append to the journal
-close <session> [--abandon] [--summary <text>]
-spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy auto|checkpointed]
-report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
-report <session> --stopped             (Stop hook; reads hook JSON on stdin)
-approve <session> [message…]           release a waiting worker
-digest <session> [--recent N]          summarize the worker's transcript
-updates [--mark-reviewed [--task name]]  unreviewed scheduled-task reports
-briefing                               everything a session start needs, as JSON
+usage: chief <command> [options]
+
+  init                                   create the state directory
+  list [--all] [--json]                  sessions in flight
+  status <session>                       one session's record
+  note <text…>                           append to the journal
+  close <session> [--abandon] [--summary <text>]
+  spawn --goal <text> [--slug s] [--repo dir] [--harness claude] [--model m] [--effort e] [--autonomy auto|checkpointed]
+  report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
+  report <session> --stopped             (Stop hook; reads hook JSON on stdin)
+  approve <session> [message…]           release a waiting worker
+  digest <session> [--recent N]          summarize the worker's transcript
+  updates [--mark-reviewed [--task name]]  unreviewed scheduled-task reports
+  briefing                               everything a session start needs, as JSON
 ```
 
 `<session>` is a full session id, the short id `claude attach` takes, a slug

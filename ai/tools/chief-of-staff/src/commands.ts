@@ -29,14 +29,14 @@ export interface CommandResult {
 
 type Command = (ctx: Context, args: string[]) => Promise<CommandResult>;
 
-const USAGE = `usage: chief <command> [options]
+export const USAGE = `usage: chief <command> [options]
 
   init                                   create the state directory
   list [--all] [--json]                  sessions in flight
   status <session>                       one session's record
   note <text…>                           append to the journal
   close <session> [--abandon] [--summary <text>]
-  spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy auto|checkpointed]
+  spawn --goal <text> [--slug s] [--repo dir] [--harness claude] [--model m] [--effort e] [--autonomy auto|checkpointed]
   report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
   report <session> --stopped             (Stop hook; reads hook JSON on stdin)
   approve <session> [message…]           release a waiting worker
