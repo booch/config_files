@@ -1,6 +1,7 @@
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { type ParseArgsConfig, parseArgs } from "node:util";
+import { approveSession } from "./approve";
 import { ChiefError, type Context } from "./context";
 import { appendJournal } from "./journal";
 import {
@@ -32,7 +33,8 @@ const USAGE = `usage: chief <command> [options]
   close <session> [--abandon] [--summary <text>]
   spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy auto|checkpointed]
   report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
-  report <session> --stopped             (Stop hook; reads hook JSON on stdin)`;
+  report <session> --stopped             (Stop hook; reads hook JSON on stdin)
+  approve <session> [message…]           release a waiting worker`;
 
 const json = (value: unknown): CommandResult => ({ output: JSON.stringify(value, null, 2) });
 
@@ -110,6 +112,11 @@ export const COMMANDS: Record<string, Command> = {
                 autonomy: oneOf(AUTONOMIES, values.autonomy, "autonomy"),
             }),
         );
+    },
+    approve: async (ctx, args) => {
+        const [ref, ...words] = args;
+        if (!ref) throw usage("missing <session>");
+        return json(await approveSession(ctx, ref, words.length ? words.join(" ") : undefined));
     },
 };
 

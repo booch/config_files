@@ -34,4 +34,5 @@ close <session> [--abandon] [--summary <text>]
 spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy auto|checkpointed]
 report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
 report <session> --stopped             (Stop hook; reads hook JSON on stdin)
+approve <session> [message…]           release a waiting worker
 ```
