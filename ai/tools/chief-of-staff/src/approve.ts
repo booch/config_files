@@ -26,7 +26,7 @@ export async function approveSession(
             `\`${session.slug}\` has no Claude session id yet; attach to it by hand`,
         );
     }
-    await stopAndWait(ctx, session.slug, session.harness_ref);
+    await stopIfRunning(ctx, session.slug, session.harness_ref);
     const result = await ctx.run(resumeArgv(session.harness_session_id, message), {
         cwd: session.worktree,
     });
@@ -50,8 +50,10 @@ export async function approveSession(
 }
 
 // Resuming a live session starts a copy, and `claude stop` returns before the process exits.
+// A process already gone (e.g. after a reboot) has nothing to stop, and `claude stop` would fail.
 // Any doubt that it stopped is an error, never a resume.
-async function stopAndWait(ctx: Context, slug: string, ref: string): Promise<void> {
+async function stopIfRunning(ctx: Context, slug: string, ref: string): Promise<void> {
+    if (!(await isRunning(ctx, ref))) return;
     const stop = await ctx.run(stopArgv(ref));
     if (stop.exitCode !== 0) {
         throw new ChiefError(`could not stop \`${slug}\`: ${firstLine(stop.stderr)}`);

@@ -11,41 +11,42 @@ let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
 
 const waiting = sampleRecord({ state: "waiting", waiting_on: "approve-tests" });
+const LISTED = JSON.stringify([{ id: "5f3a9c00" }]);
+const RESUME = {
+    argv: [
+        "claude",
+        "--bg",
+        "--resume",
+        "5f3a9c00-1111-4222-8333-444455556666",
+        "Tests look good; implement.",
+    ],
+    cwd: waiting.worktree,
+};
 
-test("stops the session, then resumes it in the background with the message, in its worktree", async () => {
+test("resumes a session whose process is already gone without stopping it", async () => {
     env = testContext();
     await addSession(env.ctx, waiting);
     await approveSession(env.ctx, "chief-cli", "Tests look good; implement.");
-    expect(env.calls).toEqual([
-        { argv: ["claude", "stop", "5f3a9c00"] },
-        { argv: ["claude", "agents", "--json"] },
-        {
-            argv: [
-                "claude",
-                "--bg",
-                "--resume",
-                "5f3a9c00-1111-4222-8333-444455556666",
-                "Tests look good; implement.",
-            ],
-            cwd: waiting.worktree,
-        },
-    ]);
+    expect(env.calls).toEqual([{ argv: ["claude", "agents", "--json"] }, RESUME]);
 });
 
-test("waits for the stopped session to disappear before resuming", async () => {
-    let polls = 0;
+test("stops a live session and waits for it to disappear before resuming", async () => {
+    const order: string[] = [];
+    let checks = 0;
     env = testContext();
-    const listed = JSON.stringify([{ id: "5f3a9c00" }]);
     const ctx: Context = {
         ...env.ctx,
-        run: async (argv, options) =>
-            argv[1] === "agents"
-                ? { exitCode: 0, stdout: ++polls < 3 ? listed : "[]", stderr: "" }
-                : env.ctx.run(argv, options),
+        run: async (argv, options) => {
+            order.push(argv[1] ?? "");
+            return argv[1] === "agents"
+                ? { exitCode: 0, stdout: ++checks < 3 ? LISTED : "[]", stderr: "" }
+                : env.ctx.run(argv, options);
+        },
     };
     await addSession(ctx, waiting);
-    await approveSession(ctx, "chief-cli");
-    expect(polls).toBe(3);
+    await approveSession(ctx, "chief-cli", "Tests look good; implement.");
+    expect(order).toEqual(["agents", "stop", "agents", "agents", "--bg"]);
+    expect(env.calls).toEqual([{ argv: ["claude", "stop", "5f3a9c00"] }, RESUME]);
 });
 
 test("flips the worker back to running and journals what was released", async () => {
@@ -108,7 +109,10 @@ describe("never resumes a session it could not confirm is stopped", () => {
     const cases: [string, Record<string, Partial<RunResult>>, RegExp][] = [
         [
             "claude stop fails",
-            { "claude stop": { exitCode: 1, stderr: "stop: boom" } },
+            {
+                "claude agents": { stdout: LISTED },
+                "claude stop": { exitCode: 1, stderr: "stop: boom" },
+            },
             /could not stop `chief-cli`: stop: boom/,
         ],
         [
