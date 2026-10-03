@@ -19,6 +19,16 @@ describe("loadRegistry", () => {
         writeFileSync(join(env.ctx.home, "registry.json"), "{not json");
         await expect(loadRegistry(env.ctx)).rejects.toThrow(/registry\.json/);
     });
+
+    for (const content of ["{}", "null"]) {
+        test(`refuses a file without a sessions list (${content}), naming the file`, async () => {
+            env = testContext();
+            writeFileSync(join(env.ctx.home, "registry.json"), content);
+            const loading = loadRegistry(env.ctx);
+            await expect(loading).rejects.toThrow(ChiefError);
+            await expect(loading).rejects.toThrow(/registry\.json/);
+        });
+    }
 });
 
 describe("addSession", () => {

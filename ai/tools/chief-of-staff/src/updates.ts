@@ -65,7 +65,7 @@ async function reportsAfter(dir: string, after: string): Promise<Update[]> {
 async function loadWatermarks(ctx: Context): Promise<Watermarks> {
     const path = watermarkPath(ctx);
     const parsed = await readJsonIfExists(path);
-    if (parsed === null) return {};
+    if (parsed === undefined || parsed === null) return {};
     if (typeof parsed !== "object" || Array.isArray(parsed)) {
         throw new ChiefError(`${path} must be a JSON object of dir → date; fix or move it aside`);
     }

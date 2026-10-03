@@ -43,9 +43,13 @@ export function isActive(session: SessionRecord): boolean {
 }
 
 export async function loadRegistry(ctx: Context): Promise<SessionRecord[]> {
-    const registry = await readJsonIfExists(registryPath(ctx));
-    if (registry === null) return [];
-    return (registry as { sessions: SessionRecord[] }).sessions;
+    const path = registryPath(ctx);
+    const registry = (await readJsonIfExists(path)) as { sessions?: unknown } | null | undefined;
+    if (registry === undefined) return [];
+    if (!Array.isArray(registry?.sessions)) {
+        throw new ChiefError(`${path} has no "sessions" list; fix or move it aside`);
+    }
+    return registry.sessions as SessionRecord[];
 }
 
 export async function addSession(ctx: Context, record: SessionRecord): Promise<void> {

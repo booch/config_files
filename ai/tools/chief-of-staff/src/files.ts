@@ -24,11 +24,11 @@ export function readTextIfExists(path: string): Promise<string | null> {
     return ifExists(readFile(path, "utf8"));
 }
 
-// Chief's own state files: a missing file is a fresh start, but one that does not parse (even an
-// empty one) is never guessed at.
-export async function readJsonIfExists(path: string): Promise<unknown | null> {
+// Chief's own state files: a missing file (undefined, which JSON cannot hold) is a fresh start,
+// but one that does not parse (even an empty one) is never guessed at.
+export async function readJsonIfExists(path: string): Promise<unknown> {
     const text = await readTextIfExists(path);
-    if (text === null) return null;
+    if (text === null) return undefined;
     try {
         return JSON.parse(text);
     } catch (error) {
