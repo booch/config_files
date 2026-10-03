@@ -57,7 +57,13 @@ wants to look at one, give them its `attach.terminal` command from the briefing
 
 Always pass `--repo`; left out, it defaults to your own working directory.
 
-Workers must be worktrees of a repository the human has already trusted in Claude Code; otherwise the launch fails with "Workspace not trusted" and the session is recorded as blocked. Tell the human to run claude once in that repository.
+Workers must be worktrees of a repository the human has already trusted in
+Claude Code; otherwise the launch fails with "Workspace not trusted". Tell the
+human to run claude once in that repository.
+
+A spawn that comes back `blocked` with a `launch failed: …` summary left no
+worktree or branch behind. Tell the human the reason; once it is fixed, run
+`chief close <slug> --abandon` and spawn again (the same slug is then free).
 
 Before spawning, tell the human in one line: the slug, model and effort, and the
 autonomy you chose and why.

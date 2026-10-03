@@ -1,7 +1,8 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { runCommand } from "../src/commands";
+import { type Context, realRunner } from "../src/context";
 import { KICKOFF_FILE } from "../src/kickoff";
 import { addSession, loadRegistry } from "../src/registry";
 import { type SpawnOptions, spawnSession } from "../src/spawn";
@@ -91,7 +92,36 @@ describe("spawnSession", () => {
         expect(record.state).toBe("blocked");
         expect(record.summary).toBe("launch failed: error: not logged in");
         expect(record.harness_session_id).toBeNull();
+        expect(record.closed_at).toBeNull();
         expect(env.calls).toHaveLength(1);
+    });
+
+    test("a failed launch removes its worktree and branch", async () => {
+        env = testContext({ fakes: { "claude --bg": { exitCode: 1, stderr: "nope" } } });
+        const { repo, record } = await spawnDefault();
+        expect(existsSync(record.worktree)).toBe(false);
+        const branches = await realRunner(["git", "-C", repo, "branch", "--list", record.branch]);
+        expect(branches.stdout.trim()).toBe("");
+    });
+
+    test("a failed cleanup is noted in the summary, not thrown", async () => {
+        env = testContext({ fakes: { "claude --bg": { exitCode: 1, stderr: "nope" } } });
+        const ctx: Context = {
+            ...env.ctx,
+            run: async (argv, options) =>
+                argv.includes("remove")
+                    ? { exitCode: 128, stdout: "", stderr: "fatal: locked\nmore" }
+                    : env.ctx.run(argv, options),
+        };
+        const record = await spawnSession(ctx, {
+            goal: "Fix it",
+            repo: await makeGitRepo(env.root),
+            harness: "claude",
+            model: "opus",
+            effort: "high",
+            autonomy: "auto",
+        });
+        expect(record.summary).toBe("launch failed: nope; cleanup failed: fatal: locked");
     });
 
     test("uses an explicit --slug after validating it", async () => {

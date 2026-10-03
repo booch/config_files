@@ -20,7 +20,7 @@ import {
     type SessionRecord,
 } from "./registry";
 import { firstLine, shellQuote } from "./text";
-import { createWorktree } from "./worktree";
+import { createWorktree, removeWorktree, type Worktree } from "./worktree";
 
 export interface SpawnOptions {
     goal: string;
@@ -57,6 +57,7 @@ export async function spawnSession(ctx: Context, options: SpawnOptions): Promise
     const harnessSessionId = harnessRef
         ? sessionIdFor((await ctx.run(AGENTS_ARGV)).stdout, harnessRef)
         : null;
+    const failure = launched ? null : await cleanUpFailedLaunch(ctx, worktree, launch.stderr);
 
     const now = ctx.now().toISOString();
     const record: SessionRecord = {
@@ -74,7 +75,7 @@ export async function spawnSession(ctx: Context, options: SpawnOptions): Promise
         autonomy,
         state: launched ? "running" : "blocked",
         waiting_on: null,
-        summary: launched ? null : `launch failed: ${firstLine(launch.stderr)}`,
+        summary: failure,
         cross_check: null,
         spawned_at: now,
         last_activity_at: now,
@@ -87,6 +88,18 @@ export async function spawnSession(ctx: Context, options: SpawnOptions): Promise
         `spawned \`${slug}\` (${harness}/${model}/${effort}, ${autonomy}) — goal: ${goal}${launched ? "" : " — LAUNCH FAILED"}`,
     );
     return record;
+}
+
+// The record stays (blocked) so the human sees why; the worktree and branch go, so closing the
+// record frees the slug for a retry. Returns the summary to record.
+async function cleanUpFailedLaunch(
+    ctx: Context,
+    worktree: Worktree,
+    stderr: string,
+): Promise<string> {
+    const reason = `launch failed: ${firstLine(stderr)}`;
+    const cleanupError = await removeWorktree(ctx, worktree);
+    return cleanupError ? `${reason}; cleanup failed: ${cleanupError}` : reason;
 }
 
 async function ensureSlugAvailable(ctx: Context, slug: string): Promise<void> {
