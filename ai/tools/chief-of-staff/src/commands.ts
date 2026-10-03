@@ -3,7 +3,16 @@ import { join } from "node:path";
 import { type ParseArgsConfig, parseArgs } from "node:util";
 import { ChiefError, type Context } from "./context";
 import { appendJournal } from "./journal";
-import { findSession, isActive, loadRegistry, type SessionRecord, updateSession } from "./registry";
+import {
+    AUTONOMIES,
+    findSession,
+    HARNESSES,
+    isActive,
+    loadRegistry,
+    type SessionRecord,
+    updateSession,
+} from "./registry";
+import { spawnSession } from "./spawn";
 import { minutesBetween } from "./time";
 
 export interface CommandResult {
@@ -18,7 +27,8 @@ const USAGE = `usage: chief <command> [options]
   list [--all] [--json]                  sessions in flight
   status <session>                       one session's record
   note <text…>                           append to the journal
-  close <session> [--abandon] [--summary <text>]`;
+  close <session> [--abandon] [--summary <text>]
+  spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy auto|checkpointed]`;
 
 const json = (value: unknown): CommandResult => ({ output: JSON.stringify(value, null, 2) });
 
@@ -56,7 +66,37 @@ export const COMMANDS: Record<string, Command> = {
             ),
         );
     },
+    spawn: async (ctx, args) => {
+        const { values } = parse(args, {
+            goal: { type: "string" },
+            slug: { type: "string" },
+            repo: { type: "string", default: process.cwd() },
+            harness: { type: "string", default: "claude" },
+            model: { type: "string", default: "opus" },
+            effort: { type: "string", default: "high" },
+            autonomy: { type: "string", default: "auto" },
+        });
+        if (!values.goal) throw usage("spawn needs --goal");
+        return json(
+            await spawnSession(ctx, {
+                goal: values.goal,
+                slug: values.slug,
+                repo: values.repo,
+                harness: oneOf(HARNESSES, values.harness, "harness"),
+                model: values.model,
+                effort: values.effort,
+                autonomy: oneOf(AUTONOMIES, values.autonomy, "autonomy"),
+            }),
+        );
+    },
 };
+
+export function oneOf<T extends string>(allowed: readonly T[], value: string, name: string): T {
+    if (!(allowed as readonly string[]).includes(value)) {
+        throw usage(`--${name} must be one of: ${allowed.join(", ")}`);
+    }
+    return value as T;
+}
 
 export async function runCommand(ctx: Context, argv: string[]): Promise<CommandResult> {
     const [name, ...args] = argv;

@@ -31,4 +31,5 @@ list [--all] [--json]                  sessions in flight
 status <session>                       one session's record
 note <text…>                           append to the journal
 close <session> [--abandon] [--summary <text>]
+spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy auto|checkpointed]
 ```
