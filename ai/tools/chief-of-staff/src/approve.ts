@@ -31,13 +31,17 @@ export async function approveSession(
         cwd: session.worktree,
     });
     if (result.exitCode !== 0) {
-        throw new ChiefError(`could not resume \`${session.slug}\`: ${firstLine(result.stderr)}`);
+        throw new ChiefError(
+            `stopped \`${session.slug}\` but could not resume it: ${firstLine(result.stderr)}; ` +
+                `to continue it by hand: ${session.attach.resume}`,
+        );
     }
-    const released = await updateSession(ctx, session.id, () => ({
-        state: "running",
-        waiting_on: null,
-        last_activity_at: ctx.now().toISOString(),
-    }));
+    // A fast worker may already have reported its next state; that report wins.
+    const released = await updateSession(ctx, session.id, (s) =>
+        s.state === session.state
+            ? { state: "running", waiting_on: null, last_activity_at: ctx.now().toISOString() }
+            : {},
+    );
     await appendJournal(
         ctx,
         `released \`${session.slug}\` (was waiting on ${session.waiting_on ?? session.state}): ${message}`,

@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { approveSession } from "../src/approve";
 import { runCommand } from "../src/commands";
 import { ChiefError, type Context, type RunResult } from "../src/context";
-import { addSession, loadRegistry } from "../src/registry";
+import { addSession, loadRegistry, updateSession } from "../src/registry";
 import { sampleRecord, testContext } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
@@ -80,6 +80,28 @@ test("leaves the record untouched when the resume fails", async () => {
     await addSession(env.ctx, waiting);
     await expect(approveSession(env.ctx, "chief-cli")).rejects.toThrow(/no such session/);
     expect((await loadRegistry(env.ctx))[0]?.state).toBe("waiting");
+});
+
+test("a failed resume says the session is stopped and how to get back in", async () => {
+    env = testContext({ fakes: { "claude --bg": { exitCode: 1, stderr: "no such session" } } });
+    await addSession(env.ctx, waiting);
+    const approval = approveSession(env.ctx, "chief-cli");
+    await expect(approval).rejects.toThrow(/stopped/);
+    await expect(approval).rejects.toThrow(waiting.attach.resume as string);
+});
+
+test("does not overwrite a report the resumed worker made first", async () => {
+    env = testContext();
+    const ctx: Context = {
+        ...env.ctx,
+        run: async (argv, options) => {
+            if (argv[1] === "--bg") await updateSession(ctx, waiting.id, () => ({ state: "done" }));
+            return env.ctx.run(argv, options);
+        },
+    };
+    await addSession(ctx, waiting);
+    await approveSession(ctx, "chief-cli");
+    expect((await loadRegistry(ctx))[0]?.state).toBe("done");
 });
 
 describe("never resumes a session it could not confirm is stopped", () => {
