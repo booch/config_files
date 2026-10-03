@@ -35,6 +35,10 @@ Under `$CHIEF_HOME` (default `~/.local/share/ai/chief-of-staff`):
 - `registry.json` — one record per session
 - `journal/YYYY-MM.md` — append-only journal
 - `hooks/` — hook scripts written for spawned sessions
+- `config.toml` — the only hand-edited file; `chief init` writes a template once
+  and never overwrites it. `[watch] dirs` lists directories where scheduled tasks
+  write dated `YYYY-MM-DD.md` reports
+- `reviewed.json` — per watched directory, the latest report date already reviewed
 
 ## Commands
 
@@ -49,5 +53,6 @@ report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
 report <session> --stopped             (Stop hook; reads hook JSON on stdin)
 approve <session> [message…]           release a waiting worker
 digest <session> [--recent N]          summarize the worker's transcript
+updates [--mark-reviewed [--task name]]  unreviewed scheduled-task reports
 briefing                               everything a session start needs, as JSON
 ```

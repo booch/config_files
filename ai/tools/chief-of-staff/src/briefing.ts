@@ -6,6 +6,7 @@ import { tailJournal } from "./journal";
 import { type Quota, readQuota } from "./quota";
 import { isActive, loadRegistry, type SessionRecord, type SessionState } from "./registry";
 import { minutesBetween } from "./time";
+import { type Update, unreviewedUpdates } from "./updates";
 
 export const STALL_HOURS = 24;
 export const JOURNAL_TAIL = 15;
@@ -34,6 +35,7 @@ export interface Briefing {
     generated_at: string;
     sessions: BriefingSession[];
     journal_tail: string[];
+    updates: Update[];
     quota: Quota | null;
     context_files: typeof CONTEXT_FILES;
 }
@@ -45,6 +47,7 @@ export async function buildBriefing(ctx: Context): Promise<Briefing> {
         generated_at: ctx.now().toISOString(),
         sessions: sessions.sort(byUrgency),
         journal_tail: await tailJournal(ctx, JOURNAL_TAIL),
+        updates: await unreviewedUpdates(ctx),
         quota: await readQuota(ctx),
         context_files: CONTEXT_FILES,
     };

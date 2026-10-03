@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { runCommand } from "../src/commands";
 import { addSession, loadRegistry } from "../src/registry";
@@ -19,6 +19,14 @@ describe("init", () => {
         expect(existsSync(join(env.ctx.home, "journal"))).toBe(true);
         expect(existsSync(join(env.ctx.home, "hooks"))).toBe(true);
         expect(await loadRegistry(env.ctx)).toHaveLength(1);
+    });
+
+    test("writes the config template once, never overwriting edits", async () => {
+        env = testContext();
+        await run("init");
+        writeFileSync(join(env.ctx.home, "config.toml"), "# mine\n");
+        await run("init");
+        expect(readFileSync(join(env.ctx.home, "config.toml"), "utf8")).toBe("# mine\n");
     });
 });
 
@@ -88,4 +96,15 @@ test("unknown commands and missing arguments are usage errors", async () => {
     env = testContext();
     await expect(run("bogus")).rejects.toThrow(/usage/i);
     await expect(run("status")).rejects.toThrow(/usage/i);
+});
+
+test("updates lists, and --mark-reviewed clears", async () => {
+    env = testContext();
+    const dir = join(env.root, "t");
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "2026-09-22.md"), "- x\n");
+    writeFileSync(join(env.ctx.home, "config.toml"), `[watch]\ndirs = ["${dir}"]\n`);
+    expect(JSON.parse((await run("updates")).output)).toHaveLength(1);
+    await run("updates", "--mark-reviewed");
+    expect(JSON.parse((await run("updates")).output)).toEqual([]);
 });

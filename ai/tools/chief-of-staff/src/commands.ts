@@ -1,10 +1,12 @@
-import { mkdir } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { type ParseArgsConfig, parseArgs } from "node:util";
 import { approveSession } from "./approve";
 import { buildBriefing } from "./briefing";
+import { CONFIG_TEMPLATE, configPath } from "./config";
 import { ChiefError, type Context } from "./context";
 import { digestSession } from "./digest";
+import { readTextIfExists } from "./files";
 import { appendJournal } from "./journal";
 import {
     AUTONOMIES,
@@ -19,6 +21,7 @@ import {
 import { reportState, reportStopped } from "./report";
 import { spawnSession } from "./spawn";
 import { minutesBetween } from "./time";
+import { markReviewed, unreviewedUpdates } from "./updates";
 
 export interface CommandResult {
     output: string;
@@ -38,6 +41,7 @@ const USAGE = `usage: chief <command> [options]
   report <session> --stopped             (Stop hook; reads hook JSON on stdin)
   approve <session> [message…]           release a waiting worker
   digest <session> [--recent N]          summarize the worker's transcript
+  updates [--mark-reviewed [--task name]]  unreviewed scheduled-task reports
   briefing                               everything a session start needs, as JSON`;
 
 const json = (value: unknown): CommandResult => ({ output: JSON.stringify(value, null, 2) });
@@ -122,6 +126,16 @@ export const COMMANDS: Record<string, Command> = {
         if (!ref) throw usage("missing <session>");
         return json(await approveSession(ctx, ref, words.length ? words.join(" ") : undefined));
     },
+    updates: async (ctx, args) => {
+        const { values } = parse(args, {
+            "mark-reviewed": { type: "boolean" },
+            task: { type: "string" },
+        });
+        if (values["mark-reviewed"]) {
+            return { output: `Marked ${await markReviewed(ctx, values.task)} reviewed.` };
+        }
+        return json(await unreviewedUpdates(ctx));
+    },
     briefing: async (ctx) => json(await buildBriefing(ctx)),
     digest: async (ctx, args) => {
         const { values, positionals } = parse(args, { recent: { type: "string", default: "3" } });
@@ -153,6 +167,9 @@ export async function initHome(ctx: Context): Promise<void> {
     await Promise.all(
         ["journal", "hooks"].map((dir) => mkdir(join(ctx.home, dir), { recursive: true })),
     );
+    if ((await readTextIfExists(configPath(ctx))) === null) {
+        await writeFile(configPath(ctx), CONFIG_TEMPLATE);
+    }
 }
 
 export async function closeSession(

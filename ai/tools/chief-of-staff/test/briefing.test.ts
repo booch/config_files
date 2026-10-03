@@ -1,6 +1,6 @@
 import { afterEach, expect, test } from "bun:test";
 import { mkdirSync, utimesSync, writeFileSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, join } from "node:path";
 import { buildBriefing } from "../src/briefing";
 import { transcriptPath } from "../src/harness/claude";
 import { appendJournal } from "../src/journal";
@@ -68,4 +68,13 @@ test("includes the journal tail, quota, and context file paths", async () => {
         projects: "~/Personal/Projects/Current.md",
         human: "~/.config/ai/HUMAN.md",
     });
+});
+
+test("includes unreviewed scheduled-task updates", async () => {
+    env = testContext({ now: NOW });
+    const dir = join(env.root, "mac-software-updates");
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "2026-09-26.md"), "- 3 upgrades\n");
+    writeFileSync(join(env.ctx.home, "config.toml"), `[watch]\ndirs = ["${dir}"]\n`);
+    expect((await buildBriefing(env.ctx)).updates.map((u) => u.date)).toEqual(["2026-09-26"]);
 });
