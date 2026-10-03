@@ -25,3 +25,6 @@ secring.*
 **/.claude/settings.local.json
 # A worktree holds a full checkout of the repo it sits inside.
 **/.claude/worktrees/
+
+# Chief of Staff writes each worker's instructions into its worktree root.
+.chief-kickoff.md
