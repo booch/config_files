@@ -54,6 +54,16 @@ Called out so a reviewer can accept or reject them explicitly:
 > Deviation 5's mechanism becomes `claude stop <short>`, then wait, then
 > `claude --bg --resume <session id>`, because resuming a live idle session starts a copy.
 > See the notes at the top of Tasks 1 and 5–10.
+>
+> **Changed 2026-10-02 (final review):**
+>
+> - The record gains `closed_at`: a worker's own `done` is not the human's close,
+>   so a session stays listed until `chief close` sets it.
+> - A failed launch removes its worktree and branch.
+> - The Stop hook's `stop_hook_active` guard is removed; every stop is recorded.
+> - `chief approve` fails closed when `claude stop` or `claude agents` fails.
+> - A harness-adapter interface (`harnessFor(record.harness)`) is deferred to the
+>   start of step 6.
 
 ## Open Questions for the Human
 
