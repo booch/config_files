@@ -1,6 +1,6 @@
 import { stat } from "node:fs/promises";
 import type { Context } from "./context";
-import { isNotFound } from "./files";
+import { ifExists } from "./files";
 import { transcriptPath } from "./harness/claude";
 import { tailJournal } from "./journal";
 import { type Quota, readQuota } from "./quota";
@@ -92,13 +92,8 @@ async function briefSession(ctx: Context, s: SessionRecord): Promise<BriefingSes
 // The file's mtime is a cheap liveness signal that works even when a Stop hook never fired.
 async function transcriptModifiedAt(ctx: Context, s: SessionRecord): Promise<string | null> {
     if (s.harness !== "claude" || !s.harness_session_id) return null;
-    try {
-        const path = transcriptPath(ctx.claudeHome, s.worktree, s.harness_session_id);
-        return (await stat(path)).mtime.toISOString();
-    } catch (error) {
-        if (isNotFound(error)) return null;
-        throw error;
-    }
+    const path = transcriptPath(ctx.claudeHome, s.worktree, s.harness_session_id);
+    return (await ifExists(stat(path)))?.mtime.toISOString() ?? null;
 }
 
 function latest(a: string, b: string | null): string {

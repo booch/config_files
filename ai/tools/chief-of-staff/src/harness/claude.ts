@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import { ChiefError } from "../context";
 import { KICKOFF_FILE } from "../kickoff";
-import { firstLine, shellQuote } from "../text";
+import { firstLine, shellQuote, tryParseJson } from "../text";
 
 const KICKOFF_INSTRUCTION = `Read ${KICKOFF_FILE} in the current directory and follow it.`;
 const HOOK_TIMEOUT_SECONDS = 30;
@@ -54,7 +54,7 @@ interface AgentEntry {
 
 // `claude agents --json` maps the short id that `--bg` prints to the full session id.
 export function sessionIdFor(agentsJson: string, ref: string): string | null {
-    const match = parseAgents(agentsJson).find((agent) => agent.id === ref);
+    const match = parseAgentsOrEmpty(agentsJson).find((agent) => agent.id === ref);
     return typeof match?.sessionId === "string" ? match.sessionId : null;
 }
 
@@ -64,7 +64,7 @@ export function isListed(agentsJson: string, ref: string): boolean {
     return parseAgentsStrictly(agentsJson).some((agent) => agent.id === ref);
 }
 
-function parseAgents(json: string): AgentEntry[] {
+function parseAgentsOrEmpty(json: string): AgentEntry[] {
     try {
         return parseAgentsStrictly(json);
     } catch {
@@ -73,12 +73,7 @@ function parseAgents(json: string): AgentEntry[] {
 }
 
 function parseAgentsStrictly(json: string): AgentEntry[] {
-    let parsed: unknown;
-    try {
-        parsed = JSON.parse(json);
-    } catch {
-        parsed = null;
-    }
+    const parsed = tryParseJson(json);
     if (!Array.isArray(parsed)) {
         throw new ChiefError(`claude agents failed: output is not a JSON list: ${firstLine(json)}`);
     }
@@ -150,11 +145,7 @@ export function digestTranscript(jsonl: string, recent = 3): TranscriptDigest {
 // A transcript being written can end mid-line; skip what does not parse.
 function parseLines(jsonl: string): TranscriptEntry[] {
     return jsonl.split("\n").flatMap((line) => {
-        if (!line.trim()) return [];
-        try {
-            return [JSON.parse(line) as TranscriptEntry];
-        } catch {
-            return [];
-        }
+        const entry = tryParseJson(line);
+        return entry === undefined ? [] : [entry as TranscriptEntry];
     });
 }

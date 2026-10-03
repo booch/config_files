@@ -2,7 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { basename, dirname, join } from "node:path";
 import { loadConfig } from "./config";
 import { ChiefError, type Context } from "./context";
-import { isNotFound, readJsonIfExists, writeJson } from "./files";
+import { ifExists, readJsonIfExists, writeJson } from "./files";
 
 const DATED_REPORT = /^(\d{4}-\d{2}-\d{2})\.md$/;
 const HIGHLIGHTS = 3;
@@ -45,7 +45,8 @@ export function highlights(markdown: string, limit = HIGHLIGHTS): string[] {
 }
 
 async function reportsAfter(dir: string, after: string): Promise<Update[]> {
-    const dates = (await listDir(dir))
+    const names = (await ifExists(readdir(dir))) ?? []; // a task that has not run yet
+    const dates = names
         .map((name) => DATED_REPORT.exec(name)?.[1])
         .filter((date): date is string => date !== undefined && date > after);
     return Promise.all(
@@ -59,15 +60,6 @@ async function reportsAfter(dir: string, after: string): Promise<Update[]> {
             };
         }),
     );
-}
-
-async function listDir(dir: string): Promise<string[]> {
-    try {
-        return await readdir(dir);
-    } catch (error) {
-        if (isNotFound(error)) return []; // a task that has not run yet
-        throw error;
-    }
 }
 
 async function loadWatermarks(ctx: Context): Promise<Watermarks> {

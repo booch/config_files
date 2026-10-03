@@ -2,7 +2,7 @@ import { ChiefError, type Context } from "./context";
 import { attachCommands } from "./harness/claude";
 import { appendJournal } from "./journal";
 import { findSession, type SessionRecord, type SessionState, updateSession } from "./registry";
-import { oneLine, truncate } from "./text";
+import { oneLine, truncate, tryParseJson } from "./text";
 
 export const UNREPORTED_STOP = "unreported-stop";
 const MAX_SUMMARY = 200;
@@ -75,10 +75,6 @@ export async function reportStopped(
 }
 
 function parseHookInput(text: string): Record<string, unknown> {
-    try {
-        const parsed = JSON.parse(text);
-        return parsed && typeof parsed === "object" ? parsed : {};
-    } catch {
-        return {};
-    }
+    const parsed = tryParseJson(text);
+    return parsed && typeof parsed === "object" ? (parsed as Record<string, unknown>) : {};
 }

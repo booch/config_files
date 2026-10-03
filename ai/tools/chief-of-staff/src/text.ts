@@ -18,6 +18,15 @@ export function firstLine(text: string): string {
     );
 }
 
+// For external input: undefined when the text is not JSON.
+export function tryParseJson(text: string): unknown {
+    try {
+        return JSON.parse(text);
+    } catch {
+        return undefined;
+    }
+}
+
 export function shellQuote(text: string): string {
     return `'${text.replaceAll("'", `'\\''`)}'`;
 }

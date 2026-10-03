@@ -5,13 +5,18 @@ export function isNotFound(error: unknown): boolean {
     return (error as NodeJS.ErrnoException)?.code === "ENOENT";
 }
 
-export async function readTextIfExists(path: string): Promise<string | null> {
+// Resolves to null when the file or directory does not exist; any other failure still throws.
+export async function ifExists<T>(op: Promise<T>): Promise<T | null> {
     try {
-        return await readFile(path, "utf8");
+        return await op;
     } catch (error) {
         if (isNotFound(error)) return null;
         throw error;
     }
+}
+
+export function readTextIfExists(path: string): Promise<string | null> {
+    return ifExists(readFile(path, "utf8"));
 }
 
 // Chief's own state files: a missing file is a fresh start, but one that does not parse (even an
