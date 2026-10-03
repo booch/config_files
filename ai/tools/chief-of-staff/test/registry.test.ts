@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { readdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, utimesSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ChiefError } from "../src/context";
 import { addSession, findSession, isActive, loadRegistry, updateSession } from "../src/registry";
@@ -40,6 +40,16 @@ describe("addSession", () => {
         await Promise.all(ids.map((id) => addSession(env.ctx, sampleRecord({ id, slug: id }))));
         const stored = (await loadRegistry(env.ctx)).map((s) => s.id).sort();
         expect(stored).toEqual([...ids].sort());
+    });
+
+    test("breaks a lock left by a crashed process", async () => {
+        env = testContext();
+        const lock = join(env.ctx.home, "registry.lock");
+        mkdirSync(lock);
+        const thirtyOneSecondsAgo = new Date(Date.now() - 31_000);
+        utimesSync(lock, thirtyOneSecondsAgo, thirtyOneSecondsAgo);
+        await addSession(env.ctx, sampleRecord());
+        expect(readdirSync(env.ctx.home)).toEqual(["registry.json"]);
     });
 
     test("rejects a duplicate id", async () => {
