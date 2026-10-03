@@ -86,10 +86,20 @@ export function stopHookSettings(command: string) {
     };
 }
 
+const SESSION_ID = /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
+
+// Hook input comes from the worker, so its session id is trusted only if it is well formed and
+// extends the short id spawn saw (the short id is the session id's first 8 hex digits).
+export function isSessionIdFor(sessionId: string, ref: string | null): boolean {
+    return SESSION_ID.test(sessionId) && (ref === null || sessionId.startsWith(ref));
+}
+
 export function attachCommands(sessionId: string | null, ref: string | null, worktree: string) {
     return {
-        terminal: ref ? `claude attach ${ref}` : null,
-        resume: sessionId ? `cd ${shellQuote(worktree)} && claude --resume ${sessionId}` : null,
+        terminal: ref ? `claude attach ${shellQuote(ref)}` : null,
+        resume: sessionId
+            ? `cd ${shellQuote(worktree)} && claude --resume ${shellQuote(sessionId)}`
+            : null,
     };
 }
 

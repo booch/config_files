@@ -60,10 +60,10 @@ test("stopHookSettings registers one Stop command", () => {
     });
 });
 
-test("attachCommands offers each command only when its id is known", () => {
-    expect(attachCommands("S", "ab12", "/w t")).toEqual({
-        terminal: "claude attach ab12",
-        resume: "cd '/w t' && claude --resume S",
+test("attachCommands offers each command only when its id is known, quoting every value", () => {
+    expect(attachCommands("S;x", "ab$(y)", "/w t")).toEqual({
+        terminal: "claude attach 'ab$(y)'",
+        resume: "cd '/w t' && claude --resume 'S;x'",
     });
     expect(attachCommands(null, null, "/w")).toEqual({ terminal: null, resume: null });
 });

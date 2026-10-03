@@ -127,8 +127,8 @@ export function sampleRecord(overrides: Partial<SessionRecord> = {}): SessionRec
         last_activity_at: "2026-09-23T14:02:00.000Z",
         closed_at: null,
         attach: {
-            terminal: "claude attach 5f3a9c00",
-            resume: "cd '/worktrees/repo/chief-cli' && claude --resume 5f3a9c00-1111-4222-8333-444455556666",
+            terminal: "claude attach '5f3a9c00'",
+            resume: "cd '/worktrees/repo/chief-cli' && claude --resume '5f3a9c00-1111-4222-8333-444455556666'",
         },
         ...overrides,
     };
