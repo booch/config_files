@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { basename, dirname, join } from "node:path";
 import { loadConfig } from "./config";
-import type { Context } from "./context";
+import { ChiefError, type Context } from "./context";
 import { isNotFound, readTextIfExists, writeAtomically } from "./files";
 
 const DATED_REPORT = /^(\d{4}-\d{2}-\d{2})\.md$/;
@@ -71,8 +71,21 @@ async function listDir(dir: string): Promise<string[]> {
 }
 
 async function loadWatermarks(ctx: Context): Promise<Watermarks> {
-    const text = await readTextIfExists(watermarkPath(ctx));
-    return text ? JSON.parse(text) : {};
+    const path = watermarkPath(ctx);
+    const text = await readTextIfExists(path);
+    if (!text) return {};
+    let parsed: unknown;
+    try {
+        parsed = JSON.parse(text);
+    } catch (error) {
+        throw new ChiefError(
+            `${path} is not valid JSON (${(error as Error).message}); fix or move it aside`,
+        );
+    }
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+        throw new ChiefError(`${path} must be a JSON object of dir → date; fix or move it aside`);
+    }
+    return parsed as Watermarks;
 }
 
 function watermarkPath(ctx: Context): string {

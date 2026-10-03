@@ -54,6 +54,18 @@ test("marking one task reviewed leaves the others", async () => {
     expect((await unreviewedUpdates(env.ctx)).map((u) => u.task)).toEqual(["workflow-retro"]);
 });
 
+test("a corrupt reviewed.json is reported by name, not guessed at", async () => {
+    setup();
+    writeFileSync(join(env.ctx.home, "reviewed.json"), "{bad");
+    await expect(unreviewedUpdates(env.ctx)).rejects.toThrow(/reviewed\.json/);
+});
+
+test("a reviewed.json that is not an object is reported by name", async () => {
+    setup();
+    writeFileSync(join(env.ctx.home, "reviewed.json"), "[]");
+    await expect(unreviewedUpdates(env.ctx)).rejects.toThrow(/reviewed\.json/);
+});
+
 test("highlights skip headings, frontmatter fences, and bullet markers", () => {
     expect(highlights("---\n# Title\n\n* one\n- two\nthree\nfour\n")).toEqual([
         "one",
