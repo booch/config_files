@@ -300,6 +300,7 @@ link_file "$CWD/nano/nanorc" "$HOME/.nanorc"
 link_dir "$CWD/nano" "$HOME/.nano"
 
 link_file "$CWD/less/lessfilter" "$HOME/.local/bin/lessfilter"
+link_file "$CWD/ai/tools/chief-of-staff/src/cli.ts" "$HOME/.local/bin/chief"
 link_file "$CWD/vim/vimrc" "$HOME/.vimrc"
 link_dir "$CWD/vim" "$HOME/.vim"
 
