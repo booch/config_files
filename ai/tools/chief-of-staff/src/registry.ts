@@ -78,7 +78,7 @@ export async function updateSession(
 
 export async function findSession(ctx: Context, ref: string): Promise<SessionRecord> {
     const sessions = await loadRegistry(ctx);
-    const exact = sessions.find((s) => s.id === ref);
+    const exact = sessions.find((s) => s.id === ref) ?? sessions.find((s) => s.harness_ref === ref);
     if (exact) return exact;
     const bySlug = sessions.filter((s) => s.slug === ref).at(-1);
     if (bySlug) return bySlug;

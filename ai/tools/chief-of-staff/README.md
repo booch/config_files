@@ -57,3 +57,6 @@ digest <session> [--recent N]          summarize the worker's transcript
 updates [--mark-reviewed [--task name]]  unreviewed scheduled-task reports
 briefing                               everything a session start needs, as JSON
 ```
+
+`<session>` is a full session id, the short id `claude attach` takes, a slug
+(the latest session with it), or a unique id prefix of at least 4 characters.

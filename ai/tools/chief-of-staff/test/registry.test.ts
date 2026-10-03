@@ -96,6 +96,13 @@ describe("findSession", () => {
         expect((await findSession(env.ctx, "alpha")).id).toBe(second.id);
     });
 
+    test("finds by the harness's short id, the one `claude attach` shows", async () => {
+        env = testContext();
+        await addSession(env.ctx, sampleRecord({ ...first, harness_ref: "ab12cd34" }));
+        await addSession(env.ctx, sampleRecord({ ...second, slug: "ab12cd34" }));
+        expect((await findSession(env.ctx, "ab12cd34")).id).toBe(first.id);
+    });
+
     test("rejects ambiguous or too-short prefixes, and unknown refs", async () => {
         env = testContext();
         await addSession(env.ctx, first);
