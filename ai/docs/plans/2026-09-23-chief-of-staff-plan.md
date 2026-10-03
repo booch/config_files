@@ -2993,6 +2993,10 @@ function byUrgency(a: BriefingSession, b: BriefingSession): number {
 - In AGENT.md's model rules, add: `- Never use Haiku for workers: auto mode is unavailable for it, so the worker stalls on permission prompts.`
 - In AGENT.md's "Spawning work", add: `Workers must be worktrees of a repository the human has already trusted in Claude Code; otherwise the launch fails with "Workspace not trusted" and the session is recorded as blocked. Tell the human to run claude once in that repository.`
 - CLI-spawned sessions do not appear in the desktop app's sidebar. When telling the human how to enter a worker, give the `attach.terminal` command.
+- Skip Step 3's OpenCode symlink. `sh/ai.sh` sets `OPENCODE_CONFIG_DIR="$HOME/.config/ai"`, so
+  OpenCode already reads `ai/agents/` directly, as it does for the existing agents.
+- Skip Steps 2, 3 (verification), and 5 during execution. They read the main checkout, not this
+  branch, so they are handed to the human after merge.
 
 Not unit-testable; verified by running it. Answer the Open Questions first.
 
