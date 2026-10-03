@@ -78,6 +78,7 @@ export async function spawnSession(ctx: Context, options: SpawnOptions): Promise
         cross_check: null,
         spawned_at: now,
         last_activity_at: now,
+        closed_at: null,
         attach: attachCommands(harnessSessionId, harnessRef, worktree.path),
     };
     await addSession(ctx, record);

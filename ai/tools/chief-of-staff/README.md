@@ -32,7 +32,8 @@ make format    # biome --write
 
 Under `$CHIEF_HOME` (default `~/.local/share/ai/chief-of-staff`):
 
-- `registry.json` — one record per session
+- `registry.json` — one record per session. A session stays listed, even after
+  its worker reports `done`, until `chief close` sets its `closed_at`
 - `journal/YYYY-MM.md` — append-only journal
 - `hooks/` — hook scripts written for spawned sessions
 - `config.toml` — the only hand-edited file; `chief init` writes a template once

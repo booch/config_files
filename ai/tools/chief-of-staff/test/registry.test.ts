@@ -3,7 +3,7 @@ import { readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ChiefError } from "../src/context";
 import { addSession, findSession, isActive, loadRegistry, updateSession } from "../src/registry";
-import { sampleRecord, testContext } from "./helpers";
+import { CLOSED_AT, sampleRecord, testContext } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
@@ -83,6 +83,7 @@ describe("findSession", () => {
         id: "0190aaaa-0000-7000-8000-000000000001",
         slug: "alpha",
         state: "done",
+        closed_at: CLOSED_AT,
     });
     const second = sampleRecord({ id: "0190bbbb-0000-7000-8000-000000000002", slug: "alpha" });
 
@@ -105,8 +106,9 @@ describe("findSession", () => {
     });
 });
 
-test("isActive excludes done and abandoned sessions", () => {
+test("a session stays active, even when done, until the human closes it", () => {
     expect(isActive(sampleRecord({ state: "waiting" }))).toBe(true);
-    expect(isActive(sampleRecord({ state: "done" }))).toBe(false);
-    expect(isActive(sampleRecord({ state: "abandoned" }))).toBe(false);
+    expect(isActive(sampleRecord({ state: "done" }))).toBe(true);
+    expect(isActive(sampleRecord({ state: "done", closed_at: CLOSED_AT }))).toBe(false);
+    expect(isActive(sampleRecord({ state: "abandoned", closed_at: CLOSED_AT }))).toBe(false);
 });

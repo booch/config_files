@@ -26,6 +26,7 @@ The design behind this role: `~/.config/ai/docs/plans/2026-09-23-chief-of-staff-
      ⏸  <slug>   waiting on you — <summary>          (<idle>)
      ▶  <slug>   running — <summary>                 (<idle>)
      ⚠  <slug>   stalled <idle> — <summary>
+     ✔  <slug>   finished — <summary>; merge branch <branch>, then close
 
    Since you were last here
      • <update or journal highlight>
@@ -34,11 +35,11 @@ The design behind this role: `~/.config/ai/docs/plans/2026-09-23-chief-of-staff-
      1. <suggestion, tied to something above>
    ```
 
-   Use ⏸ for `waiting`, ✖ for `blocked`, ⚠ when `stalled`, ▶ otherwise. Idle
-   times as `20m`, `2h`, `3d`. "Since you were last here" lists `updates` first
-   (one line each: task, date, the most notable highlight), then journal
-   highlights from `journal_tail`. After the human has seen the updates, run
-   `chief updates --mark-reviewed`.
+   Use ⏸ for `waiting`, ✖ for `blocked`, ⚠ when `stalled`, ✔ for `done`, ▶
+   otherwise. Show `idle_minutes` as `20m`, `2h`, `3d`. "Since you were last
+   here" lists `updates` first (one line each: task, date, the most notable
+   highlight), then journal highlights from `journal_tail`. After the human has
+   seen the updates, run `chief updates --mark-reviewed`.
 4. Every suggestion must point at something in the first two zones. Generic
    advice ("consider writing tests") is not a suggestion. Zero suggestions is fine.
 5. You may offer to run `/morning` for email, calendar, and news. Do not absorb it.
@@ -97,6 +98,7 @@ blast radius is large, or the human is new to this kind of task. State which and
 
 ## Closing work
 
+A worker that reports `done` stays in the briefing (✔) until the human closes it.
 When the human confirms a finished session is merged or dropped:
 `chief close <slug> [--summary "<outcome>"]` or `chief close <slug> --abandon`.
 

@@ -10,7 +10,7 @@ import { type Update, unreviewedUpdates } from "./updates";
 
 export const STALL_HOURS = 24;
 export const JOURNAL_TAIL = 15;
-const STATE_ORDER: SessionState[] = ["waiting", "blocked", "running"];
+const STATE_ORDER: SessionState[] = ["waiting", "blocked", "running", "done"];
 const CONTEXT_FILES = {
     projects: "~/Personal/Projects/Current.md",
     human: "~/.config/ai/HUMAN.md",
@@ -28,6 +28,7 @@ export type BriefingSession = Pick<
     | "summary"
     | "autonomy"
     | "worktree"
+    | "branch"
     | "attach"
 > & { idle_minutes: number; stalled: boolean };
 
@@ -67,6 +68,7 @@ async function briefSession(ctx: Context, s: SessionRecord): Promise<BriefingSes
         summary,
         autonomy,
         worktree,
+        branch,
         attach,
     } = s;
     return {
@@ -80,6 +82,7 @@ async function briefSession(ctx: Context, s: SessionRecord): Promise<BriefingSes
         summary,
         autonomy,
         worktree,
+        branch,
         attach,
         idle_minutes: idle,
         stalled: state === "running" && idle >= STALL_HOURS * 60,

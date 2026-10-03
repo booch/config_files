@@ -78,6 +78,8 @@ export async function makeGitRepo(root: string, name = "repo"): Promise<string> 
     return dir;
 }
 
+export const CLOSED_AT = "2026-09-24T09:00:00.000Z";
+
 export function sampleRecord(overrides: Partial<SessionRecord> = {}): SessionRecord {
     return {
         id: "01a0d1ea-6d1d-7000-834f-27da05c179e5",
@@ -98,6 +100,7 @@ export function sampleRecord(overrides: Partial<SessionRecord> = {}): SessionRec
         cross_check: null,
         spawned_at: "2026-09-23T14:02:00.000Z",
         last_activity_at: "2026-09-23T14:02:00.000Z",
+        closed_at: null,
         attach: {
             terminal: "claude attach 5f3a9c00",
             resume: "cd '/worktrees/repo/chief-cli' && claude --resume 5f3a9c00-1111-4222-8333-444455556666",

@@ -29,6 +29,7 @@ export interface SessionRecord {
     cross_check: string | null;
     spawned_at: string;
     last_activity_at: string;
+    closed_at: string | null; // set by the human's `chief close`; a worker's own `done` leaves it null
     attach: { terminal: string | null; resume: string | null };
 }
 
@@ -38,7 +39,7 @@ const STALE_LOCK_MS = 30_000;
 const LOCK_RETRY_MS = 20;
 
 export function isActive(session: SessionRecord): boolean {
-    return session.state !== "done" && session.state !== "abandoned";
+    return session.closed_at === null;
 }
 
 export async function loadRegistry(ctx: Context): Promise<SessionRecord[]> {

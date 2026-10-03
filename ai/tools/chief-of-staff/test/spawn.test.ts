@@ -5,7 +5,7 @@ import { runCommand } from "../src/commands";
 import { KICKOFF_FILE } from "../src/kickoff";
 import { addSession, loadRegistry } from "../src/registry";
 import { type SpawnOptions, spawnSession } from "../src/spawn";
-import { makeGitRepo, sampleRecord, testContext } from "./helpers";
+import { CLOSED_AT, makeGitRepo, sampleRecord, testContext } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
@@ -104,6 +104,24 @@ describe("spawnSession", () => {
         env = testContext({ fakes: CLAUDE_FAKES });
         await addSession(env.ctx, sampleRecord({ slug: "login" }));
         await expect(spawnDefault({ slug: "login" })).rejects.toThrow(/already in use/);
+    });
+
+    test("refuses a slug whose worker is done but not yet closed", async () => {
+        env = testContext({ fakes: CLAUDE_FAKES });
+        await addSession(env.ctx, sampleRecord({ slug: "login", state: "done" }));
+        await expect(spawnDefault({ slug: "login" })).rejects.toThrow(/already in use/);
+    });
+
+    test("reuses the slug of a closed session", async () => {
+        env = testContext({ fakes: CLAUDE_FAKES });
+        await addSession(
+            env.ctx,
+            sampleRecord({ slug: "login", state: "abandoned", closed_at: CLOSED_AT }),
+        );
+        expect((await spawnDefault({ slug: "login" })).record).toMatchObject({
+            slug: "login",
+            closed_at: null,
+        });
     });
 
     test("refuses harnesses not supported yet", async () => {

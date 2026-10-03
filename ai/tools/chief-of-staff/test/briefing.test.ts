@@ -5,7 +5,7 @@ import { buildBriefing } from "../src/briefing";
 import { transcriptPath } from "../src/harness/claude";
 import { appendJournal } from "../src/journal";
 import { addSession } from "../src/registry";
-import { sampleRecord, testContext } from "./helpers";
+import { CLOSED_AT, sampleRecord, testContext } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
@@ -31,13 +31,36 @@ test("lists active sessions, waiting first, with idle time and stall flags", asy
             waiting_on: "approve-tests",
         }),
     );
-    await addSession(env.ctx, sampleRecord({ id: "d1", slug: "finished", state: "done" }));
+    await addSession(
+        env.ctx,
+        sampleRecord({ id: "d1", slug: "finished", state: "done", closed_at: CLOSED_AT }),
+    );
     const { sessions } = await buildBriefing(env.ctx);
     expect(sessions.map((s) => [s.slug, s.idle_minutes, s.stalled])).toEqual([
         ["needs-you", 4318, false],
         ["stale", 4320, true],
         ["fresh", 20, false],
     ]);
+});
+
+test("lists a worker's done session, after running ones, until the human closes it", async () => {
+    env = testContext({ now: NOW });
+    await addSession(
+        env.ctx,
+        sampleRecord({ id: "d1", slug: "merge-me", state: "done", summary: "ready" }),
+    );
+    await addSession(env.ctx, sampleRecord({ id: "r1", slug: "busy" }));
+    const { sessions } = await buildBriefing(env.ctx);
+    expect(sessions.map((s) => [s.slug, s.state])).toEqual([
+        ["busy", "running"],
+        ["merge-me", "done"],
+    ]);
+});
+
+test("names each session's branch, so the human knows what to merge", async () => {
+    env = testContext({ now: NOW });
+    await addSession(env.ctx, sampleRecord({ branch: "fix-login" }));
+    expect((await buildBriefing(env.ctx)).sessions[0]?.branch).toBe("fix-login");
 });
 
 test("uses the transcript's modification time when it is newer than the record", async () => {
