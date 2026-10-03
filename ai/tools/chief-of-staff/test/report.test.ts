@@ -182,6 +182,21 @@ describe("report command", () => {
         expect(await stored()).toMatchObject({ state: "done", summary: "shipped" });
     });
 
+    test("--summary - reads the summary from stdin, as one line", async () => {
+        env = testContext({ stdin: "  uses `$(rm -rf ~)`\nliterally  \n" });
+        await addSession(env.ctx, sampleRecord());
+        await runCommand(env.ctx, ["report", "chief-cli", "--state", "done", "--summary", "-"]);
+        expect((await stored())?.summary).toBe("uses `$(rm -rf ~)` literally");
+    });
+
+    test("--summary - cannot share stdin with --stopped", async () => {
+        env = testContext();
+        await addSession(env.ctx, sampleRecord());
+        await expect(
+            runCommand(env.ctx, ["report", "chief-cli", "--stopped", "--summary", "-"]),
+        ).rejects.toThrow(/--summary - .*--stopped/);
+    });
+
     test("--stopped reads hook input from stdin", async () => {
         env = testContext({ stdin: JSON.stringify({ last_assistant_message: "hi" }) });
         await addSession(env.ctx, sampleRecord());

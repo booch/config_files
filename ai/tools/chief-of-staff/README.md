@@ -52,7 +52,7 @@ usage: chief <command> [options]
   note <text…>                           append to the journal
   close <session> [--abandon] [--summary <text>]
   spawn --goal <text> [--slug s] [--repo dir] [--harness claude] [--model m] [--effort e] [--autonomy auto|checkpointed]
-  report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
+  report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>|-]
   report <session> --stopped             (Stop hook; reads hook JSON on stdin)
   approve <session> [message…]           release a waiting worker
   digest <session> [--recent N]          summarize the worker's transcript
@@ -62,3 +62,6 @@ usage: chief <command> [options]
 
 `<session>` is a full session id, the short id `claude attach` takes, a slug
 (the latest session with it), or a unique id prefix of at least 4 characters.
+
+`--summary -` reads the summary from stdin. Workers report that way, through a
+quoted heredoc, so their shell never expands backticks or `$(…)` in a summary.

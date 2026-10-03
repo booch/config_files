@@ -38,11 +38,21 @@ Stop and report \`waiting\` before any of these. Do not do them yourself.
 
 ## Reporting status
 
-Report with these exact commands, then end your turn:
+Report with these exact commands, then end your turn. Replace the line between
+\`<<'SUMMARY'\` and \`SUMMARY\` with your one-line summary; the quoted heredoc
+passes it on stdin exactly as written.
 
-- Need a human decision: \`${report} --state waiting --waiting-on <checkpoint> --summary "<one line>"\`
-- Blocked by something outside your control: \`${report} --state blocked --summary "<what and why>"\`
-- Finished: \`${report} --state done --summary "<what changed; branch ${slug}>"\`
+Need a human decision:
+
+${reportCommand(`${report} --state waiting --waiting-on <checkpoint>`, "<one line>")}
+
+Blocked by something outside your control:
+
+${reportCommand(`${report} --state blocked`, "<what and why>")}
+
+Finished:
+
+${reportCommand(`${report} --state done`, `<what changed; branch ${slug}>`)}
 
 If you stop without reporting, Chief assumes you are waiting on the human.
 `;
@@ -52,7 +62,19 @@ const checkpointsSection = (report: string) => `## Checkpoints
 
 This session is **checkpointed**. Also stop and report \`waiting\` at each of these:
 
-1. After writing a plan, before any code: \`${report} --state waiting --waiting-on approve-plan --summary "<plan in one line>"\`
-2. After writing tests, before implementing: \`${report} --state waiting --waiting-on approve-tests --summary "<what the tests specify>"\`
+After writing a plan, before any code:
+
+${reportCommand(`${report} --state waiting --waiting-on approve-plan`, "<plan in one line>")}
+
+After writing tests, before implementing:
+
+${reportCommand(`${report} --state waiting --waiting-on approve-tests`, "<what the tests specify>")}
 
 `;
+
+// The quoted delimiter stops the worker's shell from expanding backticks or $(…) in the summary.
+const reportCommand = (command: string, summary: string) => `\`\`\`sh
+${command} --summary - <<'SUMMARY'
+${summary}
+SUMMARY
+\`\`\``;

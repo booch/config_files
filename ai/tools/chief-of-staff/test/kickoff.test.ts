@@ -18,6 +18,14 @@ describe("kickoffPrompt", () => {
         expect(prompt).toContain("bun '/opt/chief/src/cli.ts' report 0190-id --state done");
     });
 
+    test("every report passes its summary on stdin, through a heredoc nothing expands in", () => {
+        for (const autonomy of ["auto", "checkpointed"] as const) {
+            const prompt = kickoffPrompt({ ...base, autonomy });
+            expect(prompt).toContain("--summary - <<'SUMMARY'");
+            expect(prompt).not.toContain('--summary "');
+        }
+    });
+
     test("auto mode grants continue-without-prompting but keeps the always-escalate list", () => {
         const prompt = kickoffPrompt({ ...base, autonomy: "auto" });
         expect(prompt).toContain("continue without prompting");

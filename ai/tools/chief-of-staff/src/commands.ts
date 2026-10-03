@@ -20,6 +20,7 @@ import {
 } from "./registry";
 import { reportState, reportStopped } from "./report";
 import { spawnSession } from "./spawn";
+import { oneLine } from "./text";
 import { minutesBetween } from "./time";
 import { markReviewed, unreviewedUpdates } from "./updates";
 
@@ -37,12 +38,15 @@ export const USAGE = `usage: chief <command> [options]
   note <text…>                           append to the journal
   close <session> [--abandon] [--summary <text>]
   spawn --goal <text> [--slug s] [--repo dir] [--harness claude] [--model m] [--effort e] [--autonomy auto|checkpointed]
-  report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
+  report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>|-]
   report <session> --stopped             (Stop hook; reads hook JSON on stdin)
   approve <session> [message…]           release a waiting worker
   digest <session> [--recent N]          summarize the worker's transcript
   updates [--mark-reviewed [--task name]]  unreviewed scheduled-task reports
   briefing                               everything a session start needs, as JSON`;
+
+// Workers pass summaries on stdin through a quoted heredoc, so their shell expands nothing in them.
+const SUMMARY_FROM_STDIN = "-";
 
 const json = (value: unknown): CommandResult => ({ output: JSON.stringify(value, null, 2) });
 
@@ -88,13 +92,17 @@ const COMMANDS: Record<string, Command> = {
             stopped: { type: "boolean" },
         });
         const ref = requirePositional(positionals, 0, "session");
+        const summaryFromStdin = values.summary === SUMMARY_FROM_STDIN;
+        if (values.stopped && summaryFromStdin) {
+            throw usage("--summary - cannot be used with --stopped; both read stdin");
+        }
         if (values.stopped) return json(await reportStopped(ctx, ref, await ctx.stdin()));
         if (!values.state) throw usage("report needs --state or --stopped");
         return json(
             await reportState(ctx, ref, {
                 state: oneOf(STATES, values.state, "state"),
                 waitingOn: values["waiting-on"],
-                summary: values.summary,
+                summary: summaryFromStdin ? oneLine(await ctx.stdin()) : values.summary,
             }),
         );
     },
