@@ -2,7 +2,7 @@ import { ChiefError } from "./context";
 
 const MAX_SLUG = 40;
 // Becomes a branch name and a path segment: no slashes, dots, or leading hyphen.
-const SLUG = /^[a-z0-9][a-z0-9-]{0,39}$/;
+const SLUG = new RegExp(`^[a-z0-9][a-z0-9-]{0,${MAX_SLUG - 1}}$`);
 
 export function slugify(goal: string): string {
     const slug = goal

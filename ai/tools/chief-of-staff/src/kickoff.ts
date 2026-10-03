@@ -27,7 +27,7 @@ AGENTS.md / CLAUDE.md for workflow, testing, linting, reviews, and commit style.
 The human has authorized you to **continue without prompting**, as defined in
 AGENTS.md, **except** for the items under "Always escalate". Commit locally as you go.
 
-${autonomy === "checkpointed" ? CHECKPOINTS(report) : ""}## Always escalate
+${autonomy === "checkpointed" ? checkpointsSection(report) : ""}## Always escalate
 
 Stop and report \`waiting\` before any of these. Do not do them yourself.
 
@@ -48,7 +48,7 @@ If you stop without reporting, Chief assumes you are waiting on the human.
 `;
 }
 
-const CHECKPOINTS = (report: string) => `## Checkpoints
+const checkpointsSection = (report: string) => `## Checkpoints
 
 This session is **checkpointed**. Also stop and report \`waiting\` at each of these:
 

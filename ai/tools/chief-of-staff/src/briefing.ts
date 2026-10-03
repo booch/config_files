@@ -16,21 +16,24 @@ const CONTEXT_FILES = {
     human: "~/.config/ai/HUMAN.md",
 };
 
-export type BriefingSession = Pick<
-    SessionRecord,
-    | "id"
-    | "slug"
-    | "goal"
-    | "harness"
-    | "model"
-    | "state"
-    | "waiting_on"
-    | "summary"
-    | "autonomy"
-    | "worktree"
-    | "branch"
-    | "attach"
-> & { idle_minutes: number; stalled: boolean };
+// The record fields a briefing shows; the rest are bookkeeping.
+const BRIEFED = [
+    "id",
+    "slug",
+    "goal",
+    "harness",
+    "model",
+    "state",
+    "waiting_on",
+    "summary",
+    "autonomy",
+    "worktree",
+    "branch",
+    "attach",
+] as const;
+type BriefedFields = Pick<SessionRecord, (typeof BRIEFED)[number]>;
+
+export type BriefingSession = BriefedFields & { idle_minutes: number; stalled: boolean };
 
 export interface Briefing {
     generated_at: string;
@@ -57,35 +60,11 @@ export async function buildBriefing(ctx: Context): Promise<Briefing> {
 async function briefSession(ctx: Context, s: SessionRecord): Promise<BriefingSession> {
     const lastActivity = latest(s.last_activity_at, await transcriptModifiedAt(ctx, s));
     const idle = minutesBetween(lastActivity, ctx.now());
-    const {
-        id,
-        slug,
-        goal,
-        harness,
-        model,
-        state,
-        waiting_on,
-        summary,
-        autonomy,
-        worktree,
-        branch,
-        attach,
-    } = s;
+    const briefed = Object.fromEntries(BRIEFED.map((field) => [field, s[field]])) as BriefedFields;
     return {
-        id,
-        slug,
-        goal,
-        harness,
-        model,
-        state,
-        waiting_on,
-        summary,
-        autonomy,
-        worktree,
-        branch,
-        attach,
+        ...briefed,
         idle_minutes: idle,
-        stalled: state === "running" && idle >= STALL_HOURS * 60,
+        stalled: s.state === "running" && idle >= STALL_HOURS * 60,
     };
 }
 

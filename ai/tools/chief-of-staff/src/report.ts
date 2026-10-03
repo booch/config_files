@@ -46,17 +46,11 @@ export async function reportStopped(
     const now = ctx.now().toISOString();
     const lastMessage =
         typeof input.last_assistant_message === "string" ? input.last_assistant_message : null;
-    let unreported = false;
+    let stoppedWithoutReporting = false;
     const updated = await updateSession(ctx, session.id, (s) => {
-        const backfill =
-            s.harness_session_id || typeof input.session_id !== "string"
-                ? {}
-                : {
-                      harness_session_id: input.session_id,
-                      attach: attachCommands(input.session_id, s.harness_ref, s.worktree),
-                  };
+        const backfill = harnessIdBackfill(s, input);
         if (s.state !== "running") return { last_activity_at: now, ...backfill };
-        unreported = true;
+        stoppedWithoutReporting = true;
         return {
             state: "waiting",
             waiting_on: UNREPORTED_STOP,
@@ -65,13 +59,25 @@ export async function reportStopped(
             ...backfill,
         };
     });
-    if (unreported) {
+    if (stoppedWithoutReporting) {
         await appendJournal(
             ctx,
             `\`${updated.slug}\` stopped without reporting; treating as waiting`,
         );
     }
     return updated;
+}
+
+// Spawn may not have learned the harness's session id; the hook input carries it.
+function harnessIdBackfill(
+    s: SessionRecord,
+    input: Record<string, unknown>,
+): Partial<SessionRecord> {
+    if (s.harness_session_id || typeof input.session_id !== "string") return {};
+    return {
+        harness_session_id: input.session_id,
+        attach: attachCommands(input.session_id, s.harness_ref, s.worktree),
+    };
 }
 
 function parseHookInput(text: string): Record<string, unknown> {

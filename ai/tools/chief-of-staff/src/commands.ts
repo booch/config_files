@@ -6,7 +6,7 @@ import { buildBriefing } from "./briefing";
 import { closeSession } from "./close";
 import { CONFIG_TEMPLATE, configPath } from "./config";
 import { ChiefError, type Context } from "./context";
-import { digestSession } from "./digest";
+import { DEFAULT_RECENT, digestSession } from "./digest";
 import { readTextIfExists } from "./files";
 import { appendJournal } from "./journal";
 import {
@@ -137,7 +137,9 @@ const COMMANDS: Record<string, Command> = {
     },
     briefing: async (ctx) => json(await buildBriefing(ctx)),
     digest: async (ctx, args) => {
-        const { values, positionals } = parse(args, { recent: { type: "string", default: "3" } });
+        const { values, positionals } = parse(args, {
+            recent: { type: "string", default: String(DEFAULT_RECENT) },
+        });
         return json(
             await digestSession(
                 ctx,

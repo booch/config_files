@@ -3,6 +3,8 @@ import { readTextIfExists } from "./files";
 import { digestTranscript, type TranscriptDigest, transcriptPath } from "./harness/claude";
 import { findSession, type SessionState, updateSession } from "./registry";
 
+export const DEFAULT_RECENT = 3;
+
 export type SessionDigest = {
     id: string;
     slug: string;
@@ -11,7 +13,11 @@ export type SessionDigest = {
     available: boolean;
 } & Partial<TranscriptDigest>;
 
-export async function digestSession(ctx: Context, ref: string, recent = 3): Promise<SessionDigest> {
+export async function digestSession(
+    ctx: Context,
+    ref: string,
+    recent = DEFAULT_RECENT,
+): Promise<SessionDigest> {
     const session = await findSession(ctx, ref);
     if (session.harness !== "claude")
         throw new ChiefError(`digest is not supported for ${session.harness} yet`);

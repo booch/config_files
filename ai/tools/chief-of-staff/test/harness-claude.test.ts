@@ -121,7 +121,7 @@ describe("digestTranscript", () => {
         ]);
     });
     test("an empty transcript has no activity", () => {
-        expect(digestTranscript("")).toEqual({
+        expect(digestTranscript("", 3)).toEqual({
             lastActivityAt: null,
             textMessages: 0,
             toolCalls: 0,

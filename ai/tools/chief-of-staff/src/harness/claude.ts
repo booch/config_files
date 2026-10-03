@@ -121,7 +121,7 @@ interface ContentBlock {
     text?: string;
 }
 
-export function digestTranscript(jsonl: string, recent = 3): TranscriptDigest {
+export function digestTranscript(jsonl: string, recent: number): TranscriptDigest {
     let lastActivityAt: string | null = null;
     let toolCalls = 0;
     const texts: string[] = [];
