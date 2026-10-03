@@ -1,0 +1,8 @@
+{"type":"agent-name","sessionId":"s"}
+{"type":"user","timestamp":"2026-09-23T14:02:05.000Z","message":{"role":"user","content":"Read .chief-kickoff.md"}}
+{"type":"assistant","timestamp":"2026-09-23T14:02:10.000Z","message":{"role":"assistant","content":[{"type":"thinking","thinking":"hmm"}]}}
+{"type":"assistant","timestamp":"2026-09-23T14:02:11.000Z","message":{"role":"assistant","content":[{"type":"tool_use","name":"Read","input":{}}]}}
+{"type":"assistant","timestamp":"2026-09-23T14:05:00.000Z","message":{"role":"assistant","content":[{"type":"text","text":"Wrote the registry tests."}]}}
+{"type":"attachment","timestamp":"2026-09-23T14:06:00.000Z"}
+{"type":"assistant","timestamp":"2026-09-23T14:40:00.000Z","message":{"role":"assistant","content":[{"type":"tool_use","name":"Bash","input":{}},{"type":"text","text":"Tests written; waiting for review."}]}}
+{"type":"assistant","timestamp":"2026-09-23T14:41:0
