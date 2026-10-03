@@ -8,8 +8,8 @@ import { isActive, loadRegistry, type SessionRecord, type SessionState } from ".
 import { minutesBetween } from "./time";
 import { type Update, unreviewedUpdates } from "./updates";
 
-export const STALL_HOURS = 24;
-export const JOURNAL_TAIL = 15;
+const STALL_HOURS = 24;
+const JOURNAL_TAIL = 15;
 const STATE_ORDER: SessionState[] = ["waiting", "blocked", "running", "done"];
 const CONTEXT_FILES = {
     projects: "~/Personal/Projects/Current.md",

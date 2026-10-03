@@ -12,7 +12,7 @@ import {
     stopHookSettings,
 } from "./harness/claude";
 import { appendJournal } from "./journal";
-import { KICKOFF_FILE, kickoffPrompt, slugify, validateSlug } from "./kickoff";
+import { KICKOFF_FILE, kickoffPrompt } from "./kickoff";
 import {
     type Autonomy,
     addSession,
@@ -21,6 +21,7 @@ import {
     loadRegistry,
     type SessionRecord,
 } from "./registry";
+import { slugify, validateSlug } from "./slug";
 import { firstLine, shellQuote } from "./text";
 import { createWorktree, removeWorktree, type Worktree } from "./worktree";
 
@@ -34,7 +35,7 @@ export interface SpawnOptions {
     autonomy: Autonomy;
 }
 
-export function chiefCommand(ctx: Context): string {
+function chiefCommand(ctx: Context): string {
     return `bun ${shellQuote(ctx.cliPath)}`;
 }
 

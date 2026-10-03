@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { runCommand } from "../src/commands";
 import { addSession, loadRegistry } from "../src/registry";
-import { reportState, reportStopped } from "../src/report";
+import { reportState, reportStopped, UNREPORTED_STOP } from "../src/report";
 import { sampleRecord, testContext } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
@@ -64,7 +64,7 @@ describe("reportStopped (Stop hook)", () => {
         );
         expect(await stored()).toMatchObject({
             state: "waiting",
-            waiting_on: "unreported-stop",
+            waiting_on: UNREPORTED_STOP,
             summary: "Which DB should I use? Thanks",
             last_activity_at: "2026-09-23T15:00:00.000Z",
         });
@@ -88,7 +88,7 @@ describe("reportStopped (Stop hook)", () => {
         await reportStopped(env.ctx, "chief-cli", JSON.stringify({ stop_hook_active: true }));
         expect(await stored()).toMatchObject({
             state: "waiting",
-            waiting_on: "unreported-stop",
+            waiting_on: UNREPORTED_STOP,
             last_activity_at: "2026-09-23T15:00:00.000Z",
         });
     });

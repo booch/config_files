@@ -4,7 +4,7 @@ import { appendJournal } from "./journal";
 import { findSession, type SessionRecord, updateSession } from "./registry";
 import { firstLine } from "./text";
 
-export const DEFAULT_APPROVAL = "Approved. Continue.";
+const DEFAULT_APPROVAL = "Approved. Continue.";
 
 const STOP_POLL_MS = 250;
 const STOP_TIMEOUT_MS = 15_000;

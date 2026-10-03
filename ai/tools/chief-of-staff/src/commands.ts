@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { type ParseArgsConfig, parseArgs } from "node:util";
 import { approveSession } from "./approve";
 import { buildBriefing } from "./briefing";
+import { closeSession } from "./close";
 import { CONFIG_TEMPLATE, configPath } from "./config";
 import { ChiefError, type Context } from "./context";
 import { digestSession } from "./digest";
@@ -16,14 +17,13 @@ import {
     loadRegistry,
     type SessionRecord,
     STATES,
-    updateSession,
 } from "./registry";
 import { reportState, reportStopped } from "./report";
 import { spawnSession } from "./spawn";
 import { minutesBetween } from "./time";
 import { markReviewed, unreviewedUpdates } from "./updates";
 
-export interface CommandResult {
+interface CommandResult {
     output: string;
 }
 
@@ -46,7 +46,7 @@ export const USAGE = `usage: chief <command> [options]
 
 const json = (value: unknown): CommandResult => ({ output: JSON.stringify(value, null, 2) });
 
-export const COMMANDS: Record<string, Command> = {
+const COMMANDS: Record<string, Command> = {
     init: async (ctx) => {
         await initHome(ctx);
         return { output: `Initialized ${ctx.home}` };
@@ -122,9 +122,8 @@ export const COMMANDS: Record<string, Command> = {
         );
     },
     approve: async (ctx, args) => {
-        const [ref, ...words] = args;
-        if (!ref) throw usage("missing <session>");
-        return json(await approveSession(ctx, ref, words.length ? words.join(" ") : undefined));
+        const ref = requirePositional(args, 0, "session");
+        return json(await approveSession(ctx, ref, args.slice(1).join(" ") || undefined));
     },
     updates: async (ctx, args) => {
         const { values } = parse(args, {
@@ -149,7 +148,7 @@ export const COMMANDS: Record<string, Command> = {
     },
 };
 
-export function oneOf<T extends string>(allowed: readonly T[], value: string, name: string): T {
+function oneOf<T extends string>(allowed: readonly T[], value: string, name: string): T {
     if (!(allowed as readonly string[]).includes(value)) {
         throw usage(`--${name} must be one of: ${allowed.join(", ")}`);
     }
@@ -163,36 +162,13 @@ export async function runCommand(ctx: Context, argv: string[]): Promise<CommandR
     return command(ctx, args);
 }
 
-export async function initHome(ctx: Context): Promise<void> {
+async function initHome(ctx: Context): Promise<void> {
     await Promise.all(
         ["journal", "hooks"].map((dir) => mkdir(join(ctx.home, dir), { recursive: true })),
     );
     if ((await readTextIfExists(configPath(ctx))) === null) {
         await writeFile(configPath(ctx), CONFIG_TEMPLATE);
     }
-}
-
-export async function closeSession(
-    ctx: Context,
-    ref: string,
-    state: "done" | "abandoned",
-    summary?: string,
-): Promise<SessionRecord> {
-    const session = await findSession(ctx, ref);
-    const closed = await updateSession(ctx, session.id, (s) => {
-        if (!isActive(s)) throw new ChiefError(`\`${s.slug}\` is already closed`);
-        return {
-            state,
-            waiting_on: null,
-            summary: summary ?? s.summary,
-            closed_at: ctx.now().toISOString(),
-        };
-    });
-    await appendJournal(
-        ctx,
-        `closed \`${closed.slug}\` (${state})${summary ? `: ${summary}` : ""}`,
-    );
-    return closed;
 }
 
 function describeLine(ctx: Context, s: SessionRecord): string {
@@ -203,7 +179,7 @@ function describeLine(ctx: Context, s: SessionRecord): string {
 
 type Options = NonNullable<ParseArgsConfig["options"]>;
 
-export function parse<T extends Options>(args: string[], options: T) {
+function parse<T extends Options>(args: string[], options: T) {
     try {
         return parseArgs({ args, options, allowPositionals: true, strict: true });
     } catch (error) {
@@ -211,12 +187,12 @@ export function parse<T extends Options>(args: string[], options: T) {
     }
 }
 
-export function requirePositional(positionals: string[], index: number, name: string): string {
+function requirePositional(positionals: string[], index: number, name: string): string {
     const value = positionals[index];
     if (!value) throw usage(`missing <${name}>`);
     return value;
 }
 
-export function usage(problem: string): ChiefError {
+function usage(problem: string): ChiefError {
     return new ChiefError(`${problem}\n\n${USAGE}`);
 }
