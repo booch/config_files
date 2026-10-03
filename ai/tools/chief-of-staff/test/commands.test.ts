@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { runCommand, USAGE } from "../src/commands";
 import { addSession, loadRegistry } from "../src/registry";
-import { CLOSED_AT, sampleRecord, testContext } from "./helpers";
+import { CLOSED_AT, readJournal, sampleRecord, testContext, watchReports } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
@@ -75,9 +75,7 @@ test("status prints the record as JSON", async () => {
 test("note journals free text", async () => {
     env = testContext();
     await run("note", "decided", "not", "to", "escalate");
-    expect(readFileSync(join(env.ctx.home, "journal", "2026-09.md"), "utf8")).toContain(
-        "- 14:02 decided not to escalate",
-    );
+    expect(readJournal(env.ctx)).toContain("- 14:02 decided not to escalate");
 });
 
 describe("close", () => {
@@ -91,9 +89,7 @@ describe("close", () => {
             summary: "merged",
             closed_at: "2026-09-23T14:02:00.000Z",
         });
-        expect(readFileSync(join(env.ctx.home, "journal", "2026-09.md"), "utf8")).toContain(
-            "closed `chief-cli` (done): merged",
-        );
+        expect(readJournal(env.ctx)).toContain("closed `chief-cli` (done): merged");
     });
 
     test("--abandon marks abandoned", async () => {
@@ -119,10 +115,7 @@ test("unknown commands and missing arguments are usage errors", async () => {
 
 test("updates lists, and --mark-reviewed clears", async () => {
     env = testContext();
-    const dir = join(env.root, "t");
-    mkdirSync(dir, { recursive: true });
-    writeFileSync(join(dir, "2026-09-22.md"), "- x\n");
-    writeFileSync(join(env.ctx.home, "config.toml"), `[watch]\ndirs = ["${dir}"]\n`);
+    watchReports(env, { t: { "2026-09-22": "- x\n" } });
     expect(JSON.parse((await run("updates")).output)).toHaveLength(1);
     await run("updates", "--mark-reviewed");
     expect(JSON.parse((await run("updates")).output)).toEqual([]);

@@ -6,7 +6,7 @@ import { type Context, realRunner } from "../src/context";
 import { KICKOFF_FILE } from "../src/kickoff";
 import { addSession, loadRegistry } from "../src/registry";
 import { type SpawnOptions, spawnSession } from "../src/spawn";
-import { CLOSED_AT, makeGitRepo, sampleRecord, testContext } from "./helpers";
+import { CLOSED_AT, makeGitRepo, readJournal, sampleRecord, testContext } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
@@ -21,9 +21,9 @@ const CLAUDE_FAKES = {
 };
 const UUID_V7 = /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
-async function spawnDefault(overrides: Partial<SpawnOptions> = {}) {
+async function spawnDefault(overrides: Partial<SpawnOptions> = {}, ctx: Context = env.ctx) {
     const repo = await makeGitRepo(env.root);
-    const record = await spawnSession(env.ctx, {
+    const record = await spawnSession(ctx, {
         goal: "Fix the login bug",
         repo,
         harness: "claude",
@@ -79,7 +79,7 @@ describe("spawnSession", () => {
     test("journals the spawn", async () => {
         env = testContext({ fakes: CLAUDE_FAKES });
         await spawnDefault();
-        expect(readFileSync(join(env.ctx.home, "journal", "2026-09.md"), "utf8")).toContain(
+        expect(readJournal(env.ctx)).toContain(
             "spawned `fix-the-login-bug` (claude/opus/high, auto) — goal: Fix the login bug",
         );
     });
@@ -113,14 +113,7 @@ describe("spawnSession", () => {
                     ? { exitCode: 128, stdout: "", stderr: "fatal: locked\nmore" }
                     : env.ctx.run(argv, options),
         };
-        const record = await spawnSession(ctx, {
-            goal: "Fix it",
-            repo: await makeGitRepo(env.root),
-            harness: "claude",
-            model: "opus",
-            effort: "high",
-            autonomy: "auto",
-        });
+        const { record } = await spawnDefault({}, ctx);
         expect(record.summary).toBe("launch failed: nope; cleanup failed: fatal: locked");
     });
 

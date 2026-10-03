@@ -1,15 +1,12 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { runCommand } from "../src/commands";
 import { addSession, loadRegistry } from "../src/registry";
 import { reportState, reportStopped, UNREPORTED_STOP } from "../src/report";
-import { sampleRecord, testContext } from "./helpers";
+import { readJournal, sampleRecord, testContext } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
 
-const journal = () => readFileSync(join(env.ctx.home, "journal", "2026-09.md"), "utf8");
 const stored = async () => (await loadRegistry(env.ctx))[0];
 
 describe("reportState", () => {
@@ -27,7 +24,9 @@ describe("reportState", () => {
             summary: "tests written",
             last_activity_at: "2026-09-23T14:40:00.000Z",
         });
-        expect(journal()).toContain("- 14:40 `chief-cli` waiting on approve-tests: tests written");
+        expect(readJournal(env.ctx)).toContain(
+            "- 14:40 `chief-cli` waiting on approve-tests: tests written",
+        );
     });
 
     test("waiting requires a checkpoint name", async () => {
@@ -68,7 +67,7 @@ describe("reportStopped (Stop hook)", () => {
             summary: "Which DB should I use? Thanks",
             last_activity_at: "2026-09-23T15:00:00.000Z",
         });
-        expect(journal()).toContain("`chief-cli` stopped without reporting");
+        expect(readJournal(env.ctx)).toContain("`chief-cli` stopped without reporting");
     });
 
     test("after an explicit report, a stop only refreshes activity", async () => {

@@ -1,11 +1,9 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { approveSession } from "../src/approve";
 import { runCommand } from "../src/commands";
 import { ChiefError, type Context, type RunResult } from "../src/context";
 import { addSession, loadRegistry, updateSession } from "../src/registry";
-import { sampleRecord, testContext } from "./helpers";
+import { readJournal, sampleRecord, testContext } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
@@ -54,7 +52,7 @@ test("flips the worker back to running and journals what was released", async ()
     await addSession(env.ctx, waiting);
     await approveSession(env.ctx, "chief-cli");
     expect((await loadRegistry(env.ctx))[0]).toMatchObject({ state: "running", waiting_on: null });
-    expect(readFileSync(join(env.ctx.home, "journal", "2026-09.md"), "utf8")).toContain(
+    expect(readJournal(env.ctx)).toContain(
         "released `chief-cli` (was waiting on approve-tests): Approved. Continue.",
     );
 });
@@ -76,19 +74,15 @@ test("refuses when the Claude session id is unknown", async () => {
     expect(env.calls).toEqual([]);
 });
 
-test("leaves the record untouched when the resume fails", async () => {
-    env = testContext({ fakes: { "claude --bg": { exitCode: 1, stderr: "no such session" } } });
-    await addSession(env.ctx, waiting);
-    await expect(approveSession(env.ctx, "chief-cli")).rejects.toThrow(/no such session/);
-    expect((await loadRegistry(env.ctx))[0]?.state).toBe("waiting");
-});
-
-test("a failed resume says the session is stopped and how to get back in", async () => {
+test("a failed resume leaves the record waiting and says how to get back in", async () => {
     env = testContext({ fakes: { "claude --bg": { exitCode: 1, stderr: "no such session" } } });
     await addSession(env.ctx, waiting);
     const approval = approveSession(env.ctx, "chief-cli");
-    await expect(approval).rejects.toThrow(/stopped/);
+    await expect(approval).rejects.toThrow(
+        /stopped `chief-cli` but could not resume it: no such session/,
+    );
     await expect(approval).rejects.toThrow(waiting.attach.resume as string);
+    expect((await loadRegistry(env.ctx))[0]?.state).toBe("waiting");
 });
 
 test("does not overwrite a report the resumed worker made first", async () => {

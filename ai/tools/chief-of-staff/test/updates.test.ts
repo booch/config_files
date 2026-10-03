@@ -1,29 +1,25 @@
 import { afterEach, expect, test } from "bun:test";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { highlights, markReviewed, unreviewedUpdates } from "../src/updates";
-import { testContext } from "./helpers";
+import { testContext, watchReports } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
 
 function setup() {
     env = testContext();
-    const brew = join(env.root, "mac-software-updates");
-    const retro = join(env.root, "workflow-retro");
-    for (const dir of [brew, retro]) mkdirSync(dir, { recursive: true });
-    writeFileSync(join(brew, "2026-09-21.md"), "# Updates\n\n- 6 upgrades, nothing notable\n");
-    writeFileSync(
-        join(brew, "2026-09-22.md"),
-        "# Updates\n\n- 14 upgrades\n- jj 0.32→0.33 (breaking)\n",
-    );
+    const dirs = watchReports(env, {
+        "mac-software-updates": {
+            "2026-09-21": "# Updates\n\n- 6 upgrades, nothing notable\n",
+            "2026-09-22": "# Updates\n\n- 14 upgrades\n- jj 0.32→0.33 (breaking)\n",
+        },
+        "workflow-retro": { "2026-09-21": "3 friction items\n" },
+        missing: {},
+    });
+    const brew = dirs["mac-software-updates"] as string;
     writeFileSync(join(brew, "notes.txt"), "ignored: not a dated file");
-    writeFileSync(join(retro, "2026-09-21.md"), "3 friction items\n");
-    writeFileSync(
-        join(env.ctx.home, "config.toml"),
-        `[watch]\ndirs = ["${brew}", "${retro}", "${join(env.root, "missing")}"]\n`,
-    );
-    return { brew, retro };
+    return { brew };
 }
 
 test("lists dated reports from every watched dir, newest first, skipping missing dirs", async () => {

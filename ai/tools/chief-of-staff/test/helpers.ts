@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, realpathSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { type Context, type RunResult, realRunner } from "../src/context";
@@ -76,6 +76,31 @@ export async function makeGitRepo(root: string, name = "repo"): Promise<string> 
         if (result.exitCode !== 0) throw new Error(result.stderr);
     }
     return dir;
+}
+
+export function readJournal(ctx: Context, month = "2026-09"): string {
+    return readFileSync(join(ctx.home, "journal", `${month}.md`), "utf8");
+}
+
+// Creates a watched dir per task under the test root, each holding its dated reports
+// ({ task: { "YYYY-MM-DD": markdown } }), and lists them all in config.toml. A task with no
+// reports gets no dir, like a scheduled task that has not run yet. Returns task → dir.
+export function watchReports(
+    env: { ctx: Context; root: string },
+    reports: Record<string, Record<string, string>>,
+): Record<string, string> {
+    const dirs: Record<string, string> = {};
+    for (const [task, byDate] of Object.entries(reports)) {
+        const dir = join(env.root, task);
+        dirs[task] = dir;
+        for (const [date, markdown] of Object.entries(byDate)) {
+            mkdirSync(dir, { recursive: true });
+            writeFileSync(join(dir, `${date}.md`), markdown);
+        }
+    }
+    const config = `[watch]\ndirs = ${JSON.stringify(Object.values(dirs))}\n`;
+    writeFileSync(join(env.ctx.home, "config.toml"), config);
+    return dirs;
 }
 
 export const CLOSED_AT = "2026-09-24T09:00:00.000Z";
