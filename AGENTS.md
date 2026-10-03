@@ -25,3 +25,16 @@ This repo configures parallel surfaces that must not drift:
   plus Codex, and leave room for others under trial. Updating agents, skills,
   commands, or hooks for one means mirroring the change to the others, preferably
   via symlinks.
+
+## Design and Plan Documents
+
+Design docs and implementation plans (`ai/docs/plans/*-design.md`, `*-plan.md`)
+are read-only records of approved decisions. Don't rewrite them.
+
+The one exception: when a later phase changes something they describe, add the change
+without removing the original.
+
+- Mark each change clearly, e.g. a `> **Changed YYYY-MM-DD:** …` note
+  beside the original text, saying what changed and why.
+- Keep the original wording visible, so the history of the decision reads in place.
+- Where code in a plan changes, describe the old and new values in the note.
