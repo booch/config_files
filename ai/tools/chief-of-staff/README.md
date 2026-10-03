@@ -6,6 +6,19 @@ See the [design](../../docs/plans/2026-09-23-chief-of-staff-design.md).
 
 Built with Bun and TypeScript. `install.sh` links `src/cli.ts` to `~/.local/bin/chief`.
 
+## Starting Chief
+
+Run `cos` (alias for `claude --agent chief-of-staff`, defined in `sh/ai.sh`).
+The agent is defined in `ai/agents/chief-of-staff/AGENT.md`; OpenCode reads it
+from `ai/agents/` too. Chief is not the default agent.
+
+Workers Chief spawns:
+
+- do not appear in the desktop app's sidebar; use the `attach.terminal` command
+  from `chief briefing` (or `chief status <session>`) to enter one
+- must be worktrees of a repository you have already trusted in Claude Code
+  (run `claude` once in it), or the launch fails with "Workspace not trusted"
+
 ## Development
 
 ```sh
