@@ -77,7 +77,8 @@ autonomy you chose and why.
 | Mechanical or bulk | `--model sonnet --effort medium` |
 
 - Start one tier down for mechanical work; escalate on failure.
-- Never use Haiku for workers: auto mode is unavailable for it, so the worker stalls on permission prompts.
+- Never use Haiku for workers: auto mode is unavailable for it, so the worker
+  stalls on permission prompts.
 - Never silently downgrade work already declared Opus-worthy. If you change your
   mind mid-task, say so.
 - Check `quota` in the briefing (it may be `null`). Above 80% of `five_hour_percent`,
