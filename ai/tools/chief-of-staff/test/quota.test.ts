@@ -35,4 +35,15 @@ test("is null when the file is missing or unreadable", async () => {
     expect(await readQuota(env.ctx)).toBeNull();
     writeQuota("{bad");
     expect(await readQuota(env.ctx)).toBeNull();
+    writeQuota("null");
+    expect(await readQuota(env.ctx)).toBeNull();
+});
+
+test("a reset time no date can hold is null, not an error", async () => {
+    env = testContext();
+    writeQuota(JSON.stringify({ five_hour: { used_percentage: 24, resets_at: 1e20 } }));
+    expect(await readQuota(env.ctx)).toMatchObject({
+        five_hour_percent: 24,
+        five_hour_resets_at: null,
+    });
 });
