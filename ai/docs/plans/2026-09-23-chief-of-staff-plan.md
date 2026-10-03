@@ -25,7 +25,7 @@ guessing at CLI output formats we have not observed.
 
 - Tool location: `~/.config/ai/tools/chief-of-staff/`; executable name `chief`; symlinked to `~/.local/bin/chief` by `install.sh`.
 - State location: `${CHIEF_HOME:-${XDG_DATA_HOME:-~/.local/share}/ai/chief-of-staff}` — `registry.json`, `journal/YYYY-MM.md`, `config.toml`, `reviewed.json`, `hooks/<id>.json`.
-- Worker worktrees: `${CHIEF_WORKTREE_ROOT:-${XDG_DATA_HOME:-~/.local/share}/ai/worktrees}/<repo basename>/<slug>`.
+- *(Added 2026-10-02; see Open Questions.)* Worker worktrees: `${CHIEF_WORKTREE_ROOT:-${XDG_DATA_HOME:-~/.local/share}/ai/worktrees}/<repo basename>/<slug>`.
 - `harness` ∈ `claude`, `codex`, `opencode`. `autonomy` ∈ `auto`, `checkpointed`. `state` ∈ `running`, `waiting`, `blocked`, `done`, `abandoned`.
 - Session ids are UUIDv7 (`Bun.randomUUIDv7()`).
 - `registry.json` is written atomically (temp file + rename), under a lock (see Task 1).
@@ -54,7 +54,15 @@ Called out so a reviewer can accept or reject them explicitly:
 Answer before Task 11. None of them block Tasks 0–10.
 
 1. **Making Chief the default entry point.** Setting `"agent": "chief-of-staff"` in `claude/settings.json` would also make every *worker* spawned by `claude --bg` start as Chief. This plan adds a `cos` alias instead (`claude --agent chief-of-staff`). Revisit once the spike shows whether `--agent` can be overridden per launch.
-2. **Worktree root.** Resolved by the human (2026-09-23): `~/.local/share/ai/worktrees/`, which is harness-neutral. It supersedes the spec example's `~/.local/share/claude/worktrees/` for Chief-spawned workers.
+2. **Worktree root.** The spec example puts worktrees under `~/.local/share/claude/worktrees/`, matching existing worktrees. That is Claude-named, while Codex and OpenCode workers will use it too. Keep it (this plan's default), or move to `~/.local/share/ai/worktrees/`?
+
+> **Changed 2026-10-02 (during execution):** both questions answered by the human.
+>
+> 1. Chief does **not** become the default agent for new sessions. Keep the `cos` alias (Task 11).
+> 2. Worktree root is `~/.local/share/ai/worktrees/`. Two code lines were changed to match.
+>    In Task 1's `defaultContext`, `join(dataHome, "claude/worktrees")` became `join(dataHome, "ai/worktrees")`.
+>    In Task 5's `transcriptPath` test, the example path `…/share/claude/worktrees/…` became `…/share/ai/worktrees/…`.
+>    A Global Constraints line was also added.
 
 ## File Structure
 
