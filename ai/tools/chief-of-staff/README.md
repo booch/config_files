@@ -35,4 +35,5 @@ spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy
 report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
 report <session> --stopped             (Stop hook; reads hook JSON on stdin)
 approve <session> [message…]           release a waiting worker
+digest <session> [--recent N]          summarize the worker's transcript
 ```

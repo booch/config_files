@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { type ParseArgsConfig, parseArgs } from "node:util";
 import { approveSession } from "./approve";
 import { ChiefError, type Context } from "./context";
+import { digestSession } from "./digest";
 import { appendJournal } from "./journal";
 import {
     AUTONOMIES,
@@ -34,7 +35,8 @@ const USAGE = `usage: chief <command> [options]
   spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy auto|checkpointed]
   report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
   report <session> --stopped             (Stop hook; reads hook JSON on stdin)
-  approve <session> [message…]           release a waiting worker`;
+  approve <session> [message…]           release a waiting worker
+  digest <session> [--recent N]          summarize the worker's transcript`;
 
 const json = (value: unknown): CommandResult => ({ output: JSON.stringify(value, null, 2) });
 
@@ -117,6 +119,16 @@ export const COMMANDS: Record<string, Command> = {
         const [ref, ...words] = args;
         if (!ref) throw usage("missing <session>");
         return json(await approveSession(ctx, ref, words.length ? words.join(" ") : undefined));
+    },
+    digest: async (ctx, args) => {
+        const { values, positionals } = parse(args, { recent: { type: "string", default: "3" } });
+        return json(
+            await digestSession(
+                ctx,
+                requirePositional(positionals, 0, "session"),
+                Number(values.recent),
+            ),
+        );
     },
 };
 
