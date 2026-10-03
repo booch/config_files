@@ -49,6 +49,12 @@ Called out so a reviewer can accept or reject them explicitly:
 5. **`chief approve` command.** The spec says approving "writes the approval into the worker's session." This is the mechanism: `claude --bg --resume <uuid> "<message>"`, which `claude --help` documents as continuing a background session under the same id. The spike confirms it.
 6. **Kickoff prompt grants "continue without prompting."** A worker loads the global `AGENTS.md`, whose approval checkpoints would stall an `auto` worker on every step. The kickoff prompt invokes that file's documented "continue without prompting" exception, carving out the always-escalate tier.
 
+> **Changed 2026-10-02 (spike results):** Deviation 1 grows a second field,
+> `harness_session_id`, because `claude --bg` ignores `--session-id` and mints its own UUID.
+> Deviation 5's mechanism becomes `claude stop <short>`, then wait, then
+> `claude --bg --resume <session id>`, because resuming a live idle session starts a copy.
+> See the notes at the top of Tasks 1 and 5–10.
+
 ## Open Questions for the Human
 
 Answer before Task 11. None of them block Tasks 0–10.
@@ -105,6 +111,13 @@ Also modified: `install.sh` (symlink), `git/ignore` (kickoff file), `sh/ai.sh` (
 ---
 
 ### Task 0: Spike — background session behavior (throwaway)
+
+#### Changed 2026-10-02: done
+
+The spike ran on 2026-10-02 in a worktree of `~/.config` under `~/.local/share/ai/worktrees/`,
+not via the steps below. The first attempt, in a fresh `git init` repo, was refused because the
+repo wasn't trusted. Findings are in `ai/tools/chief-of-staff/docs/spike-notes.md`.
+Tasks 1, 5, 6, 7, 8, 9, 10, and 11 carry "Changed 2026-10-02" notes reconciling them.
 
 No production code. Output: `docs/spike-notes.md` and one fixture. Every later
 assumption about `claude --bg` traces back to this file.
@@ -176,6 +189,25 @@ git -C ~/.config branch -D chief-spike
 ---
 
 ### Task 1: Scaffold and session registry
+
+#### Changed 2026-10-02: spike results (overrides the code below where they differ)
+
+The spike (`ai/tools/chief-of-staff/docs/spike-notes.md`) found that `claude --bg` ignores
+`--session-id` and mints its own UUID. Chief keeps its own UUIDv7 `id`; the record gains
+the harness's id.
+
+- `SessionRecord`: add `harness_session_id: string | null;` right after `harness_ref`, with
+  the comment `// the harness's full session id (transcripts, resume); null until known`.
+  `attach` becomes `{ terminal: string | null; resume: string | null }`.
+- `sampleRecord` (`test/helpers.ts`): use `harness_ref: "5f3a9c00"`,
+  `harness_session_id: "5f3a9c00-1111-4222-8333-444455556666"`, and
+  `attach: { terminal: "claude attach 5f3a9c00", resume: "cd '/worktrees/repo/chief-cli' && claude --resume 5f3a9c00-1111-4222-8333-444455556666" }`
+  in place of the original `harness_ref` and `attach` values.
+- `testContext`'s fake runner: look up canned results by the first two argv words, then by
+  the first word, so tests can fake `claude --bg` and `claude agents` separately:
+  `{ exitCode: 0, stdout: "", stderr: "", ...(options.fakes?.[argv.slice(0, 2).join(" ")] ?? options.fakes?.[argv[0] ?? ""]) }`.
+  Update the `fakes` comment to: `// Canned results for non-git commands, keyed by "argv0 argv1" (e.g. "claude --bg") or argv0.`
+- Commit `docs/spike-notes.md` and `test/fixtures/claude-bg-output.txt` (already written) with this task.
 
 **Files:**
 
@@ -1429,6 +1461,97 @@ This session is **checkpointed**. Also stop and report \`waiting\` at each of th
 
 ### Task 5: Claude harness adapter
 
+#### Changed 2026-10-02: spike results (overrides the code below where they differ)
+
+`--bg` ignores `--session-id`; the full id comes from `claude agents --json`. Resuming a live
+session starts a copy, so approval needs `claude stop`. The `parseBgRef` pattern matches the
+real output. Changes to `src/harness/claude.ts`:
+
+```ts
+export interface LaunchSpec {
+    slug: string;
+    model: string;
+    effort: string;
+    settingsPath: string;
+}
+
+export function launchArgv({ slug, model, effort, settingsPath }: LaunchSpec): string[] {
+    return [
+        "claude", "--bg", "--name", slug, "--model", model, "--effort", effort,
+        "--permission-mode", "auto", "--settings", settingsPath, KICKOFF_INSTRUCTION,
+    ];
+}
+
+export const AGENTS_ARGV = ["claude", "agents", "--json"];
+
+export function stopArgv(ref: string): string[] {
+    return ["claude", "stop", ref];
+}
+
+interface AgentEntry {
+    id?: unknown;
+    sessionId?: unknown;
+}
+
+// `claude agents --json` maps the short id that `--bg` prints to the full session id.
+export function sessionIdFor(agentsJson: string, ref: string): string | null {
+    const match = parseAgents(agentsJson).find((agent) => agent.id === ref);
+    return typeof match?.sessionId === "string" ? match.sessionId : null;
+}
+
+// A listed session still has a live process, even when idle.
+export function isListed(agentsJson: string, ref: string): boolean {
+    return parseAgents(agentsJson).some((agent) => agent.id === ref);
+}
+
+function parseAgents(json: string): AgentEntry[] {
+    try {
+        const parsed = JSON.parse(json);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+}
+
+export function attachCommands(sessionId: string | null, ref: string | null, worktree: string) {
+    return {
+        terminal: ref ? `claude attach ${ref}` : null,
+        resume: sessionId ? `cd ${shellQuote(worktree)} && claude --resume ${sessionId}` : null,
+    };
+}
+```
+
+`resumeArgv(sessionId, message)` and `transcriptPath(claudeHome, worktree, sessionId)` keep their
+shape; their id argument is the **harness** session id, so name the parameter `sessionId`.
+
+Test changes in `test/harness-claude.test.ts`:
+
+- `launchArgv` test: call `launchArgv({ slug: "s", model: "opus", effort: "high", settingsPath: "/h.json" })` and expect the original array minus `"--session-id", "U"`.
+- `parseBgRef` fixture test: `expect(parseBgRef(fixture("claude-bg-output.txt"))).toBe("ca42e85d")`.
+- `attachCommands` test: `attachCommands("S", "ab12", "/w t")` equals `{ terminal: "claude attach ab12", resume: "cd '/w t' && claude --resume S" }`; `attachCommands(null, null, "/w")` equals `{ terminal: null, resume: null }`.
+- Add:
+
+```ts
+describe("claude agents --json", () => {
+    const agents = JSON.stringify([{ id: "ca42e85d", sessionId: "ca42e85d-bc19-44c5-8a7a-244064a4c0e5", state: "done" }]);
+
+    test("sessionIdFor maps a short id to the full session id", () => {
+        expect(sessionIdFor(agents, "ca42e85d")).toBe("ca42e85d-bc19-44c5-8a7a-244064a4c0e5");
+        expect(sessionIdFor(agents, "nope")).toBeNull();
+        expect(sessionIdFor("not json", "ca42e85d")).toBeNull();
+    });
+
+    test("isListed says whether the session's process still exists", () => {
+        expect(isListed(agents, "ca42e85d")).toBe(true);
+        expect(isListed("[]", "ca42e85d")).toBe(false);
+    });
+});
+
+test("stopArgv stops a background session by short id", () => {
+    expect(stopArgv("ab12")).toEqual(["claude", "stop", "ab12"]);
+});
+```
+
 Pure functions only; every Claude-specific string lives here.
 
 **Files:**
@@ -1651,6 +1774,33 @@ function parseLines(jsonl: string): TranscriptEntry[] {
 ---
 
 ### Task 6: `chief spawn` (Claude only)
+
+#### Changed 2026-10-02: spike results (overrides the code below where they differ)
+
+`spawnSession` still mints Chief's own `id` with `Bun.randomUUIDv7()` (used in the kickoff
+prompt, the Stop hook, and the registry), but no longer passes it to `claude`:
+
+```ts
+    const launch = await ctx.run(launchArgv({ slug, model, effort, settingsPath }), { cwd: worktree.path });
+    const launched = launch.exitCode === 0;
+    const harnessRef = launched ? parseBgRef(launch.stdout) : null;
+    const harnessSessionId = harnessRef ? sessionIdFor((await ctx.run(AGENTS_ARGV)).stdout, harnessRef) : null;
+```
+
+The record sets `harness_session_id: harnessSessionId` and
+`attach: attachCommands(harnessSessionId, harnessRef, worktree.path)`.
+A worktree of an untrusted repo fails to launch with `Workspace not trusted…`. The existing
+failed-launch path records it as `blocked` with that line as the summary; no extra code needed.
+
+Test changes in `test/spawn.test.ts`:
+
+- Add `const AGENTS_JSON = JSON.stringify([{ id: "ca42e85d", sessionId: "ca42e85d-bc19-44c5-8a7a-244064a4c0e5" }]);`
+  and `const CLAUDE_FAKES = { "claude --bg": { stdout: BG_OUTPUT }, "claude agents": { stdout: AGENTS_JSON } };`.
+  Replace every `fakes: { claude: { stdout: BG_OUTPUT } }` with `fakes: CLAUDE_FAKES`.
+- First test: also expect `harness_ref: "ca42e85d"` and `harness_session_id: "ca42e85d-bc19-44c5-8a7a-244064a4c0e5"` (replacing `expect(record.harness_ref).not.toBeNull()`).
+- Launch test: expect `call?.argv.slice(0, 2)` to equal `["claude", "--bg"]` and `call?.argv` not to contain `"--session-id"` (replacing the `slice(0, 4)` assertion); expect `env.calls[1]?.argv` to equal `["claude", "agents", "--json"]`.
+- Failed-launch test: use `fakes: { "claude --bg": { exitCode: 1, stderr: "error: not logged in\nmore" } }`; also expect `record.harness_session_id` to be null and `env.calls` to have length 1.
+- The `spawn` command test: use `fakes: CLAUDE_FAKES`.
 
 **Files:**
 
@@ -1937,6 +2087,43 @@ and `chief close chief-live-check --abandon`.
 
 ### Task 7: `chief report` — explicit and Stop-hook modes
 
+#### Changed 2026-10-02: spike results (overrides the code below where they differ)
+
+The Stop hook input carries `session_id`, the harness's full session id. `reportStopped` uses
+it to fill `harness_session_id` (and the `attach` commands) when spawn couldn't. Inside the
+`updateSession` change function, merge this into both returned objects:
+
+```ts
+        const backfill =
+            s.harness_session_id || typeof input.session_id !== "string"
+                ? {}
+                : {
+                      harness_session_id: input.session_id,
+                      attach: attachCommands(input.session_id, s.harness_ref, s.worktree),
+                  };
+```
+
+(import `attachCommands` from `./harness/claude`). Add to `test/report.test.ts`:
+
+```ts
+    test("fills in the harness session id from the hook input when spawn could not", async () => {
+        env = testContext();
+        await addSession(env.ctx, sampleRecord({ harness_session_id: null, attach: { terminal: null, resume: null } }));
+        await reportStopped(env.ctx, "chief-cli", JSON.stringify({ session_id: "full-session-id" }));
+        expect(await stored()).toMatchObject({
+            harness_session_id: "full-session-id",
+            attach: { resume: "cd '/worktrees/repo/chief-cli' && claude --resume full-session-id" },
+        });
+    });
+
+    test("never overwrites a known harness session id", async () => {
+        env = testContext();
+        await addSession(env.ctx, sampleRecord());
+        await reportStopped(env.ctx, "chief-cli", JSON.stringify({ session_id: "other" }));
+        expect((await stored())?.harness_session_id).toBe(sampleRecord().harness_session_id);
+    });
+```
+
 **Files:**
 
 - Create: `src/report.ts`
@@ -2193,6 +2380,83 @@ control JSON.
 
 ### Task 8: `chief approve` — release a waiting worker
 
+#### Changed 2026-10-02: spike results (overrides the code below where they differ)
+
+A worker that finished its turn is still a live, idle process. `claude --bg --resume` on a live
+session starts a *copy*. So approval first stops the session, waits until it leaves
+`claude agents --json` (`claude stop` returns before the process exits), and then resumes it by
+its harness session id. The resumed session keeps its saved options, including the Stop hook.
+
+```ts
+const STOP_POLL_MS = 250;
+const STOP_TIMEOUT_MS = 15_000;
+
+export async function approveSession(ctx: Context, ref: string, message = DEFAULT_APPROVAL): Promise<SessionRecord> {
+    const session = await findSession(ctx, ref);
+    if (session.state !== "waiting" && session.state !== "blocked") {
+        throw new ChiefError(`\`${session.slug}\` is ${session.state}, not waiting`);
+    }
+    if (session.harness !== "claude") throw new ChiefError(`approve is not supported for ${session.harness} yet`);
+    if (!session.harness_ref || !session.harness_session_id) {
+        throw new ChiefError(`\`${session.slug}\` has no Claude session id yet; attach to it by hand`);
+    }
+    await stopAndWait(ctx, session.harness_ref);
+    const result = await ctx.run(resumeArgv(session.harness_session_id, message), { cwd: session.worktree });
+    if (result.exitCode !== 0) throw new ChiefError(`could not resume \`${session.slug}\`: ${firstLine(result.stderr)}`);
+    const released = await updateSession(ctx, session.id, () => ({
+        state: "running",
+        waiting_on: null,
+        last_activity_at: ctx.now().toISOString(),
+    }));
+    await appendJournal(ctx, `released \`${session.slug}\` (was waiting on ${session.waiting_on ?? session.state}): ${message}`);
+    return released;
+}
+
+// Resuming a live session starts a copy, and `claude stop` returns before the process exits.
+async function stopAndWait(ctx: Context, ref: string): Promise<void> {
+    await ctx.run(stopArgv(ref));
+    const deadline = Date.now() + STOP_TIMEOUT_MS;
+    while (isListed((await ctx.run(AGENTS_ARGV)).stdout, ref)) {
+        if (Date.now() > deadline) throw new ChiefError(`session ${ref} did not stop within ${STOP_TIMEOUT_MS / 1000}s`);
+        await Bun.sleep(STOP_POLL_MS);
+    }
+}
+```
+
+(imports: `AGENTS_ARGV`, `isListed`, `resumeArgv`, `stopArgv` from `./harness/claude`; the
+test file also imports `type Context` from `../src/context`.)
+
+Test changes in `test/approve.test.ts`:
+
+- First test: expect `env.calls` to equal
+  `[{ argv: ["claude", "stop", "5f3a9c00"] }, { argv: ["claude", "agents", "--json"] }, { argv: ["claude", "--bg", "--resume", waiting.harness_session_id, "Tests look good; implement."], cwd: waiting.worktree }]`.
+- Resume-failure test: use `fakes: { "claude --bg": { exitCode: 1, stderr: "no such session" } }`.
+- Command test: `expect(env.calls.at(-1)?.argv.at(-1)).toBe("ship it")`.
+- Add:
+
+```ts
+test("waits for the stopped session to disappear before resuming", async () => {
+    let polls = 0;
+    env = testContext();
+    const listed = JSON.stringify([{ id: "5f3a9c00" }]);
+    const ctx: Context = {
+        ...env.ctx,
+        run: async (argv, options) =>
+            argv[1] === "agents" ? { exitCode: 0, stdout: ++polls < 3 ? listed : "[]", stderr: "" } : env.ctx.run(argv, options),
+    };
+    await addSession(ctx, waiting);
+    await approveSession(ctx, "chief-cli");
+    expect(polls).toBe(3);
+});
+
+test("refuses when the Claude session id is unknown", async () => {
+    env = testContext();
+    await addSession(env.ctx, sampleRecord({ state: "waiting", waiting_on: "x", harness_session_id: null }));
+    await expect(approveSession(env.ctx, "chief-cli")).rejects.toThrow(/no Claude session id/);
+    expect(env.calls).toEqual([]);
+});
+```
+
 **Files:**
 
 - Create: `src/approve.ts`
@@ -2312,6 +2576,30 @@ export async function approveSession(ctx: Context, ref: string, message = DEFAUL
 ---
 
 ### Task 9: `chief digest` — the pull path
+
+#### Changed 2026-10-02: spike results (overrides the code below where they differ)
+
+Transcripts are named by the **harness** session id, which may still be unknown. In
+`digestSession`:
+
+```ts
+    const transcript = session.harness_session_id
+        ? transcriptPath(ctx.claudeHome, session.worktree, session.harness_session_id)
+        : null;
+    const header = { id: session.id, slug: session.slug, state: session.state, transcript };
+    const text = transcript ? await readTextIfExists(transcript) : null;
+```
+
+`SessionDigest.transcript` becomes `string | null`. In `test/digest.test.ts`, `installTranscript`
+uses `record.harness_session_id as string` in place of `record.id`. Add:
+
+```ts
+test("is unavailable while the harness session id is unknown", async () => {
+    env = testContext();
+    await addSession(env.ctx, sampleRecord({ harness_session_id: null }));
+    expect(await digestSession(env.ctx, "chief-cli")).toMatchObject({ available: false, transcript: null });
+});
+```
 
 **Files:**
 
@@ -2436,6 +2724,13 @@ export async function digestSession(ctx: Context, ref: string, recent = 3): Prom
 ---
 
 ### Task 10: `chief briefing`
+
+#### Changed 2026-10-02: spike results (overrides the code below where they differ)
+
+`transcriptModifiedAt` uses the harness session id:
+`if (s.harness !== "claude" || !s.harness_session_id) return null;` and
+`transcriptPath(ctx.claudeHome, s.worktree, s.harness_session_id)`. In `test/briefing.test.ts`,
+the mtime test uses `record.harness_session_id as string` in place of `record.id`.
 
 **Files:**
 
@@ -2691,6 +2986,13 @@ function byUrgency(a: BriefingSession, b: BriefingSession): number {
 ---
 
 ### Task 11: The Chief agent
+
+#### Changed 2026-10-02: spike results and the human's answers
+
+- Chief is **not** the default agent (Open Questions). Keep the `cos` alias.
+- In AGENT.md's model rules, add: `- Never use Haiku for workers: auto mode is unavailable for it, so the worker stalls on permission prompts.`
+- In AGENT.md's "Spawning work", add: `Workers must be worktrees of a repository the human has already trusted in Claude Code; otherwise the launch fails with "Workspace not trusted" and the session is recorded as blocked. Tell the human to run claude once in that repository.`
+- CLI-spawned sessions do not appear in the desktop app's sidebar. When telling the human how to enter a worker, give the `attach.terminal` command.
 
 Not unit-testable; verified by running it. Answer the Open Questions first.
 
