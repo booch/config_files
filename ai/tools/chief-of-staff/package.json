@@ -1,0 +1,13 @@
+{
+    "name": "chief-of-staff",
+    "private": true,
+    "type": "module",
+    "bin": {
+        "chief": "src/cli.ts"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^2.0.0",
+        "@types/bun": "latest",
+        "typescript": "^5.6.0"
+    }
+}

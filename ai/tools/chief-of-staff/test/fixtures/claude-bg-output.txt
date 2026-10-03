@@ -1,0 +1,6 @@
+Starting background service…
+backgrounded · ca42e85d · chief-spike
+  claude agents             list sessions
+  claude attach ca42e85d    open in this terminal
+  claude logs ca42e85d      show recent output
+  claude stop ca42e85d      stop this session
