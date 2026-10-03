@@ -64,6 +64,9 @@ Called out so a reviewer can accept or reject them explicitly:
 > - `chief approve` fails closed when `claude stop` or `claude agents` fails.
 > - A harness-adapter interface (`harnessFor(record.harness)`) is deferred to the
 >   start of step 6.
+> - Session ids from the Stop hook are validated before they are backfilled.
+> - Worker summaries go through stdin (`chief report --summary -`).
+> - The agent definition treats worker-written text as untrusted.
 
 ## Open Questions for the Human
 
