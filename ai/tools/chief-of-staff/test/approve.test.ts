@@ -1,9 +1,9 @@
-import { afterEach, expect, test } from "bun:test";
+import { afterEach, describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { approveSession } from "../src/approve";
 import { runCommand } from "../src/commands";
-import type { Context } from "../src/context";
+import { ChiefError, type Context, type RunResult } from "../src/context";
 import { addSession, loadRegistry } from "../src/registry";
 import { sampleRecord, testContext } from "./helpers";
 
@@ -80,6 +80,36 @@ test("leaves the record untouched when the resume fails", async () => {
     await addSession(env.ctx, waiting);
     await expect(approveSession(env.ctx, "chief-cli")).rejects.toThrow(/no such session/);
     expect((await loadRegistry(env.ctx))[0]?.state).toBe("waiting");
+});
+
+describe("never resumes a session it could not confirm is stopped", () => {
+    const cases: [string, Record<string, Partial<RunResult>>, RegExp][] = [
+        [
+            "claude stop fails",
+            { "claude stop": { exitCode: 1, stderr: "stop: boom" } },
+            /could not stop `chief-cli`: stop: boom/,
+        ],
+        [
+            "claude agents fails",
+            { "claude agents": { exitCode: 1, stderr: "agents: boom" } },
+            /claude agents failed: agents: boom/,
+        ],
+        [
+            "claude agents prints garbage",
+            { "claude agents": { stdout: "garbage" } },
+            /claude agents failed/,
+        ],
+    ];
+    for (const [name, fakes, message] of cases) {
+        test(name, async () => {
+            env = testContext({ fakes });
+            await addSession(env.ctx, waiting);
+            const approval = approveSession(env.ctx, "chief-cli");
+            await expect(approval).rejects.toThrow(ChiefError);
+            await expect(approval).rejects.toThrow(message);
+            expect(env.calls.some((call) => call.argv[1] === "--bg")).toBe(false);
+        });
+    }
 });
 
 test("the approve command joins remaining words into the message", async () => {

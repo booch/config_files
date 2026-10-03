@@ -1,6 +1,7 @@
 import { join } from "node:path";
+import { ChiefError } from "../context";
 import { KICKOFF_FILE } from "../kickoff";
-import { shellQuote } from "../text";
+import { firstLine, shellQuote } from "../text";
 
 const KICKOFF_INSTRUCTION = `Read ${KICKOFF_FILE} in the current directory and follow it.`;
 const HOOK_TIMEOUT_SECONDS = 30;
@@ -57,18 +58,31 @@ export function sessionIdFor(agentsJson: string, ref: string): string | null {
     return typeof match?.sessionId === "string" ? match.sessionId : null;
 }
 
-// A listed session still has a live process, even when idle.
+// A listed session still has a live process, even when idle. Unreadable output throws:
+// "not listed" must mean stopped, never "could not tell".
 export function isListed(agentsJson: string, ref: string): boolean {
-    return parseAgents(agentsJson).some((agent) => agent.id === ref);
+    return parseAgentsStrictly(agentsJson).some((agent) => agent.id === ref);
 }
 
 function parseAgents(json: string): AgentEntry[] {
     try {
-        const parsed = JSON.parse(json);
-        return Array.isArray(parsed) ? parsed : [];
+        return parseAgentsStrictly(json);
     } catch {
         return [];
     }
+}
+
+function parseAgentsStrictly(json: string): AgentEntry[] {
+    let parsed: unknown;
+    try {
+        parsed = JSON.parse(json);
+    } catch {
+        parsed = null;
+    }
+    if (!Array.isArray(parsed)) {
+        throw new ChiefError(`claude agents failed: output is not a JSON list: ${firstLine(json)}`);
+    }
+    return parsed.filter((entry) => typeof entry === "object" && entry !== null);
 }
 
 export function stopHookSettings(command: string) {

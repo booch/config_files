@@ -16,10 +16,14 @@ export interface TestContextOptions {
     fakes?: Record<string, Partial<RunResult>>;
 }
 
+// What an idle machine answers when no fake overrides it.
+const DEFAULT_FAKES: Record<string, Partial<RunResult>> = { "claude agents": { stdout: "[]" } };
+
 // Real git (fast, filesystem-only); everything else is recorded and faked.
 export function testContext(options: TestContextOptions = {}) {
     const root = realpathSync(mkdtempSync(join(tmpdir(), "chief-test-")));
     const calls: RecordedCall[] = [];
+    const fakes = { ...DEFAULT_FAKES, ...options.fakes };
     let current = new Date(options.now ?? "2026-09-23T14:02:00Z");
     const ctx: Context = {
         home: join(root, "home"),
@@ -34,7 +38,7 @@ export function testContext(options: TestContextOptions = {}) {
                 exitCode: 0,
                 stdout: "",
                 stderr: "",
-                ...(options.fakes?.[argv.slice(0, 2).join(" ")] ?? options.fakes?.[argv[0] ?? ""]),
+                ...(fakes[argv.slice(0, 2).join(" ")] ?? fakes[argv[0] ?? ""]),
             };
         },
         stdin: async () => options.stdin ?? "",

@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { ChiefError } from "../src/context";
 import {
     attachCommands,
     digestTranscript,
@@ -81,6 +82,15 @@ describe("claude agents --json", () => {
     test("isListed says whether the session's process still exists", () => {
         expect(isListed(agents, "ca42e85d")).toBe(true);
         expect(isListed("[]", "ca42e85d")).toBe(false);
+    });
+
+    test("skips entries that are not objects", () => {
+        expect(sessionIdFor("[null]", "x")).toBeNull();
+        expect(isListed("[null]", "x")).toBe(false);
+    });
+
+    test("isListed refuses to guess when the output is not a JSON list", () => {
+        expect(() => isListed("garbage", "x")).toThrow(ChiefError);
     });
 });
 

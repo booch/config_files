@@ -26,7 +26,7 @@ export async function approveSession(
             `\`${session.slug}\` has no Claude session id yet; attach to it by hand`,
         );
     }
-    await stopAndWait(ctx, session.harness_ref);
+    await stopAndWait(ctx, session.slug, session.harness_ref);
     const result = await ctx.run(resumeArgv(session.harness_session_id, message), {
         cwd: session.worktree,
     });
@@ -46,13 +46,25 @@ export async function approveSession(
 }
 
 // Resuming a live session starts a copy, and `claude stop` returns before the process exits.
-async function stopAndWait(ctx: Context, ref: string): Promise<void> {
-    await ctx.run(stopArgv(ref));
+// Any doubt that it stopped is an error, never a resume.
+async function stopAndWait(ctx: Context, slug: string, ref: string): Promise<void> {
+    const stop = await ctx.run(stopArgv(ref));
+    if (stop.exitCode !== 0) {
+        throw new ChiefError(`could not stop \`${slug}\`: ${firstLine(stop.stderr)}`);
+    }
     const deadline = Date.now() + STOP_TIMEOUT_MS;
-    while (isListed((await ctx.run(AGENTS_ARGV)).stdout, ref)) {
+    while (await isRunning(ctx, ref)) {
         if (Date.now() > deadline) {
             throw new ChiefError(`session ${ref} did not stop within ${STOP_TIMEOUT_MS / 1000}s`);
         }
         await Bun.sleep(STOP_POLL_MS);
     }
+}
+
+async function isRunning(ctx: Context, ref: string): Promise<boolean> {
+    const agents = await ctx.run(AGENTS_ARGV);
+    if (agents.exitCode !== 0) {
+        throw new ChiefError(`claude agents failed: ${firstLine(agents.stderr)}`);
+    }
+    return isListed(agents.stdout, ref);
 }
