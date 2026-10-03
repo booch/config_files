@@ -26,6 +26,7 @@ export class ChiefError extends Error {}
 export const realRunner: Runner = async (argv, options = {}) => {
     const proc = Bun.spawn(argv, {
         cwd: options.cwd,
+        env: process.env, // without it, Bun uses the environment the process started with
         stdin: "ignore",
         stdout: "pipe",
         stderr: "pipe",
