@@ -131,7 +131,10 @@ const COMMANDS: Record<string, Command> = {
     },
     approve: async (ctx, args) => {
         const ref = requirePositional(args, 0, "session");
-        return json(await approveSession(ctx, ref, args.slice(1).join(" ") || undefined));
+        const message = args.slice(1).join(" ");
+        // The message is claude's last argument, so a leading "-" would make it a flag.
+        if (message.startsWith("-")) throw usage('approve message must not start with "-"');
+        return json(await approveSession(ctx, ref, message || undefined));
     },
     updates: async (ctx, args) => {
         const { values } = parse(args, {

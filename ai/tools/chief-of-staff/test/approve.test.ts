@@ -138,3 +138,12 @@ test("the approve command joins remaining words into the message", async () => {
     await runCommand(env.ctx, ["approve", "chief-cli", "ship", "it"]);
     expect(env.calls.at(-1)?.argv.at(-1)).toBe("ship it");
 });
+
+test("the approve command refuses a message claude would read as a flag", async () => {
+    env = testContext();
+    await addSession(env.ctx, waiting);
+    await expect(
+        runCommand(env.ctx, ["approve", "chief-cli", "--dangerously-skip-permissions"]),
+    ).rejects.toThrow(/must not start with "-"/);
+    expect(env.calls).toEqual([]);
+});
