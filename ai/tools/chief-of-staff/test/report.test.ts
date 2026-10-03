@@ -37,6 +37,29 @@ describe("reportState", () => {
         );
     });
 
+    test("stores the summary as one line of at most 200 characters", async () => {
+        env = testContext();
+        await addSession(env.ctx, sampleRecord());
+        await reportState(env.ctx, "chief-cli", {
+            state: "done",
+            summary: `line one\nline two ${"x".repeat(500)}`,
+        });
+        const summary = (await stored())?.summary as string;
+        expect(summary).toStartWith("line one line two x");
+        expect(summary.length).toBe(200);
+    });
+
+    for (const checkpoint of ["Approve Tests", "approve;rm", "x".repeat(41), ""]) {
+        test(`rejects the checkpoint name ${JSON.stringify(checkpoint)}`, async () => {
+            env = testContext();
+            await addSession(env.ctx, sampleRecord());
+            await expect(
+                reportState(env.ctx, "chief-cli", { state: "waiting", waitingOn: checkpoint }),
+            ).rejects.toThrow(/--waiting-on/);
+            expect((await stored())?.state).toBe("running");
+        });
+    }
+
     test("leaving waiting clears waiting_on and keeps the old summary if none is given", async () => {
         env = testContext();
         await addSession(

@@ -6,6 +6,7 @@ import { oneLine, truncate, tryParseJson } from "./text";
 
 export const UNREPORTED_STOP = "unreported-stop";
 const MAX_SUMMARY = 200;
+const CHECKPOINT = /^[a-z0-9-]{1,40}$/;
 
 export interface Report {
     state: SessionState;
@@ -21,16 +22,30 @@ export async function reportState(
     if (state === "waiting" && !waitingOn) {
         throw new ChiefError("--state waiting needs --waiting-on <checkpoint>");
     }
+    if (waitingOn !== undefined && !CHECKPOINT.test(waitingOn)) {
+        throw new ChiefError(
+            "--waiting-on must be 1-40 lowercase letters, digits, or dashes (e.g. approve-tests)",
+        );
+    }
     const session = await findSession(ctx, ref);
+    const cleanSummary = summary === undefined ? undefined : asSummary(summary);
     const updated = await updateSession(ctx, session.id, (s) => ({
         state,
         waiting_on: state === "waiting" ? (waitingOn ?? null) : null,
-        summary: summary ?? s.summary,
+        summary: cleanSummary ?? s.summary,
         last_activity_at: ctx.now().toISOString(),
     }));
     const detail = updated.waiting_on ? `${state} on ${updated.waiting_on}` : state;
-    await appendJournal(ctx, `\`${updated.slug}\` ${detail}${summary ? `: ${summary}` : ""}`);
+    await appendJournal(
+        ctx,
+        `\`${updated.slug}\` ${detail}${cleanSummary ? `: ${cleanSummary}` : ""}`,
+    );
     return updated;
+}
+
+// Worker-written, so kept to one short line wherever it is shown.
+function asSummary(text: string): string {
+    return truncate(oneLine(text), MAX_SUMMARY);
 }
 
 // Called by the worker's Stop hook after every turn. A worker that stops while still
@@ -54,7 +69,7 @@ export async function reportStopped(
         return {
             state: "waiting",
             waiting_on: UNREPORTED_STOP,
-            summary: lastMessage ? truncate(oneLine(lastMessage), MAX_SUMMARY) : s.summary,
+            summary: lastMessage ? asSummary(lastMessage) : s.summary,
             last_activity_at: now,
             ...backfill,
         };

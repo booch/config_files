@@ -20,7 +20,6 @@ import {
 } from "./registry";
 import { reportState, reportStopped } from "./report";
 import { spawnSession } from "./spawn";
-import { oneLine } from "./text";
 import { minutesBetween } from "./time";
 import { markReviewed, unreviewedUpdates } from "./updates";
 
@@ -102,7 +101,7 @@ const COMMANDS: Record<string, Command> = {
             await reportState(ctx, ref, {
                 state: oneOf(STATES, values.state, "state"),
                 waitingOn: values["waiting-on"],
-                summary: summaryFromStdin ? oneLine(await ctx.stdin()) : values.summary,
+                summary: summaryFromStdin ? await ctx.stdin() : values.summary,
             }),
         );
     },
