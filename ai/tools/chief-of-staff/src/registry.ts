@@ -1,7 +1,7 @@
 import { mkdir, rm, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { ChiefError, type Context } from "./context";
-import { isNotFound, readTextIfExists, writeAtomically } from "./files";
+import { isNotFound, readJsonIfExists, writeJson } from "./files";
 
 export const HARNESSES = ["claude", "codex", "opencode"] as const;
 export const STATES = ["running", "waiting", "blocked", "done", "abandoned"] as const;
@@ -43,16 +43,9 @@ export function isActive(session: SessionRecord): boolean {
 }
 
 export async function loadRegistry(ctx: Context): Promise<SessionRecord[]> {
-    const path = registryPath(ctx);
-    const text = await readTextIfExists(path);
-    if (text === null) return [];
-    try {
-        return JSON.parse(text).sessions;
-    } catch (error) {
-        throw new ChiefError(
-            `${path} is not valid JSON (${(error as Error).message}); fix or move it aside`,
-        );
-    }
+    const registry = await readJsonIfExists(registryPath(ctx));
+    if (registry === null) return [];
+    return (registry as { sessions: SessionRecord[] }).sessions;
 }
 
 export async function addSession(ctx: Context, record: SessionRecord): Promise<void> {
@@ -106,10 +99,7 @@ async function mutateRegistry(
     await mkdir(ctx.home, { recursive: true });
     return withLock(join(ctx.home, "registry.lock"), async () => {
         const sessions = mutate(await loadRegistry(ctx));
-        await writeAtomically(
-            registryPath(ctx),
-            `${JSON.stringify({ version: 1, sessions }, null, 2)}\n`,
-        );
+        await writeJson(registryPath(ctx), { version: 1, sessions });
         return sessions;
     });
 }

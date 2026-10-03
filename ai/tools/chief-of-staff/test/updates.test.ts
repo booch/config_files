@@ -60,6 +60,12 @@ test("a corrupt reviewed.json is reported by name, not guessed at", async () => 
     await expect(unreviewedUpdates(env.ctx)).rejects.toThrow(/reviewed\.json/);
 });
 
+test("an empty reviewed.json is reported by name, like any unparseable file", async () => {
+    setup();
+    writeFileSync(join(env.ctx.home, "reviewed.json"), "");
+    await expect(unreviewedUpdates(env.ctx)).rejects.toThrow(/reviewed\.json is not valid JSON/);
+});
+
 test("a reviewed.json that is not an object is reported by name", async () => {
     setup();
     writeFileSync(join(env.ctx.home, "reviewed.json"), "[]");

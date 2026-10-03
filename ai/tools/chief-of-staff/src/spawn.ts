@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ChiefError, type Context } from "./context";
+import { writeJson } from "./files";
 import {
     AGENTS_ARGV,
     attachCommands,
@@ -114,6 +115,6 @@ async function writeStopHook(ctx: Context, id: string): Promise<string> {
     await mkdir(dir, { recursive: true });
     const path = join(dir, `${id}.json`);
     const settings = stopHookSettings(`${chiefCommand(ctx)} report ${id} --stopped`);
-    await writeFile(path, `${JSON.stringify(settings, null, 2)}\n`);
+    await writeJson(path, settings);
     return path;
 }

@@ -2,7 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { basename, dirname, join } from "node:path";
 import { loadConfig } from "./config";
 import { ChiefError, type Context } from "./context";
-import { isNotFound, readTextIfExists, writeAtomically } from "./files";
+import { isNotFound, readJsonIfExists, writeJson } from "./files";
 
 const DATED_REPORT = /^(\d{4}-\d{2}-\d{2})\.md$/;
 const HIGHLIGHTS = 3;
@@ -31,7 +31,7 @@ export async function markReviewed(ctx: Context, task?: string): Promise<number>
         const dir = dirname(path);
         if (date > (marks[dir] ?? "")) marks[dir] = date;
     }
-    await writeAtomically(watermarkPath(ctx), `${JSON.stringify(marks, null, 2)}\n`);
+    await writeJson(watermarkPath(ctx), marks);
     return marking.length;
 }
 
@@ -72,17 +72,9 @@ async function listDir(dir: string): Promise<string[]> {
 
 async function loadWatermarks(ctx: Context): Promise<Watermarks> {
     const path = watermarkPath(ctx);
-    const text = await readTextIfExists(path);
-    if (!text) return {};
-    let parsed: unknown;
-    try {
-        parsed = JSON.parse(text);
-    } catch (error) {
-        throw new ChiefError(
-            `${path} is not valid JSON (${(error as Error).message}); fix or move it aside`,
-        );
-    }
-    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+    const parsed = await readJsonIfExists(path);
+    if (parsed === null) return {};
+    if (typeof parsed !== "object" || Array.isArray(parsed)) {
         throw new ChiefError(`${path} must be a JSON object of dir → date; fix or move it aside`);
     }
     return parsed as Watermarks;
