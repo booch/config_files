@@ -10,8 +10,10 @@ import {
     isActive,
     loadRegistry,
     type SessionRecord,
+    STATES,
     updateSession,
 } from "./registry";
+import { reportState, reportStopped } from "./report";
 import { spawnSession } from "./spawn";
 import { minutesBetween } from "./time";
 
@@ -28,7 +30,9 @@ const USAGE = `usage: chief <command> [options]
   status <session>                       one session's record
   note <text…>                           append to the journal
   close <session> [--abandon] [--summary <text>]
-  spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy auto|checkpointed]`;
+  spawn --goal <text> [--slug s] [--repo dir] [--model m] [--effort e] [--autonomy auto|checkpointed]
+  report <session> --state <state> [--waiting-on <checkpoint>] [--summary <text>]
+  report <session> --stopped             (Stop hook; reads hook JSON on stdin)`;
 
 const json = (value: unknown): CommandResult => ({ output: JSON.stringify(value, null, 2) });
 
@@ -64,6 +68,24 @@ export const COMMANDS: Record<string, Command> = {
                 state,
                 values.summary,
             ),
+        );
+    },
+    report: async (ctx, args) => {
+        const { values, positionals } = parse(args, {
+            state: { type: "string" },
+            "waiting-on": { type: "string" },
+            summary: { type: "string" },
+            stopped: { type: "boolean" },
+        });
+        const ref = requirePositional(positionals, 0, "session");
+        if (values.stopped) return json(await reportStopped(ctx, ref, await ctx.stdin()));
+        if (!values.state) throw usage("report needs --state or --stopped");
+        return json(
+            await reportState(ctx, ref, {
+                state: oneOf(STATES, values.state, "state"),
+                waitingOn: values["waiting-on"],
+                summary: values.summary,
+            }),
         );
     },
     spawn: async (ctx, args) => {
