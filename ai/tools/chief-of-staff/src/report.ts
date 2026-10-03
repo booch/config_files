@@ -34,14 +34,14 @@ export async function reportState(
 }
 
 // Called by the worker's Stop hook after every turn. A worker that stops while still
-// `running` never said why, so it needs a human look.
+// `running` never said why, so it needs a human look. `stop_hook_active` is deliberately
+// ignored: it means another Stop hook blocked a stop, and skipping those would freeze the record.
 export async function reportStopped(
     ctx: Context,
     ref: string,
     hookInput: string,
-): Promise<SessionRecord | null> {
+): Promise<SessionRecord> {
     const input = parseHookInput(hookInput);
-    if (input.stop_hook_active === true) return null;
     const session = await findSession(ctx, ref);
     const now = ctx.now().toISOString();
     const lastMessage =

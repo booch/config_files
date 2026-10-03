@@ -82,13 +82,15 @@ describe("reportStopped (Stop hook)", () => {
         });
     });
 
-    test("ignores re-entrant stops", async () => {
-        env = testContext();
+    test("still records a stop when another Stop hook blocked the previous one", async () => {
+        env = testContext({ now: "2026-09-23T15:00:00Z" });
         await addSession(env.ctx, sampleRecord());
-        expect(
-            await reportStopped(env.ctx, "chief-cli", JSON.stringify({ stop_hook_active: true })),
-        ).toBeNull();
-        expect((await stored())?.state).toBe("running");
+        await reportStopped(env.ctx, "chief-cli", JSON.stringify({ stop_hook_active: true }));
+        expect(await stored()).toMatchObject({
+            state: "waiting",
+            waiting_on: "unreported-stop",
+            last_activity_at: "2026-09-23T15:00:00.000Z",
+        });
     });
 
     test("tolerates malformed hook input", async () => {
