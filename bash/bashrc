@@ -292,7 +292,9 @@ fi
 
 
 # Enable programmable completion features.
-if [ -r /etc/bash_completion ] && [ -n "$BASH_COMPLETION" ]; then
+if [ -r "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/bash_completion.sh" ]; then
+    . "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/bash_completion.sh" # Homebrew bash-completion@2
+elif [ -r /etc/bash_completion ] && [ -n "$BASH_COMPLETION" ]; then
     . /etc/bash_completion
 elif [ -r /usr/local/etc/bash_completion ]; then
     . /usr/local/etc/bash_completion # Homebrew for Mac installs here.
