@@ -22,8 +22,27 @@ backup_path() {
     mv "$path" "$backup"
 }
 
+# The path to a target, relative to a directory (both absolute), like `../ai/commands`.
+# Stays absolute if the 2 share nothing but `/`.
+relative_path() {
+    local from="${1%/}" to="$2" up=""
+    while [ "${to#"$from"/}" = "$to" ]; do
+        [ "$from" = "/" ] || [ -z "$from" ] && { echo "$to"; return; }
+        from="$(dirname "$from")"
+        up="../$up"
+    done
+    echo "$up${to#"$from"/}"
+}
+
+# The physical directory containing a path, with any symlinks resolved.
+physical_dir() {
+    (cd "$(dirname "$1")" && pwd -P)
+}
+
 # Symlink a file, backing up any existing regular file.
 # Existing symlinks are replaced silently (idempotent).
+# Links are relative (e.g. `~/.zshrc -> .config/zsh/zshrc`), since home
+# directory names differ across machines.
 link_file() {
     src="$1"
     dst="$2"
@@ -33,7 +52,9 @@ link_file() {
         backup_path "$dst"
     fi
     mkdir -p "$(dirname "$dst")"
-    ln -s "$src" "$dst"
+    # Resolve symlinked directories (like ~/.claude) first, since a relative link
+    # is followed from the directory it's physically in.
+    ln -s "$(relative_path "$(physical_dir "$dst")" "$(physical_dir "$src")/$(basename "$src")")" "$dst"
 }
 
 # Symlink a directory, backing up any existing directory.
