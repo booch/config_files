@@ -154,3 +154,8 @@
 # 	date = format-local:%Y-%m-%d %a  # Display dates like `2024-02-25 Sun`, in local time zone. (Not compatible with `delta`.)
 [safe]
     directory = /opt/homebrew  # Allow working with git repo in `/opt/homebrew`, even if I don't own the directory.
+[filter "lfs"]  # Set up for git-lfs; same as `git lfs install` would add.
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
