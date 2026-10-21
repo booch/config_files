@@ -364,6 +364,13 @@
         "source": "github",
         "repo": "obra/superpowers-marketplace"
       }
+    },
+    "boochtek": {
+      "source": {
+        "source": "github",
+        "repo": "boochtek/ai-skills"
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "high",
