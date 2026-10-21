@@ -32,6 +32,7 @@ link_file() {
     elif [ -e "$dst" ]; then
         backup_path "$dst"
     fi
+    mkdir -p "$(dirname "$dst")"
     ln -s "$src" "$dst"
 }
 
