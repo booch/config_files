@@ -31,7 +31,15 @@ It can be run from any directory:
 ~/.config/install.sh
 ~~~
 
-On first run, if `git/local` doesn't exist, the script prompts for your
-name, email, and (optionally) GitHub username and writes them there.
-That file is gitignored, so your git identity stays on your machine and
-is never committed.
+On first run, if `git/local` doesn't exist, the script writes your git
+identity there. It derives your name from your user account, your email
+from the one that name has committed with most in this repo, and your
+GitHub username from this repo's `origin`; it prompts only for what it
+can't derive. That file is gitignored, so your git identity stays on
+your machine and is never committed.
+
+For tools that insist on a dot-folder in your home directory (such as
+`~/.claude` or `~/.homebrew`), the script moves its contents into this
+repo and links the dot-folder back here. Those links are relative
+(`~/.claude -> .config/claude`), so they keep working on a Mac whose
+home directory has a different name.
