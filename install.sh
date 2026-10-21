@@ -195,22 +195,42 @@ mkdir -p "$XDG_DATA_HOME" "$XDG_STATE_HOME" "$XDG_CACHE_HOME"
 chmod 700 "$XDG_DATA_HOME" "$XDG_STATE_HOME" "$XDG_CACHE_HOME"
 # TODO: FIXME: $XDG_CACHE_HOME is set to ~/Library/Caches on macOS. Make ~/.cache a symlink to that directory.
 
+# Full name of the current user account.
+account_full_name() {
+    id -F 2>/dev/null || getent passwd "$USER" | cut -d: -f5 | cut -d, -f1
+}
+
+# The email that this author name has committed with most often in this repo.
+most_used_email_for() {
+    git -C "$CWD" log --author="^$1 <" --format='%ae' | sort | uniq -c | sort -rn | awk 'NR == 1 {print $2}'
+}
+
+# The GitHub user that owns this repo's origin.
+origin_github_user() {
+    git -C "$CWD" remote get-url origin | sed -nE 's#^(https://github\.com/|git@github\.com:)([^/]+)/.*#\2#p'
+}
+
 # Git identity is personal and not committed (see .gitignore).
-# Generate it per-machine on first run, prompting for name/email.
+# Generate it per-machine on first run, deriving what we can, and prompting for the rest.
 GIT_LOCAL="$CWD/git/local"
 if [ ! -f "$GIT_LOCAL" ]; then
+    git_name="$(account_full_name)"
+    git_email=""
+    [ -z "$git_name" ] || git_email="$(most_used_email_for "$git_name")"
+    git_github="$(origin_github_user)"
     if [ -t 0 ]; then
-        echo "Setting up your personal git identity (git/local)..."
-        read -r -p "  Full name: " git_name
-        read -r -p "  Email address: " git_email
-        read -r -p "  GitHub username (optional): " git_github
-        {
-            printf '[user]\n\tname = %s\n\temail = %s\n' "$git_name" "$git_email"
-            [ -n "$git_github" ] && printf '[github]\n\tuser = %s\n' "$git_github"
-        } > "$GIT_LOCAL"
-        echo "Wrote $GIT_LOCAL"
+        [ -n "$git_name" ] || read -r -p "  Full name: " git_name
+        [ -n "$git_email" ] || read -r -p "  Email address: " git_email
+        [ -n "$git_github" ] || read -r -p "  GitHub username (optional): " git_github
+    fi
+    if [ -n "$git_name" ] && [ -n "$git_email" ]; then
+        # `git config` escapes the values for us.
+        git config --file "$GIT_LOCAL" user.name "$git_name"
+        git config --file "$GIT_LOCAL" user.email "$git_email"
+        [ -z "$git_github" ] || git config --file "$GIT_LOCAL" github.user "$git_github"
+        echo "Wrote $GIT_LOCAL ($git_name <$git_email>)."
     else
-        echo "No git/local found (non-interactive); create it with your [user] name/email."
+        echo "No git/local found; create it with your [user] name and email."
     fi
 fi
 
