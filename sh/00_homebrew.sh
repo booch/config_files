@@ -33,7 +33,8 @@ else
     export HOMEBREW_REPOSITORY=$HOMEBREW_PREFIX
 fi
 
-# Disable quarantine ("Are you sure you want to open this?" prompt) when installing Casks.
-export HOMEBREW_CASK_OPTS='--no-quarantine'
+# Don't ask for confirmation before installing (including dependencies). Homebrew 7 asks by default.
+# (This replaces HOMEBREW_CASK_OPTS='--no-quarantine'; Homebrew 7 removed that option.)
+export HOMEBREW_NO_ASK=1
 
 # TODO: Add to manpath and infopath.
