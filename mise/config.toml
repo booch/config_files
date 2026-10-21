@@ -11,8 +11,9 @@ _.file = '.env'
 #leave = "echo 'I left the project'"
 #preinstall = "echo 'I am about to install tools'"
 #postinstall = "echo 'I just installed tools'"
+# Only where there's a Gemfile; mise also runs this after global installs, in $HOME.
 postinstall = [
-    'bundle install'
+    '[ ! -f Gemfile ] || bundle install'
 ]
 
 [tools]
