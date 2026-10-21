@@ -368,7 +368,6 @@ link_file "$AI_DIR/AGENTS.md" "$CWD/codex/AGENTS.md"
 # Consider copying relevant prompts to ~/.config/zed/prompts/.
 
 # Claude Code: install plugin marketplaces and plugins.
-# Boochtek marketplace is a git submodule, not managed here.
 if command -v claude >/dev/null; then
     claude plugins marketplace add anthropics/claude-plugins-official
     claude plugins install agent-sdk-dev@claude-plugins-official
@@ -440,6 +439,10 @@ if command -v claude >/dev/null; then
 
     claude plugins marketplace add openai/codex-plugin-cc
     claude plugins install codex@openai-codex
+
+    # My own skills and commands, published from ai/ by /publish-to-plugin.
+    claude plugins marketplace add boochtek/ai-skills
+    claude plugins install boochtek@boochtek
 fi
 
 if [ "$(uname)"x = "Darwin"x ]; then
