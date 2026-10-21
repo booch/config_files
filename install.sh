@@ -288,6 +288,12 @@ link_file "$CWD/postgresql/psqlrc" "$HOME/.psqlrc"
 
 link_dir "$CWD/usql" "$HOME/Library/Application Support/usql"
 
+## Homebrew.
+# `brew trust` saves to $XDG_CONFIG_HOME/homebrew, or ~/.homebrew if that isn't set
+# (as in a shell from before these config files were installed). Link them, so both
+# see the same trusted taps.
+migrate_to_config "homebrew"
+
 ## AI tools.
 # Symlink home dotdirs into ~/.config for tools that don't respect XDG.
 migrate_to_config "claude"
