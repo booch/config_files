@@ -10,6 +10,10 @@ export function isNotFound(error: unknown): boolean {
     return (error as NodeJS.ErrnoException)?.code === "ENOENT";
 }
 
+export function isAlreadyExists(error: unknown): boolean {
+    return (error as NodeJS.ErrnoException)?.code === "EEXIST";
+}
+
 // Resolves to null when the file or directory does not exist; any other failure still throws.
 export async function ifExists<T>(op: Promise<T>): Promise<T | null> {
     try {

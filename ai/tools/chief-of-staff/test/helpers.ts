@@ -55,26 +55,18 @@ export function testContext(options: TestContextOptions = {}) {
     };
 }
 
+// Real git in `dir`, as a throwaway identity; throws on failure.
+export async function runGit(dir: string, ...args: string[]): Promise<void> {
+    const identity = ["-c", "user.name=Test", "-c", "user.email=test@example.com"];
+    const result = await realRunner(["git", "-C", dir, ...identity, ...args]);
+    if (result.exitCode !== 0) throw new Error(result.stderr);
+}
+
 export async function makeGitRepo(root: string, name = "repo"): Promise<string> {
     const dir = join(root, name);
     mkdirSync(dir, { recursive: true });
-    for (const args of [
-        ["init", "-q", "-b", "main"],
-        [
-            "-c",
-            "user.name=Test",
-            "-c",
-            "user.email=test@example.com",
-            "commit",
-            "-q",
-            "--allow-empty",
-            "-m",
-            "init",
-        ],
-    ]) {
-        const result = await realRunner(["git", "-C", dir, ...args]);
-        if (result.exitCode !== 0) throw new Error(result.stderr);
-    }
+    await runGit(dir, "init", "-q", "-b", "main");
+    await runGit(dir, "commit", "-q", "--allow-empty", "-m", "init");
     return dir;
 }
 

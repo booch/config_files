@@ -1,7 +1,7 @@
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ChiefError, type Context } from "./context";
-import { makePrivateDir, writeJson } from "./files";
+import { isAlreadyExists, makePrivateDir, writeJson } from "./files";
 import {
     AGENTS_ARGV,
     attachCommands,
@@ -47,8 +47,9 @@ export async function spawnSession(ctx: Context, options: SpawnOptions): Promise
 
     const worktree = await createWorktree(ctx, options.repo, slug);
     const id = Bun.randomUUIDv7();
-    await writeFile(
-        join(worktree.path, KICKOFF_FILE),
+    await writeKickoff(
+        ctx,
+        worktree,
         kickoffPrompt({ id, slug, goal, autonomy, chief: chiefCommand(ctx) }),
     );
     const settingsPath = await writeStopHook(ctx, id);
@@ -82,6 +83,18 @@ export async function spawnSession(ctx: Context, options: SpawnOptions): Promise
     return record;
 }
 
+// Create-only ("wx"), so a file or symlink the repo checked out at that path can't redirect the
+// write; the worktree is then useless, so it goes too.
+async function writeKickoff(ctx: Context, worktree: Worktree, prompt: string): Promise<void> {
+    try {
+        await writeFile(join(worktree.path, KICKOFF_FILE), prompt, { flag: "wx" });
+    } catch (error) {
+        if (!isAlreadyExists(error)) throw error;
+        const reason = `${worktree.repo} already has a ${KICKOFF_FILE} (Chief writes that file itself); remove it from the repo and retry`;
+        throw new ChiefError(await discardWorktree(ctx, worktree, reason));
+    }
+}
+
 type LaunchOutcome = Pick<
     SessionRecord,
     "state" | "harness_ref" | "harness_session_id" | "summary"
@@ -93,12 +106,18 @@ async function launchWorker(
     spec: LaunchSpec,
 ): Promise<LaunchOutcome> {
     const launch = await ctx.run(launchArgv(spec), { cwd: worktree.path });
+    // The record stays (blocked) so the human sees why; the worktree and branch go, so closing the
+    // record frees the slug for a retry.
     if (launch.exitCode !== 0) {
         return {
             state: "blocked",
             harness_ref: null,
             harness_session_id: null,
-            summary: await cleanUpFailedLaunch(ctx, worktree, launch.stderr),
+            summary: await discardWorktree(
+                ctx,
+                worktree,
+                `launch failed: ${firstLine(launch.stderr)}`,
+            ),
         };
     }
     const harnessRef = parseBgRef(launch.stdout);
@@ -112,14 +131,8 @@ async function launchWorker(
     };
 }
 
-// The record stays (blocked) so the human sees why; the worktree and branch go, so closing the
-// record frees the slug for a retry. Returns the summary to record.
-async function cleanUpFailedLaunch(
-    ctx: Context,
-    worktree: Worktree,
-    stderr: string,
-): Promise<string> {
-    const reason = `launch failed: ${firstLine(stderr)}`;
+// Undoes createWorktree; returns `reason`, plus why the cleanup failed if it did.
+async function discardWorktree(ctx: Context, worktree: Worktree, reason: string): Promise<string> {
     const cleanupError = await removeWorktree(ctx, worktree);
     return cleanupError ? `${reason}; cleanup failed: ${cleanupError}` : reason;
 }

@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { runCommand } from "../src/commands";
 import { type Context, realRunner } from "../src/context";
 import { KICKOFF_FILE } from "../src/kickoff";
 import { addSession, loadRegistry } from "../src/registry";
 import { type SpawnOptions, spawnSession } from "../src/spawn";
-import { CLOSED_AT, makeGitRepo, readJournal, sampleRecord, testContext } from "./helpers";
+import { CLOSED_AT, makeGitRepo, readJournal, runGit, sampleRecord, testContext } from "./helpers";
 
 let env: ReturnType<typeof testContext>;
 afterEach(() => env.cleanup());
@@ -35,6 +35,15 @@ async function spawnDefault(overrides: Partial<SpawnOptions> = {}, ctx: Context 
     return { repo, record };
 }
 
+// A repo whose checkout puts a symlink where the kickoff prompt goes, aimed at `target`.
+async function repoWithKickoffLink(target: string): Promise<string> {
+    const repo = await makeGitRepo(env.root, "planted");
+    symlinkSync(target, join(repo, KICKOFF_FILE));
+    await runGit(repo, "add", "--force", KICKOFF_FILE);
+    await runGit(repo, "commit", "-q", "-m", "plant");
+    return repo;
+}
+
 describe("spawnSession", () => {
     test("records a running session with a UUIDv7 id and a worktree", async () => {
         env = testContext({ fakes: CLAUDE_FAKES });
@@ -59,6 +68,33 @@ describe("spawnSession", () => {
         const prompt = readFileSync(join(record.worktree, KICKOFF_FILE), "utf8");
         expect(prompt).toContain("Fix the login bug");
         expect(prompt).toContain(`bun '/opt/chief/src/cli.ts' report ${record.id}`);
+    });
+
+    test("refuses to write the kickoff prompt through a symlink the repo checked out", async () => {
+        env = testContext({ fakes: CLAUDE_FAKES });
+        const target = join(env.root, "victim.txt");
+        writeFileSync(target, "original");
+        const repo = await repoWithKickoffLink(target);
+        await expect(spawnDefault({ repo })).rejects.toThrow(/already has a \.chief-kickoff\.md/);
+        expect(readFileSync(target, "utf8")).toBe("original");
+        expect(env.calls).toHaveLength(0);
+    });
+
+    test("refuses a dangling symlink too, rather than creating its target", async () => {
+        env = testContext({ fakes: CLAUDE_FAKES });
+        const target = join(env.root, "missing.txt");
+        const repo = await repoWithKickoffLink(target);
+        await expect(spawnDefault({ repo })).rejects.toThrow(/already has/);
+        expect(existsSync(target)).toBe(false);
+    });
+
+    test("removes the worktree and branch it refused to use", async () => {
+        env = testContext({ fakes: CLAUDE_FAKES });
+        const repo = await repoWithKickoffLink(join(env.root, "missing.txt"));
+        await expect(spawnDefault({ repo })).rejects.toThrow(/already has/);
+        expect(existsSync(join(env.ctx.worktreeRoot, "planted", "fix-the-login-bug"))).toBe(false);
+        const branches = await realRunner(["git", "-C", repo, "branch", "--list", "fix-*"]);
+        expect(branches.stdout.trim()).toBe("");
     });
 
     test("launches claude in the worktree with a Stop hook that reports back", async () => {
