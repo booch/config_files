@@ -20,7 +20,8 @@ This directory is the **source of truth** for AI agent configuration across mult
 │   ├── explorer/       # Codebase exploration
 │   ├── code-reviewer-*/# Sequential code reviewers
 │   ├── test-writer/    # TDD test writing
-│   └── refactorer/     # Code refactoring
+│   ├── refactorer/     # Code refactoring
+│   └── chief-of-staff/ # Session manager that spawns and tracks workers
 ├── skills/             # Model-invoked capabilities
 │   ├── tdd/            # Test-driven development
 │   ├── refactor/       # Code refactoring
@@ -38,6 +39,9 @@ This directory is the **source of truth** for AI agent configuration across mult
 │   ├── learn.md        # Persist learnings
 │   ├── remember.md     # Quick learning (alias)
 │   └── explore.md      # Codebase exploration
+├── docs/plans/         # Design and implementation plans
+├── tools/              # Supporting programs
+│   └── chief-of-staff/ # `chief` CLI behind the Chief of Staff agent
 └── README.md           # This file
 ```
 
